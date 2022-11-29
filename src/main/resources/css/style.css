@@ -4,6 +4,7 @@
 
 .anchor-pane{
     -fx-background-color: #2b2b2f;
+    -fx-border-color: grey;
 }
 
 .sign-in-btn{
