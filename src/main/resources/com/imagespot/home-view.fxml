@@ -5,9 +5,9 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:controller="com.imagespot.controller.HomeController" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="171.0" layoutY="163.0" text="Home View">
+      <Label fx:id="label_home" layoutX="171.0" layoutY="163.0" text="Home View">
          <font>
             <Font size="51.0" />
          </font>

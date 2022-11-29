@@ -2,13 +2,10 @@ package com.imagespot;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class HelloController {
@@ -31,21 +28,5 @@ public class HelloController {
             throw new RuntimeException(e);
         }
 
-    }
-
-    public String MD5(String md5) {
-        try {
-            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-            byte[] array = md.digest(md5.getBytes());
-            StringBuffer sb = new StringBuffer();
-            for (byte b : array) {
-                sb.append(Integer.toHexString((b & 0xFF) | 0x100).substring(1, 3));
-            }
-            return sb.toString();
-        }
-        catch (java.security.NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }
