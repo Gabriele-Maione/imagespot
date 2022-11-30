@@ -1,5 +1,7 @@
-package com.imagespot;
+package com.imagespot.controller;
 
+import com.imagespot.MainApplication;
+import com.imagespot.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +16,7 @@ import java.sql.SQLException;
 
 import static com.imagespot.Connection.ConnectionManager.getConnection;
 
-public class HelloController {
+public class SignInController {
     @FXML
     private Button btn_sign_in;
     @FXML
@@ -47,11 +49,14 @@ public class HelloController {
         try{
             signup();
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("home-view.fxml"));
+            fxmlLoader.setLocation(MainApplication.class.getResource("home-view.fxml"));//Da fare meglio
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
             Stage stage = new Stage();
             stage.setTitle("Home");
             stage.setScene(scene);
+            HomeController controller = (HomeController)fxmlLoader.getController();
+            User user = new User(username.getText(), name.getText(), email.getText(), password.getText());
+            controller.setUser(user);
             btn_sign_in.getScene().getWindow().hide();
             stage.show();
         } catch (IOException | SQLException e) {

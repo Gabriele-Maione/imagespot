@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.HelloController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.SignInController">
    <children>
       <AnchorPane layoutX="250.0" layoutY="107.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="300.0" styleClass="anchor-pane" stylesheets="@../../css/style.css">
          <children>
@@ -26,7 +26,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Label fx:id="lbl" alignment="CENTER" text="Register on Image Spot" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0">
+            <Label alignment="CENTER" text="Register on Image Spot" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
