@@ -12,6 +12,11 @@
    <children>
       <AnchorPane layoutX="250.0" layoutY="107.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="300.0" styleClass="anchor-pane" stylesheets="@../../css/style.css">
          <children>
+            <Label fx:id="lbl_error" layoutX="67.0" layoutY="69.0" text="Account registration failed" textFill="RED" visible="false" AnchorPane.leftAnchor="30.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
             <TextField fx:id="username" layoutX="76.0" layoutY="86.0" prefWidth="238.0" promptText="Username" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0" />
             <TextField fx:id="name" layoutX="76.0" layoutY="188.0" promptText="Name" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="150.0" />
             <TextField fx:id="email" layoutX="76.0" layoutY="155.0" promptText="Email" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="200.0" />
