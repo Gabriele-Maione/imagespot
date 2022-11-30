@@ -25,12 +25,10 @@ public class HelloController {
     private TextField password;
 
     //DB STUFF DA SISTEMARE
-    private Connection connection;
-    private PreparedStatement statement;
     @FXML
     protected void signup() {
-        connection = getConnection();
-
+        Connection connection = getConnection();
+        PreparedStatement statement;
         try {
             String sql = "INSERT INTO account(Username, Name, Email, password) VALUES(?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
