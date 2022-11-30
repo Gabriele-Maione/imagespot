@@ -4,18 +4,49 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import static com.imagespot.Connection.ConnectionManager.getConnection;
 
 public class HelloController {
-    public Button btn_sign_in;
     @FXML
-    private Label lbl;
+    private Button btn_sign_in;
+    @FXML
+    private TextField username;
+    @FXML
+    private TextField name;
+    @FXML
+    private TextField email;
+    @FXML
+    private TextField password;
+
+    //DB STUFF DA SISTEMARE
+    private Connection connection;
+    private PreparedStatement statement;
+    @FXML
+    protected void signup() {
+        connection = getConnection();
+
+        try {
+            String sql = "INSERT INTO account(Username, Name, Email, password) VALUES(?, ?, ?, ?)";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, username.getText());
+            statement.setString(2, name.getText());
+            statement.setString(3, email.getText());
+            statement.setString(4, password.getText());
+            statement.execute();
+
+        } catch(Exception e) {e.printStackTrace();}
+    }
 
     @FXML
     protected void onSignInClick() {
         try{
+            signup();
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("home-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
