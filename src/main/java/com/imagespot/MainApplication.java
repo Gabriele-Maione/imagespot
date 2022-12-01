@@ -17,8 +17,8 @@ public class MainApplication extends Application {
         stage.show(); */
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("home-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1315, 900);
-        stage.setTitle("Register an account!");
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 700);
+        stage.setTitle("Imagespot");
         stage.setScene(scene);
         stage.show();
     }
