@@ -5,20 +5,25 @@ import com.imagespot.MainApplication;
 import com.imagespot.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import static com.imagespot.Connection.ConnectionManager.getConnection;
 
-public class SignInController {
+public class SignInController implements Initializable {
+    public AnchorPane root;
     @FXML
     private Button btn_sign_in;
     @FXML
@@ -31,6 +36,9 @@ public class SignInController {
     private TextField password;
     @FXML
     private Label lbl_error;
+
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     private final static Connection connection;
 
@@ -87,6 +95,7 @@ public class SignInController {
                 stage.show();
             }
             else{
+                username.setStyle("-fx-border-color: red;");//test
                 lbl_error.setText("User already exist!");
                 lbl_error.setVisible(true);
             }
@@ -94,5 +103,20 @@ public class SignInController {
             lbl_error.setVisible(true);
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        //grab your root here
+        root.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        //move around here
+        root.setOnMouseDragged(event -> {
+
+            root.getScene().getWindow().setX(event.getScreenX() - xOffset);
+            root.getScene().getWindow().setY(event.getScreenY() - yOffset);
+        });
     }
 }
