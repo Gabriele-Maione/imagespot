@@ -14,7 +14,7 @@ public class HomeController {
     public void setUser(User u) {
         this.user = u;
         if (user != null) {
-            label_home.setText("Benvenuto " + u.getName());
+            label_home.setText(u.getName());
         }
     }
 }

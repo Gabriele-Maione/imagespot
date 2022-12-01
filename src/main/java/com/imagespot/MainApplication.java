@@ -8,11 +8,17 @@ import java.io.IOException;
 
 public class MainApplication extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    /*public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("sign-in-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 300, 400);
         stage.setTitle("Register an account!");
         stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show(); */
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("home-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1315, 900);
+        stage.setTitle("Register an account!");
         stage.setScene(scene);
         stage.show();
     }

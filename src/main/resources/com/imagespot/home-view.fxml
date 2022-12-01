@@ -1,15 +1,193 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.HomeController">
-   <children>
-      <Label fx:id="label_home" alignment="CENTER" layoutX="-1.0" layoutY="163.0" prefHeight="74.0" prefWidth="431.0" text="Home View" AnchorPane.bottomAnchor="163.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="163.0">
-         <font>
-            <Font size="51.0" />
-         </font>
-      </Label>
-   </children>
-</AnchorPane>
+<BorderPane prefHeight="900.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+   </center>
+   <top>
+      <HBox alignment="CENTER" styleClass="background-color-main-page" stylesheets="@../../css/style.css" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="63.0" prefWidth="250.0" text="Imagespot" textFill="#c147e9">
+               <font>
+                  <Font name="Bernard MT Condensed" size="35.0" />
+               </font>
+            </Label>
+            <Separator maxHeight="-Infinity" orientation="VERTICAL" prefHeight="35.0" prefWidth="4.0" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="27.0" prefWidth="188.0" styleClass="round-layout" stylesheets="@../../css/style.css">
+               <children>
+                  <TextField prefHeight="27.0" prefWidth="154.0" promptText="Search" styleClass="transparent" />
+                  <ImageView fitHeight="20.0" fitWidth="20.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../icons/search_icon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" fillHeight="false" prefHeight="63.0" prefWidth="415.0" spacing="20.0" HBox.hgrow="SOMETIMES">
+               <children>
+                  <Label text="Felice Consiglio" textFill="#6a2a80">
+                     <font>
+                        <Font name="Berlin Sans FB" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/ugly_shrek.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </HBox>
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="250.0" styleClass="background-color-main-page" stylesheets="@../../css/style.css" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label prefHeight="32.0" prefWidth="161.0" text="Browse" textFill="#6a2a80">
+                     <font>
+                        <Font name="Berlin Sans FB" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../icons/bestlocation_icon.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="32.0" prefWidth="161.0" text="Top Places" textFill="#6a2a80">
+                           <font>
+                              <Font name="Berlin Sans FB" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../icons/categories_icon.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="32.0" prefWidth="161.0" text="Categories" textFill="#6a2a80">
+                           <font>
+                              <Font name="Berlin Sans FB" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../icons/explore_icon.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="32.0" prefWidth="161.0" text="Browse" textFill="#6a2a80">
+                           <font>
+                              <Font name="Berlin Sans FB" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Separator prefWidth="200.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label prefHeight="32.0" prefWidth="161.0" text="Your Photo" textFill="#6a2a80">
+                     <font>
+                        <Font name="Berlin Sans FB" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../icons/your_gallery_icon.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="32.0" prefWidth="161.0" text="Your Gallery" textFill="#6a2a80">
+                           <font>
+                              <Font name="Berlin Sans FB" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../icons/favorites_icon.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="32.0" prefWidth="161.0" text="Favorites" textFill="#6a2a80">
+                           <font>
+                              <Font name="Berlin Sans FB" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../icons/tag_icon.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="32.0" prefWidth="161.0" text="Tagged" textFill="#6a2a80">
+                           <font>
+                              <Font name="Berlin Sans FB" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+            <Separator prefWidth="200.0" />
+            <VBox prefHeight="34.0" prefWidth="250.0" stylesheets="@../../css/style.css">
+               <children>
+                  <Label prefHeight="32.0" prefWidth="161.0" text="Add photo" textFill="#6a2a80">
+                     <font>
+                        <Font name="Berlin Sans FB" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </left>
+</BorderPane>

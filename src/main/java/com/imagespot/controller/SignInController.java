@@ -1,5 +1,6 @@
 package com.imagespot.controller;
 
+import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.MainApplication;
 import com.imagespot.model.User;
 import javafx.fxml.FXML;
@@ -37,7 +38,7 @@ public class SignInController {
         connection = getConnection();
     }
 
-    //DB STUFF DA SISTEMARE
+
     @FXML
     protected boolean signup() throws SQLException {
         if(!userExist()){
@@ -49,12 +50,14 @@ public class SignInController {
             statement.setString(3, email.getText());
             statement.setString(4, password.getText());
             statement.execute();
+            statement.close();
             return true;
         }
         else return false;
     }
 
     private boolean userExist() throws SQLException{
+
         PreparedStatement statement;
         String sql = "SELECT count(*) FROM account WHERE Username = ?";
         statement = connection.prepareStatement(sql);
@@ -79,7 +82,7 @@ public class SignInController {
                 stage.setScene(scene);
                 HomeController controller = (HomeController)fxmlLoader.getController();
                 User user = new User(username.getText(), name.getText(), email.getText(), password.getText());
-                controller.setUser(user);
+                //controller.setUser(user);
                 btn_sign_in.getScene().getWindow().hide();
                 stage.show();
             }
