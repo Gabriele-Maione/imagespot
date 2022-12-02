@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="550.0" prefWidth="900.0" styleClass="background-color-main-page" stylesheets="@../../css/home-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="550.0" prefWidth="900.0" styleClass="background-color-main-page" stylesheets="@../../css/home-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.HomeController">
    <center>
    </center>
    <top>
