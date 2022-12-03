@@ -1,5 +1,6 @@
 package com.imagespot.controller;
 
+import com.imagespot.MainApplication;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
 import javafx.fxml.FXML;
@@ -24,38 +25,35 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        posts = new ArrayList<>(data());
+        //posts = new ArrayList<>(data());
 
-        int columns = 0;
-        int rows = 1;
-        try {
-            for(int i = 0; i < posts.size(); i++) {
+        Post post = new Post();
+        post.setPhotoname("mautone.png");
+
+        for(int i=0; i<9; i++){
+            try{
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation((getClass().getResource("images-preview.fxml")));
+                fxmlLoader.setLocation((MainApplication.class.getResource("images-preview.fxml")));
 
                 VBox postBox = fxmlLoader.load();
 
                 ImagesController imagesController = fxmlLoader.getController();
-                imagesController.setData(posts.get(i));
+                //imagesController.setData(post);
 
-                if (columns == 3) {
-                    columns = 0;
-                    ++rows;
-                }
-
-                postGrid.add(postBox, columns++, rows);
+                postGrid.add(postBox, i%3, i/3 + 1);
                 GridPane.setMargin(postBox, new Insets(10));
             }
-        } catch (IOException e) {
+            catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
     }
 
      private  List<Post> data() {
         List<Post> listpost = new ArrayList<>();
 
         Post post = new Post();
-        post.setPhotoname("bebra.jpg");
+        post.setPhotoname("mautone.png");
         listpost.add(post);
 
         return listpost;

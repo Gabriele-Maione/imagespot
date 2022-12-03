@@ -1,8 +1,10 @@
 package com.imagespot.controller;
 
 import com.imagespot.Connection.ConnectionManager;
+import com.imagespot.DAO.UserDAO;
 import com.imagespot.MainApplication;
 import com.imagespot.model.User;
+import com.imagespot.DAOImpl.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -39,8 +41,9 @@ public class SignInController implements Initializable {
 
     private double xOffset = 0;
     private double yOffset = 0;
+    private UserDAOImpl userDAO;
 
-    private final static Connection connection;
+    /*private final static Connection connection;   non avevo il coraggio di cancellarlo
 
     static {
         connection = getConnection();
@@ -76,12 +79,15 @@ public class SignInController implements Initializable {
             return rs.getInt(1) == 1;
         }
         return false;
-    }
+    } */
 
+    public SignInController() {
+        userDAO = new UserDAOImpl();
+    }
     @FXML
     protected void onSignInClick() {
         try{
-            if(signup()){
+            if(userDAO.signup(username.getText(), name.getText(), email.getText(), password.getText())){
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(MainApplication.class.getResource("home-view.fxml"));//Da fare meglio
                 Scene scene = new Scene(fxmlLoader.load(), 600, 400);
@@ -90,7 +96,6 @@ public class SignInController implements Initializable {
                 stage.setScene(scene);
                 HomeController controller = (HomeController)fxmlLoader.getController();
                 User user = new User(username.getText(), name.getText(), email.getText(), password.getText());
-                //controller.setUser(user);
                 btn_sign_in.getScene().getWindow().hide();
                 stage.show();
             }

@@ -1,5 +1,7 @@
 package com.imagespot.model;
 
+import java.util.ArrayList;
+
 public class User {
     private String username;
     private String name;
@@ -8,6 +10,34 @@ public class User {
     private String gender;
     private String bio;
     private String country;
+    private String avatar;
+    private ArrayList<User> following;
+    private ArrayList<Post> posts;
+    private ArrayList<Reaction> reaction;
+
+    public ArrayList<User> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(ArrayList<User> following) {
+        this.following = following;
+    }
+
+    public ArrayList<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(ArrayList<Post> posts) {
+        this.posts = posts;
+    }
+
+    public ArrayList<Reaction> getReaction() {
+        return reaction;
+    }
+
+    public void setReaction(ArrayList<Reaction> reaction) {
+        this.reaction = reaction;
+    }
 
     public User(){}
 
@@ -17,7 +47,13 @@ public class User {
         this.email = email;
         this.password = password;
     }
+    public String getAvatar() {
+        return avatar;
+    }
 
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
     public String getUsername() {
         return username;
     }

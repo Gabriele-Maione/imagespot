@@ -1,9 +1,10 @@
 package com.imagespot.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class Post {
-    private String idImage;
+    private Integer idImage;
     private String photoname;
     private String resolution;
     private String description;
@@ -11,15 +12,43 @@ public class Post {
     private String extension;
     private Timestamp date;
     private String status;
-    private String place;
-    private String device;
-    private String profile;
+    private Device device;
+    private User profile;
+    private Location location;
+    private ArrayList<User> taggedUsers;
+    private ArrayList<Reaction> reactions;
 
-    public String getIdImage() {
+    public ArrayList<Reaction> getReactions() {
+        return reactions;
+    }
+
+    public void setReactions(ArrayList<Reaction> reactions) {
+        this.reactions = reactions;
+    }
+
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+
+    public ArrayList<User> getTaggedUsers() {
+        return taggedUsers;
+    }
+
+    public void setTaggedUsers(ArrayList<User> taggedUsers) {
+        this.taggedUsers = taggedUsers;
+    }
+
+    public Integer getIdImage() {
         return idImage;
     }
 
-    public void setIdImage(String idImage) {
+    public void setIdImage(Integer idImage) {
         this.idImage = idImage;
     }
 
@@ -79,27 +108,19 @@ public class Post {
         this.status = status;
     }
 
-    public String getPlace() {
-        return place;
-    }
-
-    public void setPlace(String place) {
-        this.place = place;
-    }
-
-    public String getDevice() {
+    public Device getDevice() {
         return device;
     }
 
-    public void setDevice(String device) {
+    public void setDevice(Device device) {
         this.device = device;
     }
 
-    public String getProfile() {
+    public User getProfile() {
         return profile;
     }
 
-    public void setProfile(String profile) {
+    public void setProfile(User profile) {
         this.profile = profile;
     }
 }

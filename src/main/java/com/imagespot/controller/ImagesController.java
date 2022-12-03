@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 public class ImagesController {
 
     @FXML
@@ -16,6 +19,7 @@ public class ImagesController {
 
     @FXML
     private Label usrname;
+
 
     public void setData(Post post) {
 
