@@ -1,5 +1,6 @@
 package com.imagespot.DAOImpl;
 
+import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.UserDAO;
 import com.imagespot.model.Device;
 import com.imagespot.model.User;
@@ -9,14 +10,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static com.imagespot.Connection.ConnectionManager.getConnection;
+import com.imagespot.Connection.ConnectionManager;
 
 public class UserDAOImpl implements UserDAO {
 
     private Connection con;
 
-    public UserDAOImpl() {
-        con = getConnection();
+    public UserDAOImpl() throws SQLException {
+        con = ConnectionManager.getInstance().getConnection();
     }
 
     //returns 0 - user registered && 1 - email/username already exists

@@ -22,7 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import static com.imagespot.Connection.ConnectionManager.getConnection;
+import com.imagespot.Connection.ConnectionManager;
 
 public class SignInController implements Initializable {
     public AnchorPane root;
@@ -81,7 +81,7 @@ public class SignInController implements Initializable {
         return false;
     } */
 
-    public SignInController() {
+    public SignInController() throws SQLException {
         userDAO = new UserDAOImpl();
     }
     @FXML
