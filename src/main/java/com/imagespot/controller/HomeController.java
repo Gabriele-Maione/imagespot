@@ -28,7 +28,6 @@ public class HomeController implements Initializable {
         //posts = new ArrayList<>(data());
 
         Post post = new Post();
-        post.setPhotoname("mautone.png");
 
         for(int i=0; i<9; i++){
             try{
@@ -53,7 +52,6 @@ public class HomeController implements Initializable {
         List<Post> listpost = new ArrayList<>();
 
         Post post = new Post();
-        post.setPhotoname("mautone.png");
         listpost.add(post);
 
         return listpost;

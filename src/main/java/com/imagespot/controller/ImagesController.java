@@ -22,9 +22,6 @@ public class ImagesController {
 
 
     public void setData(Post post) {
-
-        //TODO: add all images data
-        Image image = new Image(getClass().getResourceAsStream((post.getPhotoname())));
-        image_preview.setImage(image);
+        //TODO:
     }
 }

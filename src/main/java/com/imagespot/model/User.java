@@ -1,5 +1,6 @@
 package com.imagespot.model;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class User {
@@ -10,7 +11,7 @@ public class User {
     private String gender;
     private String bio;
     private String country;
-    private String avatar;
+    private File avatar;
     private ArrayList<User> following;
     private ArrayList<Post> posts;
     private ArrayList<Reaction> reaction;
@@ -47,11 +48,11 @@ public class User {
         this.email = email;
         this.password = password;
     }
-    public String getAvatar() {
+    public File getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(File avatar) {
         this.avatar = avatar;
     }
     public String getUsername() {

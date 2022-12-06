@@ -1,11 +1,12 @@
 package com.imagespot.model;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Post {
     private Integer idImage;
-    private String photoname;
+    private File photo;
     private String resolution;
     private String description;
     private String size;
@@ -52,12 +53,12 @@ public class Post {
         this.idImage = idImage;
     }
 
-    public String getPhotoname() {
-        return photoname;
+    public File getPhoto() {
+        return photo;
     }
 
-    public void setPhotoname(String photoname) {
-        this.photoname = photoname;
+    public void setPhoto(File photo) {
+        this.photo = photo;
     }
 
     public String getResolution() {

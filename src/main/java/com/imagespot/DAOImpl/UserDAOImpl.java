@@ -60,6 +60,7 @@ public class UserDAOImpl implements UserDAO {
         return flag;
     }
 
+    @Override
     public User login(String username, String password) throws SQLException {
 
         PreparedStatement st;
@@ -78,8 +79,5 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    public void addPhoto(String namePhoto, Device device) {
-        //TODO
-    }
 
 }
