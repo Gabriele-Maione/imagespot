@@ -1,30 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" styleClass="anchor-pane" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.SignInController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="600.0" prefWidth="480.0" stylesheets="@../../css/signinup-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.SignInController">
    <children>
-      <Label alignment="CENTER" text="Register on Image Spot" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbl_error" layoutX="67.0" layoutY="69.0" text="Account registration failed!" textFill="RED" visible="false" AnchorPane.leftAnchor="30.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="username" layoutX="76.0" layoutY="86.0" prefWidth="238.0" promptText="Username" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0" />
-      <TextField fx:id="name" layoutX="76.0" layoutY="188.0" promptText="Name" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="150.0" />
-      <TextField fx:id="email" layoutX="76.0" layoutY="155.0" promptText="Email" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="200.0" />
-      <PasswordField fx:id="password" promptText="Password" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="250.0" />
-      <Hyperlink text="User already registered?" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="300.0" />
-      <Button fx:id="btn_sign_in" layoutX="30.0" layoutY="336.0" mnemonicParsing="false" onAction="#onSignInClick" styleClass="sign-in-btn" stylesheets="@../../css/style.css" text="REGISTRATI" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
+      <HBox alignment="BOTTOM_CENTER" prefHeight="124.0" prefWidth="480.0">
+         <children>
+            <Label fx:id="logo" alignment="CENTER" prefHeight="90.0" prefWidth="340.0" text="IMAGESPOT">
+               <font>
+                  <Font name="Microsoft YaHei Bold" size="48.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0" startX="0.35071090047393366">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.4627451002597809" green="0.47058823704719543" blue="0.929411768913269" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color red="0.4627451002597809" green="0.47058823704719543" blue="0.929411768913269" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.9215686321258545" green="0.3686274588108063" blue="0.1568627506494522" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+         </children>
+      </HBox>
+      <TabPane fx:id="tabPane" layoutY="124.0" prefHeight="450.0" prefWidth="480.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="SIGN IN">
+               <content>
+                  <VBox alignment="CENTER" prefWidth="344.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="signInErr" textFill="#ff6161" />
+                        <TextField fx:id="signInUsername" prefHeight="45.0" promptText="Username">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </TextField>
+                        <PasswordField fx:id="signInPass" prefHeight="45.0" promptText="Password">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </PasswordField>
+                        <Button fx:id="btnSignIn" mnemonicParsing="false" onAction="#signInButtonOnAction" prefHeight="45.0" prefWidth="390.0" text="SIGN IN" />
+                        <Hyperlink fx:id="hlinkForgotPass" onAction="#hlinkForgotPass" text="Forgot Password?" />
+                     </children>
+                     <padding>
+                        <Insets bottom="45.0" left="45.0" right="45.0" top="45.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </Tab>
+            <Tab text="SIGN UP">
+               <content>
+                  <VBox alignment="BOTTOM_CENTER" prefWidth="430.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="signUpErr" textFill="#ff6161" />
+                        <TextField fx:id="signUpUsername" prefHeight="45.0" promptText="Username">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </TextField>
+                        <TextField fx:id="signUpName" prefHeight="45.0" promptText="Name">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </TextField>
+                        <TextField fx:id="signUpEmail" prefHeight="45.0" prefWidth="340.0" promptText="Email">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </TextField>
+                        <PasswordField fx:id="signUpPass" prefHeight="45.0" promptText="Password">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </PasswordField>
+                        <Button fx:id="btnSignUp" mnemonicParsing="false" onAction="#signUpButtonOnAction" prefHeight="45.0" prefWidth="390.0" text="SIGN UP" />
+                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="340.0" styleClass="text-alredy">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-alredy" text="Alredy have account?" />
+                              <Hyperlink fx:id="hlinkSignIn" text="Sign in" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="15.0" left="45.0" right="45.0" top="15.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </Tab>
+         </tabs>
+         <padding>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </padding>
+      </TabPane>
    </children>
 </AnchorPane>

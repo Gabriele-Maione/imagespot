@@ -10,6 +10,7 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.IdentityHashMap;
@@ -36,6 +37,8 @@ public class AddPhotoController {
     @FXML
     public void onBtnLoadImageClick(ActionEvent event) {
         FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg"));
+
         file = fc.showOpenDialog(img.getScene().getWindow());
         img.setImage(new Image((file.getAbsolutePath())));
     }
@@ -53,7 +56,6 @@ public class AddPhotoController {
         // Convert the bytes to Kilobytes (1 KB = 1024 Bytes)
         // Convert the KB to MegaBytes (1 MB = 1024 KBytes)
         size = (file.length()/1024 + "KB");
-        System.out.println(ext + "    " + res + "      " + size);
 
         postDAO.addPost(file, res, null, size, ext, timestamp, "public", null, null, null);
     }

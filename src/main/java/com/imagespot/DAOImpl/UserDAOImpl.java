@@ -22,7 +22,7 @@ public class UserDAOImpl implements UserDAO {
 
     //returns 0 - user registered && 1 - email/username already exists
     @Override
-    public boolean signup(String username, String name, String email, String password) throws SQLException {
+    public boolean signup(String username, String name, String email, String password) {
 
         PreparedStatement st, st1;
         ResultSet rs, rs1;
@@ -32,40 +32,45 @@ public class UserDAOImpl implements UserDAO {
         String usernameCheck = "SELECT count(*) FROM account WHERE Username = ?";
         String addNewUser = "INSERT INTO account(Username, Name, Email, password) VALUES(?, ?, ?, ?)";
 
-        st = con.prepareStatement(usernameCheck);
-        st1 = con.prepareStatement(mailCheck);
+        try {
+            st = con.prepareStatement(usernameCheck);
+            st1 = con.prepareStatement(mailCheck);
 
-        st.setString(1, username);
-        st1.setString(1, email);
+            st.setString(1, username);
+            st1.setString(1, email);
 
-        rs = st.executeQuery();
-        rs1 = st1.executeQuery();
+            rs = st.executeQuery();
+            rs1 = st1.executeQuery();
 
-        if(rs.next() && rs1.next()) {
-            if(rs.getInt(1) == 0 && rs1.getInt(1) == 0) {
+            if (rs.next() && rs1.next()) {
+                if (rs.getInt(1) == 0 && rs1.getInt(1) == 0) {
 
-                //riutilizzo lo statement pke è importante riciclare
-                st = con.prepareStatement(addNewUser);
-                st.setString(1, username);
-                st.setString(2, name);
-                st.setString(3, email);
-                st.setString(4, password);
-                st.execute();
-                flag = true;
+                    //riutilizzo lo statement pke è importante riciclare
+                    st = con.prepareStatement(addNewUser);
+                    st.setString(1, username);
+                    st.setString(2, name);
+                    st.setString(3, email);
+                    st.setString(4, password);
+                    st.execute();
+                    flag = true;
+                }
             }
+            st.close();
+            st1.close();
         }
-        st.close();
-        st1.close();
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return flag;
     }
 
     @Override
-    public User login(String username, String password) throws SQLException {
+    public boolean login(String username, String password) throws SQLException {
 
         PreparedStatement st;
         ResultSet rs;
-        User user = null;
+        boolean flag = false;
 
         String credentialsCheck = "SELECT * FROM account WHERE Username = ? AND password = ?";
 
@@ -74,9 +79,9 @@ public class UserDAOImpl implements UserDAO {
         st.setString(2, password);
         rs = st.executeQuery();
         if(rs.next())
-            user = new User(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
+            flag = true;
         st.close();
-        return user;
+        return flag;
     }
 
 

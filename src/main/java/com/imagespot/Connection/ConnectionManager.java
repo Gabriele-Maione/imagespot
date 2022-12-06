@@ -30,9 +30,7 @@ public class ConnectionManager {
 
     public static ConnectionManager getInstance() throws SQLException {
 
-        if(instance == null)
-            instance = new ConnectionManager();
-        else if(instance.getConnection().isClosed())
+        if(instance == null || instance.getConnection().isClosed())
             instance = new ConnectionManager();
 
         return instance;

@@ -1,127 +1,117 @@
 package com.imagespot.controller;
-
-import com.imagespot.Connection.ConnectionManager;
-import com.imagespot.DAO.UserDAO;
-import com.imagespot.MainApplication;
-import com.imagespot.model.User;
-import com.imagespot.DAOImpl.*;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import com.imagespot.Connection.ConnectionManager;
+import com.imagespot.DAOImpl.UserDAOImpl;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
 
 public class SignInController implements Initializable {
-    public AnchorPane root;
-    @FXML
-    private Button btn_sign_in;
-    @FXML
-    private TextField username;
-    @FXML
-    private TextField name;
-    @FXML
-    private TextField email;
-    @FXML
-    private TextField password;
-    @FXML
-    private Label lbl_error;
 
-    private double xOffset = 0;
-    private double yOffset = 0;
-    private UserDAOImpl userDAO;
-
-    /*private final static Connection connection;   non avevo il coraggio di cancellarlo
-
-    static {
-        connection = getConnection();
-    }
-
+    private double x, y;
 
     @FXML
-    protected boolean signup() throws SQLException {
-        if(!userExist()){
-            PreparedStatement statement;
-            String sql = "INSERT INTO account(Username, Name, Email, password) VALUES(?, ?, ?, ?)";
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, username.getText());
-            statement.setString(2, name.getText());
-            statement.setString(3, email.getText());
-            statement.setString(4, password.getText());
-            statement.execute();
-            statement.close();
-            return true;
-        }
-        else return false;
-    }
+    private Button btnSignIn;
 
-    private boolean userExist() throws SQLException{
-
-        PreparedStatement statement;
-        String sql = "SELECT count(*) FROM account WHERE Username = ?";
-        statement = connection.prepareStatement(sql);
-        statement.setString(1, username.getText());
-        ResultSet  rs =  statement.executeQuery();
-
-        if(rs.next()){
-            return rs.getInt(1) == 1;
-        }
-        return false;
-    } */
-
-    public SignInController() throws SQLException {
-        userDAO = new UserDAOImpl();
-    }
     @FXML
-    protected void onSignInClick() {
-        try{
-            if(userDAO.signup(username.getText(), name.getText(), email.getText(), password.getText())){
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(MainApplication.class.getResource("home-view.fxml"));//Da fare meglio
-                Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-                Stage stage = new Stage();
-                stage.setTitle("Home");
-                stage.setScene(scene);
-                HomeController controller = (HomeController)fxmlLoader.getController();
-                User user = new User(username.getText(), name.getText(), email.getText(), password.getText());
-                btn_sign_in.getScene().getWindow().hide();
-                stage.show();
-            }
-            else{
-                username.setStyle("-fx-border-color: red;");//test
-                lbl_error.setText("User already exist!");
-                lbl_error.setVisible(true);
-            }
-        } catch (IOException | SQLException e) {
-            lbl_error.setVisible(true);
-            throw new RuntimeException(e);
-        }
-    }
+    private Button btnSignUp;
+
+    @FXML
+    private Hyperlink hlinkForgotPass;
+
+    @FXML
+    private Hyperlink hlinkSignIn;
+
+    @FXML
+    private Label logo;
+
+    @FXML
+    private PasswordField signInPass;
+
+    @FXML
+    private TextField signInUsername;
+
+    @FXML
+    private TextField signUpEmail;
+
+    @FXML
+    private Label signUpErr;
+
+    @FXML
+    private TextField signUpName;
+
+    @FXML
+    private PasswordField signUpPass;
+
+    @FXML
+    private TextField signUpUsername;
+
+    @FXML
+    private Label signInErr;
+
+    @FXML
+    private TabPane tabPane;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        //grab your root here
-        root.setOnMousePressed(event -> {
-            xOffset = event.getSceneX();
-            yOffset = event.getSceneY();
-        });
-        //move around here
-        root.setOnMouseDragged(event -> {
+    public void initialize(URL location, ResourceBundle resources) {
+        //agg caput a cosa serve init, in fxml nn agg miz o flag della funzione, ma cmq funziona
+        redirectToLoginView();
+    }
 
-            root.getScene().getWindow().setX(event.getScreenX() - xOffset);
-            root.getScene().getWindow().setY(event.getScreenY() - yOffset);
+    @FXML
+    private void signUpButtonOnAction() throws SQLException {
+
+        if(signUpUsername.getText().isBlank() || signUpEmail.getText().isBlank()
+                || signUpName.getText().isBlank() || signUpPass.getText().isBlank())
+            signUpErr.setText("Fields can't be empty");
+
+        else if(new UserDAOImpl().signup(signUpUsername.getText(), signUpName.getText(),
+                signUpEmail.getText(), signUpPass.getText())){
+            signUpErr.setText("User Registered, but main page is not ready lulz");
+        }
+        else signUpErr.setText("Credentials already exists");
+    }
+
+    @FXML
+    private void signInButtonOnAction() throws SQLException {
+
+        if(signInUsername.getText().isBlank() || signInPass.getText().isBlank())
+            signInErr.setText("Fields can't be empty");
+        else if(new UserDAOImpl().login(signInUsername.getText(), signInPass.getText())) {
+            signInErr.setText("Well cum");
+        }
+        else signInErr.setText("Credentials are wrong :(");
+    }
+
+    @FXML
+    private void hlinkForgotPass() {
+
+        hlinkForgotPass.setText("¯\\_(ツ)_/¯");
+        hlinkForgotPass.setStyle("-fx-underline: false");
+    }
+
+    private void redirectToLoginView() {
+        hlinkSignIn.setOnMouseClicked(ev -> {
+            tabPane.getSelectionModel().select(0);
         });
+    }
+
+    @FXML
+    private void dragged(MouseEvent ev) {
+        Stage stage = (Stage) logo.getScene().getWindow();
+        stage.setX(ev.getScreenX() - x);
+        stage.setY(ev.getScreenY() - y);
+    }
+
+    @FXML
+    private void pressed(MouseEvent ev) {
+        x = ev.getSceneX();
+        y = ev.getSceneY();
     }
 }
