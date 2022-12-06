@@ -29,16 +29,17 @@ public class PostDAOImpl implements PostDAO {
 
         st = con.prepareStatement(insert);
 
-        st.setBinaryStream(1, new FileInputStream(photo), photo.length());
+        st.setBinaryStream(1, new FileInputStream(photo));
         st.setString(2, resolution);
         st.setString(3, description);
         st.setString(4, size);
         st.setString(5, extension);
         st.setTimestamp(6, posting_date);
         st.setString(7, status);
-        st.setInt(8, location.getIdLocation());
-        st.setInt(9, device.getIdDevice());
-        st.setString(10, profile.getUsername());
+        //TODO sostituire utente/device id 1 messo li per raggirare il vincolo not null
+        st.setInt(8, 1);
+        st.setInt(9, 1);
+        st.setString(10, "Atene342");
         st.execute();
         st.close();
     }
