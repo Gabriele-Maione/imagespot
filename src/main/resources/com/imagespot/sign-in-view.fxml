@@ -19,7 +19,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="600.0" prefWidth="480.0" stylesheets="@../../css/signinup-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.SignInController">
    <children>
-      <HBox alignment="BOTTOM_CENTER" prefHeight="124.0" prefWidth="480.0">
+      <HBox alignment="BOTTOM_CENTER" layoutY="31.0" prefHeight="93.0" prefWidth="480.0">
          <children>
             <Label fx:id="logo" alignment="CENTER" prefHeight="90.0" prefWidth="340.0" text="IMAGESPOT">
                <font>
@@ -80,10 +80,10 @@
             </Tab>
             <Tab text="SIGN UP">
                <content>
-                  <VBox alignment="BOTTOM_CENTER" prefWidth="430.0" spacing="20.0">
+                  <VBox alignment="BOTTOM_CENTER" spacing="20.0">
                      <children>
                         <Label fx:id="signUpErr" textFill="#ff6161" />
-                        <TextField fx:id="signUpUsername" prefHeight="45.0" promptText="Username">
+                        <TextField fx:id="signUpUsername" prefHeight="45.0" prefWidth="341.0" promptText="Username">
                            <padding>
                               <Insets left="20.0" />
                            </padding>
@@ -93,7 +93,7 @@
                               <Insets left="20.0" />
                            </padding>
                         </TextField>
-                        <TextField fx:id="signUpEmail" prefHeight="45.0" prefWidth="340.0" promptText="Email">
+                        <TextField fx:id="signUpEmail" prefHeight="45.0" promptText="Email">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
@@ -109,7 +109,7 @@
                         <Button fx:id="btnSignUp" mnemonicParsing="false" onAction="#signUpButtonOnAction" prefHeight="45.0" prefWidth="390.0" text="SIGN UP" />
                         <HBox alignment="CENTER" prefHeight="9.0" prefWidth="340.0" styleClass="text-alredy">
                            <children>
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-alredy" text="Alredy have account?" />
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-alredy" text="Already have account?" />
                               <Hyperlink fx:id="hlinkSignIn" text="Sign in" />
                            </children>
                         </HBox>
@@ -125,5 +125,11 @@
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
          </padding>
       </TabPane>
+      <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="480.0">
+         <children>
+            <Button fx:id="btnMinimize" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="38.0" prefWidth="38.0" text="_" />
+            <Button fx:id="btnClose" mnemonicParsing="false" onAction="#closeButtonOnAction" prefHeight="38.0" prefWidth="38.0" text="X" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

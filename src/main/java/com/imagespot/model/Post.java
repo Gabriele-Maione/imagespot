@@ -9,7 +9,7 @@ public class Post {
     private File photo;
     private String resolution;
     private String description;
-    private String size;
+    private int size;
     private String extension;
     private Timestamp date;
     private String status;
@@ -77,11 +77,11 @@ public class Post {
         this.description = description;
     }
 
-    public String getSize() {
+    public int getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(int size) {
         this.size = size;
     }
 

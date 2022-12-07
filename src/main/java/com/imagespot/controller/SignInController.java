@@ -15,46 +15,36 @@ import javafx.stage.Stage;
 public class SignInController implements Initializable {
 
     private double x, y;
-
     @FXML
     private Button btnSignIn;
-
     @FXML
     private Button btnSignUp;
-
+    @FXML
+    private Button btnClose;
+    @FXML
+    private Button btnMinimize;
     @FXML
     private Hyperlink hlinkForgotPass;
-
     @FXML
     private Hyperlink hlinkSignIn;
-
     @FXML
     private Label logo;
-
     @FXML
     private PasswordField signInPass;
-
     @FXML
     private TextField signInUsername;
-
     @FXML
     private TextField signUpEmail;
-
     @FXML
     private Label signUpErr;
-
     @FXML
     private TextField signUpName;
-
     @FXML
     private PasswordField signUpPass;
-
     @FXML
     private TextField signUpUsername;
-
     @FXML
     private Label signInErr;
-
     @FXML
     private TabPane tabPane;
 
@@ -94,6 +84,21 @@ public class SignInController implements Initializable {
 
         hlinkForgotPass.setText("¯\\_(ツ)_/¯");
         hlinkForgotPass.setStyle("-fx-underline: false");
+    }
+
+    /*
+    * Le animazioni di windows nn funzionano ed ho fatto
+    * il design di tutti i bottoni quindi ora è tutto bruttissimo*/
+    @FXML
+    private void closeButtonOnAction() {
+        Stage stage = (Stage) btnClose.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void minimizeButtonOnAction() {
+        Stage stage = (Stage) btnMinimize.getScene().getWindow();
+        stage.setIconified(true);
     }
 
     private void redirectToLoginView() {

@@ -20,7 +20,7 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public void addPost(File photo, String resolution, String description, String size, String extension,
+    public void addPost(File photo, String resolution, String description, int size, String extension,
                         Timestamp posting_date, String status, Location location, Device device, User profile) throws SQLException, FileNotFoundException {
 
         PreparedStatement st;
@@ -32,7 +32,7 @@ public class PostDAOImpl implements PostDAO {
         st.setBinaryStream(1, new FileInputStream(photo));
         st.setString(2, resolution);
         st.setString(3, description);
-        st.setString(4, size);
+        st.setInt(4, size);
         st.setString(5, extension);
         st.setTimestamp(6, posting_date);
         st.setString(7, status);

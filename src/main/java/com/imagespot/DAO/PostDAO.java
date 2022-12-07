@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 
 public interface PostDAO {
 
-    public void addPost(File photo, String resolution, String description, String size,
+    public void addPost(File photo, String resolution, String description, int size,
                         String extension, Timestamp posting_date, String status,
                         Location location, Device device, User profile) throws SQLException, FileNotFoundException;
 }

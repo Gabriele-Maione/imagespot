@@ -48,14 +48,14 @@ public class AddPhotoController {
         Image i = new Image(file.getAbsolutePath());
         String res;
         String ext;
-        String size;
+        int size;
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         res = ((int)i.getHeight() + "x" + (int)i.getWidth());
         ext = FilenameUtils.getExtension(file.getName());
         // Convert the bytes to Kilobytes (1 KB = 1024 Bytes)
         // Convert the KB to MegaBytes (1 MB = 1024 KBytes)
-        size = (file.length()/1024 + "KB");
+        size = (int)(file.length()/1024);
 
         postDAO.addPost(file, res, null, size, ext, timestamp, "public", null, null, null);
     }

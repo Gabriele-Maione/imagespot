@@ -5,6 +5,9 @@ import com.imagespot.DAO.UserDAO;
 import com.imagespot.model.Device;
 import com.imagespot.model.User;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,5 +87,58 @@ public class UserDAOImpl implements UserDAO {
         return flag;
     }
 
+    @Override
+    public void setBio(String username, String bio) {
 
+        PreparedStatement st;
+        String insertbio = "UPDATE account SET bio = ? WHERE username = ?";
+
+        try {
+            st = con.prepareStatement(insertbio);
+            st.setString(1, bio);
+            st.setString(2, username);
+            st.executeQuery(insertbio);
+            st.close();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setGender(String username, String gender) {
+
+        PreparedStatement st;
+        String insertbio = "UPDATE account SET gender = ? WHERE username = ?";
+
+        try {
+            st = con.prepareStatement(insertbio);
+            st.setString(1, gender);
+            st.setString(2, username);
+            st.executeQuery(insertbio);
+            st.close();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setAvatar(String username, File avatar) {
+
+        PreparedStatement st;
+        String insertbio = "UPDATE account SET gender = ? WHERE username = ?";
+
+        try {
+            st = con.prepareStatement(insertbio);
+            st.setBinaryStream(1, new FileInputStream(avatar));
+            st.setString(2, username);
+            st.executeQuery(insertbio);
+            st.close();
+        }
+        catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+        catch(FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

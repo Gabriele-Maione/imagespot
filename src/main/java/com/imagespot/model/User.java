@@ -10,11 +10,19 @@ public class User {
     private String password;
     private String gender;
     private String bio;
-    private String country;
     private File avatar;
     private ArrayList<User> following;
     private ArrayList<Post> posts;
     private ArrayList<Reaction> reaction;
+
+    public User(){}
+
+    public User(String username, String name, String email, String password) {
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
     public ArrayList<User> getFollowing() {
         return following;
@@ -40,14 +48,6 @@ public class User {
         this.reaction = reaction;
     }
 
-    public User(){}
-
-    public User(String username, String name, String email, String password) {
-        this.username = username;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
     public File getAvatar() {
         return avatar;
     }
@@ -103,11 +103,4 @@ public class User {
         this.bio = bio;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
 }
