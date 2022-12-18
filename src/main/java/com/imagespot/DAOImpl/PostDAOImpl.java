@@ -39,7 +39,7 @@ public class PostDAOImpl implements PostDAO {
         //TODO sostituire utente/device id 1 messo li per raggirare il vincolo not null
         st.setInt(8, 1);
         st.setInt(9, 1);
-        st.setString(10, "Atene342");
+        st.setString(10, "wewe");
         st.execute();
         st.close();
     }

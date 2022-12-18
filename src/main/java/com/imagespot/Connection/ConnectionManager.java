@@ -4,10 +4,10 @@ import java.sql.*;
 public class ConnectionManager {
 
     private static ConnectionManager instance;
-    private final String url = "jdbc:postgresql://ec2-52-212-228-71.eu-west-1.compute.amazonaws.com:5432/d4uten7a2rimt9";
+    private final String url = "jdbc:postgresql://dpg-cef3kb1gp3jk7mgsl3b0-a.frankfurt-postgres.render.com:5432/imagespotdb";
     private final String driverName = "org.postgresql.Driver";
-    private final String username = "hlzqcandbxakhx";
-    private final String password = "a61a705efd67e4955bc54903f56ce61aec39a1d5474a353300ad691581762139";
+    private final String username = "oobdsquad";
+    private final String password = "01ZpBQblnK9VysKAqQGyWWwMJrstJY41";
     private Connection con;
 
     private ConnectionManager() throws SQLException {

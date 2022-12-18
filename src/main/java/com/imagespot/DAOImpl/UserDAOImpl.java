@@ -31,7 +31,7 @@ public class UserDAOImpl implements UserDAO {
         ResultSet rs, rs1;
         boolean flag = false;
 
-        String mailCheck = "SELECT count(*) FROM account WHERE Username = ?";
+        String mailCheck = "SELECT count(*) FROM account WHERE Email = ?";
         String usernameCheck = "SELECT count(*) FROM account WHERE Username = ?";
         String addNewUser = "INSERT INTO account(Username, Name, Email, password) VALUES(?, ?, ?, ?)";
 
@@ -97,7 +97,7 @@ public class UserDAOImpl implements UserDAO {
             st = con.prepareStatement(insertbio);
             st.setString(1, bio);
             st.setString(2, username);
-            st.executeQuery(insertbio);
+            st.executeUpdate();
             st.close();
         } catch(SQLException ex) {
             ex.printStackTrace();
@@ -108,13 +108,13 @@ public class UserDAOImpl implements UserDAO {
     public void setGender(String username, String gender) {
 
         PreparedStatement st;
-        String insertbio = "UPDATE account SET gender = ? WHERE username = ?";
+        String insertgender = "UPDATE account SET gender = ? WHERE username = ?";
 
         try {
-            st = con.prepareStatement(insertbio);
+            st = con.prepareStatement(insertgender);
             st.setString(1, gender);
             st.setString(2, username);
-            st.executeQuery(insertbio);
+            st.executeUpdate();
             st.close();
         } catch(SQLException ex) {
             ex.printStackTrace();
@@ -125,13 +125,13 @@ public class UserDAOImpl implements UserDAO {
     public void setAvatar(String username, File avatar) {
 
         PreparedStatement st;
-        String insertbio = "UPDATE account SET gender = ? WHERE username = ?";
+        String insertavatar = "UPDATE account SET avatar = ? WHERE username = ?";
 
         try {
-            st = con.prepareStatement(insertbio);
+            st = con.prepareStatement(insertavatar);
             st.setBinaryStream(1, new FileInputStream(avatar));
             st.setString(2, username);
-            st.executeQuery(insertbio);
+            st.executeUpdate();
             st.close();
         }
         catch(SQLException ex) {

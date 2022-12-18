@@ -1,15 +1,26 @@
 package com.imagespot.controller;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.imagespot.DAOImpl.UserDAOImpl;
+import com.imagespot.MainApplication;
+import com.imagespot.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 public class SignInController implements Initializable {
@@ -48,6 +59,8 @@ public class SignInController implements Initializable {
     @FXML
     private TabPane tabPane;
 
+    private User user;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //agg caput a cosa serve init, in fxml nn agg miz o flag della funzione, ma cmq funziona
@@ -63,7 +76,14 @@ public class SignInController implements Initializable {
 
         else if(new UserDAOImpl().signup(signUpUsername.getText(), signUpName.getText(),
                 signUpEmail.getText(), signUpPass.getText())){
-            signUpErr.setText("User Registered, but main page is not ready lulz");
+            user = new User();
+            user.setUsername(signUpUsername.getText());
+            user.setName(signUpName.getText());
+            user.setEmail(signUpEmail.getText());
+            user.setPassword(signUpPass.getText());
+            openAddInfoScene();
+            Stage stage = (Stage) btnSignUp.getScene().getWindow();
+            stage.close();
         }
         else signUpErr.setText("Credentials already exists");
     }
@@ -87,8 +107,7 @@ public class SignInController implements Initializable {
     }
 
     /*
-    * Le animazioni di windows nn funzionano ed ho fatto
-    * il design di tutti i bottoni quindi ora è tutto bruttissimo*/
+    * Le animazioni di windows nn funzionano*/
     @FXML
     private void closeButtonOnAction() {
         Stage stage = (Stage) btnClose.getScene().getWindow();
@@ -105,6 +124,25 @@ public class SignInController implements Initializable {
         hlinkSignIn.setOnMouseClicked(ev -> {
             tabPane.getSelectionModel().select(0);
         });
+    }
+
+    private void openAddInfoScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/add-info-view.fxml"));
+            Parent root = (Parent)loader.load();
+            AddInfoController controller = loader.getController();
+            controller.setUser(user);
+            Scene scene = new Scene(root, 600, 483);
+            Stage stage = new Stage();
+            stage.setTitle("Add some info!");
+            scene.setFill(Color.TRANSPARENT);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
     }
 
     @FXML
