@@ -94,7 +94,10 @@ public class SignInController implements Initializable {
         if(signInUsername.getText().isBlank() || signInPass.getText().isBlank())
             signInErr.setText("Fields can't be empty");
         else if(new UserDAOImpl().login(signInUsername.getText(), signInPass.getText())) {
-            signInErr.setText("Well cum");
+            user = new UserDAOImpl().getUserInfo(signInUsername.getText());
+            openHomeScene();
+            Stage stage = (Stage) btnSignUp.getScene().getWindow();
+            stage.close();
         }
         else signInErr.setText("Credentials are wrong :(");
     }
@@ -137,6 +140,23 @@ public class SignInController implements Initializable {
             stage.setTitle("Add some info!");
             scene.setFill(Color.TRANSPARENT);
             stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
+    }
+
+    private void openHomeScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-view.fxml"));
+            Parent root = loader.load();
+            HomeController controller = loader.getController();
+            controller.initData(user);
+            Scene scene = new Scene(root, 900, 550);
+            Stage stage = new Stage();
+            stage.setTitle("Imagespot - Home");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

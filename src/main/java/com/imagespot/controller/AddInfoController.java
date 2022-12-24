@@ -51,7 +51,7 @@ public class AddInfoController implements Initializable {
         cbGender.getItems().addAll(gender);
     }
 
-    public void setUser(User user) {
+    protected void setUser(User user) {
         this.user = user;
         welcomeLabel.setText("Welcome, " + user.getName());
     }

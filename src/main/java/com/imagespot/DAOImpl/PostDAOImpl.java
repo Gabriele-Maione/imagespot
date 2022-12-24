@@ -21,11 +21,11 @@ public class PostDAOImpl implements PostDAO {
 
     @Override
     public void addPost(File photo, String resolution, String description, int size, String extension,
-                        Timestamp posting_date, String status, Location location, Device device, User profile) throws SQLException, FileNotFoundException {
+                        Timestamp posting_date, String status, Device device, User profile) throws SQLException, FileNotFoundException {
 
         PreparedStatement st;
         String insert = ("INSERT INTO Post (photo, resolution, description, size, extension, posting_date," +
-                " status, place, device, profile) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                " status, device, profile) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         st = con.prepareStatement(insert);
 
@@ -36,10 +36,8 @@ public class PostDAOImpl implements PostDAO {
         st.setString(5, extension);
         st.setTimestamp(6, posting_date);
         st.setString(7, status);
-        //TODO sostituire utente/device id 1 messo li per raggirare il vincolo not null
-        st.setInt(8, 1);
-        st.setInt(9, 1);
-        st.setString(10, "wewe");
+        st.setInt(8, device.getIdDevice());
+        st.setString(9, profile.getUsername());
         st.execute();
         st.close();
     }

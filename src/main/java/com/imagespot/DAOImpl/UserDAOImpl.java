@@ -141,4 +141,29 @@ public class UserDAOImpl implements UserDAO {
             ex.printStackTrace();
         }
     }
+
+    @Override
+    public User getUserInfo(String username) throws SQLException {
+        User user = new User();
+        user.setUsername(username);
+        PreparedStatement st;
+        ResultSet rs;
+
+        String query = "SELECT email, name, gender, bio, avatar FROM account WHERE Username = ?";
+
+        st = con.prepareStatement(query);
+        st.setString(1, username);
+        rs = st.executeQuery();
+        if(rs.next()) {
+            user.setEmail(rs.getString(1));
+            user.setName(rs.getString(2));
+            user.setGender(rs.getString(3));
+            user.setBio(rs.getString(4));
+            user.setAvatar(rs.getBinaryStream(5));
+        }
+        st.close();
+
+        return user;
+    }
+
 }
