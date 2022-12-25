@@ -4,12 +4,15 @@ import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.PostDAO;
 import com.imagespot.model.Device;
 import com.imagespot.model.Location;
+import com.imagespot.model.Post;
 import com.imagespot.model.User;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PostDAOImpl implements PostDAO {
 
@@ -40,6 +43,27 @@ public class PostDAOImpl implements PostDAO {
         st.setString(9, profile.getUsername());
         st.execute();
         st.close();
+    }
+
+    public List<Post> getRecentPost() throws SQLException {
+
+        List<Post> ls = new ArrayList<>();
+        Post post;
+        Statement st;
+        ResultSet rs;
+        String query = "SELECT photo, profile FROM post WHERE status = 'Public' ORDER BY posting_date DESC LIMIT 20";
+        st = con.createStatement();
+        rs = st.executeQuery(query);
+
+        while(rs.next()) {
+            post = new Post();
+            post.setProfile(new UserDAOImpl().getUserInfo(rs.getString(2)));
+            post.setPhoto(rs.getBinaryStream(1));
+            ls.add(post);
+        }
+
+        st.close();
+        return ls;
     }
 
 }

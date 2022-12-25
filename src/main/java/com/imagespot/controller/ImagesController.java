@@ -1,12 +1,19 @@
 package com.imagespot.controller;
 
+import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.model.Post;
+import com.imagespot.model.User;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ImagesController {
@@ -18,10 +25,31 @@ public class ImagesController {
     private ImageView image_preview;
 
     @FXML
-    private Label usrname;
+    private Label username;
+    @FXML
+    private Label name;
+
+    @FXML
+    private ImageView avatar;
 
 
-    public void setData(Post post) {
-        //TODO:
+    public void setData(Post post) throws SQLException {
+
+        Image image = new Image((post.getPhoto()));
+        image_preview.setImage(crop(image));
+        name.setText(post.getProfile().getName());
+        username.setText("@" + post.getProfile().getUsername());
+        avatar.setImage(new Image(post.getProfile().getAvatar()));
+
+    }
+
+    private Image crop(Image img) {
+        double d = Math.min(img.getWidth(),img.getHeight());
+        double x = (d-img.getWidth())/2;
+        double y = (d-img.getHeight())/2;
+        Canvas canvas = new Canvas(d, d);
+        GraphicsContext g = canvas.getGraphicsContext2D();
+        g.drawImage(img, x, y);
+        return canvas.snapshot(null, null);
     }
 }

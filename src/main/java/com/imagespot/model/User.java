@@ -16,7 +16,10 @@ public class User {
     private ArrayList<Post> posts;
     private ArrayList<Reaction> reaction;
 
-    public User(){}
+    public User() {}
+    public User(String username){
+        this.username = username;
+    }
 
     public User(String username, String name, String email, String password) {
         this.username = username;
