@@ -3,6 +3,7 @@ package com.imagespot.controller;
 import com.imagespot.DAOImpl.DeviceDAOImpl;
 import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.MainApplication;
+import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Device;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
@@ -91,15 +92,13 @@ public class AddPhotoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        user = ViewFactory.getInstance().getUser();
         cbCategory.getItems().addAll(categories);
         cbType.getItems().addAll(deviceT);
         cbStatus.getItems().addAll(status);
         cbStatus.getSelectionModel().selectFirst();
     }
 
-    protected void setUser(User user) {
-        this.user = user;
-    }
 
     @FXML
     private void btnUploadOnAction() {

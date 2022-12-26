@@ -2,6 +2,7 @@ package com.imagespot.DAOImpl;
 
 import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.UserDAO;
+import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Device;
 import com.imagespot.model.User;
 
@@ -14,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.imagespot.Connection.ConnectionManager;
+import javafx.fxml.FXML;
 
 public class UserDAOImpl implements UserDAO {
 
@@ -116,7 +118,7 @@ public class UserDAOImpl implements UserDAO {
             st.setString(2, username);
             st.executeUpdate();
             st.close();
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
@@ -133,17 +135,38 @@ public class UserDAOImpl implements UserDAO {
             st.setString(2, username);
             st.executeUpdate();
             st.close();
-        }
-        catch(SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        catch(FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
     }
 
     @Override
-    public User getUserInfo(String username) throws SQLException {
+    public void getUserInfo(String username) throws SQLException {
+
+        PreparedStatement st;
+        ResultSet rs;
+
+        String query = "SELECT email, name, gender, bio, avatar FROM account WHERE Username = ?";
+
+        st = con.prepareStatement(query);
+        st.setString(1, username);
+        rs = st.executeQuery();
+        if (rs.next()) {
+            ViewFactory.getInstance().getUser().setUsername(username);
+            ViewFactory.getInstance().getUser().setEmail(rs.getString(1));
+            ViewFactory.getInstance().getUser().setName(rs.getString(2));
+            ViewFactory.getInstance().getUser().setGender(rs.getString(3));
+            ViewFactory.getInstance().getUser().setBio(rs.getString(4));
+            ViewFactory.getInstance().getUser().setAvatar(rs.getBinaryStream(5));
+        }
+        st.close();
+
+    }
+
+    public User getUserInfoForPreview(String username) throws SQLException {
+
         User user = new User();
         user.setUsername(username);
         PreparedStatement st;
@@ -154,7 +177,7 @@ public class UserDAOImpl implements UserDAO {
         st = con.prepareStatement(query);
         st.setString(1, username);
         rs = st.executeQuery();
-        if(rs.next()) {
+        if (rs.next()) {
             user.setEmail(rs.getString(1));
             user.setName(rs.getString(2));
             user.setGender(rs.getString(3));

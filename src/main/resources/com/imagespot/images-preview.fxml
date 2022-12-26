@@ -25,7 +25,7 @@
                         <Label fx:id="username" text="\\@username" textFill="#8d8d8d" />
                      </children>
                   </HBox>
-                  <Label fx:id="date" text="days ago..." />
+                  <Label fx:id="passedTime" text="days ago..." />
                </children>
                <opaqueInsets>
                   <Insets />

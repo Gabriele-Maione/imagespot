@@ -16,4 +16,6 @@ public interface PostDAO {
     public void addPost(File photo, String resolution, String description, int size, String extension, Timestamp posting_date,
                         String status, Device device, User profile) throws SQLException, FileNotFoundException;
     public List<Post> getRecentPost() throws SQLException;
+
+    public List<Post>getUsersPost(String username) throws SQLException;
 }

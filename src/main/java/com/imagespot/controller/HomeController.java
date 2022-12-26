@@ -2,6 +2,7 @@ package com.imagespot.controller;
 
 import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.MainApplication;
+import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
 import javafx.fxml.FXML;
@@ -14,7 +15,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -35,8 +38,15 @@ public class HomeController implements Initializable {
     private ImageView profilePic;
     @FXML
     private Button btnAddPhoto;
+    @FXML
+    private HBox hbYourGallery;
+    @FXML
+    private HBox hbBrowse;
+    @FXML
+    private BorderPane homePane;
 
-    private List<Post> posts;
+    private List<Post> recentPosts;
+    private List<Post> yourGallery;
 
     private User user;
 
@@ -44,56 +54,34 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        displayRecentlyAdded();
-    }
-
-    protected void displayRecentlyAdded() {
-
-        try {
-            posts = new ArrayList<>(new PostDAOImpl().getRecentPost());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        for (int i = 0; i < posts.size(); i++) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation((MainApplication.class.getResource("images-preview.fxml")));
-
-                VBox postBox = fxmlLoader.load();
-
-                ImagesController imagesController = fxmlLoader.getController();
-                imagesController.setData(posts.get(i));
-
-                postGrid.add(postBox, i % 3, i / 3 + 1);
-                GridPane.setMargin(postBox, new Insets(10));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    protected void initData(User user) {
-        this.user = user;
+        user = ViewFactory.getInstance().getUser();
         nameLabel.setText(user.getUsername());
         profilePic.setImage(new Image((user.getAvatar())));
+
+        ViewFactory.getInstance().getClientSelectedMenuItem().addListener((observableValue, s, t1) -> {
+            switch (t1) { //TODO: add cases
+                case "YourGallery" -> homePane.setCenter(ViewFactory.getInstance().getYourGalleryView());
+                case "Browse" -> homePane.setCenter(ViewFactory.getInstance().getBrowseView());
+                default -> homePane.setCenter(ViewFactory.getInstance().getBrowseView());
+            }
+        });
+        addListeners();
+    }
+
+    private void addListeners() { //TODO: add all listeners
+        hbBrowse.setOnMouseClicked(event -> onBrowse());
+        hbYourGallery.setOnMouseClicked(event -> onYourGallery());
+    }
+
+    private void onBrowse() {
+        ViewFactory.getInstance().getClientSelectedMenuItem().set("Browse");
+    }
+    private void onYourGallery() {
+        ViewFactory.getInstance().getClientSelectedMenuItem().set("YourGallery");
     }
 
     @FXML
     private void btnAddPhotoOnAction() {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/add-photo-view.fxml"));
-            Parent root = (Parent)loader.load();
-            AddPhotoController controller = loader.getController();
-            controller.setUser(user);
-            Stage stage = new Stage();
-            stage.setTitle("Login");
-            Scene scene = new Scene(root, 602, 602);
-            stage.setScene(scene);
-            stage.show();
-        } catch(IOException e) { e.printStackTrace(); }
+        ViewFactory.getInstance().showAddPhotoWindow();
     }
 }

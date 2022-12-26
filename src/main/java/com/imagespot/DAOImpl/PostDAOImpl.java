@@ -2,6 +2,7 @@ package com.imagespot.DAOImpl;
 
 import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.PostDAO;
+import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Device;
 import com.imagespot.model.Location;
 import com.imagespot.model.Post;
@@ -51,14 +52,37 @@ public class PostDAOImpl implements PostDAO {
         Post post;
         Statement st;
         ResultSet rs;
-        String query = "SELECT photo, profile FROM post WHERE status = 'Public' ORDER BY posting_date DESC LIMIT 20";
+        String query = "SELECT photo, profile, posting_date FROM post WHERE status = 'Public' ORDER BY posting_date DESC LIMIT 20";
         st = con.createStatement();
         rs = st.executeQuery(query);
 
         while(rs.next()) {
             post = new Post();
-            post.setProfile(new UserDAOImpl().getUserInfo(rs.getString(2)));
+            post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
             post.setPhoto(rs.getBinaryStream(1));
+            post.setDate(rs.getTimestamp(3));
+            ls.add(post);
+        }
+
+        st.close();
+        return ls;
+    }
+
+    public List<Post>getUsersPost(String username) throws SQLException {
+
+        List<Post> ls = new ArrayList<>();
+        Post post;
+        PreparedStatement st;
+        ResultSet rs;
+        String query = "SELECT photo, profile, posting_date FROM post WHERE profile = ? ORDER BY posting_date DESC LIMIT 20";
+        st = con.prepareStatement(query);
+        st.setString(1, username);
+        rs = st.executeQuery();
+        while(rs.next()) {
+            post = new Post();
+            post.setProfile(ViewFactory.getInstance().getUser());
+            post.setPhoto(rs.getBinaryStream(1));
+            post.setDate(rs.getTimestamp(3));
             ls.add(post);
         }
 

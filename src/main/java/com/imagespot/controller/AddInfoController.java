@@ -1,6 +1,7 @@
 package com.imagespot.controller;
 
 import com.imagespot.DAOImpl.UserDAOImpl;
+import com.imagespot.View.ViewFactory;
 import com.imagespot.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,13 +49,13 @@ public class AddInfoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        user = ViewFactory.getInstance().getUser();
+
+        welcomeLabel.setText("Welcome, " + user.getName());
         cbGender.getItems().addAll(gender);
     }
 
-    protected void setUser(User user) {
-        this.user = user;
-        welcomeLabel.setText("Welcome, " + user.getName());
-    }
 
     @FXML
     private void btnAvatarOnAction() {

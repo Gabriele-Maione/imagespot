@@ -13,6 +13,7 @@ public interface UserDAO {
     public void setBio(String username, String bio);
     public void setGender(String username, String gender);
     public void setAvatar(String username, File photo);
-    public User getUserInfo(String username) throws SQLException;
+    public void getUserInfo(String username) throws SQLException;
+    public User getUserInfoForPreview(String username) throws SQLException;
 
 }

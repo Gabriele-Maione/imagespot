@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.MainApplication;
+import com.imagespot.View.ViewFactory;
 import com.imagespot.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,8 +60,6 @@ public class SignInController implements Initializable {
     @FXML
     private TabPane tabPane;
 
-    private User user;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //agg caput a cosa serve init, in fxml nn agg miz o flag della funzione, ma cmq funziona
@@ -76,12 +75,11 @@ public class SignInController implements Initializable {
 
         else if(new UserDAOImpl().signup(signUpUsername.getText(), signUpName.getText(),
                 signUpEmail.getText(), signUpPass.getText())){
-            user = new User();
-            user.setUsername(signUpUsername.getText());
-            user.setName(signUpName.getText());
-            user.setEmail(signUpEmail.getText());
-            user.setPassword(signUpPass.getText());
-            openAddInfoScene();
+            ViewFactory.getInstance().getUser().setUsername(signUpUsername.getText());
+            ViewFactory.getInstance().getUser().setName(signUpName.getText());
+            ViewFactory.getInstance().getUser().setEmail(signUpEmail.getText());
+            ViewFactory.getInstance().getUser().setPassword(signUpPass.getText());
+            ViewFactory.getInstance().showAddInfoWindow();
             Stage stage = (Stage) btnSignUp.getScene().getWindow();
             stage.close();
         }
@@ -94,8 +92,8 @@ public class SignInController implements Initializable {
         if(signInUsername.getText().isBlank() || signInPass.getText().isBlank())
             signInErr.setText("Fields can't be empty");
         else if(new UserDAOImpl().login(signInUsername.getText(), signInPass.getText())) {
-            user = new UserDAOImpl().getUserInfo(signInUsername.getText());
-            openHomeScene();
+            new UserDAOImpl().getUserInfo(signInUsername.getText());
+            new ViewFactory().showHomeWindow();
             Stage stage = (Stage) btnSignUp.getScene().getWindow();
             stage.close();
         }
@@ -129,41 +127,7 @@ public class SignInController implements Initializable {
         });
     }
 
-    private void openAddInfoScene() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/add-info-view.fxml"));
-            Parent root = (Parent)loader.load();
-            AddInfoController controller = loader.getController();
-            controller.setUser(user);
-            Scene scene = new Scene(root, 600, 483);
-            Stage stage = new Stage();
-            stage.setTitle("Add some info!");
-            scene.setFill(Color.TRANSPARENT);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            Logger logger = Logger.getLogger(getClass().getName());
-            logger.log(Level.SEVERE, "Failed to create new Window.", e);
-        }
-    }
 
-    private void openHomeScene() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-view.fxml"));
-            Parent root = loader.load();
-            HomeController controller = loader.getController();
-            controller.initData(user);
-            Scene scene = new Scene(root, 900, 550);
-            Stage stage = new Stage();
-            stage.setTitle("Imagespot - Home");
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            Logger logger = Logger.getLogger(getClass().getName());
-            logger.log(Level.SEVERE, "Failed to create new Window.", e);
-        }
-    }
 
     @FXML
     private void dragged(MouseEvent ev) {
