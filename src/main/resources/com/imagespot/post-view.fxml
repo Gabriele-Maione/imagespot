@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.6505016722408027" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.PostController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <ImageView fx:id="photo" fitHeight="243.0" fitWidth="315.0" layoutX="36.0" layoutY="44.0" pickOnBounds="true" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <HBox alignment="CENTER" layoutX="3.0" prefHeight="71.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <ImageView fx:id="avatar" fitHeight="49.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true" />
+                  <VBox alignment="CENTER_LEFT" prefHeight="71.0" prefWidth="181.0">
+                     <children>
+                        <Label fx:id="name" text="Name">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="username" text="username" />
+                        <Button fx:id="btnFollow" mnemonicParsing="false" text="Follow" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Label layoutX="14.0" layoutY="102.0" text="Description" />
+            <TextArea fx:id="fldDescription" layoutX="3.0" layoutY="131.0" prefHeight="200.0" prefWidth="200.0" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>

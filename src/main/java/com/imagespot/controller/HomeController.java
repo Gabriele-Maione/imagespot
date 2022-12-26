@@ -45,8 +45,6 @@ public class HomeController implements Initializable {
     @FXML
     private BorderPane homePane;
 
-    private List<Post> recentPosts;
-    private List<Post> yourGallery;
 
     private User user;
 

@@ -52,7 +52,7 @@ public class PostDAOImpl implements PostDAO {
         Post post;
         Statement st;
         ResultSet rs;
-        String query = "SELECT photo, profile, posting_date FROM post WHERE status = 'Public' ORDER BY posting_date DESC LIMIT 20";
+        String query = "SELECT photo, profile, posting_date, description FROM post WHERE status = 'Public' ORDER BY posting_date DESC LIMIT 20";
         st = con.createStatement();
         rs = st.executeQuery(query);
 
@@ -61,6 +61,7 @@ public class PostDAOImpl implements PostDAO {
             post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
             post.setPhoto(rs.getBinaryStream(1));
             post.setDate(rs.getTimestamp(3));
+            post.setDescription(rs.getString(4));
             ls.add(post);
         }
 
@@ -74,7 +75,7 @@ public class PostDAOImpl implements PostDAO {
         Post post;
         PreparedStatement st;
         ResultSet rs;
-        String query = "SELECT photo, profile, posting_date FROM post WHERE profile = ? ORDER BY posting_date DESC LIMIT 20";
+        String query = "SELECT photo, profile, posting_date, description FROM post WHERE profile = ? ORDER BY posting_date DESC LIMIT 20";
         st = con.prepareStatement(query);
         st.setString(1, username);
         rs = st.executeQuery();
@@ -83,6 +84,7 @@ public class PostDAOImpl implements PostDAO {
             post.setProfile(ViewFactory.getInstance().getUser());
             post.setPhoto(rs.getBinaryStream(1));
             post.setDate(rs.getTimestamp(3));
+            post.setDescription(rs.getString(4));
             ls.add(post);
         }
 

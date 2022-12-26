@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -24,6 +25,7 @@ public class ViewFactory {
     private VBox browseView;
     private VBox yourGallery;
     private VBox postPreview;
+
     private final StringProperty clientSelectedMenuItem;
 
     private static User user;
@@ -87,6 +89,23 @@ public class ViewFactory {
         return postPreview;
     }
 
+    public void showPostView(Post post) throws IOException {
+
+        Scene scene;
+        Stage stage = new Stage();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/post-view.fxml"));
+
+            stage.setTitle("Post");
+            scene = new Scene(loader.load(), 600, 400);
+            PostController controller = loader.getController();
+            controller.init(post);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void showAuthWindow() {
         Scene scene;
