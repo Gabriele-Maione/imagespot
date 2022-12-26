@@ -128,7 +128,7 @@ public class ViewFactory {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-view.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 900, 550);
+            Scene scene = new Scene(root, 1050, 550);
             Stage stage = new Stage();
             stage.setTitle("Imagespot - Home");
             stage.setScene(scene);

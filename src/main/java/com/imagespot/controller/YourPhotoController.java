@@ -6,6 +6,7 @@ import com.imagespot.model.Post;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class YourPhotoController implements Initializable {
     @FXML
-    private GridPane postGrid;
+    private FlowPane flowPane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -37,7 +38,7 @@ public class YourPhotoController implements Initializable {
 
             VBox postBox = ViewFactory.getInstance().getPostPreview(recentPosts.get(i));
 
-            postGrid.add(postBox, i % 3, i / 3 + 1);
+            flowPane.getChildren().add(postBox);
             GridPane.setMargin(postBox, new Insets(10));
 
         }
