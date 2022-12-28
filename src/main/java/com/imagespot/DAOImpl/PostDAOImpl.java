@@ -17,6 +17,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.imagespot.Utils.Utils.photoScaler;
+
 public class PostDAOImpl implements PostDAO {
 
     private Connection con;
@@ -34,11 +36,7 @@ public class PostDAOImpl implements PostDAO {
                 " status, device, profile, preview) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         //scaling image and deserialize from bufferedImage to InputStream
-        BufferedImage bufferedImage = ImageIO.read(photo.getAbsoluteFile());
-        bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 700, 700, Scalr.OP_ANTIALIAS);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "jpeg", baos);
-        InputStream preview = new ByteArrayInputStream(baos.toByteArray());
+        InputStream preview = photoScaler(photo);
 
         st = con.prepareStatement(insert);
 

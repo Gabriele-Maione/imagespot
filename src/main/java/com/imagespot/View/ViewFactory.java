@@ -89,7 +89,7 @@ public class ViewFactory {
         return postPreview;
     }
 
-    public void showPostView(Post post) throws IOException {
+    public void showPostView(Post post) {
 
         Scene scene;
         Stage stage = new Stage();

@@ -84,6 +84,8 @@ public class AddPhotoController implements Initializable {
         cbType.getItems().addAll(deviceT);
         cbStatus.getItems().addAll(status);
         cbStatus.getSelectionModel().selectFirst();
+
+
     }
 
 

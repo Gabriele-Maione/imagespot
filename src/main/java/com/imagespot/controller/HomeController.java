@@ -55,13 +55,14 @@ public class HomeController implements Initializable {
         user = ViewFactory.getInstance().getUser();
         nameLabel.setText(user.getUsername());
         if(user.getAvatar() != null)
-        profilePic.setImage(new Image((user.getAvatar())));
 
-        ViewFactory.getInstance().getClientSelectedMenuItem().addListener((observableValue, s, t1) -> {
-            switch (t1) { //TODO: add cases
+        profilePic.setImage(new Image((user.getAvatar())));
+        homePane.setCenter(ViewFactory.getInstance().getBrowseView());
+
+        ViewFactory.getInstance().getClientSelectedMenuItem().addListener((observableValue, oldVal, newVal) -> {
+            switch (newVal) { //TODO: add cases
                 case "YourGallery" -> homePane.setCenter(ViewFactory.getInstance().getYourGalleryView());
                 case "Browse" -> homePane.setCenter(ViewFactory.getInstance().getBrowseView());
-                default -> homePane.setCenter(ViewFactory.getInstance().getBrowseView());
             }
         });
         addListeners();

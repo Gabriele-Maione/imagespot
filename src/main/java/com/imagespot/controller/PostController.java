@@ -44,7 +44,7 @@ public class PostController implements Initializable {
 
     public void init(Post post) {
 
-        photo.setImage(new Image(post.getPhoto()));
+        photo.setImage(new Image(post.getPreview()));
         name.setText(post.getProfile().getName());
         username.setText("@" + post.getProfile().getUsername());
         avatar.setImage(new Image(post.getProfile().getAvatar()));

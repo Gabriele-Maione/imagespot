@@ -15,6 +15,8 @@ import org.ocpsoft.prettytime.PrettyTime;
 import java.io.IOException;
 import java.util.Locale;
 
+import static com.imagespot.Utils.Utils.crop;
+
 
 public class ImagesController {
 
@@ -53,16 +55,4 @@ public class ImagesController {
         ViewFactory.getInstance().showPostView(post);
     }
 
-    public Image crop(Image img) {
-
-        double d = Math.min(img.getWidth(),img.getHeight());
-        double x = (d-img.getWidth())/2;
-        double y = (d-img.getHeight())/2;
-
-        Canvas canvas = new Canvas(d, d);
-        GraphicsContext g = canvas.getGraphicsContext2D();
-        g.drawImage(img, x, y);
-
-        return canvas.snapshot(null, null);
-    }
 }

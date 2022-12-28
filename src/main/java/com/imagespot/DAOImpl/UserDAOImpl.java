@@ -19,6 +19,8 @@ import org.imgscalr.Scalr;
 
 import javax.imageio.ImageIO;
 
+import static com.imagespot.Utils.Utils.photoScaler;
+
 public class UserDAOImpl implements UserDAO {
 
     private Connection con;
@@ -133,11 +135,7 @@ public class UserDAOImpl implements UserDAO {
         PreparedStatement st;
         String insertavatar = "UPDATE account SET avatar = ? WHERE username = ?";
 
-        BufferedImage bufferedImage = ImageIO.read(avatar.getAbsoluteFile());
-        bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 500, 500, Scalr.OP_ANTIALIAS);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "jpeg", baos);
-        InputStream preview = new ByteArrayInputStream(baos.toByteArray());
+        InputStream preview = photoScaler(avatar);
 
         try {
             st = con.prepareStatement(insertavatar);
