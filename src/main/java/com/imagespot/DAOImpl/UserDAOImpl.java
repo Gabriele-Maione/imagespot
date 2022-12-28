@@ -6,9 +6,8 @@ import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Device;
 import com.imagespot.model.User;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +15,9 @@ import java.sql.SQLException;
 
 import com.imagespot.Connection.ConnectionManager;
 import javafx.fxml.FXML;
+import org.imgscalr.Scalr;
+
+import javax.imageio.ImageIO;
 
 public class UserDAOImpl implements UserDAO {
 
@@ -104,6 +106,7 @@ public class UserDAOImpl implements UserDAO {
         } catch(SQLException ex) {
             ex.printStackTrace();
         }
+        ViewFactory.getInstance().getUser().setBio(bio);
     }
 
     @Override
@@ -121,25 +124,31 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        ViewFactory.getInstance().getUser().setGender(gender);
     }
 
     @Override
-    public void setAvatar(String username, File avatar) {
+    public void setAvatar(String username, File avatar) throws IOException {
 
         PreparedStatement st;
         String insertavatar = "UPDATE account SET avatar = ? WHERE username = ?";
 
+        BufferedImage bufferedImage = ImageIO.read(avatar.getAbsoluteFile());
+        bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 500, 500, Scalr.OP_ANTIALIAS);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "jpeg", baos);
+        InputStream preview = new ByteArrayInputStream(baos.toByteArray());
+
         try {
             st = con.prepareStatement(insertavatar);
-            st.setBinaryStream(1, new FileInputStream(avatar));
+            st.setBinaryStream(1, preview);
             st.setString(2, username);
             st.executeUpdate();
             st.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
         }
+        ViewFactory.getInstance().getUser().setAvatar(preview);
     }
 
     @Override

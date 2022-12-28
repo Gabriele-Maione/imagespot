@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="200.0" prefWidth="100.0" styleClass="background-color-border" stylesheets="@../../css/home-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.BrowseController">
+<VBox prefHeight="200.0" prefWidth="100.0" styleClass="background-color-border" stylesheets="@../../css/home-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.YourPhotoController">
    <children>
       <Label prefHeight="32.0" prefWidth="161.0" text="Your Gallery" textFill="#6a2a80">
          <font>

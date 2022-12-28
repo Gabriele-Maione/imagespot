@@ -13,6 +13,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -67,7 +68,7 @@ public class AddInfoController implements Initializable {
     }
 
     @FXML
-    private void submitBtnOnAction() throws SQLException {
+    private void submitBtnOnAction() throws SQLException, IOException {
         UserDAOImpl userDB = new UserDAOImpl();
         if(avatar != null)
             userDB.setAvatar(user.getUsername(), avatar);
@@ -76,7 +77,8 @@ public class AddInfoController implements Initializable {
         if(!bio.getText().equals(""))
             userDB.setBio(user.getUsername(), bio.getText());
 
-        btnSubmit.setText("Done!");
+        Stage stage = (Stage)btnSubmit.getScene().getWindow();
+        ViewFactory.getInstance().showHomeWindow();
     }
     @FXML
     private void closeButtonOnAction() {

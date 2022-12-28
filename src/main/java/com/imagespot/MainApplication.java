@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import javax.swing.text.View;
 import java.io.IOException;
 
 public class MainApplication extends Application {

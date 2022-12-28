@@ -17,6 +17,7 @@ public class Post {
     private Device device;
     private User profile;
     private Location location;
+    private InputStream preview;
     private ArrayList<User> taggedUsers;
     private ArrayList<Reaction> reactions;
 
@@ -125,5 +126,9 @@ public class Post {
     public void setProfile(User profile) {
         this.profile = profile;
     }
+
+    public InputStream getPreview() { return preview; }
+
+    public void setPreview(InputStream preview) { this.preview = preview; }
 }
 

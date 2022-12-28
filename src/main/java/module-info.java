@@ -4,6 +4,8 @@ module com.imagespot {
     requires java.sql;
     requires org.apache.commons.io;
     requires prettytime;
+    requires java.desktop;
+    requires imgscalr.lib;
 
 
     opens com.imagespot to javafx.fxml;

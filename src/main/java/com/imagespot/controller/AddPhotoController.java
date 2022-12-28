@@ -2,36 +2,23 @@ package com.imagespot.controller;
 
 import com.imagespot.DAOImpl.DeviceDAOImpl;
 import com.imagespot.DAOImpl.PostDAOImpl;
-import com.imagespot.MainApplication;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Device;
-import com.imagespot.model.Post;
 import com.imagespot.model.User;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.IdentityHashMap;
 import java.util.ResourceBundle;
-
-import javafx.stage.Stage;
-import org.apache.commons.io.FilenameUtils;
 
 
 public class AddPhotoController implements Initializable {
@@ -73,9 +60,9 @@ public class AddPhotoController implements Initializable {
 
     private String[] status = {"Public", "Private"};
 
-    private String[] deviceT = {"Smartphone", "Digital Camera"};
+    private final String[] deviceT = {"Smartphone", "Digital Camera"};
 
-    private String[] categories = {"Landscape", "Wildlife", "Macro", "Underwater",
+    private final String[] categories = {"Landscape", "Wildlife", "Macro", "Underwater",
             "Astrophotography", "Scientific", "Portrait", "Documentary", "Sport",
             "Fashion", "Commercial", "Street", "Event", "Travel", "Pet", "Food",
             "Architecture", "Family", "Other"};
@@ -106,12 +93,15 @@ public class AddPhotoController implements Initializable {
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg"));
         file = fc.showOpenDialog(img.getScene().getWindow());
         if(file != null) {
+
             img.setImage(new Image((file.getAbsolutePath())));
             btnUpload.setText("Change");
         }
     }
+
+
     @FXML
-    private void btnPublishOnAction() throws SQLException, FileNotFoundException {
+    private void btnPublishOnAction() throws SQLException, IOException {
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         device = new Device();

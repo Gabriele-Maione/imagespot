@@ -7,10 +7,12 @@ import com.imagespot.model.Device;
 import com.imagespot.model.Location;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
+import javafx.scene.image.Image;
+import org.imgscalr.Scalr;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +27,18 @@ public class PostDAOImpl implements PostDAO {
 
     @Override
     public void addPost(File photo, String resolution, String description, int size, String extension,
-                        Timestamp posting_date, String status, Device device, User profile) throws SQLException, FileNotFoundException {
+                        Timestamp posting_date, String status, Device device, User profile) throws SQLException, IOException {
 
         PreparedStatement st;
         String insert = ("INSERT INTO Post (photo, resolution, description, size, extension, posting_date," +
-                " status, device, profile) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                " status, device, profile, preview) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+        //scaling image and deserialize from bufferedImage to InputStream
+        BufferedImage bufferedImage = ImageIO.read(photo.getAbsoluteFile());
+        bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 700, 700, Scalr.OP_ANTIALIAS);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "jpeg", baos);
+        InputStream preview = new ByteArrayInputStream(baos.toByteArray());
 
         st = con.prepareStatement(insert);
 
@@ -42,6 +51,7 @@ public class PostDAOImpl implements PostDAO {
         st.setString(7, status);
         st.setInt(8, device.getIdDevice());
         st.setString(9, profile.getUsername());
+        st.setBinaryStream(10, preview);
         st.execute();
         st.close();
     }
@@ -52,14 +62,14 @@ public class PostDAOImpl implements PostDAO {
         Post post;
         Statement st;
         ResultSet rs;
-        String query = "SELECT photo, profile, posting_date, description FROM post WHERE status = 'Public' ORDER BY posting_date DESC LIMIT 20";
+        String query = "SELECT preview, profile, posting_date, description FROM post WHERE status = 'Public' AND idimage>18 ORDER BY posting_date DESC LIMIT 20";
         st = con.createStatement();
         rs = st.executeQuery(query);
 
         while(rs.next()) {
             post = new Post();
             post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
-            post.setPhoto(rs.getBinaryStream(1));
+            post.setPreview(rs.getBinaryStream(1));
             post.setDate(rs.getTimestamp(3));
             post.setDescription(rs.getString(4));
             ls.add(post);
@@ -75,14 +85,14 @@ public class PostDAOImpl implements PostDAO {
         Post post;
         PreparedStatement st;
         ResultSet rs;
-        String query = "SELECT photo, profile, posting_date, description FROM post WHERE profile = ? ORDER BY posting_date DESC LIMIT 20";
+        String query = "SELECT preview, profile, posting_date, description FROM post WHERE profile = ? ORDER BY posting_date DESC LIMIT 20";
         st = con.prepareStatement(query);
         st.setString(1, username);
         rs = st.executeQuery();
         while(rs.next()) {
             post = new Post();
-            post.setProfile(ViewFactory.getInstance().getUser());
-            post.setPhoto(rs.getBinaryStream(1));
+            post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
+            post.setPreview(rs.getBinaryStream(1));
             post.setDate(rs.getTimestamp(3));
             post.setDescription(rs.getString(4));
             ls.add(post);
