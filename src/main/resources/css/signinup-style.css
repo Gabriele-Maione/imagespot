@@ -1,9 +1,8 @@
-
 * {
     -primary: #353639;
     -secondary: #7678ed;
-    -fill: #ADADAD;
-    -fx-font-smoothing-type: gray;
+    -fill: #3b3b3b;
+    -secondary-hover: #6163ef;
 }
 
 .root {
@@ -15,22 +14,32 @@
     -fx-background-color: #ffffff;
     -fx-background-radius: 20;
     -fx-text-fill: -fill;
-    -fx-font-size: 16;
+    -fx-prompt-text-fill: gray;
     -fx-highlight-fill: -fill;
-}
-
-.button {
     -fx-font-size: 16;
-    -fx-text-fill: #ffffff;
-    -fx-background-radius: 20;
-    -fx-background-color: -secondary;
 }
 
-.hyperlink {
-    -fx-cursor: hand;
-    -fx-font-size: 14;
-    -fx-text-fill: -fill;
-    -fx-border-color: transparent;
+.topbar{
+    -fx-background-color: -fill;
+    -fx-background-radius: 15 15 0 0;
+}
+
+.topbar-button, .topbar-button-close{
+    -fx-background-color: -fill;
+    -fx-background-radius: 0;
+    -fx-text-fill: #fff;
+}
+
+.topbar-button-close{
+    -fx-background-radius: 0 15 0 0;
+}
+
+.topbar-button:hover{
+    -fx-background-color: #575757;
+}
+
+.topbar-button-close:hover{
+    -fx-background-color: #d91717;
 }
 
 .tab {
@@ -38,7 +47,7 @@
     -fx-faint-focus-color: transparent;
     -fx-background-color: -primary;
     -fx-border-color: -primary;
-    -fx-border-width: 0px 0px 3px 0px;
+    -fx-border-width: 0px 0px 2.5px 0px;
 }
 
 .tab:selected {
@@ -67,7 +76,25 @@
     -fx-padding: 0 0 0 140;
 }
 
+.button-sign-in {
+    -fx-font-size: 16;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 20;
+    -fx-background-color: -secondary;
+}
+
+.button-sign-in:hover{
+    -fx-background-color: -secondary-hover;
+}
+
 .text-alredy {
     -fx-font-size: 14;
-    -fx-fill: -fill;
+    -fx-fill: #fff;
+}
+
+.hyperlink {
+    -fx-cursor: hand;
+    -fx-font-size: 14;
+    -fx-text-fill: #fff;
+    -fx-border-color: transparent;
 }
