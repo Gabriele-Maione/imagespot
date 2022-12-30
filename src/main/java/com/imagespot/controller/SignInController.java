@@ -11,6 +11,8 @@ import com.imagespot.MainApplication;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.User;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,6 +20,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -64,6 +68,21 @@ public class SignInController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //agg caput a cosa serve init, in fxml nn agg miz o flag della funzione, ma cmq funziona
         redirectToLoginView();
+
+    }
+    @FXML
+    private void onKeyEnterPressed(KeyEvent event){
+        if(event.getCode().equals(KeyCode.ENTER)){
+            try {
+                if(tabPane.getSelectionModel().getSelectedIndex() == 0)
+                    signInButtonOnAction();
+                else
+                    signUpButtonOnAction();
+            }
+            catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @FXML
