@@ -37,15 +37,13 @@ public class BrowseController implements Initializable {
 
     protected void displayRecentlyAdded() throws SQLException {
 
-            List<Post> recentPosts = new ArrayList<>(new PostDAOImpl().getRecentPost());
+            List<Post> recentPosts = new PostDAOImpl().getRecentPost();
 
-        for (int i = 0; i < recentPosts.size(); i++) {
+        for (Post recentPost : recentPosts) {
 
-            VBox postBox = ViewFactory.getInstance().getPostPreview(recentPosts.get(i));
+            VBox postBox = ViewFactory.getInstance().getPostPreview(recentPost);
 
             flowPane.getChildren().add(postBox);
-            GridPane.setMargin(postBox, new Insets(10));
-
         }
     }
 }

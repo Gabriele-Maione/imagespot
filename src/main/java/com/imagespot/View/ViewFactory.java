@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -25,6 +26,8 @@ public class ViewFactory {
     private VBox browseView;
     private VBox yourGallery;
     private VBox postPreview;
+    private VBox searchedUsers;
+    private HBox userPreview;
 
     private final StringProperty clientSelectedMenuItem;
 
@@ -52,9 +55,11 @@ public class ViewFactory {
     }
 
     //TODO: add fxml panes and getter
+
+
     public VBox getBrowseView() {
 
-        if(browseView == null) {
+        if (browseView == null) {
             try {
                 browseView = new FXMLLoader(getClass().getResource("/com/imagespot/browse-view.fxml")).load();
             } catch (Exception e) {
@@ -89,6 +94,32 @@ public class ViewFactory {
         return postPreview;
     }
 
+    public HBox getUserPreview(User user) {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/user-preview-view.fxml"));
+        try {
+            userPreview = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        UserPreviewController controller = loader.getController();
+        controller.init(user);
+        return userPreview;
+    }
+
+    public VBox getSearchedUsers(String string) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/searched-users-view.fxml"));
+            searchedUsers = loader.load();
+            SearchedUsersController controller = loader.getController();
+            controller.init(string);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return searchedUsers;
+    }
     public void showPostView(Post post) {
 
         Scene scene;
@@ -98,6 +129,7 @@ public class ViewFactory {
 
             stage.setTitle("Post");
             scene = new Scene(loader.load(), 600, 400);
+
             PostController controller = loader.getController();
             controller.init(post);
             stage.setScene(scene);
@@ -166,6 +198,21 @@ public class ViewFactory {
             stage.setScene(scene);
             stage.show();
         } catch(IOException e) { e.printStackTrace(); }
+    }
+
+    public void showWebMapWindow() {
+        Scene scene;
+        Stage stage = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/imagespot/web-map-view.fxml"));
+
+            stage.setTitle("Login");
+            scene = new Scene(fxmlLoader.load(), 600, 400);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

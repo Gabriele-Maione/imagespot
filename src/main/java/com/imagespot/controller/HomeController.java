@@ -13,8 +13,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -37,6 +39,8 @@ public class HomeController implements Initializable {
     @FXML
     private ImageView profilePic;
     @FXML
+    private ImageView searchIcon;
+    @FXML
     private Button btnAddPhoto;
     @FXML
     private HBox hbYourGallery;
@@ -44,10 +48,12 @@ public class HomeController implements Initializable {
     private HBox hbBrowse;
     @FXML
     private BorderPane homePane;
-
+    @FXML
+    private Button btnMap;
+    @FXML
+    private TextField fldSearch;
 
     private User user;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -71,6 +77,10 @@ public class HomeController implements Initializable {
     private void addListeners() { //TODO: add all listeners
         hbBrowse.setOnMouseClicked(event -> onBrowse());
         hbYourGallery.setOnMouseClicked(event -> onYourGallery());
+        searchIcon.setOnMouseClicked(event -> searchUser());
+        fldSearch.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.ENTER)) searchUser();
+        });
     }
 
     private void onBrowse() {
@@ -80,8 +90,16 @@ public class HomeController implements Initializable {
         ViewFactory.getInstance().getClientSelectedMenuItem().set("YourGallery");
     }
 
+    private void searchUser() {
+        if(fldSearch.getText().trim().isBlank()) {
+            fldSearch.setPromptText("FIELD IS EMPTY");
+        }
+        else homePane.setCenter(ViewFactory.getInstance().getSearchedUsers(fldSearch.getText().trim()));
+    }
+
     @FXML
     private void btnAddPhotoOnAction() {
         ViewFactory.getInstance().showAddPhotoWindow();
     }
+
 }

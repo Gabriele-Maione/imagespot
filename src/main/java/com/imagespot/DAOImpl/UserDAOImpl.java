@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.imagespot.Connection.ConnectionManager;
 import javafx.fxml.FXML;
@@ -194,6 +196,33 @@ public class UserDAOImpl implements UserDAO {
         st.close();
 
         return user;
+    }
+
+    public List<User> findUsers(String username) {
+
+        List<User> ls = new ArrayList<>();
+        PreparedStatement st;
+        ResultSet rs;
+        String query = "SELECT avatar, username, name FROM account " +
+                "WHERE username iLIKE '%'||?||'%' AND username NOT IN(?) LIMIT 10";
+        try {
+            st = con.prepareStatement(query);
+            st.setString(1, username);
+            st.setString(2, ViewFactory.getInstance().getUser().getUsername());
+            rs = st.executeQuery();
+            while(rs.next()) {
+                User user = new User();
+                user.setAvatar(rs.getBinaryStream(1));
+                user.setUsername(rs.getString(2));
+                user.setName(rs.getString(3));
+                ls.add(user);
+            }
+            st.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ls;
     }
 
 }

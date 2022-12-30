@@ -1,5 +1,6 @@
 package com.imagespot;
 
+import com.imagespot.Utils.MapUtils;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.controller.SignInController;
 import javafx.application.Application;

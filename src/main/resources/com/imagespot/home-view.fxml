@@ -26,8 +26,8 @@
             <Separator maxHeight="-Infinity" orientation="VERTICAL" prefHeight="35.0" prefWidth="4.0" />
             <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="27.0" prefWidth="188.0" styleClass="round-layout" stylesheets="@../../css/home-style.css">
                <children>
-                  <TextField prefHeight="27.0" prefWidth="154.0" promptText="Search" styleClass="transparent" stylesheets="@../../css/home-style.css" />
-                  <ImageView fitHeight="20.0" fitWidth="20.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                  <TextField fx:id="fldSearch" prefHeight="27.0" prefWidth="154.0" promptText="Search" styleClass="transparent" stylesheets="@../../css/home-style.css" />
+                  <ImageView fx:id="searchIcon" fitHeight="20.0" fitWidth="20.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../icons/search_icon.png" />
                      </image>
@@ -186,7 +186,7 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Button fx:id="btnAddPhoto" onAction="#btnAddPhotoOnAction" mnemonicParsing="false" text="ADD PHOTO" />
+                  <Button fx:id="btnAddPhoto" mnemonicParsing="false" onAction="#btnAddPhotoOnAction" text="ADD PHOTO" />
                </children>
             </VBox>
          </children>

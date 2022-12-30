@@ -37,7 +37,6 @@ public class ImagesController {
 
     private Post post;
 
-    private SplitPane postView;
 
     public void setData(Post pst) {
 
@@ -50,8 +49,9 @@ public class ImagesController {
     }
 
     @FXML
-    public void previewOnClick() throws IOException {
+    public void previewOnClick() {
 
+        System.out.println(post.getProfile().getAvatar());
         ViewFactory.getInstance().showPostView(post);
     }
 

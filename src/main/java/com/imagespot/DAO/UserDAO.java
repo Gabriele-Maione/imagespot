@@ -6,6 +6,7 @@ import com.imagespot.model.User;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public interface UserDAO {
     // true - user registered && false - username/email already exists
@@ -16,5 +17,6 @@ public interface UserDAO {
     public void setAvatar(String username, File photo) throws IOException;
     public void getUserInfo(String username) throws SQLException;
     public User getUserInfoForPreview(String username) throws SQLException;
+    public List<User> findUsers(String username);
 
 }

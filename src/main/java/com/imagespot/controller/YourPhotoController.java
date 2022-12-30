@@ -32,14 +32,13 @@ public class YourPhotoController implements Initializable {
 
     protected void displayYourPhoto() throws SQLException {
 
-        List<Post> recentPosts = new ArrayList<>(new PostDAOImpl().getUsersPost(ViewFactory.getInstance().getUser().getUsername()));
+        List<Post> recentPosts = new PostDAOImpl().getUsersPost(ViewFactory.getInstance().getUser().getUsername());
 
         for (int i = 0; i < recentPosts.size(); i++) {
 
             VBox postBox = ViewFactory.getInstance().getPostPreview(recentPosts.get(i));
 
             flowPane.getChildren().add(postBox);
-            GridPane.setMargin(postBox, new Insets(10));
 
         }
     }
