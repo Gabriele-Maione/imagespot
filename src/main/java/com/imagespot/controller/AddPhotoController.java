@@ -23,6 +23,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
+import static com.imagespot.Utils.Utils.*;
+
 
 public class AddPhotoController implements Initializable {
 
@@ -133,24 +135,10 @@ public class AddPhotoController implements Initializable {
             device.setBrand(fldBrand.getText());
             device.setModel(fldModel.getText());
             device.setDeviceType(cbType.getValue());
-            new PostDAOImpl().addPost(file, getRes(), fldDescription.getText(),
-                    getSize(), getExt(), timestamp, cbStatus.getValue(), device, user);
+            new PostDAOImpl().addPost(file, getRes(file), fldDescription.getText(),
+                    getSize(file), getExt(file), timestamp, cbStatus.getValue(), device, user);
             btnPublish.setVisible(false);
             err.setText("DONE");
         }
-    }
-
-    private String getRes() {
-        Image i = new Image(file.getAbsolutePath());
-        return ((int)i.getHeight() + "x" + (int)i.getWidth());
-    }
-
-    private String getExt() {
-        return FilenameUtils.getExtension(file.getName());
-    }
-    private int getSize() {
-        // Convert the bytes to Kilobytes (1 KB = 1024 Bytes)
-        // Convert the KB to MegaBytes (1 MB = 1024 KBytes)
-        return (int)(file.length()/1024);
     }
 }

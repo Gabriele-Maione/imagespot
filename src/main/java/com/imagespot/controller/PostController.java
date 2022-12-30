@@ -38,12 +38,9 @@ public class PostController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         fldDescription.setEditable(false);
     }
-
     public void init(Post post) {
-
         photo.setImage(new Image(post.getPreview()));
         name.setText(post.getProfile().getName());
         username.setText("@" + post.getProfile().getUsername());
