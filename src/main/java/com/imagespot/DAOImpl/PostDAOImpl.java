@@ -60,7 +60,7 @@ public class PostDAOImpl implements PostDAO {
         Post post;
         Statement st;
         ResultSet rs;
-        String query = "SELECT preview, profile, posting_date, description FROM post WHERE status = 'Public' AND idimage>18 ORDER BY posting_date DESC LIMIT 20";
+        String query = "SELECT preview, profile, posting_date, description FROM post WHERE status = 'Public'  ORDER BY posting_date DESC LIMIT 20";
         st = con.createStatement();
         rs = st.executeQuery(query);
 

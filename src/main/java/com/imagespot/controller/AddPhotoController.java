@@ -12,10 +12,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import org.apache.commons.io.FilenameUtils;
-
+import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
@@ -58,15 +61,6 @@ public class AddPhotoController implements Initializable {
     @FXML
     private Label err;
 
-    private String[] status = {"Public", "Private"};
-
-    private final String[] deviceT = {"Smartphone", "Digital Camera"};
-
-    private final String[] categories = {"Landscape", "Wildlife", "Macro", "Underwater",
-            "Astrophotography", "Scientific", "Portrait", "Documentary", "Sport",
-            "Fashion", "Commercial", "Street", "Event", "Travel", "Pet", "Food",
-            "Architecture", "Family", "Other"};
-
     private File file;
     private PostDAOImpl postDAO;
     private DeviceDAOImpl deviceDAO;
@@ -78,14 +72,35 @@ public class AddPhotoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        URL jsonFile = getClass().getResource("/json/labels.json");
+        JSONObject jsonObject;
+
+        if(jsonFile != null){
+            try {
+                jsonObject = new JSONObject(IOUtils.toString(jsonFile, StandardCharsets.UTF_8));
+
+                JSONArray jsonCategories = jsonObject.getJSONArray("categories");
+                JSONArray jsonDeviceTypes = jsonObject.getJSONArray("deviceType");
+                JSONArray jsonStatus = jsonObject.getJSONArray("status");
+
+                for(Object category: jsonCategories)
+                    cbCategory.getItems().add(category.toString());
+
+                for(Object deviceType: jsonDeviceTypes)
+                    cbType.getItems().add(deviceType.toString());
+
+                for(Object state: jsonStatus)
+                    cbStatus.getItems().add(state.toString());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else{
+            System.out.println("Error opening JSON file!");
+        }
 
         user = ViewFactory.getInstance().getUser();
-        cbCategory.getItems().addAll(categories);
-        cbType.getItems().addAll(deviceT);
-        cbStatus.getItems().addAll(status);
         cbStatus.getSelectionModel().selectFirst();
-
-
     }
 
 

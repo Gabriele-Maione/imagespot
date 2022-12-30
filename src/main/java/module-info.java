@@ -6,6 +6,7 @@ module com.imagespot {
     requires prettytime;
     requires java.desktop;
     requires imgscalr.lib;
+    requires org.json;
 
 
     opens com.imagespot to javafx.fxml;
