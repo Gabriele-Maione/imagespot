@@ -174,7 +174,7 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
-    public User getUserInfoForPreview(String username) throws SQLException {
+    public User getUserInfoForPreview(String username) {
 
         User user = new User();
         user.setUsername(username);
@@ -183,17 +183,22 @@ public class UserDAOImpl implements UserDAO {
 
         String query = "SELECT email, name, gender, bio, avatar FROM account WHERE Username = ?";
 
-        st = con.prepareStatement(query);
-        st.setString(1, username);
-        rs = st.executeQuery();
-        if (rs.next()) {
-            user.setEmail(rs.getString(1));
-            user.setName(rs.getString(2));
-            user.setGender(rs.getString(3));
-            user.setBio(rs.getString(4));
-            user.setAvatar(rs.getBinaryStream(5));
+        try {
+            st = con.prepareStatement(query);
+
+            st.setString(1, username);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                user.setEmail(rs.getString(1));
+                user.setName(rs.getString(2));
+                user.setGender(rs.getString(3));
+                user.setBio(rs.getString(4));
+                user.setAvatar(rs.getBinaryStream(5));
+            }
+            st.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        st.close();
 
         return user;
     }
@@ -204,13 +209,13 @@ public class UserDAOImpl implements UserDAO {
         PreparedStatement st;
         ResultSet rs;
         String query = "SELECT avatar, username, name FROM account " +
-                "WHERE username iLIKE '%'||?||'%' AND username NOT IN(?) LIMIT 10";
+                "WHERE username iLIKE '%'||?||'%' AND username NOT IN(?) ORDER BY username LIMIT 10";
         try {
             st = con.prepareStatement(query);
             st.setString(1, username);
             st.setString(2, ViewFactory.getInstance().getUser().getUsername());
             rs = st.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 User user = new User();
                 user.setAvatar(rs.getBinaryStream(1));
                 user.setUsername(rs.getString(2));

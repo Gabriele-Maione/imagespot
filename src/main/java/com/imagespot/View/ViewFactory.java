@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -16,7 +17,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.awt.*;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,8 +29,6 @@ public class ViewFactory {
     private VBox browseView;
     private VBox yourGallery;
     private VBox postPreview;
-    private VBox searchedUsers;
-    private HBox userPreview;
 
     private final StringProperty clientSelectedMenuItem;
 
@@ -97,6 +98,7 @@ public class ViewFactory {
     public HBox getUserPreview(User user) {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/user-preview-view.fxml"));
+        HBox userPreview;
         try {
             userPreview = loader.load();
         } catch (IOException e) {
@@ -109,6 +111,7 @@ public class ViewFactory {
 
     public VBox getSearchedUsers(String string) {
 
+        VBox searchedUsers;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/searched-users-view.fxml"));
             searchedUsers = loader.load();
@@ -120,6 +123,23 @@ public class ViewFactory {
 
         return searchedUsers;
     }
+
+    public ScrollPane getUserPage(String username) {
+
+        ScrollPane userPage;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/user-page-view.fxml"));
+            userPage = loader.load();
+            UserPageController controller = loader.getController();
+            controller.init(username);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return userPage;
+    }
+
     public void showPostView(Post post) {
 
         Scene scene;
@@ -198,21 +218,6 @@ public class ViewFactory {
             stage.setScene(scene);
             stage.show();
         } catch(IOException e) { e.printStackTrace(); }
-    }
-
-    public void showWebMapWindow() {
-        Scene scene;
-        Stage stage = new Stage();
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/imagespot/web-map-view.fxml"));
-
-            stage.setTitle("Login");
-            scene = new Scene(fxmlLoader.load(), 600, 400);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }

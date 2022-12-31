@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.UserPageController">
+   <content>
+      <VBox styleClass="background-color-border" stylesheets="@../../css/home-style.css">
+         <children>
+            <HBox prefHeight="100.0" spacing="10.0">
+               <children>
+                  <ImageView fx:id="avatar" fitHeight="110.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../icons/default_avatar_icon.jpg" />
+                     </image>
+                  </ImageView>
+                  <VBox prefHeight="110.0" prefWidth="206.0" spacing="5.0">
+                     <children>
+                        <VBox prefHeight="39.0" prefWidth="206.0">
+                           <children>
+                              <Label fx:id="name" text="Name">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="username" text="\@Username" textFill="#595959">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <Label fx:id="bio" text="Bio">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox maxHeight="200.0" prefHeight="200.0">
+                     <children>
+                        <Label fx:id="post" text="Post:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="follower" text="Follower:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="following" text="Following:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+            <FlowPane fx:id="flowPane" />
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>
