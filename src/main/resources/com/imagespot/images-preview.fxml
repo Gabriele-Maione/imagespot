@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -12,7 +13,10 @@
       <ImageView fx:id="image_preview" fitHeight="275.0" fitWidth="275.0" pickOnBounds="true" preserveRatio="true" />
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <ImageView fx:id="avatar" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="avatar" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/default_avatar_icon.jpg" />
+               </image></ImageView>
             <VBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="134.0">
                <children>
                   <HBox prefHeight="20.0" prefWidth="98.0" spacing="5.0">

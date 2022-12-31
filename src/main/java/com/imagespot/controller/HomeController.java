@@ -65,30 +65,18 @@ public class HomeController implements Initializable {
         profilePic.setImage(new Image((user.getAvatar())));
         homePane.setCenter(ViewFactory.getInstance().getBrowseView());
 
-        ViewFactory.getInstance().getClientSelectedMenuItem().addListener((observableValue, oldVal, newVal) -> {
-            switch (newVal) { //TODO: add cases
-                case "YourGallery" -> homePane.setCenter(ViewFactory.getInstance().getYourGalleryView());
-                case "Browse" -> homePane.setCenter(ViewFactory.getInstance().getBrowseView());
-            }
-        });
         addListeners();
     }
 
     private void addListeners() { //TODO: add all listeners
-        hbBrowse.setOnMouseClicked(event -> onBrowse());
-        hbYourGallery.setOnMouseClicked(event -> onYourGallery());
+        hbBrowse.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getBrowseView()));
+        hbYourGallery.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getYourGalleryView()));
         searchIcon.setOnMouseClicked(event -> searchUser());
         fldSearch.setOnKeyPressed(event -> {
             if(event.getCode().equals(KeyCode.ENTER)) searchUser();
         });
     }
 
-    private void onBrowse() {
-        ViewFactory.getInstance().getClientSelectedMenuItem().set("Browse");
-    }
-    private void onYourGallery() {
-        ViewFactory.getInstance().getClientSelectedMenuItem().set("YourGallery");
-    }
 
     private void searchUser() {
         if(fldSearch.getText().trim().isBlank()) {

@@ -28,23 +28,14 @@ public class ViewFactory {
     private static ViewFactory viewFactory;
     private VBox browseView;
     private VBox yourGallery;
-    private VBox postPreview;
 
-    private final StringProperty clientSelectedMenuItem;
 
     private static User user;
 
-    public ViewFactory() {
-        this.clientSelectedMenuItem = new SimpleStringProperty("");
-    }
 
     public User getUser() {
         if(user == null) user = new User();
         return user;
-    }
-
-    public StringProperty getClientSelectedMenuItem() {
-        return clientSelectedMenuItem;
     }
 
     public static synchronized ViewFactory getInstance() {
@@ -84,6 +75,7 @@ public class ViewFactory {
 
     public VBox getPostPreview(Post post) {
 
+        VBox postPreview = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/images-preview.fxml"));
             postPreview = loader.load();

@@ -42,12 +42,11 @@ public class SearchedUsersController implements Initializable {
 
     protected void displaySearchedUsers() throws SQLException {
 
-        System.out.println(searchedString);
         List<User> users = new UserDAOImpl().findUsers(searchedString);
 
         if(users.size() == 0) flowPane.getChildren().add((new Label("I didn't found anything, try something else")));
         for (User user : users) {
-            System.out.println(user.getUsername());
+
             HBox postBox = ViewFactory.getInstance().getUserPreview(user);
 
             flowPane.getChildren().add(postBox);

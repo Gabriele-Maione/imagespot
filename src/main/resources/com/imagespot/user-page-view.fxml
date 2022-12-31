@@ -37,7 +37,7 @@
                               </Label>
                            </children>
                         </VBox>
-                        <Label fx:id="bio" text="Bio">
+                        <Label fx:id="bio" text="Bio" wrapText="true">
                            <font>
                               <Font size="14.0" />
                            </font>

@@ -44,14 +44,14 @@ public class ImagesController {
         image_preview.setImage(crop(new Image(post.getPreview())));
         name.setText(post.getProfile().getName());
         username.setText("@" + post.getProfile().getUsername());
-        avatar.setImage(new Image(post.getProfile().getAvatar()));
+        if (post.getProfile().getAvatar() != null)
+            avatar.setImage(new Image(post.getProfile().getAvatar()));
         passedTime.setText(new PrettyTime(Locale.forLanguageTag("en")).format(post.getDate()));
     }
 
     @FXML
     public void previewOnClick() {
 
-        System.out.println(post.getProfile().getAvatar());
         ViewFactory.getInstance().showPostView(post);
     }
 

@@ -8,6 +8,11 @@ module com.imagespot {
     requires imgscalr.lib;
     requires org.json;
 
+    requires org.kordamp.ikonli.core;
+    requires org.kordamp.ikonli.javafx;
+    requires org.kordamp.ikonli.fontawesome;
+    requires org.kordamp.ikonli.fontawesome5;
+
 
     opens com.imagespot to javafx.fxml;
     exports com.imagespot;
