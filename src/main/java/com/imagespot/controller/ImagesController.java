@@ -3,12 +3,16 @@ package com.imagespot.controller;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -50,9 +54,10 @@ public class ImagesController {
     }
 
     @FXML
-    public void previewOnClick() {
+    public void previewOnClick() throws IOException {
 
-        ViewFactory.getInstance().showPostView(post);
+        username.getScene().setRoot(ViewFactory.getInstance().getPostView(post.getIdImage()));
+        //ViewFactory.getInstance().showPostView(post);
     }
 
 }

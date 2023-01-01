@@ -28,8 +28,8 @@ public class ViewFactory {
     private static ViewFactory viewFactory;
     private VBox browseView;
     private VBox yourGallery;
-
-
+    private HBox postRoot;
+    private Parent homeRoot;
     private static User user;
 
 
@@ -48,7 +48,9 @@ public class ViewFactory {
 
     //TODO: add fxml panes and getter
 
-
+    public Parent getHomeRoot() {
+        return homeRoot;
+    }
     public VBox getBrowseView() {
 
         if (browseView == null) {
@@ -132,23 +134,20 @@ public class ViewFactory {
         return userPage;
     }
 
-    public void showPostView(Post post) {
+    public HBox getPostView(int idpost) {
 
-        Scene scene;
-        Stage stage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/post-view.fxml"));
 
-            stage.setTitle("Post");
-            scene = new Scene(loader.load(), 600, 400);
-
+            postRoot = loader.load();
             PostController controller = loader.getController();
-            controller.init(post);
-            stage.setScene(scene);
-            stage.show();
+            controller.init(idpost);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+        return postRoot;
     }
 
     public void showAuthWindow() {
@@ -169,17 +168,19 @@ public class ViewFactory {
     }
 
     public void showHomeWindow() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-view.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root, 1050, 550);
-            Stage stage = new Stage();
-            stage.setTitle("Imagespot - Home");
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            Logger logger = Logger.getLogger(getClass().getName());
-            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        if(homeRoot == null){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-view.fxml"));
+                homeRoot = loader.load();
+                Scene scene = new Scene(homeRoot, 1050, 550);
+                Stage stage = new Stage();
+                stage.setTitle("Imagespot - Home");
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                Logger logger = Logger.getLogger(getClass().getName());
+                logger.log(Level.SEVERE, "Failed to create new Window.", e);
+            }
         }
     }
 

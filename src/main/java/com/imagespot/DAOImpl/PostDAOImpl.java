@@ -56,20 +56,33 @@ public class PostDAOImpl implements PostDAO {
 
     public List<Post> getRecentPost() throws SQLException {
 
+        String query = "SELECT preview, profile, posting_date, idimage FROM post " +
+                "WHERE status = 'Public' ORDER BY posting_date DESC LIMIT 20";
+        return getPreviews(query);
+    }
+
+    public List<Post>getUsersPost(String username) throws SQLException {
+
+        String query = "SELECT preview, profile, posting_date, idimage FROM post WHERE profile = '"
+                + username + "' ORDER BY posting_date DESC LIMIT 20";
+        return getPreviews(query);
+    }
+
+    public List<Post> getPreviews(String query) throws SQLException {
+
         List<Post> ls = new ArrayList<>();
         Post post;
         Statement st;
         ResultSet rs;
-        String query = "SELECT preview, profile, posting_date, description FROM post WHERE status = 'Public'  ORDER BY posting_date DESC LIMIT 20";
         st = con.createStatement();
         rs = st.executeQuery(query);
 
         while(rs.next()) {
             post = new Post();
-            post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
             post.setPreview(rs.getBinaryStream(1));
+            post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
             post.setDate(rs.getTimestamp(3));
-            post.setDescription(rs.getString(4));
+            post.setIdImage(rs.getInt(4));
             ls.add(post);
         }
 
@@ -77,28 +90,26 @@ public class PostDAOImpl implements PostDAO {
         return ls;
     }
 
-    public List<Post>getUsersPost(String username) throws SQLException {
 
-        List<Post> ls = new ArrayList<>();
-        Post post;
+    public Post getPost(int id){
+        Post post = new Post();
         PreparedStatement st;
         ResultSet rs;
-        String query = "SELECT preview, profile, posting_date, description FROM post WHERE profile = ? ORDER BY posting_date DESC LIMIT 20";
-        st = con.prepareStatement(query);
-        st.setString(1, username);
-        rs = st.executeQuery();
-        while(rs.next()) {
-            post = new Post();
-            post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
-            post.setPreview(rs.getBinaryStream(1));
-            post.setDate(rs.getTimestamp(3));
-            post.setDescription(rs.getString(4));
-            ls.add(post);
+        String query = "SELECT photo, profile, description, device FROM post WHERE idimage = ?";
+        try {
+            st = con.prepareStatement(query);
+            st.setInt(1, id);
+            rs = st.executeQuery();
+            if(rs.next()) {
+                post.setPhoto(rs.getBinaryStream(1));
+                post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
+                post.setDescription(rs.getString(3));
+                //TODO: add device dao and things
+                //post.setDevice();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
-        st.close();
-        return ls;
+        return post;
     }
-
-
 }

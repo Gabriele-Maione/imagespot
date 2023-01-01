@@ -1,7 +1,6 @@
 package com.imagespot;
 
 import com.imagespot.DAOImpl.UserDAOImpl;
-import com.imagespot.Utils.MapUtils;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.controller.SignInController;
 import com.imagespot.model.User;
@@ -21,7 +20,8 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException, SQLException {
 
-        ViewFactory.getInstance().showAuthWindow();
+        new UserDAOImpl().getUserInfo("Fel");
+        ViewFactory.getInstance().showHomeWindow();
     }
 
 
