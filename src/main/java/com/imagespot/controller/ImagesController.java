@@ -58,20 +58,8 @@ public class ImagesController {
     @FXML
     public void previewOnClick() throws IOException {
 
-        retrieveDataFromDB();
-        //ViewFactory.getInstance().showPostView(post);
+        username.getScene().setRoot(ViewFactory.getInstance().getPostView(post.getIdImage()));
     }
 
-    public void retrieveDataFromDB() {
-        final Task<HBox> postTask = new Task<HBox>() {
-            @Override
-            protected HBox call() throws Exception {
-                return ViewFactory.getInstance().getPostView(post.getIdImage());
-            }
-
-        };
-        new Thread(postTask).start();
-        postTask.setOnSucceeded(workerStateEvent -> username.getScene().setRoot(postTask.getValue()));
-    }
 
 }

@@ -15,6 +15,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,9 +24,11 @@ public class ViewFactory {
     private static ViewFactory viewFactory;
     private VBox browseView;
     private VBox yourGallery;
-    private HBox postRoot;
+
     private Parent homeRoot;
     private static User user;
+
+    private HashMap<Integer, HBox> openedImages;
 
 
     public User getUser() {
@@ -128,11 +131,23 @@ public class ViewFactory {
     }
 
     public HBox getPostView(int idpost) {
+        HBox postRoot = null;
+
+        if(openedImages == null){
+            openedImages = new HashMap<>();
+        }
+
+        if(openedImages.get(idpost) != null){
+            return openedImages.get(idpost);
+        }
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/post-view.fxml"));
 
+
             postRoot = loader.load();
+            openedImages.put(idpost, postRoot);
+
             PostController controller = loader.getController();
             controller.init(idpost);
         } catch (IOException e) {
@@ -167,6 +182,8 @@ public class ViewFactory {
                 homeRoot = loader.load();
                 Scene scene = new Scene(homeRoot, 1050, 550);
                 Stage stage = new Stage();
+                stage.setMinHeight(400);
+                stage.setMinWidth(400);
                 stage.setTitle("Imagespot - Home");
                 stage.setScene(scene);
                 stage.show();

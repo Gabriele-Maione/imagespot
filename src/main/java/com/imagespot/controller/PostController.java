@@ -19,8 +19,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Locale;
@@ -58,21 +60,47 @@ public class PostController implements Initializable {
     }
     public void init(int idpost) throws SQLException {
 
-        this.post = new PostDAOImpl().getPost(idpost);
-
         //imgContainer is the pane that contains the image
         //photo is my imageview
         photo.fitWidthProperty().bind(imgContainer.widthProperty());
         photo.fitHeightProperty().bind(imgContainer.heightProperty());
-        photo.setImage(new Image(post.getPhoto()));
 
-        name.setText(post.getProfile().getName());
-        username.setText("@" + post.getProfile().getUsername());
-        if (post.getProfile().getAvatar() != null)
-            avatar.setImage(new Image(post.getProfile().getAvatar()));
-        description.setText(post.getDescription());
+        invokeInit(idpost);
     }
 
+    public void invokeInit(int idpost) {
+        final Task<Post> postTask = new Task<>() {
+            @Override
+            protected Post call() throws Exception {
+                return new PostDAOImpl().getPost(idpost);
+            }
+
+        };
+
+        new Thread(postTask).start();
+        postTask.setOnSucceeded(workerStateEvent -> {
+
+            invokePhoto(idpost);
+            post = postTask.getValue();
+
+            name.setText(post.getProfile().getName());
+            username.setText("@" + post.getProfile().getUsername());
+            if (post.getProfile().getAvatar() != null)
+                avatar.setImage(new Image(post.getProfile().getAvatar()));
+            description.setText(post.getDescription());
+        });
+    }
+
+    public void invokePhoto(int idpost) {
+        final Task<InputStream> photoTask = new Task<>() {
+            @Override
+            protected InputStream call() throws Exception {
+                return new PostDAOImpl().getPhoto(idpost);
+            }
+        };
+        new Thread(photoTask).start();
+        photoTask.setOnSucceeded(workerStateEvent -> photo.setImage(new Image(photoTask.getValue())));
+    }
 
     @FXML
     public void buttonCloseOnAction() {

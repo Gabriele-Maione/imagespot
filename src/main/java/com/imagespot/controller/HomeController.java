@@ -47,6 +47,7 @@ public class HomeController implements Initializable {
 
         user = ViewFactory.getInstance().getUser();
         nameLabel.setText(user.getUsername());
+
         if (user.getAvatar() != null)
 
             profilePic.setImage(new Image((user.getAvatar())));

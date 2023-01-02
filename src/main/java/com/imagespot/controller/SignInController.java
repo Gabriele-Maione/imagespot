@@ -99,7 +99,7 @@ public class SignInController implements Initializable {
             signInErr.setText("Fields can't be empty");
         else if(new UserDAOImpl().login(signInUsername.getText(), signInPass.getText())) {
             new UserDAOImpl().getUserInfo(signInUsername.getText());
-            new ViewFactory().showHomeWindow();
+            ViewFactory.getInstance().showHomeWindow();
             Stage stage = (Stage) btnSignUp.getScene().getWindow();
             stage.close();
         }

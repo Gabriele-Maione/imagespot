@@ -15,7 +15,7 @@
    <children>
       <Pane fx:id="imgContainer" style="-fx-background-color: #160D1C;" HBox.hgrow="SOMETIMES">
          <children>
-            <ImageView fx:id="photo" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="photo" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
       <VBox minWidth="175.0" spacing="10.0">

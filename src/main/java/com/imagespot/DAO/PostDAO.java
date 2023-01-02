@@ -8,6 +8,7 @@ import com.imagespot.model.User;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -19,6 +20,6 @@ public interface PostDAO {
     public List<Post> getRecentPost() throws SQLException;
 
     public List<Post>getUsersPost(String username) throws SQLException;
-
+    public InputStream getPhoto(int id);
     public Post getPost(int id);
 }
