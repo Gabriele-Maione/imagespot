@@ -1,8 +1,6 @@
 package com.imagespot.DAOImpl;
 
 import com.imagespot.Connection.ConnectionManager;
-import com.imagespot.DAO.DeviceDAO;
-import com.imagespot.model.Device;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +9,7 @@ import java.sql.SQLException;
 
 public class DeviceDAOImpl {
 
-    private Connection con;
+    private final Connection con;
 
 
     public DeviceDAOImpl() throws SQLException {

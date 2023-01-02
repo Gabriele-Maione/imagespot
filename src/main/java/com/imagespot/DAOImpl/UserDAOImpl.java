@@ -3,11 +3,11 @@ package com.imagespot.DAOImpl;
 import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.UserDAO;
 import com.imagespot.View.ViewFactory;
-import com.imagespot.model.Device;
 import com.imagespot.model.User;
 
-import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,17 +15,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.imagespot.Connection.ConnectionManager;
-import javafx.fxml.FXML;
-import org.imgscalr.Scalr;
-
-import javax.imageio.ImageIO;
-
 import static com.imagespot.Utils.Utils.photoScaler;
 
 public class UserDAOImpl implements UserDAO {
 
-    private Connection con;
+    private final Connection con;
 
     public UserDAOImpl() throws SQLException {
         con = ConnectionManager.getInstance().getConnection();

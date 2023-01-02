@@ -2,17 +2,14 @@ package com.imagespot.DAOImpl;
 
 import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.PostDAO;
-import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Device;
-import com.imagespot.model.Location;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
-import javafx.scene.image.Image;
-import org.imgscalr.Scalr;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +18,7 @@ import static com.imagespot.Utils.Utils.photoScaler;
 
 public class PostDAOImpl implements PostDAO {
 
-    private Connection con;
+    private final Connection con;
 
     public PostDAOImpl() throws SQLException {
         con = ConnectionManager.getInstance().getConnection();
@@ -61,7 +58,7 @@ public class PostDAOImpl implements PostDAO {
         return getPreviews(query);
     }
 
-    public List<Post>getUsersPost(String username) throws SQLException {
+    public List<Post> getUsersPost(String username) throws SQLException {
 
         String query = "SELECT preview, profile, posting_date, idimage FROM post WHERE profile = '"
                 + username + "' ORDER BY posting_date DESC LIMIT 20";
@@ -77,7 +74,7 @@ public class PostDAOImpl implements PostDAO {
         st = con.createStatement();
         rs = st.executeQuery(query);
 
-        while(rs.next()) {
+        while (rs.next()) {
             post = new Post();
             post.setPreview(rs.getBinaryStream(1));
             post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
@@ -91,7 +88,7 @@ public class PostDAOImpl implements PostDAO {
     }
 
 
-    public Post getPost(int id){
+    public Post getPost(int id) {
         Post post = new Post();
         PreparedStatement st;
         ResultSet rs;
@@ -100,7 +97,7 @@ public class PostDAOImpl implements PostDAO {
             st = con.prepareStatement(query);
             st.setInt(1, id);
             rs = st.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 post.setPhoto(rs.getBinaryStream(1));
                 post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
                 post.setDescription(rs.getString(3));

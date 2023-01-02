@@ -3,6 +3,9 @@ package com.imagespot.controller;
 import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -56,16 +59,20 @@ public class PostController implements Initializable {
     public void init(int idpost) throws SQLException {
 
         this.post = new PostDAOImpl().getPost(idpost);
+
+        //imgContainer is the pane that contains the image
+        //photo is my imageview
         photo.fitWidthProperty().bind(imgContainer.widthProperty());
         photo.fitHeightProperty().bind(imgContainer.heightProperty());
-
         photo.setImage(new Image(post.getPhoto()));
+
         name.setText(post.getProfile().getName());
         username.setText("@" + post.getProfile().getUsername());
         if (post.getProfile().getAvatar() != null)
             avatar.setImage(new Image(post.getProfile().getAvatar()));
         description.setText(post.getDescription());
     }
+
 
     @FXML
     public void buttonCloseOnAction() {

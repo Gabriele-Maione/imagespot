@@ -1,7 +1,9 @@
 package com.imagespot.controller;
 
+import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -56,8 +58,20 @@ public class ImagesController {
     @FXML
     public void previewOnClick() throws IOException {
 
-        username.getScene().setRoot(ViewFactory.getInstance().getPostView(post.getIdImage()));
+        retrieveDataFromDB();
         //ViewFactory.getInstance().showPostView(post);
+    }
+
+    public void retrieveDataFromDB() {
+        final Task<HBox> postTask = new Task<HBox>() {
+            @Override
+            protected HBox call() throws Exception {
+                return ViewFactory.getInstance().getPostView(post.getIdImage());
+            }
+
+        };
+        new Thread(postTask).start();
+        postTask.setOnSucceeded(workerStateEvent -> username.getScene().setRoot(postTask.getValue()));
     }
 
 }

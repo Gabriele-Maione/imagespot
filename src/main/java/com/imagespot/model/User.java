@@ -1,6 +1,5 @@
 package com.imagespot.model;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 

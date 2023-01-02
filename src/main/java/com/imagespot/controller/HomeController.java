@@ -1,16 +1,9 @@
 package com.imagespot.controller;
 
-import com.imagespot.DAOImpl.PostDAOImpl;
-import com.imagespot.MainApplication;
 import com.imagespot.View.ViewFactory;
-import com.imagespot.model.Post;
 import com.imagespot.model.User;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -20,14 +13,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
@@ -60,9 +47,9 @@ public class HomeController implements Initializable {
 
         user = ViewFactory.getInstance().getUser();
         nameLabel.setText(user.getUsername());
-        if(user.getAvatar() != null)
+        if (user.getAvatar() != null)
 
-        profilePic.setImage(new Image((user.getAvatar())));
+            profilePic.setImage(new Image((user.getAvatar())));
         homePane.setCenter(ViewFactory.getInstance().getBrowseView());
 
         addListeners();
@@ -73,16 +60,15 @@ public class HomeController implements Initializable {
         hbYourGallery.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getYourGalleryView()));
         searchIcon.setOnMouseClicked(event -> searchUser());
         fldSearch.setOnKeyPressed(event -> {
-            if(event.getCode().equals(KeyCode.ENTER)) searchUser();
+            if (event.getCode().equals(KeyCode.ENTER)) searchUser();
         });
     }
 
 
     private void searchUser() {
-        if(fldSearch.getText().trim().isBlank()) {
+        if (fldSearch.getText().trim().isBlank()) {
             fldSearch.setPromptText("FIELD IS EMPTY");
-        }
-        else homePane.setCenter(ViewFactory.getInstance().getSearchedUsers(fldSearch.getText().trim()));
+        } else homePane.setCenter(ViewFactory.getInstance().getSearchedUsers(fldSearch.getText().trim()));
     }
 
     @FXML

@@ -38,14 +38,14 @@ public class UserPreviewController implements Initializable {
     public void init(User user) {
 
         this.user = user;
-        if(user.getAvatar() != null)
-        avatar.setImage(new Image(user.getAvatar()));
+        if (user.getAvatar() != null)
+            avatar.setImage(new Image(user.getAvatar()));
         name.setText(user.getName());
         username.setText(user.getUsername());
     }
 
     public void userPreviewOnClick() {
-        BorderPane borderPane = (BorderPane)hboxUser.getScene().getRoot();
+        BorderPane borderPane = (BorderPane) hboxUser.getScene().getRoot();
         borderPane.setCenter(ViewFactory.getInstance().getUserPage(user.getUsername()));
     }
 

@@ -3,21 +3,16 @@ package com.imagespot.View;
 import com.imagespot.controller.*;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SplitPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -126,9 +121,7 @@ public class ViewFactory {
             userPage = loader.load();
             UserPageController controller = loader.getController();
             controller.init(username);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }
         return userPage;
@@ -187,7 +180,7 @@ public class ViewFactory {
     public void showAddInfoWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/add-info-view.fxml"));
-            Parent root = (Parent)loader.load();
+            Parent root = loader.load();
             Scene scene = new Scene(root, 600, 483);
             Stage stage = new Stage();
             stage.setTitle("Add some info!");
