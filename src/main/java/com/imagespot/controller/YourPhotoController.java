@@ -7,6 +7,7 @@ import com.imagespot.model.Post;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
@@ -18,10 +19,13 @@ import java.util.ResourceBundle;
 public class YourPhotoController implements Initializable {
     @FXML
     private FlowPane flowPane;
+    @FXML
+    private Label name;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        name.setText("Your Gallery");
         try {
             displayYourPhoto();
         } catch (SQLException e) {

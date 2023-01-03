@@ -57,7 +57,7 @@ public class PostDAOImpl implements PostDAO {
                 "WHERE status = 'Public' ORDER BY posting_date DESC LIMIT 20";
         return getPreviews(query);
     }
-
+    @Override
     public List<Post> getUsersPost(String username) throws SQLException {
 
         String query = "SELECT preview, profile, posting_date, idimage FROM post WHERE profile = '"
@@ -70,6 +70,21 @@ public class PostDAOImpl implements PostDAO {
 
         String query = "SELECT preview, profile, posting_date, idimage FROM post WHERE " +
                 "status = 'Public' AND profile = '" + username + "' ORDER BY posting_date DESC LIMIT 20";
+        return getPreviews(query);
+    }
+
+    @Override
+    public List<Post> getFeed(String username) throws SQLException {
+
+        String query = "SELECT preview, profile, posting_date, idimage\n" +
+                "FROM post\n" +
+                "WHERE status = 'Public'\n" +
+                "  AND profile IN (SELECT idfollowing\n" +
+                "                  FROM following\n" +
+                "                  WHERE nickname = '" + username + "')\n" +
+                "ORDER BY posting_date DESC\n" +
+                "LIMIT 20";
+        System.out.println("BIBA");
         return getPreviews(query);
     }
 
@@ -88,6 +103,7 @@ public class PostDAOImpl implements PostDAO {
             post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
             post.setDate(rs.getTimestamp(3));
             post.setIdImage(rs.getInt(4));
+            System.out.println(post.getIdImage());
             ls.add(post);
         }
 

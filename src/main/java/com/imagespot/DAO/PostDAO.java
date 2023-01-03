@@ -21,7 +21,7 @@ public interface PostDAO {
 
     public List<Post>getUsersPost(String username) throws SQLException;
     public List<Post> getUsersPublicPost(String username) throws SQLException;
-
+    List<Post> getFeed(String username) throws SQLException;
     public InputStream getPhoto(int id);
     public Post getPost(int id);
 }

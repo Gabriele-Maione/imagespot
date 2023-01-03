@@ -37,11 +37,14 @@ public class HomeController implements Initializable {
     @FXML
     private HBox hbBrowse;
     @FXML
+    private HBox hbFeed;
+    @FXML
     private BorderPane homePane;
     @FXML
     private Button btnMap;
     @FXML
     private TextField fldSearch;
+
 
     private User user;
 
@@ -62,6 +65,7 @@ public class HomeController implements Initializable {
     private void addListeners() { //TODO: add all listeners
         hbBrowse.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getBrowseView()));
         hbYourGallery.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getYourGalleryView()));
+        hbFeed.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getFeedView()));
         searchIcon.setOnMouseClicked(event -> searchUser());
         fldSearch.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER)) searchUser();

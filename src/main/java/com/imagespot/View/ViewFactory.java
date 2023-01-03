@@ -24,6 +24,7 @@ public class ViewFactory {
     private static ViewFactory viewFactory;
     private VBox browseView;
     private VBox yourGallery;
+    private VBox feedView;
 
     private Parent homeRoot;
     private static User user;
@@ -49,11 +50,27 @@ public class ViewFactory {
     public Parent getHomeRoot() {
         return homeRoot;
     }
+
+    public VBox getFeedView() {
+
+        if (feedView == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
+                loader.setController(new FeedController());
+                feedView = loader.load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return feedView;
+    }
     public VBox getBrowseView() {
 
         if (browseView == null) {
             try {
-                browseView = new FXMLLoader(getClass().getResource("/com/imagespot/browse-view.fxml")).load();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
+                loader.setController(new BrowseController());
+                browseView = loader.load();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -65,7 +82,9 @@ public class ViewFactory {
 
         if(yourGallery == null) {
             try {
-                yourGallery = new FXMLLoader(getClass().getResource("/com/imagespot/your-gallery-view.fxml")).load();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
+                loader.setController(new YourPhotoController());
+                yourGallery = loader.load();
             } catch (Exception e) {
                 e.printStackTrace();
             }

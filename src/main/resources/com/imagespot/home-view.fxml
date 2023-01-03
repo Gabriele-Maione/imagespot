@@ -73,14 +73,14 @@
                         <Insets left="10.0" />
                      </VBox.margin>
                   </Label>
-                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0" styleClass="mouse-moved" stylesheets="@../../css/home-style.css">
+                  <HBox fx:id="hbFeed" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0" styleClass="mouse-moved" stylesheets="@../../css/home-style.css">
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../icons/bestlocation_icon.png" />
                            </image>
                         </ImageView>
-                        <Label prefHeight="32.0" prefWidth="161.0" text="Top Places" textFill="#6a2a80">
+                        <Label prefHeight="32.0" prefWidth="161.0" text="Feed" textFill="#6a2a80">
                            <font>
                               <Font name="Berlin Sans FB" size="18.0" />
                            </font>
