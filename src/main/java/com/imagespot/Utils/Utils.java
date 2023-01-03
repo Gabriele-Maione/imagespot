@@ -1,14 +1,22 @@
 package com.imagespot.Utils;
 
+import com.imagespot.View.ViewFactory;
+import com.imagespot.model.Post;
+import javafx.concurrent.Task;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import org.apache.commons.io.FilenameUtils;
 import org.imgscalr.Scalr;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.Buffer;
+import java.util.List;
 
 public class Utils {
 
@@ -28,7 +36,12 @@ public class Utils {
         BufferedImage bufferedImage = ImageIO.read(photo.getAbsoluteFile());
         bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 700, 700, Scalr.OP_ANTIALIAS);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "jpeg", baos);
+        BufferedImage output = new BufferedImage(bufferedImage.getWidth(),
+                bufferedImage.getHeight(),
+                BufferedImage.TYPE_INT_RGB);
+        output.createGraphics()
+                        .drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+        ImageIO.write(output, "jpeg", baos);
         return new ByteArrayInputStream(baos.toByteArray());
     }
 
@@ -45,5 +58,19 @@ public class Utils {
         return (int)(file.length()/1024);
     }
 
+    public static void retrievePostsTask(Task<java.util.List<Post>> task, FlowPane flowPane) {
+        new Thread(task).start();
+        task.setOnSucceeded(workerStateEvent -> {
+            List<Post> yourPosts = task.getValue();
+
+            for (Post yourPost : yourPosts) {
+
+                VBox postBox = ViewFactory.getInstance().getPostPreview(yourPost);
+
+                flowPane.getChildren().add(postBox);
+
+            }
+        });
+    }
 
 }

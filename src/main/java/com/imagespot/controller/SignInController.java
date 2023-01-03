@@ -2,6 +2,7 @@ package com.imagespot.controller;
 
 import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.View.ViewFactory;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -80,7 +81,7 @@ public class SignInController implements Initializable {
             signUpErr.setText("Fields can't be empty");
 
         else if(new UserDAOImpl().signup(signUpUsername.getText(), signUpName.getText(),
-                signUpEmail.getText(), signUpPass.getText())){
+                signUpEmail.getText(), signUpPass.getText())) {
             ViewFactory.getInstance().getUser().setUsername(signUpUsername.getText());
             ViewFactory.getInstance().getUser().setName(signUpName.getText());
             ViewFactory.getInstance().getUser().setEmail(signUpEmail.getText());
@@ -88,22 +89,39 @@ public class SignInController implements Initializable {
             ViewFactory.getInstance().showAddInfoWindow();
             Stage stage = (Stage) btnSignUp.getScene().getWindow();
             stage.close();
-        }
-        else signUpErr.setText("Credentials already exists");
+        } else signUpErr.setText("Credentials already exists");
     }
 
     @FXML
     private void signInButtonOnAction() throws SQLException {
 
-        if(signInUsername.getText().isBlank() || signInPass.getText().isBlank())
+        if (signInUsername.getText().isBlank() || signInPass.getText().isBlank())
             signInErr.setText("Fields can't be empty");
-        else if(new UserDAOImpl().login(signInUsername.getText(), signInPass.getText())) {
-            new UserDAOImpl().getUserInfo(signInUsername.getText());
-            ViewFactory.getInstance().showHomeWindow();
-            Stage stage = (Stage) btnSignUp.getScene().getWindow();
-            stage.close();
-        }
-        else signInErr.setText("Credentials are wrong :(");
+        else checkUserSignInTask();
+    }
+
+    public void checkUserSignInTask() {
+        final Task<Boolean> userCheck = new Task<>() {
+            @Override
+            protected Boolean call() throws Exception {
+                updateMessage("Loading...");
+                if (new UserDAOImpl().login(signInUsername.getText(), signInPass.getText())) {
+                    new UserDAOImpl().getUserInfo(signInUsername.getText());
+                    return true;
+                }
+                else updateMessage("Credentials are wrong :(");
+                return false;
+            }
+        };
+        signInErr.textProperty().bind(userCheck.messageProperty());
+        new Thread(userCheck).start();
+        userCheck.setOnSucceeded(workerStateEvent -> {
+            if(userCheck.getValue()) {
+                ViewFactory.getInstance().showHomeWindow();
+                Stage stage = (Stage)signInErr.getScene().getWindow();
+                stage.close();
+            }
+        });
     }
 
     @FXML

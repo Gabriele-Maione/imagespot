@@ -1,8 +1,10 @@
 package com.imagespot.controller;
 
 import com.imagespot.DAOImpl.PostDAOImpl;
+import com.imagespot.Utils.Utils;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.FlowPane;
@@ -29,14 +31,17 @@ public class YourPhotoController implements Initializable {
 
     protected void displayYourPhoto() throws SQLException {
 
-        List<Post> recentPosts = new PostDAOImpl().getUsersPost(ViewFactory.getInstance().getUser().getUsername());
-
-        for (Post recentPost : recentPosts) {
-
-            VBox postBox = ViewFactory.getInstance().getPostPreview(recentPost);
-
-            flowPane.getChildren().add(postBox);
-
-        }
+        initYourGalleryTask();
     }
+
+    public void initYourGalleryTask() {
+        final Task<List<Post>> yourGallery = new Task<List<Post>>() {
+            @Override
+            protected List<Post> call() throws Exception {
+                return new PostDAOImpl().getUsersPost(ViewFactory.getInstance().getUser().getUsername());
+            }
+        };
+        Utils.retrievePostsTask(yourGallery, flowPane);
+    }
+
 }

@@ -1,7 +1,9 @@
 package com.imagespot.controller;
 
+import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.User;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -14,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -49,12 +52,12 @@ public class HomeController implements Initializable {
         nameLabel.setText(user.getUsername());
 
         if (user.getAvatar() != null)
-
             profilePic.setImage(new Image((user.getAvatar())));
         homePane.setCenter(ViewFactory.getInstance().getBrowseView());
 
         addListeners();
     }
+
 
     private void addListeners() { //TODO: add all listeners
         hbBrowse.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getBrowseView()));

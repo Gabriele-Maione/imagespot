@@ -50,8 +50,8 @@ public class PostController implements Initializable {
     private Label username;
     @FXML
     private Button btnClose;
-
     @FXML
+    private ProgressIndicator loadingIndicator;
     private Post post;
 
     @Override
@@ -98,6 +98,9 @@ public class PostController implements Initializable {
                 return new PostDAOImpl().getPhoto(idpost);
             }
         };
+
+        loadingIndicator.visibleProperty().bind(photoTask.runningProperty());
+
         new Thread(photoTask).start();
         photoTask.setOnSucceeded(workerStateEvent -> photo.setImage(new Image(photoTask.getValue())));
     }
