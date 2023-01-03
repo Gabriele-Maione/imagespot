@@ -7,6 +7,7 @@ import com.imagespot.model.Post;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -21,16 +22,30 @@ public class YourPhotoController implements Initializable {
     private FlowPane flowPane;
     @FXML
     private Label name;
+    @FXML
+    private Button btnUpdate;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         name.setText("Your Gallery");
+        btnUpdateOnAction();
         try {
             displayYourPhoto();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void btnUpdateOnAction() {
+        btnUpdate.setOnAction(actionEvent -> {
+            try {
+                flowPane.getChildren().clear();
+                displayYourPhoto();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     protected void displayYourPhoto() throws SQLException {

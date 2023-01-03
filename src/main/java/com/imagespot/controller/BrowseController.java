@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -31,17 +32,31 @@ public class BrowseController implements Initializable {
     private FlowPane flowPane;
     @FXML
     private Label name;
+    @FXML
+    private Button btnUpdate;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         name.setText("Recently Added");
+        btnUpdateOnAction();
         try {
             displayRecentlyAdded();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void btnUpdateOnAction() {
+        btnUpdate.setOnAction(actionEvent -> {
+            try {
+                flowPane.getChildren().clear();
+                displayRecentlyAdded();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     protected void displayRecentlyAdded() throws SQLException {
