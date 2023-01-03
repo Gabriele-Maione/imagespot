@@ -20,6 +20,8 @@ public interface PostDAO {
     public List<Post> getRecentPost() throws SQLException;
 
     public List<Post>getUsersPost(String username) throws SQLException;
+    public List<Post> getUsersPublicPost(String username) throws SQLException;
+
     public InputStream getPhoto(int id);
     public Post getPost(int id);
 }

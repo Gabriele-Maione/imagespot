@@ -65,6 +65,14 @@ public class PostDAOImpl implements PostDAO {
         return getPreviews(query);
     }
 
+    @Override
+    public List<Post> getUsersPublicPost(String username) throws SQLException {
+
+        String query = "SELECT preview, profile, posting_date, idimage FROM post WHERE " +
+                "status = 'Public' AND profile = '" + username + "' ORDER BY posting_date DESC LIMIT 20";
+        return getPreviews(query);
+    }
+
     public List<Post> getPreviews(String query) throws SQLException {
 
         List<Post> ls = new ArrayList<>();

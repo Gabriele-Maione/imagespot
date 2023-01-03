@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
@@ -23,20 +24,25 @@
                   </ImageView>
                   <VBox prefHeight="110.0" prefWidth="206.0" spacing="5.0">
                      <children>
-                        <VBox prefHeight="39.0" prefWidth="206.0">
+                        <HBox spacing="20.0">
                            <children>
-                              <Label fx:id="name" text="Name">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="username" text="\@Username" textFill="#595959">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
+                              <VBox prefHeight="39.0">
+                                 <children>
+                                    <Label fx:id="name" text="Name">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="username" text="\@Username" textFill="#595959">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <ToggleButton fx:id="followButton" mnemonicParsing="false" onAction="#followButtonOnAction" text="FOLLOW" />
                            </children>
-                        </VBox>
+                        </HBox>
                         <Label fx:id="bio" text="Bio" wrapText="true">
                            <font>
                               <Font size="14.0" />

@@ -61,11 +61,11 @@ public class Utils {
     public static void retrievePostsTask(Task<java.util.List<Post>> task, FlowPane flowPane) {
         new Thread(task).start();
         task.setOnSucceeded(workerStateEvent -> {
-            List<Post> yourPosts = task.getValue();
+            List<Post> posts = task.getValue();
 
-            for (Post yourPost : yourPosts) {
+            for (Post post : posts) {
 
-                VBox postBox = ViewFactory.getInstance().getPostPreview(yourPost);
+                VBox postBox = ViewFactory.getInstance().getPostPreview(post);
 
                 flowPane.getChildren().add(postBox);
 

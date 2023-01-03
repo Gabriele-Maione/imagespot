@@ -8,10 +8,7 @@ import com.imagespot.model.User;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -203,11 +200,13 @@ public class UserDAOImpl implements UserDAO {
         PreparedStatement st;
         ResultSet rs;
         String query = "SELECT avatar, username, name FROM account " +
-                "WHERE username iLIKE '%'||?||'%' AND username NOT IN(?) ORDER BY username LIMIT 10";
+                "WHERE username iLIKE '%'||?||'%' OR name iLIKE '%'||?||'%' " +
+                "AND username NOT IN(?) ORDER BY username LIMIT 10";
         try {
             st = con.prepareStatement(query);
             st.setString(1, username);
-            st.setString(2, ViewFactory.getInstance().getUser().getUsername());
+            st.setString(2, username);
+            st.setString(3, ViewFactory.getInstance().getUser().getUsername());
             rs = st.executeQuery();
             while (rs.next()) {
                 User user = new User();
@@ -224,4 +223,86 @@ public class UserDAOImpl implements UserDAO {
         return ls;
     }
 
+    public boolean checkFollow(String username) {
+        String query = "SELECT * FROM FOLLOWING WHERE nickname = ? AND idfollowing = ?";
+        PreparedStatement st;
+        ResultSet rs;
+        boolean flag = false;
+        try {
+            st = con.prepareStatement(query);
+            st.setString(1, ViewFactory.getInstance().getUser().getUsername());
+            st.setString(2, username);
+            rs = st.executeQuery();
+
+            if(rs.next())  flag = true;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return  flag;
+    }
+
+    public void removeFollow(String username) {
+        String query = "DELETE FROM following WHERE nickname = ? AND idfollowing = ? ";
+        PreparedStatement st;
+
+        try {
+            st = con.prepareStatement(query);
+            st.setString(1, ViewFactory.getInstance().getUser().getUsername());
+            st.setString(2, username);
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setFollow(String username) {
+        String query = "INSERT INTO following(nickname, idfollowing, followdate) VALUES (?, ?, ?)";
+        PreparedStatement st;
+
+        try {
+            st = con.prepareStatement(query);
+            st.setString(1, ViewFactory.getInstance().getUser().getUsername());
+            st.setString(2, username);
+            st.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public int userPostsCount(String username) {
+        String query = "SELECT count(*) FROM post WHERE status = 'Public' AND profile = '" + username +"'";
+        return retrieveCount(query);
+    }
+    @Override
+    public int userFollowerCount(String username) {
+        String query = "SELECT count(*) FROM following WHERE idfollowing = '" + username +"'";
+        return retrieveCount(query);
+    }
+
+    @Override
+    public int userFollowingCount(String username) {
+        String query = "SELECT count(*) FROM following WHERE nickname = '" + username +"'";
+        return retrieveCount(query);
+    }
+
+    public int retrieveCount(String query) {
+
+        Statement st;
+        ResultSet rs;
+        int number = 0;
+
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+
+            if (rs.next()) number = rs.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return number;
+    }
 }
