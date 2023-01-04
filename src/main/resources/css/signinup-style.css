@@ -1,33 +1,37 @@
 * {
-    -primary: #353639;
+    -primary: #ffffff;
     -secondary: #7678ed;
+    -dark: #000000;
     -fill: #3b3b3b;
     -secondary-hover: #6163ef;
 }
 
 .root {
     -fx-background-color: -primary;
-    -fx-background-radius: 15 15 15 15;
+    -fx-background-radius:  20 20 15 15;
 }
 
 .text-field {
-    -fx-background-color: #ffffff;
+    -fx-background-color: -fill;
     -fx-background-radius: 20;
-    -fx-text-fill: -fill;
-    -fx-prompt-text-fill: gray;
-    -fx-highlight-fill: -fill;
+    -fx-text-fill: -primary;
+    -fx-prompt-text-fill: #cccccc;
+    -fx-highlight-fill: #cccccc;
     -fx-font-size: 16;
 }
 
 .topbar{
     -fx-background-color: -fill;
+    -fx-border-radius: 15 15 0 0;
     -fx-background-radius: 15 15 0 0;
 }
 
 .topbar-button, .topbar-button-close{
     -fx-background-color: -fill;
+    -fx-border-width: 0;
     -fx-background-radius: 0;
     -fx-text-fill: #fff;
+    -fx-background-insets: 0;
 }
 
 .topbar-button-close{
@@ -57,7 +61,7 @@
 
 .tab-label {
     -fx-font-size: 16;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: -dark;
 }
 
 .tab-header-background {
@@ -78,7 +82,7 @@
 
 .button-sign-in {
     -fx-font-size: 16;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: -primary;
     -fx-background-radius: 20;
     -fx-background-color: -secondary;
 }
@@ -89,12 +93,12 @@
 
 .text-alredy {
     -fx-font-size: 14;
-    -fx-fill: #fff;
+    -fx-fill: -dark;
 }
 
 .hyperlink {
     -fx-cursor: hand;
     -fx-font-size: 14;
-    -fx-text-fill: #fff;
+    -fx-text-fill: -dark;
     -fx-border-color: transparent;
 }
