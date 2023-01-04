@@ -93,8 +93,10 @@ public class UserPageController {
         new Thread(userInfoTask).start();
         userInfoTask.setOnSucceeded(workerStateEvent -> {
             user = userInfoTask.getValue();
-            if (user.getAvatar() != null)
-                avatar.setImage(new Image(user.getAvatar()));
+            if (user.getAvatar() != null) {
+                Image img = new Image(user.getAvatar());
+                avatar.setImage(img);
+            }
             name.setText(user.getName());
             this.username.setText("@" + user.getUsername());
             if (user.getBio() != null)

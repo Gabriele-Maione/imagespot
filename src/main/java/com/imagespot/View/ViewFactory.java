@@ -177,7 +177,16 @@ public class ViewFactory {
         return postRoot;
     }
 
+    public void closeSession() {
+        Stage stage = (Stage)homeRoot.getScene().getWindow();
+
+        stage.close();
+        viewFactory = null;
+    }
+
     public void showAuthWindow() {
+
+        user = null; //TODO: maybe not the best to reset the user here
         Scene scene;
         Stage stage = new Stage();
         try {
@@ -213,6 +222,23 @@ public class ViewFactory {
         }
     }
 
+    public void showSettingsWindow() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/settings-view.fxml"));
+        try {
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 600, 560);
+            Stage stage = new Stage();
+            stage.setTitle("Settings");
+            stage.initOwner(homeRoot.getScene().getWindow());
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create Window.", e);
+        }
+
+    }
+
     public void showAddInfoWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/add-info-view.fxml"));
@@ -220,6 +246,8 @@ public class ViewFactory {
             Scene scene = new Scene(root, 600, 483);
             Stage stage = new Stage();
             stage.setTitle("Add some info!");
+            stage.initOwner(homeRoot.getScene().getWindow());
+
             scene.setFill(Color.TRANSPARENT);
             stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(scene);
@@ -235,6 +263,7 @@ public class ViewFactory {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/add-photo-view.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
+            stage.initOwner(homeRoot.getScene().getWindow());
             stage.setTitle("Login");
             Scene scene = new Scene(root, 602, 602);
             stage.setScene(scene);

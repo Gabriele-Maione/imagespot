@@ -50,9 +50,20 @@ public class ImagesController {
         image_preview.setImage(crop(new Image(post.getPreview())));
         name.setText(post.getProfile().getName());
         username.setText("@" + post.getProfile().getUsername());
-        if (post.getProfile().getAvatar() != null)
-            avatar.setImage(new Image(post.getProfile().getAvatar()));
+        if (post.getProfile().getAvatar() != null) {
+            Image img = new Image(post.getProfile().getAvatar());
+            avatar.setImage(crop(img));
+        }
         passedTime.setText(new PrettyTime(Locale.forLanguageTag("en")).format(post.getDate()));
+        addListeners();
+    }
+
+    public void addListeners() {
+
+        avatar.setOnMouseClicked(event -> {
+            BorderPane borderPane = (BorderPane) image_preview.getScene().getRoot();
+            borderPane.setCenter(ViewFactory.getInstance().getUserPage(post.getProfile().getUsername()));
+        });
     }
 
     @FXML

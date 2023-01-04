@@ -84,7 +84,6 @@ public class PostDAOImpl implements PostDAO {
                 "                  WHERE nickname = '" + username + "')\n" +
                 "ORDER BY posting_date DESC\n" +
                 "LIMIT 20";
-        System.out.println("BIBA");
         return getPreviews(query);
     }
 
@@ -103,7 +102,6 @@ public class PostDAOImpl implements PostDAO {
             post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
             post.setDate(rs.getTimestamp(3));
             post.setIdImage(rs.getInt(4));
-            System.out.println(post.getIdImage());
             ls.add(post);
         }
 

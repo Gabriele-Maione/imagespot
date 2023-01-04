@@ -35,14 +35,16 @@ public class Utils {
 
     public static InputStream photoScaler(File photo) throws IOException {
         BufferedImage bufferedImage = ImageIO.read(photo.getAbsoluteFile());
+
         bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 700, 700, Scalr.OP_ANTIALIAS);
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        BufferedImage output = new BufferedImage(bufferedImage.getWidth(),
-                bufferedImage.getHeight(),
-                BufferedImage.TYPE_INT_RGB);
+        BufferedImage output = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
         output.createGraphics()
-                        .drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+                .drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+
         ImageIO.write(output, "jpeg", baos);
+
         return new ByteArrayInputStream(baos.toByteArray());
     }
 

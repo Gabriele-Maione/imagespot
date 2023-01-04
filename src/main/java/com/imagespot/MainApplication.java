@@ -12,8 +12,8 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException, SQLException {
 
-
-        ViewFactory.getInstance().showAuthWindow();
+        new UserDAOImpl().getUserInfo("Fel");
+        ViewFactory.getInstance().showHomeWindow();
     }
 
 
