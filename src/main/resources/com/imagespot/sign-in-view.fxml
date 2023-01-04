@@ -10,36 +10,39 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onKeyEnterPressed" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="600.0" prefWidth="480.0" stylesheets="@../../css/signinup-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.SignInController">
    <children>
-      <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="480.0" styleClass="topbar" stylesheets="@../../css/signinup-style.css">
+      <HBox alignment="TOP_RIGHT" styleClass="topbar" stylesheets="@../../css/signinup-style.css" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="btnMinimize" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="38.0" prefWidth="38.0" styleClass="topbar-button" text="–">
+            <Button fx:id="btnMinimize" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefWidth="38.0" styleClass="topbar-button" text="–">
                <font>
                   <Font size="14.0" />
                </font>
                <HBox.margin>
                   <Insets />
                </HBox.margin>
-               <padding>
-                  <Insets top="2.0" />
-               </padding>
             </Button>
-            <Button fx:id="btnClose" mnemonicParsing="false" onAction="#closeButtonOnAction" prefHeight="38.0" prefWidth="38.0" styleClass="topbar-button-close" text="x">
+            <Button fx:id="btnClose" mnemonicParsing="false" onAction="#closeButtonOnAction" prefWidth="38.0" styleClass="topbar-button-close" text="x">
                <font>
                   <Font size="14.0" />
                </font>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
             </Button>
          </children>
       </HBox>
-      <HBox alignment="BOTTOM_CENTER" layoutY="31.0" prefHeight="93.0" prefWidth="480.0">
+      <HBox alignment="CENTER" layoutY="31.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Label fx:id="logo" alignment="CENTER" prefHeight="90.0" prefWidth="340.0" text="IMAGESPOT">
                <font>
@@ -69,40 +72,64 @@
             </Label>
          </children>
       </HBox>
-      <TabPane fx:id="tabPane" layoutY="124.0" prefHeight="450.0" prefWidth="480.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" layoutY="124.0" prefHeight="450.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <tabs>
             <Tab text="SIGN IN">
                <content>
-                  <VBox alignment="CENTER">
+                  <VBox alignment="CENTER" spacing="10.0">
                      <children>
                         <Label fx:id="signInErr" textFill="#ff6161">
                            <VBox.margin>
-                              <Insets bottom="8.0" top="8.0" />
-                           </VBox.margin></Label>
-                        <TextField fx:id="signInUsername" minHeight="40.0" prefHeight="40.0" promptText="Username">
-                           <VBox.margin>
-                              <Insets bottom="8.0" top="8.0" />
+                              <Insets />
                            </VBox.margin>
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
-                        </TextField>
-                        <PasswordField fx:id="signInPass" minHeight="40.0" prefHeight="40.0" promptText="Password">
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
+                        </Label>
+                        <StackPane minHeight="40.0" prefHeight="40.0">
+                           <children>
+                              <TextField fx:id="signInUsername" minHeight="40.0" prefHeight="40.0" promptText="Username">
+                                 <padding>
+                                    <Insets left="30.0" />
+                                 </padding>
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </TextField>
+                              <FontIcon iconColor="#cccccc" iconLiteral="fas-user" StackPane.alignment="CENTER_LEFT">
+                                 <StackPane.margin>
+                                    <Insets left="12.0" />
+                                 </StackPane.margin>
+                              </FontIcon>
+                           </children>
+                        </StackPane>
+                        <StackPane minWidth="40.0" prefWidth="40.0">
+                           <children>
+                              <PasswordField fx:id="signInPass" minHeight="40.0" prefHeight="40.0" promptText="Password">
+                                 <padding>
+                                    <Insets left="30.0" />
+                                 </padding>
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </PasswordField>
+                              <FontIcon iconColor="#cccccc" iconLiteral="fas-lock" StackPane.alignment="CENTER_LEFT">
+                                 <StackPane.margin>
+                                    <Insets left="12.0" />
+                                 </StackPane.margin>
+                              </FontIcon>
+                           </children>
                            <VBox.margin>
-                              <Insets bottom="8.0" top="8.0" />
+                              <Insets />
                            </VBox.margin>
-                        </PasswordField>
+                        </StackPane>
                         <Button fx:id="btnSignIn" minHeight="40.0" mnemonicParsing="false" onAction="#signInButtonOnAction" prefHeight="40.0" prefWidth="390.0" styleClass="button-sign-in" text="SIGN IN">
                            <VBox.margin>
-                              <Insets bottom="8.0" top="8.0" />
-                           </VBox.margin></Button>
+                              <Insets />
+                           </VBox.margin>
+                        </Button>
                         <Hyperlink fx:id="hlinkForgotPass" onAction="#hlinkForgotPass" text="Forgot Password?">
                            <VBox.margin>
                               <Insets top="10.0" />
-                           </VBox.margin></Hyperlink>
+                           </VBox.margin>
+                        </Hyperlink>
                      </children>
                      <padding>
                         <Insets left="45.0" right="45.0" />
@@ -112,54 +139,81 @@
             </Tab>
             <Tab text="SIGN UP">
                <content>
-                  <VBox alignment="BOTTOM_CENTER">
+                  <VBox alignment="CENTER" spacing="12.0">
                      <children>
                         <Label fx:id="signUpErr" textFill="#ff6161">
                            <VBox.margin>
-                              <Insets bottom="8.0" top="8.0" />
-                           </VBox.margin></Label>
-                        <TextField fx:id="signUpUsername" minHeight="40.0" prefHeight="40.0" promptText="Username">
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="8.0" top="8.0" />
+                              <Insets bottom="8.0" />
                            </VBox.margin>
-                        </TextField>
-                        <TextField fx:id="signUpName" minHeight="40.0" prefHeight="40.0" promptText="Name">
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="8.0" top="8.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <TextField fx:id="signUpEmail" minHeight="40.0" prefHeight="40.0" promptText="Email">
-                           <VBox.margin>
-                              <Insets bottom="8.0" top="8.0" />
-                           </VBox.margin>
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
-                        </TextField>
-                        <PasswordField fx:id="signUpPass" minHeight="40.0" prefHeight="40.0" promptText="Password">
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="8.0" top="8.0" />
-                           </VBox.margin>
-                        </PasswordField>
+                        </Label>
+                        <StackPane minHeight="40.0" prefHeight="40.0">
+                           <children>
+                              <TextField fx:id="signUpUsername" minHeight="40.0" prefHeight="40.0" promptText="Username">
+                                 <padding>
+                                    <Insets left="30.0" />
+                                 </padding>
+                              </TextField>
+                              <FontIcon iconColor="#cccccc" iconLiteral="fas-user" StackPane.alignment="CENTER_LEFT">
+                                 <StackPane.margin>
+                                    <Insets left="12.0" />
+                                 </StackPane.margin>
+                              </FontIcon>
+                           </children>
+                        </StackPane>
+                        <StackPane minWidth="40.0" prefHeight="40.0">
+                           <children>
+                              <TextField fx:id="signUpName" minHeight="40.0" prefHeight="40.0" promptText="Name">
+                                 <padding>
+                                    <Insets left="30.0" />
+                                 </padding>
+                              </TextField>
+                              <FontIcon iconColor="#cccccc" iconLiteral="fas-user-tag" StackPane.alignment="CENTER_LEFT">
+                                 <StackPane.margin>
+                                    <Insets left="12.0" />
+                                 </StackPane.margin>
+                              </FontIcon>
+                           </children>
+                        </StackPane>
+                        <StackPane minHeight="40.0" prefHeight="40.0">
+                           <children>
+                              <TextField fx:id="signUpEmail" minHeight="40.0" prefHeight="40.0" promptText="Email">
+                                 <padding>
+                                    <Insets left="30.0" />
+                                 </padding>
+                              </TextField>
+                              <FontIcon iconColor="#cccccc" iconLiteral="fas-envelope" StackPane.alignment="CENTER_LEFT">
+                                 <StackPane.margin>
+                                    <Insets left="12.0" />
+                                 </StackPane.margin>
+                              </FontIcon>
+                           </children>
+                        </StackPane>
+                        <StackPane minHeight="40.0" prefHeight="40.0">
+                           <children>
+                              <PasswordField fx:id="signUpPass" minHeight="40.0" prefHeight="40.0" promptText="Password">
+                                 <padding>
+                                    <Insets left="30.0" />
+                                 </padding>
+                              </PasswordField>
+                              <FontIcon iconColor="#cccccc" iconLiteral="fas-lock" StackPane.alignment="CENTER_LEFT">
+                                 <StackPane.margin>
+                                    <Insets left="12.0" />
+                                 </StackPane.margin>
+                              </FontIcon>
+                           </children>
+                        </StackPane>
                         <Button fx:id="btnSignUp" minHeight="40.0" mnemonicParsing="false" onAction="#signUpButtonOnAction" prefHeight="40.0" prefWidth="390.0" styleClass="button-sign-in" text="SIGN UP">
                            <VBox.margin>
-                              <Insets bottom="8.0" top="8.0" />
-                           </VBox.margin></Button>
-                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="340.0" styleClass="text-alredy" stylesheets="@../../css/signinup-style.css">
+                              <Insets />
+                           </VBox.margin>
+                        </Button>
+                        <HBox alignment="CENTER" styleClass="text-alredy" stylesheets="@../../css/signinup-style.css">
                            <children>
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-alredy" text="Already have account?">
                                  <HBox.margin>
                                     <Insets />
-                                 </HBox.margin></Text>
+                                 </HBox.margin>
+                              </Text>
                               <Hyperlink fx:id="hlinkSignIn" text="Sign in" />
                            </children>
                            <VBox.margin>

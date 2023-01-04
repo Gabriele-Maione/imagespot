@@ -70,7 +70,6 @@ public class Utils {
             for(int j=0; j < height ; j+=10) {
                 int rgb = image.getPixelReader().getArgb(i, j);
                 int[] rgbArr = getRGBArr(rgb);
-                // Filter out grays....
                 if (!isGray(rgbArr)) {
                     Integer counter = map.get(rgb);
                     if (counter == null)
@@ -90,12 +89,10 @@ public class Utils {
         int pixel = getPixel(map, list.get(list.size()-1));
 
         if(pixel == -1)
-            return "ffffff";
+            return "255, 255, 255";
         else{
             StringBuilder result = new StringBuilder();
             int[] rgb = getRGBArr(pixel);
-
-
 
             for(int color : rgb){
                 result.append(color).append(",");
@@ -122,7 +119,7 @@ public class Utils {
     private static boolean isGray(int[] rgbArr) {
         int rgDiff = rgbArr[0] - rgbArr[1];
         int rbDiff = rgbArr[0] - rgbArr[2];
-        // Filter out black, white and grays...... (tolerance within 10 pixels)
+
         int tolerance = 10;
         if (rgDiff > tolerance || rgDiff < -tolerance)
             return rbDiff <= tolerance && rbDiff >= -tolerance;
