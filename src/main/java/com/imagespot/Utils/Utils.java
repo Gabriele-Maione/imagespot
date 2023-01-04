@@ -16,6 +16,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.Buffer;
+import java.util.*;
 import java.util.List;
 
 public class Utils {
@@ -56,6 +57,74 @@ public class Utils {
         // Convert the bytes to Kilobytes (1 KB = 1024 Bytes)
         // Convert the KB to MegaBytes (1 MB = 1024 KBytes)
         return (int)(file.length()/1024);
+    }
+
+    public static String getMostCommonColour(Image image) {
+        int width = (int) image.getWidth();
+        int height = (int) image.getHeight();
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for(int i=0; i < width ; i+=10) {
+            for(int j=0; j < height ; j+=10) {
+                int rgb = image.getPixelReader().getArgb(i, j);
+                int[] rgbArr = getRGBArr(rgb);
+                // Filter out grays....
+                if (!isGray(rgbArr)) {
+                    Integer counter = map.get(rgb);
+                    if (counter == null)
+                        counter = 0;
+                    counter++;
+                    map.put(rgb, counter);
+                }
+            }
+        }
+
+        ArrayList<Integer> list = new ArrayList<>();
+        for(Map.Entry<Integer, Integer> entry : map.entrySet())
+            list.add(entry.getValue());
+
+        Collections.sort(list);
+
+        int pixel = getPixel(map, list.get(list.size()-1));
+
+        if(pixel == -1)
+            return "ffffff";
+        else{
+            StringBuilder result = new StringBuilder();
+            int[] rgb = getRGBArr(pixel);
+
+
+
+            for(int color : rgb){
+                result.append(color).append(",");
+            }
+            return result.substring(0, result.length()-1);
+        }
+    }
+
+    private static int getPixel(HashMap<Integer, Integer> map, int value){
+        for(Map.Entry<Integer, Integer> temp : map.entrySet()){
+            if(temp.getValue() == value)
+                return temp.getKey();
+        }
+        return -1;
+    }
+
+    private static int[] getRGBArr(int pixel) {
+        int red = (pixel >> 16) & 0xff;
+        int green = (pixel >> 8) & 0xff;
+        int blue = (pixel) & 0xff;
+
+        return new int[]{red,green,blue};
+    }
+    private static boolean isGray(int[] rgbArr) {
+        int rgDiff = rgbArr[0] - rgbArr[1];
+        int rbDiff = rgbArr[0] - rgbArr[2];
+        // Filter out black, white and grays...... (tolerance within 10 pixels)
+        int tolerance = 10;
+        if (rgDiff > tolerance || rgDiff < -tolerance)
+            return rbDiff <= tolerance && rbDiff >= -tolerance;
+        return true;
     }
 
     public static void retrievePostsTask(Task<java.util.List<Post>> task, FlowPane flowPane) {

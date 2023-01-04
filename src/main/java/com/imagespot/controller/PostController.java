@@ -14,10 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.ocpsoft.prettytime.PrettyTime;
@@ -28,8 +25,15 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import static com.imagespot.Utils.Utils.getMostCommonColour;
+
 public class PostController implements Initializable {
 
+    @FXML
+    private HBox root;
+
+    @FXML
+    private VBox postSidebar;
     @FXML
     private ImageView avatar;
 
@@ -45,7 +49,7 @@ public class PostController implements Initializable {
     @FXML
     private ImageView photo;
     @FXML
-    private Pane imgContainer;
+    private StackPane imgContainer;
     @FXML
     private Label username;
     @FXML
@@ -53,6 +57,8 @@ public class PostController implements Initializable {
     @FXML
     private ProgressIndicator loadingIndicator;
     private Post post;
+
+    private Image image;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,13 +68,13 @@ public class PostController implements Initializable {
 
         //imgContainer is the pane that contains the image
         //photo is my imageview
-        photo.fitWidthProperty().bind(imgContainer.widthProperty());
-        photo.fitHeightProperty().bind(imgContainer.heightProperty());
+        photo.fitWidthProperty().bind(root.widthProperty().subtract(postSidebar.widthProperty()));
+        photo.fitHeightProperty().bind(root.heightProperty());
 
         invokeInit(idpost);
     }
 
-    public void invokeInit(int idpost) {
+    private void invokeInit(int idpost) {
         final Task<Post> postTask = new Task<>() {
             @Override
             protected Post call() throws Exception {
@@ -91,7 +97,7 @@ public class PostController implements Initializable {
         });
     }
 
-    public void invokePhoto(int idpost) {
+    private void invokePhoto(int idpost) {
         final Task<InputStream> photoTask = new Task<>() {
             @Override
             protected InputStream call() throws Exception {
@@ -102,8 +108,30 @@ public class PostController implements Initializable {
         loadingIndicator.visibleProperty().bind(photoTask.runningProperty());
 
         new Thread(photoTask).start();
-        photoTask.setOnSucceeded(workerStateEvent -> photo.setImage(new Image(photoTask.getValue())));
+        photoTask.setOnSucceeded(workerStateEvent -> {
+            image = new Image(photoTask.getValue());
+            setPostBackgroundColor();
+        });
+
     }
+
+    private void setPostBackgroundColor(){
+        Task<String> postBackgroundTask = new Task<>() {
+            @Override
+            protected String call() throws Exception {
+                return getMostCommonColour(image);
+            }
+        };
+
+        new Thread(postBackgroundTask).start();
+        postBackgroundTask.setOnSucceeded(workerStateEvent -> {
+            System.out.println(postBackgroundTask.getValue());
+            photo.setImage(image);
+            imgContainer.setStyle("-fx-background-color: rgb(" + postBackgroundTask.getValue() +")");
+        });
+    }
+
+
 
     @FXML
     public void buttonCloseOnAction() {

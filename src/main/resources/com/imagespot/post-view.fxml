@@ -7,20 +7,23 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER" prefHeight="430.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.PostController">
+<HBox fx:id="root" alignment="CENTER" prefHeight="430.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.PostController">
    <children>
-      <Pane fx:id="imgContainer" HBox.hgrow="SOMETIMES">
+      <VBox HBox.hgrow="ALWAYS">
          <children>
-            <ImageView fx:id="photo" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <ProgressIndicator fx:id="loadingIndicator" layoutX="221.0" layoutY="189.0" />
+            <StackPane fx:id="imgContainer" VBox.vgrow="ALWAYS">
+               <children>
+                  <ImageView fx:id="photo" pickOnBounds="true" preserveRatio="true" />
+                  <ProgressIndicator fx:id="loadingIndicator" />
+               </children>
+            </StackPane>
          </children>
-      </Pane>
-      <VBox minWidth="175.0" spacing="10.0">
+      </VBox>
+      <VBox fx:id="postSidebar" spacing="10.0">
          <children>
             <HBox alignment="CENTER_LEFT" minWidth="175.0">
                <children>
