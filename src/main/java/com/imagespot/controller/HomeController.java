@@ -62,10 +62,11 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         user = ViewFactory.getInstance().getUser();
-        nameLabel.setText(user.getName());
+
+        nameLabel.textProperty().bind(user.nameProperty());
 
         if (user.getAvatar() != null) {
-            profilePic.setImage(crop(user.getAvatar()));
+            profilePic.imageProperty().bind(user.avatarProperty());
         }
         homePane.setCenter(ViewFactory.getInstance().getBrowseView());
 

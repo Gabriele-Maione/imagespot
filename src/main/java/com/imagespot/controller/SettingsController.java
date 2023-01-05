@@ -76,7 +76,7 @@ public class SettingsController implements Initializable {
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg"));
         avatar = fc.showOpenDialog(imgPreview.getScene().getWindow());
-        if(avatar != null) {
+        if (avatar != null) {
             imgPreview.setImage(new Image((avatar.getAbsolutePath())));
             changedAvatarFlag = true;
         }
@@ -89,26 +89,29 @@ public class SettingsController implements Initializable {
             protected Void call() throws Exception {
                 updateMessage("Loading...");
                 UserDAOImpl userDB = new UserDAOImpl();
-                if(changedAvatarFlag) {
+                if (changedAvatarFlag)
                     userDB.setAvatar(user.getUsername(), avatar);
-                    ViewFactory.getInstance().getUser().setAvatar(new Image(avatar.getAbsolutePath()));
-                }
-                if(!cbGender.getValue().equals(user.getGender())) {
+                if (!fldName.getText().equals(user.getName()))
+                    userDB.setName(user.getUsername(), fldName.getText());
+                if (!cbGender.getValue().equals(user.getGender()))
                     userDB.setGender(user.getUsername(), cbGender.getValue());
-                    ViewFactory.getInstance().getUser().setGender(cbGender.getValue());
-                }
-                if(!bio.getText().equals(user.getBio())) {
+                if (!bio.getText().equals(user.getBio()))
                     userDB.setBio(user.getUsername(), bio.getText());
-                    ViewFactory.getInstance().getUser().setBio(bio.getText());
-                }
+
                 return null;
             }
         };
         new Thread(updateTask).start();
         btnApply.textProperty().bind(updateTask.messageProperty());
         updateTask.setOnSucceeded(workerStateEvent -> {
+            ViewFactory.getInstance().getUser().setBio(bio.getText());
+            ViewFactory.getInstance().getUser().setGender(cbGender.getValue());
+            ViewFactory.getInstance().getUser().setName(fldName.getText());
+            if (changedAvatarFlag)
+                ViewFactory.getInstance().getUser().setAvatar(new Image(avatar.getAbsolutePath()));
             btnApply.textProperty().unbind();
             btnApply.setText("DONE!");
+            changedAvatarFlag = false;
 
         });
     }
@@ -121,7 +124,7 @@ public class SettingsController implements Initializable {
 
     @FXML
     private void dragged(MouseEvent ev) {
-        Stage stage = (Stage) welcomeLabel.getScene().getWindow();
+        Stage stage = (Stage) fldName.getScene().getWindow();
         stage.setX(ev.getScreenX() - x);
         stage.setY(ev.getScreenY() - y);
     }
@@ -136,6 +139,7 @@ public class SettingsController implements Initializable {
     private void submitBtnOnAction() {
         if(!changedAvatarFlag && fldName.getText().equals(user.getName())
         && bio.getText().equals(user.getBio()) && cbGender.getValue().equals(user.getGender()))
+
             btnApply.setText("NOTHING CHANGED");
         else
             updateInfoTask();

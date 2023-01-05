@@ -139,6 +139,20 @@ public class UserDAOImpl implements UserDAO {
         ViewFactory.getInstance().getUser().setAvatar(new Image(preview));
     }
 
+    public void setName(String username, String name) {
+        PreparedStatement st;
+        String query = "UPDATE account SET name = ? WHERE username = ?";
+        try {
+            st = con.prepareStatement(query);
+            st.setString(1, name);
+            st.setString(2, username);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void getUserInfo(String username) throws SQLException {
         PreparedStatement st;

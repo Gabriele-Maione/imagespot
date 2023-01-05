@@ -1,5 +1,7 @@
 package com.imagespot.model;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
 
 import java.io.InputStream;
@@ -7,26 +9,19 @@ import java.util.ArrayList;
 
 public class User {
     private String username;
-    private String name;
+    private ObjectProperty<String> name;
     private String email;
     private String password;
     private String gender;
     private String bio;
-    private Image avatar;
+    private ObjectProperty<Image> avatar;
     private ArrayList<User> following;
     private ArrayList<Post> posts;
     private ArrayList<Reaction> reaction;
 
-    public User() {}
-    public User(String username){
-        this.username = username;
-    }
-
-    public User(String username, String name, String email, String password) {
-        this.username = username;
-        this.name = name;
-        this.email = email;
-        this.password = password;
+    public User() {
+        this.avatar = new SimpleObjectProperty<Image>();
+        this.name = new SimpleObjectProperty<String>();
     }
 
     public ArrayList<User> getFollowing() {
@@ -53,12 +48,14 @@ public class User {
         this.reaction = reaction;
     }
 
+    public ObjectProperty<Image> avatarProperty() { return avatar; }
+
     public Image getAvatar() {
-        return avatar;
+        return avatar.getValue();
     }
 
     public void setAvatar(Image avatar) {
-        this.avatar = avatar;
+        this.avatar.setValue(avatar);
     }
     public String getUsername() {
         return username;
@@ -68,12 +65,14 @@ public class User {
         this.username = username;
     }
 
+    public ObjectProperty<String> nameProperty() { return name; }
+
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name.setValue(name);
     }
 
     public String getEmail() {

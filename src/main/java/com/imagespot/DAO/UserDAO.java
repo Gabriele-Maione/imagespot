@@ -20,6 +20,7 @@ public interface UserDAO {
     void setGender(String username, String gender);
 
     void setAvatar(String username, File photo) throws IOException;
+    void setName(String username, String name);
 
     void getUserInfo(String username) throws SQLException;
 
