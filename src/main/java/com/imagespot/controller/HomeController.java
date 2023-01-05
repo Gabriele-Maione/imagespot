@@ -32,6 +32,8 @@ public class HomeController implements Initializable {
     @FXML
     private Label nameLabel;
     @FXML
+    private Label usernameLabel;
+    @FXML
     private ImageView profilePic;
     @FXML
     private ImageView searchIcon;
@@ -62,8 +64,8 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         user = ViewFactory.getInstance().getUser();
-
         nameLabel.textProperty().bind(user.nameProperty());
+        usernameLabel.setText("@" + user.getUsername());
 
         if (user.getAvatar() != null) {
             profilePic.imageProperty().bind(user.avatarProperty());

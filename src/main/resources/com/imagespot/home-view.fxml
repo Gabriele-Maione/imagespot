@@ -3,8 +3,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -12,7 +14,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane fx:id="homePane" prefHeight="550.0" prefWidth="900.0" styleClass="background-color-main-page" stylesheets="@../../css/home-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.HomeController">
    <center>
@@ -20,10 +26,31 @@
    <top>
       <HBox alignment="CENTER" styleClass="background-color-border" stylesheets="@../../css/home-style.css" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" prefHeight="63.0" prefWidth="250.0" text="Imagespot" textFill="#c147e9">
+            <Label fx:id="logo" alignment="CENTER" prefWidth="250.0" text="IMAGESPOT">
                <font>
-                  <Font name="Bernard MT Condensed" size="35.0" />
+                  <Font name="System Bold" size="36.0" />
                </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0" startX="0.35071090047393366">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.4627451002597809" green="0.47058823704719543" blue="0.929411768913269" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color red="0.4627451002597809" green="0.47058823704719543" blue="0.929411768913269" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.9215686321258545" green="0.3686274588108063" blue="0.1568627506494522" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
             </Label>
             <Separator maxHeight="-Infinity" orientation="VERTICAL" prefHeight="35.0" prefWidth="4.0" />
             <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="27.0" prefWidth="188.0" styleClass="round-layout" stylesheets="@../../css/home-style.css">
@@ -41,23 +68,39 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                <children>
-                  <MenuButton mnemonicParsing="false" prefHeight="55.0" style="-fx-background-color: TRANSPARENT;" wrapText="true">
-                    <items>
-                      <MenuItem id="myProfileItem" fx:id="myProfileItem" mnemonicParsing="false" text="My Profile" />
-                      <MenuItem fx:id="settingsItem" mnemonicParsing="false" text="Settings" />
-                        <MenuItem fx:id="logoutItem" mnemonicParsing="false" text="Logout" />
-                    </items>
+                  <Button fx:id="btnAddPhoto" mnemonicParsing="false" onAction="#btnAddPhotoOnAction" text="ADD PHOTO">
                      <graphic>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="63.0" spacing="20.0">
+                        <FontIcon iconLiteral="fas-plus" />
+                     </graphic>
+                  </Button>
+                  <MenuButton mnemonicParsing="false" prefHeight="55.0" style="-fx-background-color: TRANSPARENT;" wrapText="true">
+                     <items>
+                        <MenuItem id="myProfileItem" fx:id="myProfileItem" mnemonicParsing="false" text="My Profile">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-user" />
+                           </graphic></MenuItem>
+                        <MenuItem fx:id="settingsItem" mnemonicParsing="false" text="Settings">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-cog" />
+                           </graphic></MenuItem>
+                        <MenuItem fx:id="logoutItem" mnemonicParsing="false" text="Logout">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-sign-out-alt" />
+                           </graphic></MenuItem>
+                     </items>
+                     <graphic>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="63.0" spacing="10.0">
                            <children>
-                              <Label fx:id="nameLabel" text="Name" textFill="#6a2a80">
-                                 <font>
-                                    <Font name="Berlin Sans FB" size="18.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Label>
+                              <VBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <Label fx:id="nameLabel" text="Name">
+                                       <font>
+                                          <Font name="Berlin Sans FB" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="usernameLabel" text="\@username" />
+                                 </children>
+                              </VBox>
                               <ImageView fx:id="profilePic" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../images/ugly_shrek.png" />
@@ -73,136 +116,155 @@
       </HBox>
    </top>
    <left>
-      <VBox prefHeight="200.0" prefWidth="250.0" styleClass="background-color-border" stylesheets="@../../css/home-style.css" BorderPane.alignment="CENTER">
-         <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+      <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
+         <content>
+            <VBox prefHeight="200.0" prefWidth="250.0" styleClass="background-color-border" stylesheets="@../../css/home-style.css">
                <children>
-                  <Label prefHeight="32.0" prefWidth="161.0" text="Browse" textFill="#6a2a80">
-                     <font>
-                        <Font name="Berlin Sans FB" size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <HBox fx:id="hbFeed" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0" styleClass="mouse-moved" stylesheets="@../../css/home-style.css">
+                  <VBox>
                      <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../icons/bestlocation_icon.png" />
-                           </image>
-                        </ImageView>
-                        <Label prefHeight="32.0" prefWidth="161.0" text="Feed" textFill="#6a2a80">
+                        <Label prefHeight="32.0" text="Browse" textFill="#7678ed">
                            <font>
                               <Font name="Berlin Sans FB" size="18.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
                         </Label>
+                        <HBox fx:id="hbFeed" alignment="CENTER_LEFT" prefHeight="50.0" styleClass="mouse-moved" stylesheets="@../../css/home-style.css">
+                           <children>
+                              <Label text="Home">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="18.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-home" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                        <HBox fx:id="hbBrowse" alignment="CENTER_LEFT" prefHeight="50.0" styleClass="mouse-moved" stylesheets="@../../css/home-style.css">
+                           <children>
+                              <Label text="Explore">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="18.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontIcon iconLiteral="far-compass" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" styleClass="mouse-moved" stylesheets="@../../css/home-style.css">
+                           <children>
+                              <Label text="Top place">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="18.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-map-marked-alt" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                 </graphic>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
                      </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0" styleClass="mouse-moved" stylesheets="@../../css/home-style.css">
+                  </VBox>
+                  <VBox>
                      <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../icons/categories_icon.png" />
-                           </image>
-                        </ImageView>
-                        <Label prefHeight="32.0" prefWidth="161.0" text="Categories" textFill="#6a2a80">
+                        <Label prefHeight="32.0" text="Your Photo" textFill="#7678ed">
                            <font>
                               <Font name="Berlin Sans FB" size="18.0" />
                            </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
                         </Label>
+                        <HBox fx:id="hbYourGallery" alignment="CENTER_LEFT" prefHeight="50.0" styleClass="mouse-moved" stylesheets="@../../css/home-style.css">
+                           <children>
+                              <Label text="Your Gallery">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="18.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-images" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                 </graphic>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" styleClass="mouse-moved" stylesheets="@../../css/home-style.css">
+                           <children>
+                              <Label text="Favorites">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="18.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-bookmark" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                 </graphic>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" styleClass="mouse-moved" stylesheets="@../../css/home-style.css">
+                           <children>
+                              <Label text="Tagged">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="18.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-tags" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                 </graphic>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
                      </children>
-                  </HBox>
-                  <HBox fx:id="hbBrowse" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0" styleClass="mouse-moved" stylesheets="@../../css/home-style.css">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../icons/explore_icon.png" />
-                           </image>
-                        </ImageView>
-                        <Label prefHeight="32.0" prefWidth="161.0" text="Browse" textFill="#6a2a80">
-                           <font>
-                              <Font name="Berlin Sans FB" size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
                   <Separator prefWidth="200.0" />
-               </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Label prefHeight="32.0" prefWidth="161.0" text="Your Photo" textFill="#6a2a80">
-                     <font>
-                        <Font name="Berlin Sans FB" size="18.0" />
-                     </font>
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <HBox fx:id="hbYourGallery" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0" styleClass="mouse-moved" stylesheets="@../../css/home-style.css">
+                  <VBox prefHeight="34.0" prefWidth="250.0" stylesheets="@../../css/style.css">
                      <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../icons/your_gallery_icon.png" />
-                           </image>
-                        </ImageView>
-                        <Label prefHeight="32.0" prefWidth="161.0" text="Your Gallery" textFill="#6a2a80">
+                        <Label prefHeight="32.0" text="Followed users" textFill="#7678ed">
                            <font>
                               <Font name="Berlin Sans FB" size="18.0" />
                            </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
                         </Label>
+                        <ListView prefHeight="200.0" prefWidth="200.0" />
                      </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0" styleClass="mouse-moved" stylesheets="@../../css/home-style.css">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../icons/favorites_icon.png" />
-                           </image>
-                        </ImageView>
-                        <Label prefHeight="32.0" prefWidth="161.0" text="Favorites" textFill="#6a2a80">
-                           <font>
-                              <Font name="Berlin Sans FB" size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="15.0" styleClass="mouse-moved" stylesheets="@../../css/home-style.css">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../icons/tag_icon.png" />
-                           </image>
-                        </ImageView>
-                        <Label prefHeight="32.0" prefWidth="161.0" text="Tagged" textFill="#6a2a80">
-                           <font>
-                              <Font name="Berlin Sans FB" size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </VBox>
-            <Separator prefWidth="200.0" />
-            <VBox prefHeight="34.0" prefWidth="250.0" stylesheets="@../../css/style.css">
-               <children>
-                  <Label prefHeight="32.0" prefWidth="161.0" text="Add photo" textFill="#6a2a80">
-                     <font>
-                        <Font name="Berlin Sans FB" size="18.0" />
-                     </font>
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <Button fx:id="btnAddPhoto" mnemonicParsing="false" onAction="#btnAddPhotoOnAction" text="ADD PHOTO" />
+                  </VBox>
                </children>
             </VBox>
-         </children>
-      </VBox>
+         </content>
+      </ScrollPane>
    </left>
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" styleClass="background-color-border" stylesheets="@../../css/home-style.css" BorderPane.alignment="CENTER" />
