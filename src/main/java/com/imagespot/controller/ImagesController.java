@@ -3,6 +3,7 @@ package com.imagespot.controller;
 import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,11 +17,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.ocpsoft.prettytime.PrettyTime;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+import static com.imagespot.Utils.TimeUtil.toDuration;
 import static com.imagespot.Utils.Utils.crop;
 
 
@@ -53,7 +56,8 @@ public class ImagesController {
         if (post.getProfile().getAvatar() != null) {
             avatar.setImage(crop(post.getProfile().getAvatar()));
         }
-        passedTime.setText(new PrettyTime(Locale.forLanguageTag("en")).format(post.getDate()));
+
+        passedTime.setText(toDuration(System.currentTimeMillis()-post.getDate().getTime()));
         addListeners();
     }
 
