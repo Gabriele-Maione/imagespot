@@ -4,6 +4,7 @@ import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.UserDAO;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.User;
+import javafx.scene.image.Image;
 
 import java.io.File;
 import java.io.IOException;
@@ -108,10 +109,10 @@ public class UserDAOImpl implements UserDAO {
     public void setGender(String username, String gender) {
 
         PreparedStatement st;
-        String insertgender = "UPDATE account SET gender = ? WHERE username = ?";
+        String insertGender = "UPDATE account SET gender = ? WHERE username = ?";
 
         try {
-            st = con.prepareStatement(insertgender);
+            st = con.prepareStatement(insertGender);
             st.setString(1, gender);
             st.setString(2, username);
             st.executeUpdate();
@@ -126,12 +127,12 @@ public class UserDAOImpl implements UserDAO {
     public void setAvatar(String username, File avatar) throws IOException {
 
         PreparedStatement st;
-        String insertavatar = "UPDATE account SET avatar = ? WHERE username = ?";
+        String insertAvatar = "UPDATE account SET avatar = ? WHERE username = ?";
 
         InputStream preview = photoScaler(avatar);
 
         try {
-            st = con.prepareStatement(insertavatar);
+            st = con.prepareStatement(insertAvatar);
             st.setBinaryStream(1, preview);
             st.setString(2, username);
             st.executeUpdate();
@@ -139,7 +140,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        ViewFactory.getInstance().getUser().setAvatar(preview);
+        ViewFactory.getInstance().getUser().setAvatar(new Image(preview));
     }
 
     @Override
@@ -159,7 +160,8 @@ public class UserDAOImpl implements UserDAO {
             ViewFactory.getInstance().getUser().setName(rs.getString(2));
             ViewFactory.getInstance().getUser().setGender(rs.getString(3));
             ViewFactory.getInstance().getUser().setBio(rs.getString(4));
-            ViewFactory.getInstance().getUser().setAvatar(rs.getBinaryStream(5));
+            if (rs.getBinaryStream(5) != null)
+                ViewFactory.getInstance().getUser().setAvatar(new Image(rs.getBinaryStream(5)));
         }
         st.close();
 
@@ -184,7 +186,8 @@ public class UserDAOImpl implements UserDAO {
                 user.setName(rs.getString(2));
                 user.setGender(rs.getString(3));
                 user.setBio(rs.getString(4));
-                user.setAvatar(rs.getBinaryStream(5));
+            if(rs.getBinaryStream(5) != null)
+                user.setAvatar(new Image(rs.getBinaryStream(5)));
             }
             st.close();
         } catch (SQLException e) {
@@ -210,7 +213,8 @@ public class UserDAOImpl implements UserDAO {
             rs = st.executeQuery();
             while (rs.next()) {
                 User user = new User();
-                user.setAvatar(rs.getBinaryStream(1));
+                if (rs.getBinaryStream(1) != null)
+                    user.setAvatar(new Image(rs.getBinaryStream(1)));
                 user.setUsername(rs.getString(2));
                 user.setName(rs.getString(3));
                 ls.add(user);

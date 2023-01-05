@@ -31,7 +31,6 @@ public class ViewFactory {
 
     private HashMap<Integer, HBox> openedImages;
 
-
     public User getUser() {
         if(user == null) user = new User();
         return user;
@@ -178,8 +177,8 @@ public class ViewFactory {
     }
 
     public void closeSession() {
-        Stage stage = (Stage)homeRoot.getScene().getWindow();
 
+        Stage stage = (Stage)homeRoot.getScene().getWindow();
         stage.close();
         viewFactory = null;
     }

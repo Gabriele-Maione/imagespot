@@ -58,8 +58,6 @@ public class UserPageController {
         following.setText("Following: " + new UserDAOImpl().userFollowingCount(username));
     }
 
-
-
     @FXML
     private void followButtonOnAction() {
         followUnfollowTask(followButton.isSelected());
@@ -94,8 +92,7 @@ public class UserPageController {
         userInfoTask.setOnSucceeded(workerStateEvent -> {
             user = userInfoTask.getValue();
             if (user.getAvatar() != null) {
-                Image img = new Image(user.getAvatar());
-                avatar.setImage(img);
+                avatar.setImage(user.getAvatar());
             }
             name.setText(user.getName());
             this.username.setText("@" + user.getUsername());

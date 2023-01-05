@@ -56,7 +56,6 @@ public class HomeController implements Initializable {
     @FXML
     private MenuItem logoutItem;
 
-    Image img;
     private User user;
 
     @Override
@@ -66,9 +65,7 @@ public class HomeController implements Initializable {
         nameLabel.setText(user.getName());
 
         if (user.getAvatar() != null) {
-            System.out.println(user.getAvatar());
-            img = new Image(user.getAvatar());
-            profilePic.setImage(crop(img));
+            profilePic.setImage(crop(user.getAvatar()));
         }
         homePane.setCenter(ViewFactory.getInstance().getBrowseView());
 

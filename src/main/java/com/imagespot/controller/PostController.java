@@ -92,17 +92,16 @@ public class PostController implements Initializable {
             name.setText(post.getProfile().getName());
             username.setText("@" + post.getProfile().getUsername());
             if (post.getProfile().getAvatar() != null) {
-                Image img = new Image(post.getProfile().getAvatar());
-                avatar.setImage(img);
+                avatar.setImage(post.getProfile().getAvatar());
             }
             description.setText(post.getDescription());
         });
     }
 
     private void invokePhoto(int idpost) {
-        final Task<InputStream> photoTask = new Task<>() {
+        final Task<Image> photoTask = new Task<>() {
             @Override
-            protected InputStream call() throws Exception {
+            protected Image call() throws Exception {
                 return new PostDAOImpl().getPhoto(idpost);
             }
         };
@@ -111,7 +110,7 @@ public class PostController implements Initializable {
 
         new Thread(photoTask).start();
         photoTask.setOnSucceeded(workerStateEvent -> {
-            image = new Image(photoTask.getValue());
+            image = photoTask.getValue();
             setPostBackgroundColor();
         });
 

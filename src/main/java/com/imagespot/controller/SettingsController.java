@@ -21,16 +21,20 @@ import java.util.ResourceBundle;
 
 public class SettingsController implements Initializable {
     @FXML
-    private Button btnAvatar;
+    private TextArea bio;
 
     @FXML
-    private Button btnSubmit;
+    private Button btnApply;
+
+    @FXML
+    private Button btnAvatar;
 
     @FXML
     private ChoiceBox<String> cbGender;
 
     @FXML
-    private TextArea bio;
+    private TextField fldName;
+
     @FXML
     private Hyperlink hlinkSkip;
 
@@ -39,8 +43,6 @@ public class SettingsController implements Initializable {
 
     @FXML
     private Label welcomeLabel;
-    @FXML
-    private TextField fldName;
 
     private File avatar;
     private boolean changedAvatarFlag = false;
@@ -51,8 +53,6 @@ public class SettingsController implements Initializable {
 
     private double x, y;
 
-    Image img;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -60,8 +60,8 @@ public class SettingsController implements Initializable {
 
         if(user.getAvatar() != null) {
             System.out.println(user.getAvatar());
-            img = new Image(user.getAvatar());
-            imgPreview.setImage(img);
+
+            imgPreview.setImage(user.getAvatar());
         }
         cbGender.getItems().addAll(gender);
         cbGender.setValue(user.getGender());
@@ -82,11 +82,6 @@ public class SettingsController implements Initializable {
         }
     }
 
-    @FXML
-    private void submitBtnOnAction() {
-
-        updateInfoTask();
-    }
 
     private void updateInfoTask() {
         final Task<Void> updateTask = new Task<Void>() {
@@ -94,20 +89,27 @@ public class SettingsController implements Initializable {
             protected Void call() throws Exception {
                 updateMessage("Loading...");
                 UserDAOImpl userDB = new UserDAOImpl();
-                if(changedAvatarFlag)
+                if(changedAvatarFlag) {
                     userDB.setAvatar(user.getUsername(), avatar);
-                if(cbGender.getValue().equals(user.getGender()))
+                    ViewFactory.getInstance().getUser().setAvatar(new Image(avatar.getAbsolutePath()));
+                }
+                if(!cbGender.getValue().equals(user.getGender())) {
                     userDB.setGender(user.getUsername(), cbGender.getValue());
-                if(bio.getText().equals(user.getBio()))
+                    ViewFactory.getInstance().getUser().setGender(cbGender.getValue());
+                }
+                if(!bio.getText().equals(user.getBio())) {
                     userDB.setBio(user.getUsername(), bio.getText());
+                    ViewFactory.getInstance().getUser().setBio(bio.getText());
+                }
                 return null;
             }
         };
         new Thread(updateTask).start();
-        btnSubmit.textProperty().bind(updateTask.messageProperty());
+        btnApply.textProperty().bind(updateTask.messageProperty());
         updateTask.setOnSucceeded(workerStateEvent -> {
-            btnSubmit.textProperty().unbind();
-            btnSubmit.setText("DONE!");
+            btnApply.textProperty().unbind();
+            btnApply.setText("DONE!");
+
         });
     }
 
@@ -128,5 +130,14 @@ public class SettingsController implements Initializable {
     private void pressed(MouseEvent ev) {
         x = ev.getSceneX();
         y = ev.getSceneY();
+    }
+
+    @FXML
+    private void submitBtnOnAction() {
+        if(!changedAvatarFlag && fldName.getText().equals(user.getName())
+        && bio.getText().equals(user.getBio()) && cbGender.getValue().equals(user.getGender()))
+            btnApply.setText("NOTHING CHANGED");
+        else
+            updateInfoTask();
     }
 }

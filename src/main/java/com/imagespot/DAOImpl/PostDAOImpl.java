@@ -5,6 +5,7 @@ import com.imagespot.DAO.PostDAO;
 import com.imagespot.model.Device;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
+import javafx.scene.image.Image;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -98,7 +99,10 @@ public class PostDAOImpl implements PostDAO {
 
         while (rs.next()) {
             post = new Post();
-            post.setPreview(rs.getBinaryStream(1));
+            post.setIdImage(rs.getInt(4));
+            System.out.println(post.getIdImage());
+            if (rs.getBinaryStream(1) != null)
+                post.setPreview(new Image(rs.getBinaryStream(1)));
             post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
             post.setDate(rs.getTimestamp(3));
             post.setIdImage(rs.getInt(4));
@@ -109,6 +113,7 @@ public class PostDAOImpl implements PostDAO {
         return ls;
     }
 
+    //split query in 2 parts so u can first load user info and only after the full size photo
     @Override
     public Post getPost(int id) {
         Post post = new Post();
@@ -131,9 +136,9 @@ public class PostDAOImpl implements PostDAO {
         return post;
     }
     @Override
-    public InputStream getPhoto(int id) {
+    public Image getPhoto(int id) {
 
-        InputStream output = null;
+        Image output = null;
         PreparedStatement st;
         ResultSet rs;
         String query = "SELECT photo FROM post WHERE idimage = ?";
@@ -142,7 +147,7 @@ public class PostDAOImpl implements PostDAO {
             st.setInt(1, id);
             rs = st.executeQuery();
             if (rs.next()) {
-                output = (rs.getBinaryStream(1));
+                output = (new Image(rs.getBinaryStream(1)));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

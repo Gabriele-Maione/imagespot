@@ -39,8 +39,7 @@ public class UserPreviewController implements Initializable {
 
         this.user = user;
         if (user.getAvatar() != null) {
-            Image img = new Image(user.getAvatar());
-            avatar.setImage(img);
+            avatar.setImage(user.getAvatar());
         }
         name.setText(user.getName());
         username.setText(user.getUsername());

@@ -1,5 +1,7 @@
 package com.imagespot.model;
 
+import javafx.scene.image.Image;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -10,7 +12,7 @@ public class User {
     private String password;
     private String gender;
     private String bio;
-    private InputStream avatar;
+    private Image avatar;
     private ArrayList<User> following;
     private ArrayList<Post> posts;
     private ArrayList<Reaction> reaction;
@@ -51,11 +53,11 @@ public class User {
         this.reaction = reaction;
     }
 
-    public InputStream getAvatar() {
+    public Image getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(InputStream avatar) {
+    public void setAvatar(Image avatar) {
         this.avatar = avatar;
     }
     public String getUsername() {

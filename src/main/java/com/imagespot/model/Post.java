@@ -1,5 +1,7 @@
 package com.imagespot.model;
 
+import javafx.scene.image.Image;
+
 import java.io.File;
 import java.io.InputStream;
 import java.sql.Timestamp;
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 
 public class Post {
     private Integer idImage;
-    private InputStream photo;
+    private Image photo;
     private String resolution;
     private String description;
     private int size;
@@ -17,7 +19,7 @@ public class Post {
     private Device device;
     private User profile;
     private Location location;
-    private InputStream preview;
+    private Image preview;
     private ArrayList<User> taggedUsers;
     private ArrayList<Reaction> reactions;
 
@@ -55,11 +57,11 @@ public class Post {
         this.idImage = idImage;
     }
 
-    public InputStream getPhoto() {
+    public Image getPhoto() {
         return photo;
     }
 
-    public void setPhoto(InputStream photo) {
+    public void setPhoto(Image photo) {
         this.photo = photo;
     }
 
@@ -127,8 +129,8 @@ public class Post {
         this.profile = profile;
     }
 
-    public InputStream getPreview() { return preview; }
+    public Image getPreview() { return preview; }
 
-    public void setPreview(InputStream preview) { this.preview = preview; }
+    public void setPreview(Image preview) { this.preview = preview; }
 }
 

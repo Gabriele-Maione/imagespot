@@ -23,12 +23,12 @@
             <Insets left="20.0" top="20.0" />
          </padding>
          <children>
-            <Label fx:id="welcomeLabel" text="Settings" textFill="#dcc9c9">
+            <Label text="Settings" textFill="#dcc9c9">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
-            <Label text="Si, ho solo incolato addInfo" textFill="#dcc9c9">
+            <Label text="Si, ho solo incollato addInfo" textFill="#dcc9c9">
                <font>
                   <Font size="20.0" />
                </font>
@@ -78,6 +78,6 @@
          </children>
       </VBox>
       <ImageView fx:id="imgPreview" fitHeight="162.0" fitWidth="162.0" layoutX="424.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="btnSubmit" layoutX="475.0" layoutY="414.0" mnemonicParsing="false" onAction="#submitBtnOnAction" prefHeight="54.0" prefWidth="110.0" text="Apply" />
+      <Button fx:id="btnApply" layoutX="475.0" layoutY="414.0" mnemonicParsing="false" onAction="#submitBtnOnAction" prefHeight="54.0" prefWidth="110.0" text="Apply" />
    </children>
 </AnchorPane>

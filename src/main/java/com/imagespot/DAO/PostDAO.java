@@ -4,6 +4,7 @@ import com.imagespot.model.Device;
 import com.imagespot.model.Location;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
+import javafx.scene.image.Image;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,6 +23,6 @@ public interface PostDAO {
     public List<Post>getUsersPost(String username) throws SQLException;
     public List<Post> getUsersPublicPost(String username) throws SQLException;
     List<Post> getFeed(String username) throws SQLException;
-    public InputStream getPhoto(int id);
+    public Image getPhoto(int id);
     public Post getPost(int id);
 }

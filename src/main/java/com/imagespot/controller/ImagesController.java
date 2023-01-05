@@ -47,12 +47,11 @@ public class ImagesController {
     public void setData(Post pst) {
 
         this.post = pst;
-        image_preview.setImage(crop(new Image(post.getPreview())));
+        image_preview.setImage(crop(post.getPreview()));
         name.setText(post.getProfile().getName());
         username.setText("@" + post.getProfile().getUsername());
         if (post.getProfile().getAvatar() != null) {
-            Image img = new Image(post.getProfile().getAvatar());
-            avatar.setImage(crop(img));
+            avatar.setImage(crop(post.getProfile().getAvatar()));
         }
         passedTime.setText(new PrettyTime(Locale.forLanguageTag("en")).format(post.getDate()));
         addListeners();
