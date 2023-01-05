@@ -59,7 +59,6 @@ public class SettingsController implements Initializable {
         user = ViewFactory.getInstance().getUser();
 
         if(user.getAvatar() != null) {
-            System.out.println(user.getAvatar());
 
             imgPreview.setImage(user.getAvatar());
         }

@@ -100,7 +100,6 @@ public class PostDAOImpl implements PostDAO {
         while (rs.next()) {
             post = new Post();
             post.setIdImage(rs.getInt(4));
-            System.out.println(post.getIdImage());
             if (rs.getBinaryStream(1) != null)
                 post.setPreview(new Image(rs.getBinaryStream(1)));
             post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));

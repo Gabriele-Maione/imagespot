@@ -126,7 +126,6 @@ public class PostController implements Initializable {
 
         new Thread(postBackgroundTask).start();
         postBackgroundTask.setOnSucceeded(workerStateEvent -> {
-            System.out.println(postBackgroundTask.getValue());
             photo.setImage(image);
             imgContainer.setStyle("-fx-background-color: rgb(" + postBackgroundTask.getValue() +")");
         });

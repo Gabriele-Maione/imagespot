@@ -71,6 +71,7 @@ public class UserPageController {
         followingTask.setOnSucceeded(workerStateEvent -> {
             if (followButton.isSelected()) followButton.setText("UNFOLLOW");
             else followButton.setText("FOLLOW");
+            getUserStatsTask(user.getUsername());
         });
     }
 
