@@ -49,13 +49,8 @@ public class UserPageController {
 
     private User user;
     public void init(String username) throws SQLException {
-
         getUserInfoTask(username);
-
-        //TODO: DO IT WITH TASKS!!!!
-        post.setText("Post: " + new UserDAOImpl().userPostsCount(username));
-        follower.setText("Follower: " + new UserDAOImpl().userFollowerCount(username));
-        following.setText("Following: " + new UserDAOImpl().userFollowingCount(username));
+        getUserStatsTask(username);
     }
 
     @FXML
@@ -102,6 +97,8 @@ public class UserPageController {
             initUserPosts();
         });
     }
+
+
     public void checkFollowingTask() {
         final Task<Boolean> checkFollowing = new Task<Boolean>() {
             @Override
@@ -120,6 +117,24 @@ public class UserPageController {
                 followButton.setText("FOLLOW");
             }
         });
+    }
+
+    private void getUserStatsTask(String username){
+        final Task<int[]> userStats = new Task<>() {
+            @Override
+            protected int[] call() throws Exception {
+                return new UserDAOImpl().retriveUserStats(username);
+            }
+        };
+
+        new Thread(userStats).start();
+        userStats.setOnSucceeded(workerStateEvent -> {
+            int[] stats = userStats.getValue();
+            post.setText("Post: " + stats[0]);
+            follower.setText("Follower: " + stats[1]);
+            following.setText("Following: " + stats[2]);
+        });
+
     }
 
     public void initUserPosts() {

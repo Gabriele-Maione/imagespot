@@ -23,10 +23,10 @@ public class UserDAOImpl implements UserDAO {
         con = ConnectionManager.getInstance().getConnection();
     }
 
-    //returns 0 - user registered && 1 - email/username already exists
+    // false -> user registered
+    // true -> email/username already exists
     @Override
     public boolean signup(String username, String name, String email, String password) {
-
         PreparedStatement st, st1;
         ResultSet rs, rs1;
         boolean flag = false;
@@ -70,7 +70,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean login(String username, String password) throws SQLException {
-
         PreparedStatement st;
         ResultSet rs;
         boolean flag = false;
@@ -89,7 +88,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void setBio(String username, String bio) {
-
         PreparedStatement st;
         String insertbio = "UPDATE account SET bio = ? WHERE username = ?";
 
@@ -107,7 +105,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void setGender(String username, String gender) {
-
         PreparedStatement st;
         String insertGender = "UPDATE account SET gender = ? WHERE username = ?";
 
@@ -125,7 +122,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void setAvatar(String username, File avatar) throws IOException {
-
         PreparedStatement st;
         String insertAvatar = "UPDATE account SET avatar = ? WHERE username = ?";
 
@@ -145,7 +141,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void getUserInfo(String username) throws SQLException {
-
         PreparedStatement st;
         ResultSet rs;
 
@@ -168,7 +163,6 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public User getUserInfoForPreview(String username) {
-
         User user = new User();
         user.setUsername(username);
         PreparedStatement st;
@@ -197,18 +191,18 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    public List<User> findUsers(String username) {
-
+    public List<User> findUsers(String searchedUser) {
         List<User> ls = new ArrayList<>();
         PreparedStatement st;
         ResultSet rs;
+
         String query = "SELECT avatar, username, name FROM account " +
-                "WHERE username iLIKE '%'||?||'%' OR name iLIKE '%'||?||'%' " +
+                "WHERE (username iLIKE '%'||?||'%' OR name iLIKE '%'||?||'%' )" +
                 "AND username NOT IN(?) ORDER BY username LIMIT 10";
         try {
             st = con.prepareStatement(query);
-            st.setString(1, username);
-            st.setString(2, username);
+            st.setString(1, searchedUser);
+            st.setString(2, searchedUser);
             st.setString(3, ViewFactory.getInstance().getUser().getUsername());
             rs = st.executeQuery();
             while (rs.next()) {
@@ -276,37 +270,26 @@ public class UserDAOImpl implements UserDAO {
             throw new RuntimeException(e);
         }
     }
-    @Override
-    public int userPostsCount(String username) {
-        String query = "SELECT count(*) FROM post WHERE status = 'Public' AND profile = '" + username +"'";
-        return retrieveCount(query);
-    }
-    @Override
-    public int userFollowerCount(String username) {
-        String query = "SELECT count(*) FROM following WHERE idfollowing = '" + username +"'";
-        return retrieveCount(query);
-    }
 
-    @Override
-    public int userFollowingCount(String username) {
-        String query = "SELECT count(*) FROM following WHERE nickname = '" + username +"'";
-        return retrieveCount(query);
-    }
-
-    public int retrieveCount(String query) {
-
+    public int[] retriveUserStats(String username) {
         Statement st;
         ResultSet rs;
-        int number = 0;
+        String query = "SELECT * FROM user_stats WHERE username = '" + username + "'";
+
+        int[] stats = new int[3];
 
         try {
             st = con.createStatement();
             rs = st.executeQuery(query);
 
-            if (rs.next()) number = rs.getInt(1);
+            if (rs.next()) {
+                stats[0] = rs.getInt(2); //number of post
+                stats[1] = rs.getInt(3); //number of followers
+                stats[2] = rs.getInt(4); //number of followed user
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return number;
+        return stats;
     }
 }
