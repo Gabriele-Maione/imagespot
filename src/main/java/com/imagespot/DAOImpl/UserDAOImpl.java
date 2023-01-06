@@ -13,6 +13,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.imagespot.Utils.Utils.crop;
 import static com.imagespot.Utils.Utils.photoScaler;
 
 public class UserDAOImpl implements UserDAO {

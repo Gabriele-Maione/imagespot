@@ -20,6 +20,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import static com.imagespot.Utils.Utils.crop;
+
 public class SettingsController implements Initializable {
     @FXML
     private TextArea bio;
@@ -94,7 +96,7 @@ public class SettingsController implements Initializable {
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg"));
         avatar = fc.showOpenDialog(imgPreview.getScene().getWindow());
         if (avatar != null) {
-            imgPreview.setImage(new Image((avatar.getAbsolutePath())));
+            imgPreview.setImage(crop(new Image((avatar.getAbsolutePath()))));
             changedAvatarFlag = true;
         }
     }
@@ -125,7 +127,7 @@ public class SettingsController implements Initializable {
             ViewFactory.getInstance().getUser().setGender(cbGender.getValue());
             ViewFactory.getInstance().getUser().setName(fldName.getText());
             if (changedAvatarFlag)
-                ViewFactory.getInstance().getUser().setAvatar(new Image(avatar.getAbsolutePath()));
+                ViewFactory.getInstance().getUser().setAvatar(crop(new Image(avatar.getAbsolutePath())));
             btnApply.textProperty().unbind();
             btnApply.setText("DONE!");
             changedAvatarFlag = false;
@@ -153,11 +155,12 @@ public class SettingsController implements Initializable {
     }
 
     @FXML
-    private void submitBtnOnAction() {
+    private void applyBtnOnAction() {
         if(!changedAvatarFlag && fldName.getText().equals(user.getName())
         && bio.getText().equals(user.getBio()) && cbGender.getValue().equals(user.getGender()))
-
             btnApply.setText("NOTHING CHANGED");
+        else if(fldCustom.isVisible() && fldCustom.getText().trim().isBlank())
+            btnApply.setText("Select a gender");
         else
             updateInfoTask();
     }

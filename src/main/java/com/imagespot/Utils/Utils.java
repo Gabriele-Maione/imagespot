@@ -5,13 +5,18 @@ import com.imagespot.model.Post;
 import javafx.concurrent.Task;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import org.apache.commons.io.FilenameUtils;
 import org.imgscalr.Scalr;
 
 import javax.imageio.ImageIO;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -35,7 +40,6 @@ public class Utils {
 
     public static InputStream photoScaler(File photo) throws IOException {
         BufferedImage bufferedImage = ImageIO.read(photo.getAbsoluteFile());
-
         bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 700, 700, Scalr.OP_ANTIALIAS);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

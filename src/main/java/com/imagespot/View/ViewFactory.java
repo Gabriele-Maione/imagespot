@@ -225,9 +225,10 @@ public class ViewFactory {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/settings-view.fxml"));
         try {
             Parent root = loader.load();
-            Scene scene = new Scene(root, 600, 560);
+            Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setTitle("Settings");
+            stage.setResizable(false);
             stage.initOwner(homeRoot.getScene().getWindow());
             stage.setScene(scene);
             stage.show();

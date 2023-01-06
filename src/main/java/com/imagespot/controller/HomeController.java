@@ -68,7 +68,8 @@ public class HomeController implements Initializable {
         usernameLabel.setText("@" + user.getUsername());
 
         if (user.getAvatar() != null) {
-            profilePic.imageProperty().bind(user.avatarProperty());
+            profilePic.imageProperty().bindBidirectional(user.avatarProperty());
+            profilePic.setImage(crop(profilePic.getImage()));
         }
         homePane.setCenter(ViewFactory.getInstance().getBrowseView());
 

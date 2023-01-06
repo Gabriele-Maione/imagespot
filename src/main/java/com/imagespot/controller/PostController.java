@@ -19,6 +19,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import static com.imagespot.Utils.Utils.crop;
 import static com.imagespot.Utils.Utils.getMostCommonColour;
 
 public class PostController implements Initializable {
@@ -86,7 +87,7 @@ public class PostController implements Initializable {
             name.setText(post.getProfile().getName());
             username.setText("@" + post.getProfile().getUsername());
             if (post.getProfile().getAvatar() != null) {
-                avatar.setImage(post.getProfile().getAvatar());
+                avatar.setImage(crop(post.getProfile().getAvatar()));
             }
             description.setText(post.getDescription());
         });

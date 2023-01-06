@@ -7,6 +7,8 @@ import javafx.scene.image.Image;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import static com.imagespot.Utils.Utils.crop;
+
 public class User {
     private String username;
     private ObjectProperty<String> name;
