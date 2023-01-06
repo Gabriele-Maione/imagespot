@@ -10,10 +10,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="560.0" prefWidth="600.0" stylesheets="@../../css/signinup-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.SettingsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="560.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.SettingsController">
    <children>
       <VBox prefWidth="406.0" spacing="10.0">
          <opaqueInsets>
@@ -23,12 +24,12 @@
             <Insets left="20.0" top="20.0" />
          </padding>
          <children>
-            <Label text="Settings" textFill="#dcc9c9">
+            <Label text="Settings">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
-            <Label text="Si, ho solo incollato addInfo" textFill="#dcc9c9">
+            <Label text="Si, ho solo incollato addInfo">
                <font>
                   <Font size="20.0" />
                </font>
@@ -36,7 +37,7 @@
             <Separator prefWidth="200.0" />
             <VBox prefHeight="73.0" prefWidth="386.0">
                <children>
-                  <Label text="Change avatar" textFill="#dcc9c9">
+                  <Label text="Change avatar">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -46,7 +47,7 @@
             </VBox>
             <VBox prefHeight="67.0" prefWidth="386.0">
                <children>
-                  <Label text="Change Name" textFill="#dcc9c9">
+                  <Label text="Change Name">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -54,19 +55,24 @@
                   <TextField fx:id="fldName" />
                </children>
             </VBox>
-            <VBox prefHeight="67.0" prefWidth="386.0">
+            <VBox fillWidth="false" prefHeight="67.0" prefWidth="386.0">
                <children>
-                  <Label text="Change Gender" textFill="#dcc9c9">
+                  <Label text="Change Gender">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="cbGender" prefWidth="150.0" />
+                  <HBox spacing="5.0">
+                     <children>
+                        <ChoiceBox fx:id="cbGender" prefWidth="150.0" />
+                        <TextField fx:id="fldCustom" promptText="Custom" visible="false" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <VBox prefHeight="134.0" prefWidth="387.0">
                <children>
-                  <Label text="Change Bio" textFill="#dcc9c9">
+                  <Label text="Change Bio">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -78,6 +84,6 @@
          </children>
       </VBox>
       <ImageView fx:id="imgPreview" fitHeight="162.0" fitWidth="162.0" layoutX="424.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="btnApply" layoutX="475.0" layoutY="414.0" mnemonicParsing="false" onAction="#submitBtnOnAction" prefHeight="54.0" prefWidth="110.0" text="Apply" />
+      <Button fx:id="btnApply" layoutX="475.0" layoutY="491.0" mnemonicParsing="false" onAction="#submitBtnOnAction" prefHeight="54.0" prefWidth="110.0" text="Apply" />
    </children>
 </AnchorPane>

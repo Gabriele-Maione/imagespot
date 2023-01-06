@@ -13,7 +13,7 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException, SQLException {
 
         new UserDAOImpl().getUserInfo("Fel");
-        ViewFactory.getInstance().showAuthWindow();
+        ViewFactory.getInstance().showHomeWindow();
     }
 
 

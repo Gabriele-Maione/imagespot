@@ -3,6 +3,7 @@ package com.imagespot.controller;
 import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.User;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,12 +43,12 @@ public class SettingsController implements Initializable {
     private ImageView imgPreview;
 
     @FXML
-    private Label welcomeLabel;
+    private TextField fldCustom;
 
     private File avatar;
     private boolean changedAvatarFlag = false;
 
-    private String[] gender = {"Male", "Female", "Not binary", "Prefer not say"};
+    private final String[] gender = {"Male", "Female", "Not binary", "Prefer not say", "Custom"};
 
     private User user;
 
@@ -62,11 +63,28 @@ public class SettingsController implements Initializable {
 
             imgPreview.setImage(user.getAvatar());
         }
-        cbGender.getItems().addAll(gender);
-        cbGender.setValue(user.getGender());
         fldName.setText(user.getName());
         bio.setText(user.getBio());
+        choiceBoxInit();
 
+    }
+
+    public void choiceBoxInit() {
+        cbGender.getItems().addAll(gender);
+        cbGender.setValue(user.getGender());
+        cbGender.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    if (cbGender.getValue().equals("Custom")) {
+                        fldCustom.setVisible(true);
+                        cbGender.valueProperty().bind(fldCustom.textProperty());
+                    } else if(!newValue.equals(fldCustom.getText())){
+                        cbGender.valueProperty().unbind();
+                        cbGender.setValue(newValue);
+                        fldCustom.setVisible(false);
+                        cbGender.valueProperty().unbind();
+                    }
+                });
     }
 
 
