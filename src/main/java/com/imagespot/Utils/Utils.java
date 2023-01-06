@@ -5,22 +5,15 @@ import com.imagespot.model.Post;
 import javafx.concurrent.Task;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import org.apache.commons.io.FilenameUtils;
 import org.imgscalr.Scalr;
-
 import javax.imageio.ImageIO;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.Buffer;
 import java.util.*;
 import java.util.List;
 
@@ -89,6 +82,9 @@ public class Utils {
             list.add(entry.getValue());
 
         Collections.sort(list);
+
+        if(list.size() == 0)
+            return "255, 255, 255";
 
         int pixel = getPixel(map, list.get(list.size()-1));
 
