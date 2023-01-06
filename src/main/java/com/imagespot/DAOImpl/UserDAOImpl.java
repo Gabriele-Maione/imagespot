@@ -140,6 +140,21 @@ public class UserDAOImpl implements UserDAO {
         ViewFactory.getInstance().getUser().setAvatar(new Image(preview));
     }
 
+    @Override
+    public void deleteAvatar(String username) {
+        Statement st;
+        String deleteAvatar = "UPDATE account SET avatar = NULL WHERE username = '" + username + "'";
+
+
+        try {
+            st = con.createStatement();
+            st.executeUpdate(deleteAvatar);
+            st.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void setName(String username, String name) {
         PreparedStatement st;
         String query = "UPDATE account SET name = ? WHERE username = ?";

@@ -46,9 +46,12 @@ public class SettingsController implements Initializable {
 
     @FXML
     private TextField fldCustom;
+    @FXML
+    private Button deleteBtn;
 
     private File avatar;
     private boolean changedAvatarFlag = false;
+    private boolean deletedAvatarFlag = false;
 
     private final String[] gender = {"Male", "Female", "Not binary", "Prefer not say", "Custom"};
 
@@ -62,7 +65,7 @@ public class SettingsController implements Initializable {
         user = ViewFactory.getInstance().getUser();
 
         if(user.getAvatar() != null) {
-
+            deleteBtn.setVisible(true);
             imgPreview.setImage(user.getAvatar());
         }
         fldName.setText(user.getName());
@@ -101,6 +104,22 @@ public class SettingsController implements Initializable {
         }
     }
 
+    @FXML
+    private void btnDeleteOnAction() {
+
+        if(deleteBtn.getText().equals("Delete")) {
+            imgPreview.setImage(new Image(getClass().getResourceAsStream("/icons/bear_icon.png")));
+            deletedAvatarFlag = true;
+            avatar = null;
+            deleteBtn.setText("Undo");
+        }
+        else if (deleteBtn.getText().equals("Undo")) {
+            imgPreview.setImage(user.getAvatar());
+            deleteBtn.setText("Delete");
+            deletedAvatarFlag = false;
+        }
+    }
+
 
     private void updateInfoTask() {
         final Task<Void> updateTask = new Task<Void>() {
@@ -110,6 +129,8 @@ public class SettingsController implements Initializable {
                 UserDAOImpl userDB = new UserDAOImpl();
                 if (changedAvatarFlag)
                     userDB.setAvatar(user.getUsername(), avatar);
+                else if(deletedAvatarFlag)
+                    userDB.deleteAvatar(user.getUsername());
                 if (!fldName.getText().equals(user.getName()))
                     userDB.setName(user.getUsername(), fldName.getText());
                 if (!cbGender.getValue().equals(user.getGender()))
@@ -126,12 +147,18 @@ public class SettingsController implements Initializable {
             ViewFactory.getInstance().getUser().setBio(bio.getText());
             ViewFactory.getInstance().getUser().setGender(cbGender.getValue());
             ViewFactory.getInstance().getUser().setName(fldName.getText());
-            if (changedAvatarFlag)
+            if (avatar != null) {
                 ViewFactory.getInstance().getUser().setAvatar(crop(new Image(avatar.getAbsolutePath())));
+                deleteBtn.setVisible(true);
+            }
+            else if(deletedAvatarFlag) {
+                ViewFactory.getInstance().getUser().setAvatar(null);
+                deleteBtn.setVisible(false);
+            }
             btnApply.textProperty().unbind();
             btnApply.setText("DONE!");
             changedAvatarFlag = false;
-
+            deletedAvatarFlag = false;
         });
     }
 
@@ -156,7 +183,7 @@ public class SettingsController implements Initializable {
 
     @FXML
     private void applyBtnOnAction() {
-        if(!changedAvatarFlag && fldName.getText().equals(user.getName())
+        if(!deletedAvatarFlag && !changedAvatarFlag && fldName.getText().equals(user.getName())
         && bio.getText().equals(user.getBio()) && cbGender.getValue().equals(user.getGender()))
             btnApply.setText("NOTHING CHANGED");
         else if(fldCustom.isVisible() && fldCustom.getText().trim().isBlank())

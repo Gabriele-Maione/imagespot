@@ -243,10 +243,9 @@ public class ViewFactory {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/add-info-view.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 600, 483);
+            Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setTitle("Add some info!");
-            stage.initOwner(homeRoot.getScene().getWindow());
 
             scene.setFill(Color.TRANSPARENT);
             stage.initStyle(StageStyle.TRANSPARENT);

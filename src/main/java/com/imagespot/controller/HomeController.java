@@ -4,6 +4,7 @@ import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.User;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -67,10 +68,13 @@ public class HomeController implements Initializable {
         nameLabel.textProperty().bind(user.nameProperty());
         usernameLabel.setText("@" + user.getUsername());
 
-        if (user.getAvatar() != null) {
-            profilePic.imageProperty().bindBidirectional(user.avatarProperty());
-            profilePic.setImage(crop(profilePic.getImage()));
-        }
+        if(user.getAvatar() != null)
+        profilePic.setImage(user.getAvatar());
+        user.avatarProperty().addListener((ObservableValue<? extends Image> observable, Image oldVal, Image newVal) -> {
+            if(newVal == null) profilePic.setImage(new Image(getClass().getResourceAsStream("/icons/bear_icon.png")));
+            else profilePic.setImage(user.getAvatar());
+        });
+
         homePane.setCenter(ViewFactory.getInstance().getBrowseView());
 
         addListeners();

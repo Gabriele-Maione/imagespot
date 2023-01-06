@@ -3,6 +3,8 @@ package com.imagespot.controller;
 import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.User;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,31 +20,37 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import static com.imagespot.Utils.Utils.crop;
+
 public class AddInfoController implements Initializable {
+
+    @FXML
+    private ImageView avatarPreview;
+
+    @FXML
+    private TextArea bio;
 
     @FXML
     private Button btnAvatar;
 
     @FXML
-    private Button btnSubmit;
-
-    @FXML
     private ChoiceBox<String> cbGender;
 
     @FXML
-    private TextArea bio;
+    private TextField fldCustom;
+
     @FXML
     private Hyperlink hlinkSkip;
 
     @FXML
-    private ImageView imgPreview;
+    private Button submit;
 
     @FXML
     private Label welcomeLabel;
 
     private File avatar;
 
-    private String[] gender = {"Male", "Female", "Not binary", "Prefer not say"};
+    private final String[] gender = {"Male", "Female", "Not binary", "Prefer not say", "Custom"};
 
     private User user;
 
@@ -54,36 +62,74 @@ public class AddInfoController implements Initializable {
         user = ViewFactory.getInstance().getUser();
 
         welcomeLabel.setText("Welcome, " + user.getName());
-        cbGender.getItems().addAll(gender);
+        choiceBoxInit();
     }
 
+    public void choiceBoxInit() {
+        cbGender.getItems().addAll(gender);
+        cbGender.setValue(user.getGender());
+        cbGender.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    if (cbGender.getValue().equals("Custom")) {
+                        fldCustom.setVisible(true);
+                        cbGender.valueProperty().bind(fldCustom.textProperty());
+                    } else if(!newValue.equals(fldCustom.getText())){
+                        cbGender.valueProperty().unbind();
+                        cbGender.setValue(newValue);
+                        fldCustom.setVisible(false);
+                        cbGender.valueProperty().unbind();
+                    }
+                });
+    }
 
     @FXML
-    private void btnAvatarOnAction() {
+    private void uploadBtnOnAction() {
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg"));
-            avatar = fc.showOpenDialog(imgPreview.getScene().getWindow());
+            avatar = fc.showOpenDialog(avatarPreview.getScene().getWindow());
             if(avatar != null)
-            imgPreview.setImage(new Image((avatar.getAbsolutePath())));
+                avatarPreview.setImage(crop(new Image((avatar.getAbsolutePath()))));
     }
 
     @FXML
-    private void submitBtnOnAction() throws SQLException, IOException {
-        UserDAOImpl userDB = new UserDAOImpl();
-        if(avatar != null)
-            userDB.setAvatar(user.getUsername(), avatar);
-        if(cbGender.getValue() != null)
-            userDB.setGender(user.getUsername(), cbGender.getValue());
-        if(!bio.getText().equals(""))
-            userDB.setBio(user.getUsername(), bio.getText());
+    private void submitBtnOnAction() {
 
-        Stage stage = (Stage)btnSubmit.getScene().getWindow();
-        ViewFactory.getInstance().showHomeWindow();
+        submitTask();
     }
+
+    private void submitTask() {
+        final Task<Void> submitTask = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                UserDAOImpl userDB = new UserDAOImpl();
+                if(avatar != null)
+                    userDB.setAvatar(user.getUsername(), avatar);
+                if(cbGender.getValue() != null)
+                    userDB.setGender(user.getUsername(), cbGender.getValue());
+                if(!bio.getText().equals(""))
+                    userDB.setBio(user.getUsername(), bio.getText());
+                return null;
+            }
+        };
+        new Thread(submitTask).start();
+        submitTask.setOnSucceeded(workerStateEvent -> {
+            Stage stage = (Stage)submit.getScene().getWindow();
+            stage.close();
+            try {
+                new UserDAOImpl().getUserInfo(user.getUsername());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            ViewFactory.getInstance().showHomeWindow();
+        });
+    }
+
     @FXML
-    private void closeButtonOnAction() {
+    private void skipBtnOnAction() {
         Stage stage = (Stage) hlinkSkip.getScene().getWindow();
         stage.close();
+        ViewFactory.getInstance().showHomeWindow();
     }
 
     @FXML
