@@ -1,0 +1,72 @@
+* {
+    -primary: #fdfdfe;
+    -secondary: #e1e3e7;
+    -sidebar-color: #f0f1f4;
+    -scrollbar-thumb-color: #cacacb;
+    -dark: #000000;
+    -fill: #3b3b3b;
+    -first-detail: #7678ed;
+}
+
+.root {
+    -fx-background-color: -primary;
+}
+
+.home-center .scroll-pane{
+    -fx-background: -primary;
+}
+
+.home-center .scroll-pane .track{
+    -fx-background-color: -primary;
+}
+
+.logo{
+    -fx-background-color: -sidebar-color;
+}
+
+.search-user-text-field{
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-background-color: transparent;
+    -fx-border-color: -first-detail;
+    -fx-border-width: 1.25;
+}
+
+.add-post-button{
+    -fx-background-color: -first-detail;
+    -fx-background-radius: 15;
+    -fx-text-fill: #fff;
+}
+
+.menu-button{
+    -fx-background-color: transparent;
+}
+
+.sidebar{
+    -fx-background-color: -sidebar-color;
+}
+
+.sidebar .scroll-pane{
+    -fx-background: -sidebar-color;
+    -fx-background-insets: 0;
+}
+
+.scroll-pane .track{
+    -fx-background-color: -sidebar-color;
+}
+
+.scroll-pane .increment-button,
+.scroll-pane .decrement-button{
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-padding: 0;
+}
+
+.scroll-pane .increment-arrow,
+.scroll-pane .decrement-arrow{
+    -fx-padding: 0 6;
+}
+
+.scroll-pane .thumb{
+    -fx-background-color: -scrollbar-thumb-color;
+}

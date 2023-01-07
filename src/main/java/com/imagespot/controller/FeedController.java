@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.FlowPane;
 
 import java.net.URL;
@@ -25,11 +26,14 @@ public class FeedController implements Initializable {
     @FXML
     private Button btnUpdate;
 
+    @FXML
+    private ProgressIndicator progressIndicator;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        name.setText("Feed");
+        name.setText("Home");
 
         btnUpdateOnAction();
         try {
@@ -62,6 +66,6 @@ public class FeedController implements Initializable {
                 return new PostDAOImpl().getFeed(ViewFactory.getInstance().getUser().getUsername());
             }
         };
-        Utils.retrievePostsTask(recentPostsPreview, flowPane);
+        Utils.retrievePostsTask(recentPostsPreview, flowPane, progressIndicator);
     }
 }

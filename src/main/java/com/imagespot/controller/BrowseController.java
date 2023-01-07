@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.FlowPane;
 
 import java.net.URL;
@@ -24,6 +25,8 @@ public class BrowseController implements Initializable {
     @FXML
     private Button btnUpdate;
 
+    @FXML
+    private ProgressIndicator progressIndicator;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,6 +64,6 @@ public class BrowseController implements Initializable {
                 return new PostDAOImpl().getRecentPost();
             }
         };
-        Utils.retrievePostsTask(recentPostsPreview, flowPane);
+        Utils.retrievePostsTask(recentPostsPreview, flowPane, progressIndicator);
     }
 }

@@ -9,6 +9,7 @@ import com.imagespot.model.User;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,6 +47,9 @@ public class UserPageController {
 
     @FXML
     private Label username;
+
+    @FXML
+    private ProgressIndicator progressIndicator;
 
     private User user;
     public void init(String username) throws SQLException {
@@ -145,7 +149,7 @@ public class UserPageController {
                 return new PostDAOImpl().getUsersPublicPost(user.getUsername());
             }
         };
-        Utils.retrievePostsTask(userPostsTask, flowPane);
+        Utils.retrievePostsTask(userPostsTask, flowPane, progressIndicator);
     }
 
 }

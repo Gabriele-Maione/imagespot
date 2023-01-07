@@ -23,17 +23,13 @@ import static com.imagespot.Utils.Utils.crop;
 
 
 public class HomeController implements Initializable {
-
-    @FXML
-    private GridPane postGrid;
     @FXML
     private Label nameLabel;
     @FXML
     private Label usernameLabel;
     @FXML
     private ImageView profilePic;
-    @FXML
-    private ImageView searchIcon;
+
     @FXML
     private Button btnAddPhoto;
     @FXML
@@ -85,7 +81,6 @@ public class HomeController implements Initializable {
         hbFeed.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getFeedView()));
 
         //search field
-        searchIcon.setOnMouseClicked(event -> searchUser());
         fldSearch.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER)) searchUser();
         });

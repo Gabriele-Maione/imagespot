@@ -3,9 +3,10 @@ package com.imagespot.Utils;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
 import javafx.concurrent.Task;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import org.apache.commons.io.FilenameUtils;
@@ -20,28 +21,30 @@ import java.util.List;
 public class Utils {
 
     public static Image crop(Image img) {
-        double d = Math.min(img.getWidth(),img.getHeight());
-        double x = (d-img.getWidth())/2;
-        double y = (d-img.getHeight())/2;
+        int width = (int) img.getWidth();
+        int height = (int) img.getHeight();
+        int cropSize = Math.min(width, height);
 
-        Canvas canvas = new Canvas(d, d);
-        GraphicsContext g = canvas.getGraphicsContext2D();
-        g.drawImage(img, x, y);
+        // Calculate the x and y coordinates of the top-left corner of the cropped image
+        int x = (width - cropSize) / 2;
+        int y = (height - cropSize) / 2;
 
-        return canvas.snapshot(null, null);
+        PixelReader pixelReader = img.getPixelReader();
+        return new WritableImage(pixelReader, x, y, cropSize, cropSize);
     }
 
     public static InputStream photoScaler(File photo) throws IOException {
         BufferedImage bufferedImage = ImageIO.read(photo.getAbsoluteFile());
         bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 700, 700, Scalr.OP_ANTIALIAS);
+        bufferedImage = Scalr.crop(bufferedImage, (bufferedImage.getWidth() - Math.min(bufferedImage.getWidth(), bufferedImage.getHeight())) / 2,
+                (bufferedImage.getHeight() - Math.min(bufferedImage.getWidth(), bufferedImage.getHeight())) / 2, Math.min(bufferedImage.getWidth(), bufferedImage.getHeight()),
+                Math.min(bufferedImage.getWidth(), bufferedImage.getHeight()));
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BufferedImage output = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
         output.createGraphics()
                 .drawImage(bufferedImage, 0, 0, Color.WHITE, null);
-
         ImageIO.write(output, "jpeg", baos);
-
         return new ByteArrayInputStream(baos.toByteArray());
     }
 
@@ -126,9 +129,11 @@ public class Utils {
         return true;
     }
 
-    public static void retrievePostsTask(Task<java.util.List<Post>> task, FlowPane flowPane) {
+    public static void retrievePostsTask(Task<java.util.List<Post>> task, FlowPane flowPane, ProgressIndicator progressIndicator) {
         new Thread(task).start();
+        progressIndicator.visibleProperty().bind(task.runningProperty());
         task.setOnSucceeded(workerStateEvent -> {
+
             List<Post> posts = task.getValue();
 
             for (Post post : posts) {

@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
@@ -24,6 +25,9 @@ public class YourPhotoController implements Initializable {
     private Label name;
     @FXML
     private Button btnUpdate;
+
+    @FXML
+    private ProgressIndicator progressIndicator;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -60,7 +64,7 @@ public class YourPhotoController implements Initializable {
                 return new PostDAOImpl().getUsersPost(ViewFactory.getInstance().getUser().getUsername());
             }
         };
-        Utils.retrievePostsTask(yourGallery, flowPane);
+        Utils.retrievePostsTask(yourGallery, flowPane, progressIndicator);
     }
 
 }
