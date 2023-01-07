@@ -3,43 +3,37 @@ package com.imagespot.Utils;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
 import javafx.concurrent.Task;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import org.apache.commons.io.FilenameUtils;
 import org.imgscalr.Scalr;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 public class Utils {
 
     public static Image crop(Image img) {
-        int width = (int) img.getWidth();
-        int height = (int) img.getHeight();
-        int cropSize = Math.min(width, height);
+        double d = Math.min(img.getWidth(),img.getHeight());
+        double x = (d-img.getWidth())/2;
+        double y = (d-img.getHeight())/2;
 
-        // Calculate the x and y coordinates of the top-left corner of the cropped image
-        int x = (width - cropSize) / 2;
-        int y = (height - cropSize) / 2;
+        Canvas canvas = new Canvas(d, d);
+        GraphicsContext g = canvas.getGraphicsContext2D();
+        g.drawImage(img, x, y);
 
-        PixelReader pixelReader = img.getPixelReader();
-        WritableImage croppedImage = new WritableImage(pixelReader, x, y, cropSize, cropSize);
-        return croppedImage;
+        return canvas.snapshot(null, null);
     }
 
     public static InputStream photoScaler(File photo) throws IOException {
         BufferedImage bufferedImage = ImageIO.read(photo.getAbsoluteFile());
         bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 700, 700, Scalr.OP_ANTIALIAS);
-        bufferedImage = Scalr.crop(bufferedImage, (bufferedImage.getWidth() - Math.min(bufferedImage.getWidth(), bufferedImage.getHeight())) / 2,
-                (bufferedImage.getHeight() - Math.min(bufferedImage.getWidth(), bufferedImage.getHeight())) / 2, Math.min(bufferedImage.getWidth(), bufferedImage.getHeight()),
-                Math.min(bufferedImage.getWidth(), bufferedImage.getHeight()));
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BufferedImage output = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -69,16 +63,17 @@ public class Utils {
         int height = (int) image.getHeight();
         HashMap<Integer, Integer> map = new HashMap<>();
 
-        for (int i = 0; i < width; i += 10) {
-            for (int j = 0; j < height; j += 10) {
+        for(int i=0; i < width ; i+=10) {
+            for(int j=0; j < height ; j+=10) {
                 int rgb = image.getPixelReader().getArgb(i, j);
                 int[] rgbArr = getRGBArr(rgb);
-
-                Integer counter = map.get(rgb);
-                if (counter == null)
-                    counter = 0;
-                counter++;
-                map.put(rgb, counter);
+                if (!isGray(rgbArr)) {
+                    Integer counter = map.get(rgb);
+                    if (counter == null)
+                        counter = 0;
+                    counter++;
+                    map.put(rgb, counter);
+                }
             }
         }
 
@@ -87,6 +82,9 @@ public class Utils {
             list.add(entry.getValue());
 
         Collections.sort(list);
+
+        if(list.size() == 0)
+            return "255, 255, 255";
 
         int pixel = getPixel(map, list.get(list.size()-1));
 
