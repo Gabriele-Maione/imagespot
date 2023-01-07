@@ -13,7 +13,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.imagespot.Utils.Utils.crop;
 import static com.imagespot.Utils.Utils.photoScaler;
 
 public class UserDAOImpl implements UserDAO {
@@ -137,7 +136,6 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        ViewFactory.getInstance().getUser().setAvatar(new Image(preview));
     }
 
     @Override

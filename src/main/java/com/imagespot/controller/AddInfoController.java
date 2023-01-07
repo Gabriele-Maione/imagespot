@@ -20,7 +20,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import static com.imagespot.Utils.Utils.crop;
 
 public class AddInfoController implements Initializable {
 
@@ -89,7 +88,7 @@ public class AddInfoController implements Initializable {
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg"));
             avatar = fc.showOpenDialog(avatarPreview.getScene().getWindow());
             if(avatar != null)
-                avatarPreview.setImage(crop(new Image((avatar.getAbsolutePath()))));
+                avatarPreview.setImage((new Image((avatar.getAbsolutePath()))));
     }
 
     @FXML

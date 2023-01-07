@@ -1,11 +1,8 @@
 package com.imagespot.controller;
 
-import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.User;
-import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -18,13 +15,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.imagespot.Utils.Utils.crop;
+
 
 public class HomeController implements Initializable {
 
@@ -69,10 +65,10 @@ public class HomeController implements Initializable {
         usernameLabel.setText("@" + user.getUsername());
 
         if(user.getAvatar() != null)
-        profilePic.setImage(user.getAvatar());
+        profilePic.setImage(crop(user.getAvatar()));
         user.avatarProperty().addListener((ObservableValue<? extends Image> observable, Image oldVal, Image newVal) -> {
             if(newVal == null) profilePic.setImage(new Image(getClass().getResourceAsStream("/icons/bear_icon.png")));
-            else profilePic.setImage(user.getAvatar());
+            else profilePic.setImage(crop(user.getAvatar()));
         });
 
         homePane.setCenter(ViewFactory.getInstance().getBrowseView());

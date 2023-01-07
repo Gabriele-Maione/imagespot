@@ -15,12 +15,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import static com.imagespot.Utils.Utils.crop;
+
 
 public class SettingsController implements Initializable {
     @FXML
@@ -148,8 +147,9 @@ public class SettingsController implements Initializable {
             ViewFactory.getInstance().getUser().setGender(cbGender.getValue());
             ViewFactory.getInstance().getUser().setName(fldName.getText());
             if (avatar != null) {
-                ViewFactory.getInstance().getUser().setAvatar(crop(new Image(avatar.getAbsolutePath())));
+                ViewFactory.getInstance().getUser().setAvatar((new Image(avatar.getAbsolutePath())));
                 deleteBtn.setVisible(true);
+                deleteBtn.setText("Delete");
             }
             else if(deletedAvatarFlag) {
                 ViewFactory.getInstance().getUser().setAvatar(null);

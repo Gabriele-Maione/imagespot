@@ -11,7 +11,6 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 
 import static com.imagespot.Utils.TimeUtil.toDuration;
-import static com.imagespot.Utils.Utils.crop;
 
 
 public class ImagesController {
@@ -37,11 +36,11 @@ public class ImagesController {
     public void setData(Post pst) {
 
         this.post = pst;
-        image_preview.setImage(crop(post.getPreview()));
+        image_preview.setImage((post.getPreview()));
         name.setText(post.getProfile().getName());
         username.setText("@" + post.getProfile().getUsername());
         if (post.getProfile().getAvatar() != null) {
-            avatar.setImage(crop(post.getProfile().getAvatar()));
+            avatar.setImage((post.getProfile().getAvatar()));
         }
 
         passedTime.setText(toDuration(System.currentTimeMillis()-post.getDate().getTime()));

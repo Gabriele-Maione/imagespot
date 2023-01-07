@@ -48,7 +48,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="btnFollow" mnemonicParsing="false" text="Button" />
+                                    <Button fx:id="btnDownload" mnemonicParsing="false" onAction="#downloadBtnOnAction" text="Download" />
                                  </children>
                               </VBox>
                            </children>

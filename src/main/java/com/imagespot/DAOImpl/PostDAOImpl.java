@@ -118,7 +118,7 @@ public class PostDAOImpl implements PostDAO {
         Post post = new Post();
         PreparedStatement st;
         ResultSet rs;
-        String query = "SELECT profile, description, device FROM post WHERE idimage = ?";
+        String query = "SELECT profile, description, extension, device FROM post WHERE idimage = ?";
         try {
             st = con.prepareStatement(query);
             st.setInt(1, id);
@@ -126,6 +126,7 @@ public class PostDAOImpl implements PostDAO {
             if (rs.next()) {
                 post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(1)));
                 post.setDescription(rs.getString(2));
+                post.setExtension(rs.getString(3));
                 //TODO: add device dao and things
                 //post.setDevice();
             }
@@ -147,6 +148,25 @@ public class PostDAOImpl implements PostDAO {
             rs = st.executeQuery();
             if (rs.next()) {
                 output = (new Image(rs.getBinaryStream(1)));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return output;
+    }
+
+    public InputStream getPhotoFile(int id) {
+
+        InputStream output = null;
+        PreparedStatement st;
+        ResultSet rs;
+        String query = "SELECT photo FROM post WHERE idimage = ?";
+        try {
+            st = con.prepareStatement(query);
+            st.setInt(1, id);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                output = rs.getBinaryStream(1);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

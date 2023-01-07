@@ -103,6 +103,9 @@ public class AddPhotoController implements Initializable {
 
         user = ViewFactory.getInstance().getUser();
         cbStatus.getSelectionModel().selectFirst();
+        cbType.setValue("Smartphone");
+        fldBrand.setText("Xiaomi");
+        fldModel.setText("Mi8");
     }
 
 
