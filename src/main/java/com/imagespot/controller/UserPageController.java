@@ -149,7 +149,19 @@ public class UserPageController {
                 return new PostDAOImpl().getUsersPublicPost(user.getUsername());
             }
         };
-        Utils.retrievePostsTask(userPostsTask, flowPane, progressIndicator);
-    }
+        new Thread(userPostsTask).start();
+        progressIndicator.visibleProperty().bind(userPostsTask.runningProperty());
+        userPostsTask.setOnSucceeded(workerStateEvent -> {
 
+            List<Post> posts = userPostsTask.getValue();
+
+            for (Post post : posts) {
+
+                VBox postBox = ViewFactory.getInstance().getPostPreview(post);
+
+                flowPane.getChildren().add(postBox);
+
+            }
+        });
+    }
 }

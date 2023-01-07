@@ -129,21 +129,4 @@ public class Utils {
         return true;
     }
 
-    public static void retrievePostsTask(Task<java.util.List<Post>> task, FlowPane flowPane, ProgressIndicator progressIndicator) {
-        new Thread(task).start();
-        progressIndicator.visibleProperty().bind(task.runningProperty());
-        task.setOnSucceeded(workerStateEvent -> {
-
-            List<Post> posts = task.getValue();
-
-            for (Post post : posts) {
-
-                VBox postBox = ViewFactory.getInstance().getPostPreview(post);
-
-                flowPane.getChildren().add(postBox);
-
-            }
-        });
-    }
-
 }

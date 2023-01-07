@@ -11,10 +11,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
@@ -67,26 +67,23 @@
                <children>
                   <HBox>
                      <children>
-                        <StackPane>
+                        <HBox alignment="CENTER_LEFT" fillHeight="false">
                            <children>
-                              <TextField fx:id="fldSearch" focusTraversable="false" prefWidth="180.0" promptText="Search users" styleClass="search-user-text-field">
-                                 <StackPane.margin>
-                                    <Insets />
-                                 </StackPane.margin>
+                              <TextField fx:id="fldSearch" focusTraversable="false" prefHeight="27.0" prefWidth="175.0" promptText="Search users" styleClass="search-user-text-field">
                                  <font>
                                     <Font name="Open Sans" size="12.0" />
                                  </font>
                                  <padding>
-                                    <Insets bottom="5.0" left="5.0" right="25.0" top="5.0" />
+                                    <Insets bottom="6.0" left="10.0" right="25.0" top="5.0" />
                                  </padding>
                               </TextField>
-                              <FontIcon iconColor="#c3c3c3" iconLiteral="fas-search" StackPane.alignment="CENTER_RIGHT">
-                                 <StackPane.margin>
-                                    <Insets right="10.0" />
-                                 </StackPane.margin>
-                              </FontIcon>
+                              <AnchorPane fx:id="searchButton" prefHeight="30.0" prefWidth="34.0" styleClass="btn-search">
+                                 <children>
+                                    <FontIcon iconColor="#616161" iconLiteral="fas-search" iconSize="15" layoutX="9.0" layoutY="21.0" styleClass="btn-search" />
+                                 </children>
+                              </AnchorPane>
                            </children>
-                        </StackPane>
+                        </HBox>
                         <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                            <children>
                               <Button fx:id="btnAddPhoto" mnemonicParsing="false" styleClass="add-post-button" text="Add Photo" textFill="WHITE" HBox.hgrow="ALWAYS">
@@ -186,7 +183,7 @@
                                     <Insets left="16.0" />
                                  </VBox.margin>
                               </Label>
-                              <HBox fx:id="hbFeed" alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0">
+                              <HBox fx:id="hbFeed" alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
                                     <Label text="Home" textFill="#586067">
                                        <font>
@@ -204,7 +201,7 @@
                                     <Insets left="8.0" />
                                  </padding>
                               </HBox>
-                              <HBox fx:id="hbBrowse" alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0">
+                              <HBox fx:id="hbBrowse" alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
                                     <Label text="Explore" textFill="#586067">
                                        <font>
@@ -222,7 +219,7 @@
                                     <Insets left="8.0" />
                                  </padding>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0">
+                              <HBox alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
                                     <Label text="Top place" textFill="#586067">
                                        <font>
@@ -257,7 +254,7 @@
                                     <Insets left="16.0" />
                                  </VBox.margin>
                               </Label>
-                              <HBox fx:id="hbYourGallery" alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0">
+                              <HBox fx:id="hbYourGallery" alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
                                     <Label text="Your Gallery" textFill="#586067">
                                        <font>
@@ -275,7 +272,7 @@
                                     <Insets left="8.0" />
                                  </padding>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0">
+                              <HBox alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
                                     <Label text="Favorites" textFill="#586067">
                                        <font>
@@ -293,7 +290,7 @@
                                     <Insets left="8.0" />
                                  </padding>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0">
+                              <HBox alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
                                     <Label text="Tagged" textFill="#586067">
                                        <font>

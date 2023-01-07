@@ -55,7 +55,7 @@ public class ViewFactory {
         if (feedView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
-                loader.setController(new FeedController());
+                loader.setController(new CenterPaneController("Feed"));
                 feedView = loader.load();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -68,7 +68,7 @@ public class ViewFactory {
         if (browseView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
-                loader.setController(new BrowseController());
+                loader.setController(new CenterPaneController("Browse"));
                 browseView = loader.load();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -82,7 +82,7 @@ public class ViewFactory {
         if(yourGallery == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
-                loader.setController(new YourPhotoController());
+                loader.setController(new CenterPaneController("Your Gallery"));
                 yourGallery = loader.load();
             } catch (Exception e) {
                 e.printStackTrace();

@@ -25,11 +25,32 @@
 }
 
 .search-user-text-field{
-    -fx-background-radius: 15;
-    -fx-border-radius: 15;
-    -fx-background-color: transparent;
+    -fx-background-radius: 15 0 0 15;
+    -fx-border-radius: 15 0 0 15;
     -fx-border-color: -first-detail;
     -fx-border-width: 1.25;
+}
+
+.transparent-background {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+.btn-search {
+    -fx-background-color: #cacacb;
+    -fx-background-radius: 0 15 15 0;
+    -fx-border-radius: 0 15 15 0;
+    -fx-border-color: -first-detail;
+    -fx-border-width: 1.25 1.25 1.25 0;
+}
+
+.btn-search:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #95ade5;
+}
+
+.btn-search:pressed {
+    -fx-background-color: -first-detail;
 }
 
 .add-post-button{
@@ -40,6 +61,17 @@
 
 .menu-button{
     -fx-background-color: transparent;
+}
+
+/*side bar buttons*/
+.sidebar-item:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #babae7;
+}
+
+.sidebar-item:pressed {
+    -fx-cursor: hand;
+    -fx-background-color: #a1a1d2;
 }
 
 .sidebar{

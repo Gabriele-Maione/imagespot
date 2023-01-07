@@ -1,0 +1,15 @@
+* {
+    -primary: #fdfdfe;
+    -secondary: #e1e3e7;
+    -sidebar-color: #f0f1f4;
+    -scrollbar-thumb-color: #cacacb;
+    -dark: #000000;
+    -fill: #3b3b3b;
+    -first-detail: #7678ed;
+}
+
+Button {
+    -fx-background-color: -first-detail;
+    -fx-background-radius: 15;
+    -fx-text-fill: #fff;
+}

@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -50,6 +51,8 @@ public class HomeController implements Initializable {
     private MenuItem settingsItem;
     @FXML
     private MenuItem logoutItem;
+    @FXML
+    private AnchorPane searchButton;
 
     private User user;
 
@@ -84,6 +87,7 @@ public class HomeController implements Initializable {
         fldSearch.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER)) searchUser();
         });
+        searchButton.setOnMouseClicked(event -> searchUser());
 
         //user's menu bar
         myProfileItem.setOnAction(actionEvent -> homePane.setCenter(ViewFactory.getInstance().getInstance()

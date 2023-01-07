@@ -118,7 +118,7 @@ public class PostDAOImpl implements PostDAO {
         Post post = new Post();
         PreparedStatement st;
         ResultSet rs;
-        String query = "SELECT profile, description, extension, device FROM post WHERE idimage = ?";
+        String query = "SELECT profile, description, extension, idimage, device FROM post WHERE idimage = ?";
         try {
             st = con.prepareStatement(query);
             st.setInt(1, id);
@@ -127,6 +127,7 @@ public class PostDAOImpl implements PostDAO {
                 post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(1)));
                 post.setDescription(rs.getString(2));
                 post.setExtension(rs.getString(3));
+                post.setIdImage(rs.getInt(4));
                 //TODO: add device dao and things
                 //post.setDevice();
             }

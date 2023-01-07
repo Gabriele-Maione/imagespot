@@ -141,10 +141,13 @@ public class PostController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*." + post.getExtension()));
+        fileChooser.setInitialFileName("photo_" + post.getIdImage());
 
         File file = fileChooser.showSaveDialog(username.getScene().getWindow());
-        btnDownload.setDisable(true);
-        retrievePhotoFileTask(file);
+        if(file != null) {
+            btnDownload.setDisable(true);
+            retrievePhotoFileTask(file);
+        }
     }
 
     private void retrievePhotoFileTask(File file) {
@@ -166,6 +169,8 @@ public class PostController implements Initializable {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                outputStream.close();
+                inputStream.close();
                 return null;
             }
         };
