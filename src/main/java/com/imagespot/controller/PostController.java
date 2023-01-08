@@ -1,5 +1,6 @@
 package com.imagespot.controller;
 
+import com.imagespot.DAOImpl.BookmarkDAOImpl;
 import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
@@ -9,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -23,7 +25,7 @@ import java.util.ResourceBundle;
 
 import static com.imagespot.Utils.Utils.getMostCommonColour;
 
-public class PostController implements Initializable {
+public class PostController {
 
     @FXML
     private HBox root;
@@ -54,22 +56,20 @@ public class PostController implements Initializable {
     private ProgressIndicator loadingIndicator;
     @FXML
     private Button btnDownload;
+    @FXML
+    private ToggleButton likeBtn;
     private Post post;
 
     private Image image;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
     public void init(int idpost) throws SQLException {
 
         //imgContainer is the pane that contains the image
         //photo is my imageview
         btnDownload.setDisable(true);
+        likeBtn.setDisable(true);
         photo.fitWidthProperty().bind(root.widthProperty().subtract(postSidebar.widthProperty()));
         photo.fitHeightProperty().bind(root.heightProperty());
-
         invokeInit(idpost);
     }
 
@@ -94,6 +94,7 @@ public class PostController implements Initializable {
                 avatar.setImage((post.getProfile().getAvatar()));
             }
             description.setText(post.getDescription());
+            initLikeBtn();
         });
     }
 
@@ -118,6 +119,21 @@ public class PostController implements Initializable {
 
     }
 
+    private void initLikeBtn() {
+        Task<Boolean> isLikedTask = new Task<Boolean>() {
+            @Override
+            protected Boolean call() throws Exception {
+                return new BookmarkDAOImpl().isLiked(post.getIdImage());
+            }
+        };
+        new Thread(isLikedTask).start();
+        isLikedTask.setOnSucceeded(workerStateEvent -> {
+            likeBtn.setDisable(false);
+            if(isLikedTask.getValue())
+                likeBtn.setSelected(true);
+            else likeBtn.setSelected(false);
+        });
+    }
 
     private void setPostBackgroundColor(){
         Task<String> postBackgroundTask = new Task<>() {
@@ -136,7 +152,30 @@ public class PostController implements Initializable {
     }
 
     @FXML
-    private void downloadBtnOnAction() throws IOException, SQLException {
+    private void likeBtnOnAction() throws SQLException {
+
+        likeAction();
+    }
+
+    private void likeAction() {
+        final Task<Void> setLike = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                if(likeBtn.isSelected())
+                    new BookmarkDAOImpl().addBookmark(post.getIdImage());
+                else
+                    new BookmarkDAOImpl().removeBookmark(post.getIdImage());
+                return null;
+            }
+        };
+        new Thread(setLike).start();
+        setLike.setOnSucceeded(workerStateEvent -> {
+
+        });
+    }
+
+    @FXML
+    private void downloadBtnOnAction() {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save");

@@ -1,5 +1,6 @@
 package com.imagespot.controller;
 
+import com.imagespot.DAOImpl.BookmarkDAOImpl;
 import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
@@ -14,6 +15,7 @@ import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -78,6 +80,10 @@ public class CenterPaneController implements Initializable {
                     }
                     case "Feed" -> {
                         return new PostDAOImpl().getFeed(ViewFactory.getInstance().getUser().getUsername());
+                    }
+                    case "Favorites" -> {
+                        new BookmarkDAOImpl().getUserBookmarks();
+                        return ViewFactory.getInstance().getUser().getBookmarks();
                     }
                 }
                 return  null;

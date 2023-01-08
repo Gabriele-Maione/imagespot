@@ -272,7 +272,7 @@
                                     <Insets left="8.0" />
                                  </padding>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
+                              <HBox fx:id="hbFavorites" alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
                                     <Label text="Favorites" textFill="#586067">
                                        <font>

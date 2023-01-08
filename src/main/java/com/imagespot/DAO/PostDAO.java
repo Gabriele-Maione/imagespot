@@ -25,4 +25,5 @@ public interface PostDAO {
     List<Post> getFeed(String username) throws SQLException;
     public Image getPhoto(int id);
     public Post getPost(int id);
+    public Post getPreviewPost(int id);
 }

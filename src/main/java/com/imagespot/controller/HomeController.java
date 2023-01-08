@@ -38,6 +38,8 @@ public class HomeController implements Initializable {
     @FXML
     private HBox hbFeed;
     @FXML
+    private HBox hbFavorites;
+    @FXML
     private BorderPane homePane;
     @FXML
     private TextField fldSearch;
@@ -78,6 +80,7 @@ public class HomeController implements Initializable {
         hbBrowse.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getBrowseView()));
         hbYourGallery.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getYourGalleryView()));
         hbFeed.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getFeedView()));
+        hbFavorites.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getFavoritesView()));
 
         //search field
         fldSearch.setOnKeyPressed(event -> {
