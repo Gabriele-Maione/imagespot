@@ -2,6 +2,7 @@ package com.imagespot.DAOImpl;
 
 import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.PostDAO;
+import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Device;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
@@ -63,7 +64,8 @@ public class PostDAOImpl implements PostDAO {
 
         String query = "SELECT preview, profile, posting_date, idimage FROM post WHERE profile = '"
                 + username + "' ORDER BY posting_date DESC LIMIT 20";
-        return getPreviews(query);
+        ViewFactory.getInstance().getUser().setPosts((ArrayList<Post>)getPreviews(query));
+        return ViewFactory.getInstance().getUser().getPosts();
     }
 
     @Override
@@ -154,6 +156,32 @@ public class PostDAOImpl implements PostDAO {
             throw new RuntimeException(e);
         }
         return output;
+    }
+    
+    @Override 
+    public Post getPreviewPost(int id) {
+        Post post = null;
+        Statement st;
+        ResultSet rs;
+        String query = "SELECT preview, profile, posting_date, idimage FROM post " +
+                "WHERE idimage = '" + id + "'";
+
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            if(rs.next()) {
+                post = new Post();
+                post.setIdImage(rs.getInt(4));
+                post.setPreview(new Image(rs.getBinaryStream(1)));
+                post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
+                post.setDate(rs.getTimestamp(3));
+                post.setIdImage(rs.getInt(4));
+            }
+            st.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return post;
     }
 
     public InputStream getPhotoFile(int id) {

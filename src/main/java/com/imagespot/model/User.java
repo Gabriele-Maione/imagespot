@@ -18,7 +18,7 @@ public class User {
     private ObjectProperty<Image> avatar;
     private ArrayList<User> following;
     private ArrayList<Post> posts;
-    private ArrayList<Reaction> reaction;
+    private ArrayList<Post> bookmark;
 
     public User() {
         this.avatar = new SimpleObjectProperty<Image>();
@@ -41,12 +41,12 @@ public class User {
         this.posts = posts;
     }
 
-    public ArrayList<Reaction> getReaction() {
-        return reaction;
+    public ArrayList<Post> getBookmarks() {
+        return bookmark;
     }
 
-    public void setReaction(ArrayList<Reaction> reaction) {
-        this.reaction = reaction;
+    public void setBookmarks(ArrayList<Post> bookmark) {
+        this.bookmark = bookmark;
     }
 
     public ObjectProperty<Image> avatarProperty() { return avatar; }

@@ -25,7 +25,7 @@ public class ViewFactory {
     private VBox browseView;
     private VBox yourGallery;
     private VBox feedView;
-
+    private VBox favoritesView;
     private Parent homeRoot;
     private static User user;
 
@@ -63,6 +63,20 @@ public class ViewFactory {
         }
         return feedView;
     }
+    public VBox getFavoritesView() {
+
+        if (favoritesView == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
+                loader.setController(new CenterPaneController("Favorites"));
+                favoritesView = loader.load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return favoritesView;
+    }
+
     public VBox getBrowseView() {
 
         if (browseView == null) {

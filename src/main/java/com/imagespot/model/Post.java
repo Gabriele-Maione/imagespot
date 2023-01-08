@@ -21,14 +21,14 @@ public class Post {
     private Location location;
     private Image preview;
     private ArrayList<User> taggedUsers;
-    private ArrayList<Reaction> reactions;
+    private ArrayList<User> likes;
 
-    public ArrayList<Reaction> getReactions() {
-        return reactions;
+    public ArrayList<User> getReactions() {
+        return likes;
     }
 
-    public void setReactions(ArrayList<Reaction> reactions) {
-        this.reactions = reactions;
+    public void setReactions(ArrayList<User> likes) {
+        this.likes = likes;
     }
 
 
