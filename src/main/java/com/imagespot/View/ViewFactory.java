@@ -12,7 +12,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -20,12 +19,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ViewFactory {
-
     private static ViewFactory viewFactory;
     private VBox browseView;
     private VBox yourGallery;
     private VBox feedView;
-
     private Parent homeRoot;
     private static User user;
 
@@ -37,7 +34,6 @@ public class ViewFactory {
     }
 
     public static synchronized ViewFactory getInstance() {
-
         if(viewFactory == null) {
             viewFactory = new ViewFactory();
         }
@@ -51,7 +47,6 @@ public class ViewFactory {
     }
 
     public VBox getFeedView() {
-
         if (feedView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
@@ -64,7 +59,6 @@ public class ViewFactory {
         return feedView;
     }
     public VBox getBrowseView() {
-
         if (browseView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
@@ -78,7 +72,6 @@ public class ViewFactory {
     }
 
     public VBox getYourGalleryView() {
-
         if(yourGallery == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
@@ -92,7 +85,6 @@ public class ViewFactory {
     }
 
     public VBox getPostPreview(Post post) {
-
         VBox postPreview = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/images-preview.fxml"));
@@ -106,7 +98,6 @@ public class ViewFactory {
     }
 
     public HBox getUserPreview(User user) {
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/user-preview-view.fxml"));
         HBox userPreview;
         try {
@@ -119,8 +110,20 @@ public class ViewFactory {
         return userPreview;
     }
 
-    public VBox getSearchedUsers(String string) {
+    public HBox getFollowedUserPreview(User user) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/followed-user-preview-view.fxml"));
+        HBox userPreview;
+        try {
+            userPreview = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        UserPreviewController controller = loader.getController();
+        controller.init(user);
+        return userPreview;
+    }
 
+    public VBox getSearchedUsers(String string) {
         VBox searchedUsers;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/searched-users-view.fxml"));
@@ -135,7 +138,6 @@ public class ViewFactory {
     }
 
     public ScrollPane getUserPage(String username) {
-
         ScrollPane userPage;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/user-page-view.fxml"));
@@ -151,17 +153,14 @@ public class ViewFactory {
     public HBox getPostView(int idpost) {
         HBox postRoot = null;
 
-        if(openedImages == null){
+        if(openedImages == null)
             openedImages = new HashMap<>();
-        }
 
-        if(openedImages.get(idpost) != null){
+        if(openedImages.get(idpost) != null)
             return openedImages.get(idpost);
-        }
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/post-view.fxml"));
-
 
             postRoot = loader.load();
             openedImages.put(idpost, postRoot);
@@ -177,14 +176,12 @@ public class ViewFactory {
     }
 
     public void closeSession() {
-
         Stage stage = (Stage)homeRoot.getScene().getWindow();
         stage.close();
         viewFactory = null;
     }
 
     public void showAuthWindow() {
-
         user = null; //TODO: maybe not the best to reset the user here
         Scene scene;
         Stage stage = new Stage();

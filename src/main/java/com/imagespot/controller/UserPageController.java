@@ -128,7 +128,7 @@ public class UserPageController {
         final Task<int[]> userStats = new Task<>() {
             @Override
             protected int[] call() throws Exception {
-                return new UserDAOImpl().retriveUserStats(username);
+                return new UserDAOImpl().retrieveUserStats(username);
             }
         };
 

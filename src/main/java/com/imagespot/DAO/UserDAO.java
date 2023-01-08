@@ -32,6 +32,6 @@ public interface UserDAO {
     boolean checkFollow(String username);
     void removeFollow(String username);
     void setFollow(String username);
-    int[] retriveUserStats(String username);
-
+    int[] retrieveUserStats(String username);
+    List<User> getFollowedUsers(String username);
 }

@@ -14,20 +14,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class UserPreviewController implements Initializable {
-
-
     @FXML
     private ImageView avatar;
-
     @FXML
     private HBox hboxUser;
-
     @FXML
     private Label name;
-
     @FXML
     private Label username;
-
     private User user;
 
     @Override
@@ -36,13 +30,12 @@ public class UserPreviewController implements Initializable {
     }
 
     public void init(User user) {
-
         this.user = user;
         if (user.getAvatar() != null) {
             avatar.setImage(user.getAvatar());
         }
         name.setText(user.getName());
-        username.setText(user.getUsername());
+        username.setText("@" + user.getUsername());
     }
 
     public void userPreviewOnClick() {

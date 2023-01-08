@@ -45,12 +45,12 @@
             </HBox>
          </children>
       </HBox>
-      <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="transparent" stylesheets="@../../css/home-style.css" VBox.vgrow="ALWAYS">
+      <ScrollPane fitToWidth="true" styleClass="transparent" stylesheets="@../../css/home-style.css" VBox.vgrow="ALWAYS">
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin>
          <content>
-            <FlowPane fx:id="flowPane" prefHeight="200.0" prefWidth="200.0" styleClass="transparent" />
+            <FlowPane fx:id="flowPane" styleClass="transparent" />
          </content>
       </ScrollPane>
    </children>

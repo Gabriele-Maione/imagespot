@@ -298,8 +298,8 @@ public class UserDAOImpl implements UserDAO {
             throw new RuntimeException(e);
         }
     }
-
-    public int[] retriveUserStats(String username) {
+    @Override
+    public int[] retrieveUserStats(String username) {
         Statement st;
         ResultSet rs;
         String query = "SELECT * FROM user_stats WHERE username = '" + username + "'";
@@ -311,13 +311,39 @@ public class UserDAOImpl implements UserDAO {
             rs = st.executeQuery(query);
 
             if (rs.next()) {
-                stats[0] = rs.getInt(2); //number of post
+                stats[0] = rs.getInt(2); //number of posts
                 stats[1] = rs.getInt(3); //number of followers
-                stats[2] = rs.getInt(4); //number of followed user
+                stats[2] = rs.getInt(4); //number of followed users
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return stats;
+    }
+    @Override
+    public List<User> getFollowedUsers(String username){
+        List<User> followedUsers = new ArrayList<>();
+        Statement st;
+        ResultSet rs;
+        String query = "SELECT name, username, avatar FROM account AS A " +
+                "JOIN following AS F ON A.username = F.idfollowing " +
+                "WHERE F.nickname = '" + username + "'";
+
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+
+            while (rs.next()){
+                User user = new User();
+                user.setName(rs.getString(1));
+                user.setUsername(rs.getString(2));
+                user.setAvatar(new Image(rs.getBinaryStream(3)));
+                followedUsers.add(user);
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return followedUsers;
     }
 }
