@@ -58,7 +58,6 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         user = ViewFactory.getInstance().getUser();
         nameLabel.textProperty().bind(user.nameProperty());
         usernameLabel.setText("@" + user.getUsername());
@@ -67,7 +66,6 @@ public class HomeController implements Initializable {
             profilePic.setImage(crop(user.getAvatar()));
         user.avatarProperty().addListener((ObservableValue<? extends Image> observable, Image oldVal, Image newVal) ->
                 profilePic.setImage( (newVal == null) ? new Image(getClass().getResourceAsStream("/icons/bear_icon.png")) : crop(user.getAvatar())));
-
         homePane.setCenter(ViewFactory.getInstance().getBrowseView());
         getFollowedUsersTask(user.getUsername());
         addListeners();
@@ -75,8 +73,7 @@ public class HomeController implements Initializable {
 
 
     private void addListeners() { //TODO: add all listeners
-
-        //left bar buttons
+        //sidebar buttons
         hbBrowse.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getBrowseView()));
         hbYourGallery.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getYourGalleryView()));
         hbFeed.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getFeedView()));
@@ -115,13 +112,11 @@ public class HomeController implements Initializable {
 
         new Thread(followedUsersTask).start();
         followedUsersTask.setOnSucceeded(workerStateEvent -> {
-
             for (User user : followedUsersTask.getValue()) {
                 HBox postBox = ViewFactory.getInstance().getFollowedUserPreview(user);
                 followedUserList.getChildren().add(postBox);
             }
         });
-
     }
 
     @FXML
