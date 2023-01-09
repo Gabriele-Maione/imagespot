@@ -332,12 +332,13 @@ public class UserDAOImpl implements UserDAO {
         try {
             st = con.createStatement();
             rs = st.executeQuery(query);
-
+            
             while (rs.next()){
                 User user = new User();
                 user.setName(rs.getString(1));
                 user.setUsername(rs.getString(2));
-                user.setAvatar(new Image(rs.getBinaryStream(3)));
+                if(rs.getBinaryStream(3) != null)
+                    user.setAvatar(new Image(rs.getBinaryStream(3)));
                 followedUsers.add(user);
             }
         }
