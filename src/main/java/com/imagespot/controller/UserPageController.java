@@ -3,8 +3,10 @@ package com.imagespot.controller;
 import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.Utils.Utils;
+import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -13,10 +15,10 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserPageController {
-
     @FXML
     private ImageView avatar;
 
@@ -61,8 +63,15 @@ public class UserPageController {
         final Task<Void> followingTask = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                if(action) new UserDAOImpl().setFollow(user.getUsername());
-                else new UserDAOImpl().removeFollow(user.getUsername());
+
+                if(action) {
+                    new UserDAOImpl().setFollow(user.getUsername());
+
+                }
+                else{
+                    new UserDAOImpl().removeFollow(user.getUsername());
+
+                }
                 return null;
             }
         };
@@ -72,6 +81,14 @@ public class UserPageController {
             else followButton.setText("FOLLOW");
             getUserStatsTask(user.getUsername());
         });
+
+        ObservableList<User> followedUsers = ViewFactory.getInstance().getUser().getFollowedUsers();
+        if(action){
+            followedUsers.add(0, user);
+        }
+        else{
+            followedUsers.removeIf(u -> u.getUsername().equals(user.getUsername()));
+        }
     }
 
 

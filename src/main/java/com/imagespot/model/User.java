@@ -2,6 +2,8 @@ package com.imagespot.model;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
 import java.io.InputStream;
@@ -16,21 +18,22 @@ public class User {
     private String gender;
     private String bio;
     private ObjectProperty<Image> avatar;
-    private ArrayList<User> following;
+    private ObservableList<User> followedUsers;
     private ArrayList<Post> posts;
     private ArrayList<Post> bookmark;
 
     public User() {
-        this.avatar = new SimpleObjectProperty<Image>();
-        this.name = new SimpleObjectProperty<String>();
+        this.avatar = new SimpleObjectProperty<>();
+        this.name = new SimpleObjectProperty<>();
+        this.followedUsers = FXCollections.observableList(new ArrayList<User>());
     }
 
-    public ArrayList<User> getFollowing() {
-        return following;
+    public ObservableList<User> getFollowedUsers() {
+        return followedUsers;
     }
 
-    public void setFollowing(ArrayList<User> following) {
-        this.following = following;
+    public void setFollowedUsers(ObservableList<User> followedUsers) {
+        this.followedUsers = followedUsers;
     }
 
     public ArrayList<Post> getPosts() {

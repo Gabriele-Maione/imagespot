@@ -4,6 +4,8 @@ import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.User;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -103,6 +105,8 @@ public class HomeController implements Initializable {
     }
 
     private void getFollowedUsersTask(String username){
+        ObservableList<User> followedUsers = user.getFollowedUsers();
+
         Task<List<User>> followedUsersTask = new Task<>() {
             @Override
             protected List<User> call() throws Exception {
@@ -111,12 +115,31 @@ public class HomeController implements Initializable {
         };
 
         new Thread(followedUsersTask).start();
+
+
         followedUsersTask.setOnSucceeded(workerStateEvent -> {
-            for (User user : followedUsersTask.getValue()) {
-                HBox postBox = ViewFactory.getInstance().getFollowedUserPreview(user);
+            for (User u : followedUsersTask.getValue()){
+                HBox postBox = ViewFactory.getInstance().getFollowedUserPreview(u);
                 followedUserList.getChildren().add(postBox);
             }
+            followedUsers.addAll(followedUsersTask.getValue());
+
+            followedUsers.addListener((ListChangeListener<? super User>) change -> {
+                change.next();
+
+                if(change.wasAdded()){
+                    if(followedUsers.get(0) != null){
+                        HBox postBox = ViewFactory.getInstance().getFollowedUserPreview(followedUsers.get(0));
+                        followedUserList.getChildren().add(0, postBox);
+                    }
+                }
+                else{
+                    followedUserList.getChildren().remove(change.getFrom());
+                }
+            });
         });
+
+
     }
 
     @FXML

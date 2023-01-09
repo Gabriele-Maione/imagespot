@@ -327,12 +327,13 @@ public class UserDAOImpl implements UserDAO {
         ResultSet rs;
         String query = "SELECT name, username, avatar FROM account AS A " +
                 "JOIN following AS F ON A.username = F.idfollowing " +
-                "WHERE F.nickname = '" + username + "'";
+                "WHERE F.nickname = '" + username + "' " +
+                "ORDER BY followdate DESC";
 
         try {
             st = con.createStatement();
             rs = st.executeQuery(query);
-            
+
             while (rs.next()){
                 User user = new User();
                 user.setName(rs.getString(1));
