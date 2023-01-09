@@ -11,11 +11,9 @@ import java.sql.SQLException;
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException, SQLException {
-
         new UserDAOImpl().getUserInfo("Werewolf");
         ViewFactory.getInstance().showHomeWindow();
     }
-
 
     public static void main(String[] args) {
         launch();

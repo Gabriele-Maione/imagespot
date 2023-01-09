@@ -15,11 +15,9 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface PostDAO {
-
     public void addPost(File photo, String resolution, String description, int size, String extension, Timestamp posting_date,
                         String status, Device device, User profile) throws SQLException, IOException;
     public List<Post> getRecentPost() throws SQLException;
-
     public List<Post>getUsersPost(String username) throws SQLException;
     public List<Post> getUsersPublicPost(String username) throws SQLException;
     List<Post> getFeed(String username) throws SQLException;

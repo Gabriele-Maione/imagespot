@@ -34,7 +34,6 @@ public class ImagesController {
 
 
     public void setData(Post pst) {
-
         this.post = pst;
         image_preview.setImage((post.getPreview()));
         name.setText(post.getProfile().getName());
@@ -48,7 +47,6 @@ public class ImagesController {
     }
 
     public void addListeners() {
-
         avatar.setOnMouseClicked(event -> {
             BorderPane borderPane = (BorderPane) image_preview.getScene().getRoot();
             borderPane.setCenter(ViewFactory.getInstance().getUserPage(post.getProfile().getUsername()));
@@ -57,7 +55,6 @@ public class ImagesController {
 
     @FXML
     public void previewOnClick() throws IOException {
-
         username.getScene().setRoot(ViewFactory.getInstance().getPostView(post.getIdImage()));
     }
 

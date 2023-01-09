@@ -8,10 +8,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="preview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.ImagesController">
+<VBox fx:id="preview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.ImagesController">
    <children>
-      <ImageView fx:id="image_preview" fitHeight="275.0" fitWidth="275.0" onMouseClicked="#previewOnClick" pickOnBounds="true" preserveRatio="true" />
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+      <ImageView fx:id="image_preview" onMouseClicked="#previewOnClick" pickOnBounds="true" preserveRatio="true" />
+      <HBox alignment="CENTER_LEFT">
          <children>
             <ImageView fx:id="avatar" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                <image>

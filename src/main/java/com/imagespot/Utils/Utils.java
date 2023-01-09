@@ -3,8 +3,10 @@ package com.imagespot.Utils;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
 import javafx.concurrent.Task;
+import javafx.scene.Node;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.FlowPane;
@@ -19,7 +21,6 @@ import java.util.*;
 import java.util.List;
 
 public class Utils {
-
     public static Image crop(Image img) {
         int width = (int) img.getWidth();
         int height = (int) img.getHeight();
@@ -129,4 +130,37 @@ public class Utils {
         return true;
     }
 
+    public static void retrievePostsTask(Task<List<Post>> task, FlowPane flowPane) {
+        new Thread(task).start();
+        task.setOnSucceeded(workerStateEvent -> {
+            List<Post> posts = task.getValue();
+
+            for (Post post : posts) {
+                VBox postBox = ViewFactory.getInstance().getPostPreview(post);
+                flowPane.getChildren().add(postBox);
+            }
+            flowPaneResponsive(flowPane);
+        });
+    }
+
+    private static void flowPaneResponsive(FlowPane flowPane){
+        List<Node> flowPaneChildren = flowPane.getChildren();
+        setWidthOfFlowPaneChild(flowPaneChildren, flowPane.getWidth());
+
+        flowPane.widthProperty().addListener((observableValue, number, width) ->
+                setWidthOfFlowPaneChild(flowPaneChildren, width.doubleValue()));
+    }
+
+    private static void setWidthOfFlowPaneChild(List<Node> flowPaneChild, double flowPaneWidth){
+        for(Node box : flowPaneChild){
+            VBox v = (VBox)box;
+            ImageView i = (ImageView)v.getChildren().get(0);
+
+            int numNodeForRow = (int)(flowPaneWidth / 280);
+            double nodeWidth = flowPaneWidth / numNodeForRow;
+
+            v.setPrefWidth(nodeWidth - 1);
+            i.setFitWidth(nodeWidth - 10);
+        }
+    }
 }

@@ -3,7 +3,6 @@ package com.imagespot.controller;
 import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.Utils.Utils;
-import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
 import javafx.concurrent.Task;
@@ -11,13 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
-
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 
 public class UserPageController {
@@ -149,19 +144,7 @@ public class UserPageController {
                 return new PostDAOImpl().getUsersPublicPost(user.getUsername());
             }
         };
-        new Thread(userPostsTask).start();
+        Utils.retrievePostsTask(userPostsTask, flowPane);
         progressIndicator.visibleProperty().bind(userPostsTask.runningProperty());
-        userPostsTask.setOnSucceeded(workerStateEvent -> {
-
-            List<Post> posts = userPostsTask.getValue();
-
-            for (Post post : posts) {
-
-                VBox postBox = ViewFactory.getInstance().getPostPreview(post);
-
-                flowPane.getChildren().add(postBox);
-
-            }
-        });
     }
 }
