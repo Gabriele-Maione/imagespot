@@ -25,8 +25,8 @@ public class ViewFactory {
     private VBox feedView;
     private VBox favoritesView;
     private Parent homeRoot;
+    private ViewType viewType;
     private static User user;
-
     private HashMap<Integer, HBox> openedImages;
 
     public User getUser() {
@@ -41,7 +41,13 @@ public class ViewFactory {
         return viewFactory;
     }
 
-    //TODO: add fxml panes and getter
+    public ViewType getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(ViewType viewType) {
+        this.viewType = viewType;
+    }
 
     public Parent getHomeRoot() {
         return homeRoot;
@@ -51,7 +57,8 @@ public class ViewFactory {
         if (feedView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
-                loader.setController(new CenterPaneController("Feed"));
+                viewType = ViewType.FEED;
+                loader.setController(new CenterPaneController());
                 feedView = loader.load();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -64,7 +71,8 @@ public class ViewFactory {
         if (favoritesView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
-                loader.setController(new CenterPaneController("Favorites"));
+                viewType = ViewType.FAVOURITES;
+                loader.setController(new CenterPaneController());
                 favoritesView = loader.load();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -77,7 +85,8 @@ public class ViewFactory {
         if (browseView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
-                loader.setController(new CenterPaneController("Browse"));
+                viewType = ViewType.EXPLORE;
+                loader.setController(new CenterPaneController());
                 browseView = loader.load();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -90,7 +99,8 @@ public class ViewFactory {
         if(yourGallery == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
-                loader.setController(new CenterPaneController("Your Gallery"));
+                viewType = ViewType.YOUR_GALLERY;
+                loader.setController(new CenterPaneController());
                 yourGallery = loader.load();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -281,5 +291,4 @@ public class ViewFactory {
             stage.show();
         } catch(IOException e) { e.printStackTrace(); }
     }
-
 }

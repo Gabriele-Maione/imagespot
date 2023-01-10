@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import java.net.URL;
 import java.util.List;
@@ -55,12 +56,12 @@ public class HomeController implements Initializable {
     private MenuItem logoutItem;
     @FXML
     private AnchorPane searchButton;
-
     private User user;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = ViewFactory.getInstance().getUser();
+
         nameLabel.textProperty().bind(user.nameProperty());
         usernameLabel.setText("@" + user.getUsername());
 
@@ -68,19 +69,16 @@ public class HomeController implements Initializable {
             profilePic.setImage(crop(user.getAvatar()));
         user.avatarProperty().addListener((ObservableValue<? extends Image> observable, Image oldVal, Image newVal) ->
                 profilePic.setImage( (newVal == null) ? new Image(getClass().getResourceAsStream("/icons/bear_icon.png")) : crop(user.getAvatar())));
+
         homePane.setCenter(ViewFactory.getInstance().getBrowseView());
+        hbBrowse.getStyleClass().add(0, "selected");
+
         getFollowedUsersTask(user.getUsername());
         addListeners();
     }
 
 
     private void addListeners() { //TODO: add all listeners
-        //sidebar buttons
-        hbBrowse.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getBrowseView()));
-        hbYourGallery.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getYourGalleryView()));
-        hbFeed.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getFeedView()));
-        hbFavorites.setOnMouseClicked(event -> homePane.setCenter(ViewFactory.getInstance().getFavoritesView()));
-
         //search field
         fldSearch.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER)) searchUser();
@@ -88,8 +86,7 @@ public class HomeController implements Initializable {
         searchButton.setOnMouseClicked(event -> searchUser());
 
         //user's menu bar
-        myProfileItem.setOnAction(actionEvent -> homePane.setCenter(ViewFactory.getInstance().getInstance()
-                .getUserPage(ViewFactory.getInstance().getUser().getUsername())));
+        myProfileItem.setOnAction(actionEvent -> homePane.setCenter(ViewFactory.getInstance().getUserPage(user.getUsername())));
         settingsItem.setOnAction(actionEvent -> ViewFactory.getInstance().showSettingsWindow());
         logoutItem.setOnAction(actionEvent -> {
             ViewFactory.getInstance().closeSession();
@@ -101,7 +98,11 @@ public class HomeController implements Initializable {
     private void searchUser() {
         if (fldSearch.getText().trim().isBlank()) {
             fldSearch.setPromptText("FIELD IS EMPTY");
-        } else homePane.setCenter(ViewFactory.getInstance().getSearchedUsers(fldSearch.getText().trim()));
+        }
+        else {
+            removeSelectedView();
+            homePane.setCenter(ViewFactory.getInstance().getSearchedUsers(fldSearch.getText().trim()));
+        }
     }
 
     private void getFollowedUsersTask(String username){
@@ -133,18 +134,37 @@ public class HomeController implements Initializable {
                         followedUserList.getChildren().add(0, postBox);
                     }
                 }
-                else{
+                else
                     followedUserList.getChildren().remove(change.getFrom());
-                }
             });
         });
+    }
 
+    @FXML
+    private void setSelectedView(MouseEvent event){
+        HBox box = (HBox) event.getSource();
 
+        if (hbFeed.equals(box)) {
+            homePane.setCenter(ViewFactory.getInstance().getFeedView());
+        } else if (hbBrowse.equals(box)) {
+            homePane.setCenter(ViewFactory.getInstance().getBrowseView());
+        } else if (hbFavorites.equals(box)) {
+            homePane.setCenter(ViewFactory.getInstance().getFavoritesView());
+        } else if (hbYourGallery.equals(box)) {
+            homePane.setCenter(ViewFactory.getInstance().getYourGalleryView());
+        }
+
+        removeSelectedView();
+        box.getStyleClass().add(0, "selected");
+    }
+
+    private void removeSelectedView(){
+        if(homePane.lookup(".selected") != null)
+            homePane.lookup(".selected").getStyleClass().remove(0);
     }
 
     @FXML
     private void btnAddPhotoOnAction() {
         ViewFactory.getInstance().showAddPhotoWindow();
     }
-
 }

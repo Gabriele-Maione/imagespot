@@ -4,6 +4,7 @@ import com.imagespot.DAOImpl.BookmarkDAOImpl;
 import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.Utils.Utils;
 import com.imagespot.View.ViewFactory;
+import com.imagespot.View.ViewType;
 import com.imagespot.model.Post;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -27,15 +28,14 @@ public class CenterPaneController implements Initializable {
     @FXML
     private ProgressIndicator progressIndicator;
 
-    private final String type;
+    private final ViewType type;
 
-    public CenterPaneController(String type) {
-        this.type = type;
+    public CenterPaneController() {
+        this.type = ViewFactory.getInstance().getViewType();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        name.setText(type);
         btnUpdateOnAction();
         try {
             setChildren();
@@ -63,16 +63,20 @@ public class CenterPaneController implements Initializable {
             @Override
             protected List<Post> call() throws Exception {
                 switch (type) {
-                    case "Browse" -> {
+                    case EXPLORE -> {
+                        name.setText("Explore");
                         return new PostDAOImpl().getRecentPost();
                     }
-                    case "Your Gallery" -> {
+                    case YOUR_GALLERY -> {
+                        name.setText("Your Gallery");
                         return new PostDAOImpl().getUsersPost(ViewFactory.getInstance().getUser().getUsername());
                     }
-                    case "Feed" -> {
+                    case FEED -> {
+                        name.setText("Home");
                         return new PostDAOImpl().getFeed(ViewFactory.getInstance().getUser().getUsername());
                     }
-                    case "Favorites" -> {
+                    case FAVOURITES -> {
+                        name.setText("Favourites");
                         new BookmarkDAOImpl().getUserBookmarks();
                         return ViewFactory.getInstance().getUser().getBookmarks();
                     }
@@ -85,6 +89,5 @@ public class CenterPaneController implements Initializable {
         Utils.retrievePostsTask(getPostsTask, flowPane);
         progressIndicator.visibleProperty().bind(getPostsTask.runningProperty());
     }
-
 
 }

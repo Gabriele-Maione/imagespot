@@ -183,7 +183,7 @@
                                     <Insets left="16.0" />
                                  </VBox.margin>
                               </Label>
-                              <HBox fx:id="hbFeed" alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
+                              <HBox fx:id="hbFeed" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
                                     <Label text="Home" textFill="#586067">
                                        <font>
@@ -197,11 +197,11 @@
                                        </HBox.margin>
                                     </Label>
                                  </children>
-                                 <padding>
-                                    <Insets left="8.0" />
-                                 </padding>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
                               </HBox>
-                              <HBox fx:id="hbBrowse" alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
+                              <HBox fx:id="hbBrowse" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
                                     <Label text="Explore" textFill="#586067">
                                        <font>
@@ -215,9 +215,9 @@
                                        </HBox.margin>
                                     </Label>
                                  </children>
-                                 <padding>
-                                    <Insets left="8.0" />
-                                 </padding>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
@@ -233,15 +233,15 @@
                                        </graphic>
                                     </Label>
                                  </children>
-                                 <padding>
-                                    <Insets left="8.0" />
-                                 </padding>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
                               </HBox>
                            </children>
                         </VBox>
                         <Separator>
                            <VBox.margin>
-                              <Insets right="16.0" />
+                              <Insets bottom="5.0" left="16.0" right="16.0" top="5.0" />
                            </VBox.margin>
                         </Separator>
                         <VBox>
@@ -254,7 +254,7 @@
                                     <Insets left="16.0" />
                                  </VBox.margin>
                               </Label>
-                              <HBox fx:id="hbYourGallery" alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
+                              <HBox fx:id="hbYourGallery" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
                                     <Label text="Your Gallery" textFill="#586067">
                                        <font>
@@ -268,11 +268,11 @@
                                        </HBox.margin>
                                     </Label>
                                  </children>
-                                 <padding>
-                                    <Insets left="8.0" />
-                                 </padding>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
                               </HBox>
-                              <HBox fx:id="hbFavorites" alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
+                              <HBox fx:id="hbFavorites" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
                                     <Label text="Favorites" textFill="#586067">
                                        <font>
@@ -286,9 +286,9 @@
                                        </HBox.margin>
                                     </Label>
                                  </children>
-                                 <padding>
-                                    <Insets left="8.0" />
-                                 </padding>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
@@ -304,9 +304,9 @@
                                        </HBox.margin>
                                     </Label>
                                  </children>
-                                 <padding>
-                                    <Insets left="8.0" />
-                                 </padding>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
                               </HBox>
                            </children>
                            <opaqueInsets>
@@ -315,7 +315,7 @@
                         </VBox>
                         <Separator prefWidth="200.0">
                            <VBox.margin>
-                              <Insets right="16.0" />
+                              <Insets bottom="5.0" left="16.0" right="16.0" top="5.0" />
                            </VBox.margin>
                         </Separator>
                         <VBox prefHeight="34.0" prefWidth="250.0" VBox.vgrow="ALWAYS">
@@ -328,7 +328,10 @@
                                     <Insets left="16.0" />
                                  </VBox.margin>
                               </Label>
-                              <FlowPane fx:id="followedUserList" VBox.vgrow="ALWAYS" />
+                              <FlowPane fx:id="followedUserList" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets left="6.0" />
+                                 </VBox.margin></FlowPane>
                            </children>
                         </VBox>
                      </children>

@@ -64,6 +64,10 @@
 }
 
 /*side bar buttons*/
+.sidebar-item{
+    -fx-background-radius: 15;
+}
+
 .sidebar-item:hover {
     -fx-cursor: hand;
     -fx-background-color: #babae7;
@@ -72,6 +76,10 @@
 .sidebar-item:pressed {
     -fx-cursor: hand;
     -fx-background-color: #a1a1d2;
+}
+
+.selected{
+    -fx-background-color: #afafe3;
 }
 
 .sidebar{
@@ -87,6 +95,11 @@
     -fx-background-color: -sidebar-color;
 }
 
+.sidebar .scroll-pane .track{
+    -fx-background-color: -sidebar-color;
+}
+
+
 .scroll-pane .increment-button,
 .scroll-pane .decrement-button{
     -fx-background-color: transparent;
@@ -96,9 +109,22 @@
 
 .scroll-pane .increment-arrow,
 .scroll-pane .decrement-arrow{
-    -fx-padding: 0 6;
+    -fx-padding: 0;
 }
 
 .scroll-pane .thumb{
     -fx-background-color: -scrollbar-thumb-color;
+}
+
+.sidebar .scroll-pane .thumb{
+    -fx-background-color: transparent;
+}
+
+.sidebar .scroll-pane:hover .thumb{
+    -fx-background-color: -scrollbar-thumb-color;
+}
+
+.sidebar .scroll-pane .thumb:pressed,
+.scroll-pane .thumb:pressed{
+    -fx-background-color: -first-detail;
 }

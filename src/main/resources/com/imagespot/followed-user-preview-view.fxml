@@ -13,7 +13,7 @@
          <image>
             <Image url="@../../icons/default_avatar_icon.jpg" />
          </image></ImageView>
-      <Label fx:id="name" text="Name">
+      <Label fx:id="name" text="Name" textFill="#586067">
          <font>
             <Font name="Open Sans Semibold" size="16.0" />
          </font>
