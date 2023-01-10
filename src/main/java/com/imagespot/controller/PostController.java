@@ -207,26 +207,27 @@ public class PostController {
     }
 
     private void retrievePhotoFileTask(File file) {
-        final Task<Void> fileTask = new Task<Void>() {
+        final Task<Void> fileTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
                 updateMessage("Downloading...");
                 InputStream inputStream = new PostDAOImpl().getPhotoFile(post.getIdImage());
-                OutputStream outputStream = null;
+                OutputStream outputStream;
+
                 try {
                     outputStream = new FileOutputStream(file);
-                    int byteRead = -1;
+                    int byteRead;
+                    byte[] buffer = new byte[1024];
 
-                    while ((byteRead = inputStream.read()) != -1) {
-                        outputStream.write(byteRead);
+                    while ((byteRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, byteRead);
                     }
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
                 outputStream.close();
                 inputStream.close();
+
                 return null;
             }
         };
@@ -240,7 +241,6 @@ public class PostController {
 
     @FXML
     public void buttonCloseOnAction() {
-
         username.getScene().setRoot(ViewFactory.getInstance().getHomeRoot());
     }
 }
