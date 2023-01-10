@@ -24,4 +24,10 @@ public interface PostDAO {
     public Image getPhoto(int id);
     public Post getPost(int id);
     public Post getPreviewPost(int id);
+
+    //Retrieving data for edit post page
+    void getDataForEdit(Post post);
+    void setDescription(int id, String description);
+    void setStatus(int id, String status);
+    void deletePost(int id);
 }

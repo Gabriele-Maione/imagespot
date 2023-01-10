@@ -261,6 +261,27 @@ public class ViewFactory {
 
     }
 
+    public void showEditPostWindow(Post post) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/edit-post-view.fxml"));
+        try {
+            Parent root = loader.load();
+            EditPostController controller = loader.getController();
+            controller.init(post);
+            Scene scene = new Scene(root, 400, 600);
+            Stage stage = new Stage();
+            stage.setTitle("Edit Post");
+            stage.setResizable(false);
+            stage.initOwner(homeRoot.getScene().getWindow());
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create Window.", e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void showAddInfoWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/add-info-view.fxml"));

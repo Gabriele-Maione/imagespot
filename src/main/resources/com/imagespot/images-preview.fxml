@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -38,6 +39,7 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </VBox>
+            <Button fx:id="modify" disable="true" mnemonicParsing="false" onAction="#ModifyBtnOnAction" text="Button" visible="false" />
          </children>
       </HBox>
    </children>

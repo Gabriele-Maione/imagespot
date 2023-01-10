@@ -34,4 +34,5 @@ public interface UserDAO {
     void setFollow(String username);
     int[] retrieveUserStats(String username);
     List<User> getFollowedUsers(String username);
+
 }

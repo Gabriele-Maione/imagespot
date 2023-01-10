@@ -57,9 +57,12 @@ public class PostDAOImpl implements PostDAO {
     public List<Post> getRecentPost() throws SQLException {
 
         String query = "SELECT preview, profile, posting_date, idimage FROM post " +
-                "WHERE status = 'Public' ORDER BY posting_date DESC LIMIT 20";
+                "WHERE status = 'Public' AND profile NOT IN('" +
+                ViewFactory.getInstance().getUser().getUsername() + "') ORDER BY posting_date DESC LIMIT 20";
         return getPreviews(query);
     }
+
+    //Retrieve user's personal posts
     @Override
     public List<Post> getUsersPost(String username) throws SQLException {
 
@@ -184,6 +187,65 @@ public class PostDAOImpl implements PostDAO {
             throw new RuntimeException(e);
         }
         return post;
+    }
+
+    @Override
+    public void getDataForEdit(Post post) {
+        PreparedStatement st;
+        ResultSet rs;
+        String query = "SELECT status, description FROM post WHERE idimage = ?";
+
+        try {
+            st = con.prepareStatement(query);
+            st.setInt(1, post.getIdImage());
+            rs = st.executeQuery();
+            if(rs.next()) {
+                post.setStatus(rs.getString(1));
+                post.setDescription(rs.getString(2));
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setDescription(int id, String description) {
+        PreparedStatement st;
+        String query = "UPDATE post SET description = ? WHERE idimage = ?";
+        try {
+            st = con.prepareStatement(query);
+            st.setString(1, description);
+            st.setInt(2, id);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    public void setStatus(int id, String status) {
+        PreparedStatement st;
+        String query = "UPDATE post SET status = ? WHERE idimage = ?";
+        try {
+            st = con.prepareStatement(query);
+            st.setString(1, status);
+            st.setInt(2, id);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void deletePost(int id) {
+        Statement st;
+        String query = "DELETE FROM post WHERE idimage = '" + id + "'";
+        try {
+            st = con.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public InputStream getPhotoFile(int id) {
