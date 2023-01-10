@@ -21,6 +21,7 @@ import javafx.stage.FileChooser;
 import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
 import static com.imagespot.Utils.Utils.getMostCommonColour;
@@ -58,6 +59,10 @@ public class PostController {
     private Button btnDownload;
     @FXML
     private ToggleButton likeBtn;
+    @FXML
+    private Label deviceLbl;
+    @FXML
+    private Label date;
     private Post post;
 
     private Image image;
@@ -90,10 +95,15 @@ public class PostController {
 
             name.setText(post.getProfile().getName());
             username.setText("@" + post.getProfile().getUsername());
+
             if (post.getProfile().getAvatar() != null) {
                 avatar.setImage((post.getProfile().getAvatar()));
             }
+            date.setText(new SimpleDateFormat("h:mm a '·' d MMM yyyy").format(post.getDate()));
             description.setText(post.getDescription());
+            deviceLbl.setText(post.getDevice().getBrand() + " " + post.getDevice().getModel());
+            likeBtn.setText(String.valueOf(post.getLikes().size()));
+
             initLikeBtn();
         });
     }
@@ -152,7 +162,7 @@ public class PostController {
     }
 
     @FXML
-    private void likeBtnOnAction() throws SQLException {
+    private void likeBtnOnAction() {
 
         likeAction();
     }
@@ -161,16 +171,23 @@ public class PostController {
         final Task<Void> setLike = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                if(likeBtn.isSelected())
+                if(likeBtn.isSelected()) {
+                    post.getLikes().add(ViewFactory.getInstance().getUser());
                     new BookmarkDAOImpl().addBookmark(post.getIdImage());
+                }
                 else
-                    new BookmarkDAOImpl().removeBookmark(post.getIdImage());
+                    for(int i = 0; i < post.getLikes().size(); i++) {
+                        if(ViewFactory.getInstance().getUser().getUsername()
+                                .equals(post.getLikes().get(i).getUsername()))
+                            post.getLikes().remove(i);
+                        new BookmarkDAOImpl().removeBookmark(post.getIdImage());
+                    }
                 return null;
             }
         };
         new Thread(setLike).start();
         setLike.setOnSucceeded(workerStateEvent -> {
-
+            likeBtn.setText(String.valueOf(post.getLikes().size())); //TODO: do it with listeners
         });
     }
 

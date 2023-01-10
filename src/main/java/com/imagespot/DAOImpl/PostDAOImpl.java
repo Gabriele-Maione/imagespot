@@ -1,6 +1,7 @@
 package com.imagespot.DAOImpl;
 
 import com.imagespot.Connection.ConnectionManager;
+import com.imagespot.DAO.DeviceDAO;
 import com.imagespot.DAO.PostDAO;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Device;
@@ -120,7 +121,7 @@ public class PostDAOImpl implements PostDAO {
         Post post = new Post();
         PreparedStatement st;
         ResultSet rs;
-        String query = "SELECT profile, description, extension, idimage, device FROM post WHERE idimage = ?";
+        String query = "SELECT profile, description, extension, idimage, posting_date, device FROM post WHERE idimage = ?";
         try {
             st = con.prepareStatement(query);
             st.setInt(1, id);
@@ -130,8 +131,9 @@ public class PostDAOImpl implements PostDAO {
                 post.setDescription(rs.getString(2));
                 post.setExtension(rs.getString(3));
                 post.setIdImage(rs.getInt(4));
-                //TODO: add device dao and things
-                //post.setDevice();
+                post.setDate(rs.getTimestamp(5));
+                post.setLikes(new BookmarkDAOImpl().getPostBookmarks(post.getIdImage()));
+                post.setDevice(new DeviceDAOImpl().getDevice(rs.getInt(6)));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -23,11 +23,13 @@ public class Post {
     private ArrayList<User> taggedUsers;
     private ArrayList<User> likes;
 
-    public ArrayList<User> getReactions() {
+    public Post() {}
+
+    public ArrayList<User> getLikes() {
         return likes;
     }
 
-    public void setReactions(ArrayList<User> likes) {
+    public void setLikes(ArrayList<User> likes) {
         this.likes = likes;
     }
 

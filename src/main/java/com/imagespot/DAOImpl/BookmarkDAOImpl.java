@@ -4,6 +4,7 @@ import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.BookmarkDAO;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
+import com.imagespot.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -90,6 +91,29 @@ public class BookmarkDAOImpl implements BookmarkDAO {
             throw new RuntimeException(e);
         }
         ViewFactory.getInstance().getUser().setBookmarks(bookmarks);
+    }
+
+    @Override
+    public ArrayList<User> getPostBookmarks(int id) {
+        ArrayList<User> likes = new ArrayList<User>();
+        PreparedStatement st;
+        ResultSet rs;
+        String query = "SELECT username FROM bookmark WHERE idimage = ? ORDER BY date DESC";
+
+        try {
+            st = con.prepareStatement(query);
+            st.setInt(1, id);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                User user;
+                user = new UserDAOImpl().getUserInfoForPreview(rs.getString(1));
+                likes.add(user);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return likes;
+
     }
 
 

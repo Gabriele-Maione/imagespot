@@ -1,0 +1,55 @@
+.like-button {
+    -fx-background-color: transparent;
+    -fx-border-color: red;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.like-button:selected {
+    -fx-background-color: #f16363;
+    -fx-border-color: #7c0000;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.like-button:hover {
+    -fx-border-color: -first-detail;
+}
+
+.dowload-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -first-detail;
+    -fx-border-color: -first-detail;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.dowload-button:hover {
+    -fx-background-color: -first-detail;
+    -fx-text-fill: black;
+}
+
+.close-button {
+    -fx-background-color: transparent;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: red;
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+}
+
+.close-button:hover {
+    -fx-background-color: #ff6868;
+}
+
+.close-button:pressed {
+    -fx-background-color: red;
+}

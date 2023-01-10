@@ -2,7 +2,12 @@ package com.imagespot.DAO;
 
 import com.imagespot.model.Device;
 
+import java.sql.SQLException;
+
 public interface DeviceDAO {
-    public int addDevice(String brand, String model, String deviceType);
-    public int getDevice(String brand, String model);
+    int addDevice(String brand, String model, String deviceType) throws SQLException;
+
+    int getDeviceID(String brand, String model) throws SQLException;
+
+    Device getDevice(int idDevice);
 }
