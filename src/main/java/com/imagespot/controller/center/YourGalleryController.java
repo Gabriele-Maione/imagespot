@@ -33,7 +33,6 @@ public class YourGalleryController extends CenterPaneController {
                 return posts;
             }
         };
-        System.out.println("YOUR GALLERY CONTROLLER BABYYY");
         retrievePostsTask(getUserPosts);
         progressIndicator.visibleProperty().bind(getUserPosts.runningProperty());
     }

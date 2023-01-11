@@ -20,6 +20,7 @@ public class FeedController extends CenterPaneController {
 
     }
 
+    @Override
     protected void loadPosts() {
         final Task<List<Post>> getFeed = new Task<>() {
             ArrayList<Post> posts;

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class CenterPaneController implements Initializable {
+public abstract class CenterPaneController implements Initializable {
     @FXML
     protected FlowPane flowPane;
     @FXML
@@ -60,50 +60,7 @@ public class CenterPaneController implements Initializable {
         });
     }
 
-    protected void loadPosts() {   //TODO a sto punto si può cancellarlo, ma lo lascio magari ho rotto qualcosa nelle sottoclassi
-        System.out.println("CENTER CONTROLLER TANTO NN VERRA' MAI CHIAMATO HAHA");
-        final Task<List<Post>> getPostsTask = new Task<>() {
-            @Override
-            protected List<Post> call() throws Exception {
-                ArrayList<Post> posts;
-
-                switch (type) {
-                    case EXPLORE -> {
-                        name.setText("Explore");
-                        posts = new PostDAOImpl().getRecentPosts(lastPostDate);
-                        if(posts != null)
-                            lastPostDate = posts.get(posts.size() - 1).getDate();
-                        return posts;
-                    }
-                    case YOUR_GALLERY -> {
-                        posts = new PostDAOImpl().getUserPosts(ViewFactory.getInstance().getUser().getUsername(), lastPostDate);
-                        if(posts != null)
-                            lastPostDate = posts.get(posts.size() - 1).getDate();
-                        ViewFactory.getInstance().getUser().getPosts().addAll(posts);
-                        return posts;
-                    }
-                    case FEED -> {
-                        name.setText("Home");
-                        posts = new PostDAOImpl().getFeed(ViewFactory.getInstance().getUser().getUsername(), lastPostDate);
-                        if(posts != null)
-                            lastPostDate = posts.get(posts.size() - 1).getDate();
-                        return posts;
-                    }
-                    case FAVOURITES -> {
-                        name.setText("Favourites");
-                        new BookmarkDAOImpl().getUserBookmarks();
-                        return ViewFactory.getInstance().getUser().getBookmarks();
-                    }
-                    default -> {
-                        return null;
-                    }
-                }
-            }
-        };
-
-        retrievePostsTask(getPostsTask);
-        progressIndicator.visibleProperty().bind(getPostsTask.runningProperty());
-    }
+    protected abstract void loadPosts();
 
     public void retrievePostsTask(Task<List<Post>> task) {
         new Thread(task).start();

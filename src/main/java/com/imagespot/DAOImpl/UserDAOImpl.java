@@ -224,7 +224,7 @@ public class UserDAOImpl implements UserDAO {
         PreparedStatement st;
         ResultSet rs;
 
-        String query = "SELECT avatar, username, name FROM account " +
+        String query = "SELECT avatar, username, name, bio FROM account " +
                 "WHERE (username iLIKE '%'||?||'%' OR name iLIKE '%'||?||'%' )" +
                 "AND username NOT IN(?) ORDER BY username LIMIT 10";
         try {
@@ -239,6 +239,7 @@ public class UserDAOImpl implements UserDAO {
                     user.setAvatar(new Image(rs.getBinaryStream(1)));
                 user.setUsername(rs.getString(2));
                 user.setName(rs.getString(3));
+                user.setBio(rs.getString(4));
                 ls.add(user);
             }
             st.close();
@@ -325,7 +326,7 @@ public class UserDAOImpl implements UserDAO {
         List<User> followedUsers = new ArrayList<>();
         Statement st;
         ResultSet rs;
-        String query = "SELECT name, username, avatar FROM account AS A " +
+        String query = "SELECT name, username, avatar, bio FROM account AS A " +
                 "JOIN following AS F ON A.username = F.idfollowing " +
                 "WHERE F.nickname = '" + username + "' " +
                 "ORDER BY followdate DESC";
@@ -340,6 +341,7 @@ public class UserDAOImpl implements UserDAO {
                 user.setUsername(rs.getString(2));
                 if(rs.getBinaryStream(3) != null)
                     user.setAvatar(new Image(rs.getBinaryStream(3)));
+                user.setBio(rs.getString(4));
                 followedUsers.add(user);
             }
         }

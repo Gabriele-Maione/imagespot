@@ -6,10 +6,22 @@
     -dark: #000000;
     -fill: #3b3b3b;
     -first-detail: #7678ed;
+    -selected: #afafe3;
+    -hovered: #babae7;
+    -pressed: #a1a1d2;
 }
 
 Button {
     -fx-background-color: -first-detail;
     -fx-background-radius: 15;
     -fx-text-fill: #fff;
+    -fx-cursor: hand;
+}
+
+Button:hover {
+    -fx-background-color: -hovered;
+}
+
+Button:pressed {
+    -fx-background-color: -pressed;
 }

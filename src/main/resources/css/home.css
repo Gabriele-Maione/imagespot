@@ -6,6 +6,9 @@
     -dark: #000000;
     -fill: #3b3b3b;
     -first-detail: #7678ed;
+    -selected: #afafe3;
+    -hovered: #babae7;
+    -pressed: #a1a1d2;
 }
 
 .root {
@@ -70,7 +73,7 @@
 
 .sidebar-item:hover {
     -fx-cursor: hand;
-    -fx-background-color: #babae7;
+    -fx-background-color: -hovered;
 }
 
 .sidebar-item:pressed {
@@ -79,7 +82,7 @@
 }
 
 .selected{
-    -fx-background-color: #afafe3;
+    -fx-background-color: -selected;
 }
 
 .sidebar{

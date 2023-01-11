@@ -25,14 +25,12 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class UserPageController extends CenterPaneController {
-    @FXML
-    private ScrollPane scrollPane;
+
     @FXML
     private ImageView avatar;
     @FXML
     private Label bio;
-    @FXML
-    private FlowPane flowPane;
+
     @FXML
     private Label follower;
     @FXML
@@ -48,7 +46,7 @@ public class UserPageController extends CenterPaneController {
     @FXML
     private ProgressIndicator progressIndicator;
     private User user;
-    private Timestamp lastPostDate;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -62,11 +60,11 @@ public class UserPageController extends CenterPaneController {
         if(this.user != null){
             setUserInfo();
             getUserStatsTask();
-            initUserPosts();
+            loadPosts();
 
             scrollPane.vvalueProperty().addListener((observableValue, number, scrollPosition) -> {
                 if(scrollPosition.intValue() == 1 && flowPane.getChildren().size() % 20 == 0){
-                    initUserPosts();
+                    loadPosts();
                 }
             });
         }
@@ -156,7 +154,8 @@ public class UserPageController extends CenterPaneController {
 
     }
 
-    public void initUserPosts() {
+    @Override
+    public void loadPosts() {
         final Task<List<Post>> userPostsTask = new Task<>() {
             @Override
             protected List<Post> call() throws Exception {

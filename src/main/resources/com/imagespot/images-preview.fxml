@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="preview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.ImagesController">
+<VBox fx:id="preview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.ImagesController">
    <children>
       <ImageView fx:id="image_preview" onMouseClicked="#previewOnClick" pickOnBounds="true" preserveRatio="true" />
       <HBox alignment="CENTER_LEFT">
@@ -39,7 +39,18 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </VBox>
-            <Button fx:id="modify" disable="true" mnemonicParsing="false" onAction="#ModifyBtnOnAction" text="Button" visible="false" />
+            <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button fx:id="modify" disable="true" mnemonicParsing="false" onAction="#ModifyBtnOnAction" text="Edit Photo" visible="false">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </HBox>
          </children>
       </HBox>
    </children>
