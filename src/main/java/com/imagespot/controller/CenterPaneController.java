@@ -64,6 +64,7 @@ public class CenterPaneController implements Initializable {
         btnUpdate.setOnAction(actionEvent -> {
             try {
                 flowPane.getChildren().clear();
+                lastPostDate = null;
                 setChildren();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
