@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException, SQLException {
-        new UserDAOImpl().getUserInfo("Fel");
+        new UserDAOImpl().getUserInfo("Werewolf");
         ViewFactory.getInstance().showHomeWindow();
     }
 

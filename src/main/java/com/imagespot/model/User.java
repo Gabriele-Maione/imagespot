@@ -5,8 +5,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
-
-import java.io.InputStream;
 import java.util.ArrayList;
 
 
@@ -23,6 +21,7 @@ public class User {
     private ArrayList<Post> bookmark;
 
     public User() {
+        this.posts = new ArrayList<>();
         this.avatar = new SimpleObjectProperty<>();
         this.name = new SimpleObjectProperty<>();
         this.followedUsers = FXCollections.observableList(new ArrayList<User>());

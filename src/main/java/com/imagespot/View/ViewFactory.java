@@ -162,13 +162,13 @@ public class ViewFactory {
         return searchedUsers;
     }
 
-    public ScrollPane getUserPage(String username) {
+    public ScrollPane getUserPage(User user) {
         ScrollPane userPage;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/user-page-view.fxml"));
             userPage = loader.load();
             UserPageController controller = loader.getController();
-            controller.init(username);
+            controller.init(user);
         } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }

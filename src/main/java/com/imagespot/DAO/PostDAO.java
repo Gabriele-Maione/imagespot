@@ -12,19 +12,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface PostDAO {
-    public void addPost(File photo, String resolution, String description, int size, String extension, Timestamp posting_date,
+    void addPost(File photo, String resolution, String description, int size, String extension, Timestamp posting_date,
                         String status, Device device, User profile) throws SQLException, IOException;
-    public List<Post> getRecentPost() throws SQLException;
-    public List<Post>getUsersPost(String username) throws SQLException;
-    public List<Post> getUsersPublicPost(String username) throws SQLException;
-    List<Post> getFeed(String username) throws SQLException;
-    public Image getPhoto(int id);
-    public Post getPost(int id);
-    public Post getPreviewPost(int id);
-
+    ArrayList<Post> getRecentPosts(Timestamp timestamp) throws SQLException;
+    ArrayList<Post>getUserPosts(String username, Timestamp timestamp) throws SQLException;
+    ArrayList<Post> getUsersPublicPosts(String username, Timestamp timestamp) throws SQLException;
+    ArrayList<Post> getFeed(String username, Timestamp timestamp) throws SQLException;
+    Image getPhoto(int id);
+    Post getPost(int id);
+    Post getPreviewPost(int id);
     //Retrieving data for edit post page
     void getDataForEdit(Post post);
     void setDescription(int id, String description);

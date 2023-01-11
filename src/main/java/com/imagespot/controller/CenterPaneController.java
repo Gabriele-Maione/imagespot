@@ -12,9 +12,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -27,11 +30,15 @@ public class CenterPaneController implements Initializable {
     private Button btnUpdate;
     @FXML
     private ProgressIndicator progressIndicator;
-
+    @FXML
+    private ScrollPane scrollPane;
     private final ViewType type;
+    private Timestamp lastPostDate;
+
 
     public CenterPaneController() {
         this.type = ViewFactory.getInstance().getViewType();
+        lastPostDate = null;
     }
 
     @Override
@@ -42,6 +49,15 @@ public class CenterPaneController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        if(type != ViewType.FAVOURITES){ //TODO temporaneamente disabilitao per il ViewType FAVOURITES
+            scrollPane.vvalueProperty().addListener((observableValue, number, scrollPosition) -> {
+                if(scrollPosition.intValue() == 1 && flowPane.getChildren().size() % 20 == 0){ //scrollPosition == 1 -> scroll have reached the bottom
+                    loadPosts();
+                }
+            });
+        }
+
     }
 
     private void btnUpdateOnAction() {
@@ -58,22 +74,34 @@ public class CenterPaneController implements Initializable {
         loadPosts();
     }
 
-    public void loadPosts() {
+    private void loadPosts() {
         final Task<List<Post>> getPostsTask = new Task<>() {
             @Override
             protected List<Post> call() throws Exception {
+                ArrayList<Post> posts;
+
                 switch (type) {
                     case EXPLORE -> {
                         name.setText("Explore");
-                        return new PostDAOImpl().getRecentPost();
+                        posts = new PostDAOImpl().getRecentPosts(lastPostDate);
+                        if(posts != null)
+                            lastPostDate = posts.get(posts.size() - 1).getDate();
+                        return posts;
                     }
                     case YOUR_GALLERY -> {
                         name.setText("Your Gallery");
-                        return new PostDAOImpl().getUsersPost(ViewFactory.getInstance().getUser().getUsername());
+                        posts = new PostDAOImpl().getUserPosts(ViewFactory.getInstance().getUser().getUsername(), lastPostDate);
+                        if(posts != null)
+                            lastPostDate = posts.get(posts.size() - 1).getDate();
+                        ViewFactory.getInstance().getUser().getPosts().addAll(posts);
+                        return posts;
                     }
                     case FEED -> {
                         name.setText("Home");
-                        return new PostDAOImpl().getFeed(ViewFactory.getInstance().getUser().getUsername());
+                        posts = new PostDAOImpl().getFeed(ViewFactory.getInstance().getUser().getUsername(), lastPostDate);
+                        if(posts != null)
+                            lastPostDate = posts.get(posts.size() - 1).getDate();
+                        return posts;
                     }
                     case FAVOURITES -> {
                         name.setText("Favourites");
@@ -86,8 +114,8 @@ public class CenterPaneController implements Initializable {
                 }
             }
         };
+
         Utils.retrievePostsTask(getPostsTask, flowPane);
         progressIndicator.visibleProperty().bind(getPostsTask.runningProperty());
     }
-
 }

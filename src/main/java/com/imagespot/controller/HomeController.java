@@ -86,7 +86,7 @@ public class HomeController implements Initializable {
         searchButton.setOnMouseClicked(event -> searchUser());
 
         //user's menu bar
-        myProfileItem.setOnAction(actionEvent -> homePane.setCenter(ViewFactory.getInstance().getUserPage(user.getUsername())));
+        myProfileItem.setOnAction(actionEvent -> homePane.setCenter(ViewFactory.getInstance().getUserPage(user)));
         settingsItem.setOnAction(actionEvent -> ViewFactory.getInstance().showSettingsWindow());
         logoutItem.setOnAction(actionEvent -> {
             ViewFactory.getInstance().closeSession();

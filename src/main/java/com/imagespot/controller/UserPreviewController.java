@@ -40,7 +40,7 @@ public class UserPreviewController implements Initializable {
 
     public void userPreviewOnClick() {
         BorderPane borderPane = (BorderPane) hboxUser.getScene().getRoot();
-        borderPane.setCenter(ViewFactory.getInstance().getUserPage(user.getUsername()));
+        borderPane.setCenter(ViewFactory.getInstance().getUserPage(user));
         if(borderPane.lookup(".selected") != null)
             borderPane.lookup(".selected").getStyleClass().remove(0);
     }

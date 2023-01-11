@@ -66,7 +66,7 @@ public class ImagesController {
     public void addListeners() {
         avatar.setOnMouseClicked(event -> {
             BorderPane borderPane = (BorderPane) image_preview.getScene().getRoot();
-            borderPane.setCenter(ViewFactory.getInstance().getUserPage(post.getProfile().getUsername()));
+            borderPane.setCenter(ViewFactory.getInstance().getUserPage(post.getProfile()));
         });
     }
 

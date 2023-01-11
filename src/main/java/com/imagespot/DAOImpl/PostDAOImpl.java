@@ -54,54 +54,56 @@ public class PostDAOImpl implements PostDAO {
         st.close();
     }
 
-    public List<Post> getRecentPost() throws SQLException {
-
+    public ArrayList<Post> getRecentPosts(Timestamp timestamp) throws SQLException {
         String query = "SELECT preview, profile, posting_date, idimage FROM post " +
-                "WHERE status = 'Public' AND profile NOT IN('" +
-                ViewFactory.getInstance().getUser().getUsername() + "') ORDER BY posting_date DESC LIMIT 20";
-        return getPreviews(query);
+                        " WHERE status = 'Public' AND profile NOT IN('" +
+                         ViewFactory.getInstance().getUser().getUsername() + "')";
+
+        return getPreviews(query, timestamp);
     }
 
     //Retrieve user's personal posts
     @Override
-    public List<Post> getUsersPost(String username) throws SQLException {
+    public ArrayList<Post> getUserPosts(String username, Timestamp timestamp) throws SQLException {
+        String query = "SELECT preview, profile, posting_date, idimage FROM post WHERE profile = '" + username + "'";
 
-        String query = "SELECT preview, profile, posting_date, idimage FROM post WHERE profile = '"
-                + username + "' ORDER BY posting_date DESC LIMIT 20";
-        ViewFactory.getInstance().getUser().setPosts((ArrayList<Post>)getPreviews(query));
-        return ViewFactory.getInstance().getUser().getPosts();
+        return getPreviews(query, timestamp);
     }
 
     @Override
-    public List<Post> getUsersPublicPost(String username) throws SQLException {
-
+    public ArrayList<Post> getUsersPublicPosts(String username, Timestamp timestamp) throws SQLException {
         String query = "SELECT preview, profile, posting_date, idimage FROM post WHERE " +
-                "status = 'Public' AND profile = '" + username + "' ORDER BY posting_date DESC LIMIT 20";
-        return getPreviews(query);
+                        "status = 'Public' AND profile = '" + username + "'";
+
+        return getPreviews(query, timestamp);
     }
 
     @Override
-    public List<Post> getFeed(String username) throws SQLException {
+    public ArrayList<Post> getFeed(String username, Timestamp timestamp) throws SQLException {
+        String query = "SELECT preview, profile, posting_date, idimage" +
+                        " FROM post" +
+                        " WHERE status = 'Public'" +
+                        " AND profile IN (SELECT idfollowing" +
+                        " FROM following" +
+                        " WHERE nickname = '" + username + "')";
 
-        String query = "SELECT preview, profile, posting_date, idimage\n" +
-                "FROM post\n" +
-                "WHERE status = 'Public'\n" +
-                "  AND profile IN (SELECT idfollowing\n" +
-                "                  FROM following\n" +
-                "                  WHERE nickname = '" + username + "')\n" +
-                "ORDER BY posting_date DESC\n" +
-                "LIMIT 20";
-        return getPreviews(query);
+        return getPreviews(query, timestamp);
     }
 
-    public List<Post> getPreviews(String query) throws SQLException {
-
-        List<Post> ls = new ArrayList<>();
+    public ArrayList<Post> getPreviews(String query, Timestamp timestamp) throws SQLException {
+        ArrayList<Post> ls = new ArrayList<>();
         Post post;
         Statement st;
         ResultSet rs;
         st = con.createStatement();
-        rs = st.executeQuery(query);
+
+        StringBuilder complexQuery = new StringBuilder(query);
+
+        if(timestamp != null)
+            complexQuery.append(" AND posting_date < '").append(timestamp).append("'");
+        complexQuery.append(" ORDER BY posting_date DESC LIMIT 20");
+
+        rs = st.executeQuery(complexQuery.toString());
 
         while (rs.next()) {
             post = new Post();
