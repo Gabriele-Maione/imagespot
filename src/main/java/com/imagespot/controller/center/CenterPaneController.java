@@ -1,4 +1,4 @@
-package com.imagespot.controller;
+package com.imagespot.controller.center;
 
 import com.imagespot.DAOImpl.BookmarkDAOImpl;
 import com.imagespot.DAOImpl.PostDAOImpl;
@@ -9,11 +9,15 @@ import com.imagespot.model.Post;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -23,17 +27,17 @@ import java.util.ResourceBundle;
 
 public class CenterPaneController implements Initializable {
     @FXML
-    private FlowPane flowPane;
+    protected FlowPane flowPane;
     @FXML
-    private Label name;
+    protected Label name;
     @FXML
     private Button btnUpdate;
     @FXML
-    private ProgressIndicator progressIndicator;
+    protected ProgressIndicator progressIndicator;
     @FXML
-    private ScrollPane scrollPane;
+    protected ScrollPane scrollPane;
     private final ViewType type;
-    private Timestamp lastPostDate;
+    protected Timestamp lastPostDate;
 
 
     public CenterPaneController() {
@@ -44,38 +48,20 @@ public class CenterPaneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnUpdateOnAction();
-        try {
-            setChildren();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        if(type != ViewType.FAVOURITES){ //TODO temporaneamente disabilitao per il ViewType FAVOURITES
-            scrollPane.vvalueProperty().addListener((observableValue, number, scrollPosition) -> {
-                if(scrollPosition.intValue() == 1 && flowPane.getChildren().size() % 20 == 0){ //scrollPosition == 1 -> scroll have reached the bottom
-                    loadPosts();
-                }
-            });
-        }
+        loadPosts();
 
     }
 
     private void btnUpdateOnAction() {
         btnUpdate.setOnAction(actionEvent -> {
-            try {
-                flowPane.getChildren().clear();
-                lastPostDate = null;
-                setChildren();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            flowPane.getChildren().clear();
+            lastPostDate = null;
+            loadPosts();
         });
     }
-    protected void setChildren() throws SQLException {
-        loadPosts();
-    }
 
-    private void loadPosts() {
+    protected void loadPosts() {   //TODO a sto punto si può cancellarlo, ma lo lascio magari ho rotto qualcosa nelle sottoclassi
+        System.out.println("CENTER CONTROLLER TANTO NN VERRA' MAI CHIAMATO HAHA");
         final Task<List<Post>> getPostsTask = new Task<>() {
             @Override
             protected List<Post> call() throws Exception {
@@ -90,7 +76,6 @@ public class CenterPaneController implements Initializable {
                         return posts;
                     }
                     case YOUR_GALLERY -> {
-                        name.setText("Your Gallery");
                         posts = new PostDAOImpl().getUserPosts(ViewFactory.getInstance().getUser().getUsername(), lastPostDate);
                         if(posts != null)
                             lastPostDate = posts.get(posts.size() - 1).getDate();
@@ -116,7 +101,42 @@ public class CenterPaneController implements Initializable {
             }
         };
 
-        Utils.retrievePostsTask(getPostsTask, flowPane);
+        retrievePostsTask(getPostsTask);
         progressIndicator.visibleProperty().bind(getPostsTask.runningProperty());
     }
+
+    public void retrievePostsTask(Task<List<Post>> task) {
+        new Thread(task).start();
+        task.setOnSucceeded(workerStateEvent -> {
+            List<Post> posts = task.getValue();
+
+            for (Post post : posts) {
+                VBox postBox = ViewFactory.getInstance().getPostPreview(post);
+                flowPane.getChildren().add(postBox);
+            }
+            flowPaneResponsive();
+        });
+    }
+
+    private void flowPaneResponsive(){
+        List<Node> flowPaneChildren = flowPane.getChildren();
+        setWidthOfFlowPaneChild(flowPaneChildren, flowPane.getWidth());
+
+        flowPane.widthProperty().addListener((observableValue, number, width) ->
+                setWidthOfFlowPaneChild(flowPaneChildren, width.doubleValue()));
+    }
+
+    private void setWidthOfFlowPaneChild(List<Node> flowPaneChild, double flowPaneWidth){
+        for(Node box : flowPaneChild){
+            VBox v = (VBox)box;
+            ImageView i = (ImageView)v.getChildren().get(0);
+
+            int numNodeForRow = (int)(flowPaneWidth / 280);
+            double nodeWidth = flowPaneWidth / numNodeForRow;
+
+            v.setPrefWidth(nodeWidth - 1);
+            i.setFitWidth(nodeWidth - 10);
+        }
+    }
+
 }

@@ -17,4 +17,6 @@ module com.imagespot {
     exports com.imagespot;
     exports com.imagespot.controller;
     opens com.imagespot.controller to javafx.fxml;
+    exports com.imagespot.controller.center;
+    opens com.imagespot.controller.center to javafx.fxml;
 }

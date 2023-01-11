@@ -1,6 +1,7 @@
 package com.imagespot.View;
 
 import com.imagespot.controller.*;
+import com.imagespot.controller.center.*;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
 import javafx.fxml.FXMLLoader;
@@ -58,7 +59,7 @@ public class ViewFactory {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
                 viewType = ViewType.FEED;
-                loader.setController(new CenterPaneController());
+                loader.setController(new FeedController());
                 feedView = loader.load();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -72,7 +73,7 @@ public class ViewFactory {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
                 viewType = ViewType.FAVOURITES;
-                loader.setController(new CenterPaneController());
+                loader.setController(new FavouritesController());
                 favoritesView = loader.load();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -86,7 +87,7 @@ public class ViewFactory {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
                 viewType = ViewType.EXPLORE;
-                loader.setController(new CenterPaneController());
+                loader.setController(new BrowseController());
                 browseView = loader.load();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -100,7 +101,7 @@ public class ViewFactory {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
                 viewType = ViewType.YOUR_GALLERY;
-                loader.setController(new CenterPaneController());
+                loader.setController(new YourGalleryController());
                 yourGallery = loader.load();
             } catch (Exception e) {
                 e.printStackTrace();

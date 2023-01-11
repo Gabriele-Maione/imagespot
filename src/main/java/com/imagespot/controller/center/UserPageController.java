@@ -1,5 +1,6 @@
-package com.imagespot.controller;
+package com.imagespot.controller.center;
 
+import com.imagespot.DAOImpl.BookmarkDAOImpl;
 import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.Utils.Utils;
@@ -15,12 +16,15 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+
+import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class UserPageController {
+public class UserPageController extends CenterPaneController {
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -45,6 +49,11 @@ public class UserPageController {
     private ProgressIndicator progressIndicator;
     private User user;
     private Timestamp lastPostDate;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Chiamato solo per fare in modo che nn chiami quello della superclasse
+    }
 
     public void init(User u) throws SQLException {
         this.user = u;
@@ -157,7 +166,9 @@ public class UserPageController {
                 return posts;
             }
         };
-        Utils.retrievePostsTask(userPostsTask, flowPane);
+        retrievePostsTask(userPostsTask);
         progressIndicator.visibleProperty().bind(userPostsTask.runningProperty());
     }
+
+
 }
