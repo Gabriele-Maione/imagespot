@@ -4,5 +4,7 @@ public enum ViewType {
     FEED,
     EXPLORE,
     YOUR_GALLERY,
-    FAVOURITES
+    FAVOURITES,
+    PROFILE,
+    USER_PROFILE
 }

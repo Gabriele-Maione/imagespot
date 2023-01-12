@@ -71,7 +71,7 @@ public class BookmarkDAOImpl implements BookmarkDAO {
         return flag;
     }
 
-    public void getUserBookmarks() {
+    public ArrayList<Post> getUserBookmarks() {
         ArrayList<Post> bookmarks = new  ArrayList<Post>();
         PreparedStatement st;
         ResultSet rs;
@@ -90,7 +90,8 @@ public class BookmarkDAOImpl implements BookmarkDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ViewFactory.getInstance().getUser().setBookmarks(bookmarks);
+
+        return bookmarks;
     }
 
     @Override

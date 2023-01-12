@@ -19,6 +19,17 @@ public class YourGalleryController extends CenterPaneController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
         name.setText("Your Gallery");
+        addScrollPaneListener();
+    }
+
+    @Override
+    protected void btnUpdateOnAction(){
+        btnUpdate.setOnAction(actionEvent -> {
+            flowPane.getChildren().clear();
+            ViewFactory.getInstance().getUser().getPosts().clear();
+            lastPostDate = null;
+            loadPosts();
+        });
     }
 
     protected void loadPosts() {
@@ -33,7 +44,7 @@ public class YourGalleryController extends CenterPaneController {
                 return posts;
             }
         };
-        retrievePostsTask(getUserPosts);
+        retrievePostsTask(getUserPosts, true);
         progressIndicator.visibleProperty().bind(getUserPosts.runningProperty());
     }
 

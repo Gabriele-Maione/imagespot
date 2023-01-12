@@ -1,6 +1,7 @@
 package com.imagespot.controller;
 
 import com.imagespot.View.ViewFactory;
+import com.imagespot.View.ViewType;
 import com.imagespot.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,6 +40,7 @@ public class UserPreviewController implements Initializable {
     }
 
     public void userPreviewOnClick() {
+        ViewFactory.getInstance().setViewType(ViewType.USER_PROFILE);
         BorderPane borderPane = (BorderPane) hboxUser.getScene().getRoot();
         borderPane.setCenter(ViewFactory.getInstance().getUserPage(user));
         if(borderPane.lookup(".selected") != null)

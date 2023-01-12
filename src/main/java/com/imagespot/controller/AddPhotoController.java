@@ -64,6 +64,7 @@ public class AddPhotoController implements Initializable {
     private Label err;
 
     private File file;
+
     private PostDAOImpl postDAO;
     private DeviceDAOImpl deviceDAO;
 
@@ -124,7 +125,6 @@ public class AddPhotoController implements Initializable {
 
     @FXML
     private void btnPublishOnAction() throws SQLException, IOException {
-
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         device = new Device();
         deviceDAO = new DeviceDAOImpl();

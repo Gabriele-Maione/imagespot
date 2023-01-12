@@ -2,6 +2,7 @@ package com.imagespot.controller;
 
 import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.View.ViewFactory;
+import com.imagespot.View.ViewType;
 import com.imagespot.model.User;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -86,7 +87,10 @@ public class HomeController implements Initializable {
         searchButton.setOnMouseClicked(event -> searchUser());
 
         //user's menu bar
-        myProfileItem.setOnAction(actionEvent -> homePane.setCenter(ViewFactory.getInstance().getUserPage(user)));
+        myProfileItem.setOnAction(actionEvent -> {
+            ViewFactory.getInstance().setViewType(ViewType.PROFILE);
+            homePane.setCenter(ViewFactory.getInstance().getUserPage(user));
+        });
         settingsItem.setOnAction(actionEvent -> ViewFactory.getInstance().showSettingsWindow());
         logoutItem.setOnAction(actionEvent -> {
             ViewFactory.getInstance().closeSession();

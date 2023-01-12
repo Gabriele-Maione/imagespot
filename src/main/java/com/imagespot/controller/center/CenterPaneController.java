@@ -1,11 +1,9 @@
 package com.imagespot.controller.center;
 
-import com.imagespot.DAOImpl.BookmarkDAOImpl;
-import com.imagespot.DAOImpl.PostDAOImpl;
-import com.imagespot.Utils.Utils;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.View.ViewType;
 import com.imagespot.model.Post;
+import javafx.collections.ListChangeListener;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,11 +15,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-
 import java.net.URL;
-import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -31,17 +26,14 @@ public abstract class CenterPaneController implements Initializable {
     @FXML
     protected Label name;
     @FXML
-    private Button btnUpdate;
+    protected Button btnUpdate;
     @FXML
     protected ProgressIndicator progressIndicator;
     @FXML
     protected ScrollPane scrollPane;
-    private final ViewType type;
     protected Timestamp lastPostDate;
 
-
     public CenterPaneController() {
-        this.type = ViewFactory.getInstance().getViewType();
         lastPostDate = null;
     }
 
@@ -49,10 +41,9 @@ public abstract class CenterPaneController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnUpdateOnAction();
         loadPosts();
-
     }
 
-    private void btnUpdateOnAction() {
+    protected void btnUpdateOnAction() {
         btnUpdate.setOnAction(actionEvent -> {
             flowPane.getChildren().clear();
             lastPostDate = null;
@@ -62,16 +53,39 @@ public abstract class CenterPaneController implements Initializable {
 
     protected abstract void loadPosts();
 
-    public void retrievePostsTask(Task<List<Post>> task) {
+    protected void retrievePostsTask(Task<List<Post>> task, boolean addListener) {
         new Thread(task).start();
         task.setOnSucceeded(workerStateEvent -> {
             List<Post> posts = task.getValue();
 
             for (Post post : posts) {
                 VBox postBox = ViewFactory.getInstance().getPostPreview(post);
+                postBox.setId(String.valueOf(post.getIdImage()));
                 flowPane.getChildren().add(postBox);
             }
             flowPaneResponsive();
+
+            if(addListener)
+                addPostsListener();
+        });
+    }
+
+    private void addPostsListener(){
+        ViewFactory.getInstance().getUser().getPosts().addListener((ListChangeListener<? super Post>) change ->{
+            change.next();
+
+            if(change.wasRemoved()){
+                int id = change.getRemoved().get(0).getIdImage();
+                flowPane.getChildren().removeIf(node -> node.getId().equals(String.valueOf(id)));
+            }
+        });
+    }
+
+    protected void addScrollPaneListener(){
+        scrollPane.vvalueProperty().addListener((observableValue, number, scrollPosition) -> {
+            if(scrollPosition.intValue() == 1 && flowPane.getChildren().size() % 20 == 0){ //scrollPosition == 1 -> scroll have reached the bottom
+                loadPosts();
+            }
         });
     }
 
@@ -95,5 +109,4 @@ public abstract class CenterPaneController implements Initializable {
             i.setFitWidth(nodeWidth - 10);
         }
     }
-
 }

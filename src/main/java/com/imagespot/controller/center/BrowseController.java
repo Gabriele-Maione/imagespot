@@ -1,11 +1,8 @@
 package com.imagespot.controller.center;
 
 import com.imagespot.DAOImpl.PostDAOImpl;
-import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
 import javafx.concurrent.Task;
-import javafx.fxml.Initializable;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +14,7 @@ public class BrowseController extends CenterPaneController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
         name.setText("Recently Added");
+        addScrollPaneListener();
     }
 
     protected void loadPosts() {
@@ -30,8 +28,7 @@ public class BrowseController extends CenterPaneController {
                 return posts;
             }
         };
-        System.out.println("BROWSE CONTROLLER WEEE");
-        retrievePostsTask(getRecentPosts);
+        retrievePostsTask(getRecentPosts, false);
         progressIndicator.visibleProperty().bind(getRecentPosts.runningProperty());
     }
 }

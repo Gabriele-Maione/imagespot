@@ -4,7 +4,6 @@ import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
 import javafx.concurrent.Task;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +13,9 @@ public class FeedController extends CenterPaneController {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         super.initialize(url, resourceBundle);
         name.setText("Feed");
-
+        addScrollPaneListener();
     }
 
     @Override
@@ -32,8 +30,7 @@ public class FeedController extends CenterPaneController {
                 return posts;
             }
         };
-        System.out.println("FEED CONTROLLER FOZZA");
-        retrievePostsTask(getFeed);
+        retrievePostsTask(getFeed, false);
         progressIndicator.visibleProperty().bind(getFeed.runningProperty());
     }
 }

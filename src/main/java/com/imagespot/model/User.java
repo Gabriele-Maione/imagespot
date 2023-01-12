@@ -17,14 +17,14 @@ public class User {
     private String bio;
     private ObjectProperty<Image> avatar;
     private ObservableList<User> followedUsers;
-    private ArrayList<Post> posts;
+    private ObservableList<Post> posts;
     private ArrayList<Post> bookmark;
 
     public User() {
-        this.posts = new ArrayList<>();
         this.avatar = new SimpleObjectProperty<>();
         this.name = new SimpleObjectProperty<>();
-        this.followedUsers = FXCollections.observableList(new ArrayList<User>());
+        this.followedUsers = FXCollections.observableList(new ArrayList<>());
+        this.posts = FXCollections.observableList(new ArrayList<>());
     }
 
     public ObservableList<User> getFollowedUsers() {
@@ -35,11 +35,11 @@ public class User {
         this.followedUsers = followedUsers;
     }
 
-    public ArrayList<Post> getPosts() {
+    public ObservableList<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(ArrayList<Post> posts) {
+    public void setPosts(ObservableList<Post> posts) {
         this.posts = posts;
     }
 

@@ -1,6 +1,7 @@
 package com.imagespot.controller;
 
 import com.imagespot.View.ViewFactory;
+import com.imagespot.View.ViewType;
 import com.imagespot.model.Post;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,8 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-
-import javax.swing.plaf.basic.BasicButtonUI;
 import java.io.IOException;
 
 import static com.imagespot.Utils.TimeUtil.toDuration;
@@ -52,7 +51,7 @@ public class ImagesController {
     }
 
     private void setModify() {
-        if (post.getProfile().getUsername().equals(ViewFactory.getInstance().getUser().getUsername())) {
+        if(ViewFactory.getInstance().getViewType() == ViewType.YOUR_GALLERY){
             modify.setDisable(false);
             modify.setVisible(true);
         }
