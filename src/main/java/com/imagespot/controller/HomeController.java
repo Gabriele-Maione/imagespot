@@ -44,6 +44,8 @@ public class HomeController implements Initializable {
     @FXML
     private HBox hbFavorites;
     @FXML
+    private HBox hbTagged;
+    @FXML
     private BorderPane homePane;
     @FXML
     private TextField fldSearch;
@@ -156,6 +158,8 @@ public class HomeController implements Initializable {
             homePane.setCenter(ViewFactory.getInstance().getFavoritesView());
         } else if (hbYourGallery.equals(box)) {
             homePane.setCenter(ViewFactory.getInstance().getYourGalleryView());
+        } else if (hbTagged.equals(box)) {
+            homePane.setCenter(ViewFactory.getInstance().getTaggedView());
         }
 
         removeSelectedView();

@@ -10,7 +10,7 @@ public class ConnectionManager {
     private final String password = "01ZpBQblnK9VysKAqQGyWWwMJrstJY41";
     private Connection con;
 
-    private ConnectionManager() throws SQLException {
+    private ConnectionManager() {
         try {
             Class.forName(driverName);
             try {

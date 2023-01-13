@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
@@ -14,9 +18,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane hbarPolicy="NEVER" prefHeight="867.0" prefWidth="602.0" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.AddPhotoController">
+<ScrollPane hbarPolicy="NEVER" prefWidth="602.0" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.AddPhotoController">
    <content>
-      <VBox alignment="CENTER" prefHeight="858.0" prefWidth="600.0" spacing="10.0">
+      <VBox alignment="CENTER" spacing="10.0">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -106,7 +110,7 @@
                </children>
             </VBox>
             <Separator prefWidth="200.0" />
-            <VBox prefHeight="134.0" prefWidth="387.0">
+            <VBox>
                <children>
                   <Label text="Status" textFill="#2d6139">
                      <font>
@@ -116,12 +120,29 @@
                   <ChoiceBox fx:id="cbStatus" prefWidth="150.0" />
                </children>
             </VBox>
+            <Separator prefWidth="200.0" />
+            <VBox VBox.vgrow="ALWAYS">
+               <children>
+                  <Label focusTraversable="false" text="Tag someone" textFill="#2d6139">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="searchUser" focusTraversable="false" promptText="Search user">
+                     <contextMenu>
+                        <ContextMenu fx:id="contextMenu" autoHide="false" />
+                     </contextMenu>
+                  </TextField>
+                  <ListView fx:id="taggedUsersList" focusTraversable="false" prefHeight="115.0" prefWidth="0.0" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
             <Label fx:id="err" textFill="RED">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="btnPublish" mnemonicParsing="false" onAction="#btnPublishOnAction" prefHeight="54.0" prefWidth="110.0" text="Publish" />
+            <ProgressIndicator fx:id="progressIndicator" prefHeight="60.0" prefWidth="60.0" visible="false" />
+            <Button fx:id="btnPublish" mnemonicParsing="false" onAction="#btnPublishOnAction" prefHeight="23.0" prefWidth="110.0" text="Publish" />
             <Hyperlink fx:id="hlinkCancel" text="Cancel">
                <VBox.margin>
                   <Insets />
@@ -132,4 +153,8 @@
          </children>
       </VBox>
    </content>
+   <stylesheets>
+      <URL value="@../../css/main.css" />
+      <URL value="@../../css/settings.css" />
+   </stylesheets>
 </ScrollPane>

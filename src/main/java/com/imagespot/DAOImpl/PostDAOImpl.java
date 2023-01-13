@@ -28,16 +28,16 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public void addPost(File photo, String resolution, String description, int size, String extension,
+    public int addPost(File photo, String resolution, String description, int size, String extension,
                         Timestamp posting_date, String status, Device device, User profile) throws SQLException, IOException {
-
+        int id = -1;
         PreparedStatement st;
+        ResultSet rs;
         String insert = ("INSERT INTO Post (photo, resolution, description, size, extension, posting_date," +
-                " status, device, profile, preview) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                " status, device, profile, preview) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING idimage");
 
         //scaling image and deserialize from bufferedImage to InputStream
         InputStream preview = photoScaler(photo);
-
         st = con.prepareStatement(insert);
 
         st.setBinaryStream(1, new FileInputStream(photo));
@@ -50,8 +50,10 @@ public class PostDAOImpl implements PostDAO {
         st.setInt(8, device.getIdDevice());
         st.setString(9, profile.getUsername());
         st.setBinaryStream(10, preview);
-        st.execute();
+        rs = st.executeQuery();
+        if(rs.next()) id = rs.getInt(1);
         st.close();
+        return id;
     }
 
     public ArrayList<Post> getRecentPosts(Timestamp timestamp) throws SQLException {
@@ -242,6 +244,7 @@ public class PostDAOImpl implements PostDAO {
     public void deletePost(int id) {
         Statement st;
         String query = "DELETE FROM post WHERE idimage = '" + id + "'";
+        System.out.println(query);
         try {
             st = con.createStatement();
             st.executeUpdate(query);

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="hboxUser" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#userPreviewOnClick" prefHeight="30.0" prefWidth="200.0" spacing="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.UserPreviewController">
+   <children>
+      <ImageView fx:id="avatar" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/bear_icon.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="name" text="Name">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="username" text="\@Username" textFill="#5b5b5b" />
+   </children>
+   <padding>
+      <Insets left="10.0" />
+   </padding>
+</HBox>

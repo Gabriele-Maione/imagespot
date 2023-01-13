@@ -123,12 +123,14 @@ public class EditPostController {
             Task<Void> deleteTask = new Task<>() {
                 @Override
                 protected Void call() throws Exception {
+                    System.out.println(post.getIdImage());
                     new PostDAOImpl().deletePost(post.getIdImage());
                     return null;
                 }
             };
             new Thread(deleteTask).start();
             deleteTask.setOnSucceeded(workerStateEvent -> {
+                System.out.println(post.getIdImage());
                 ViewFactory.getInstance().getUser().getPosts().removeIf(p -> p.getIdImage().equals(post.getIdImage()));
                 Stage stage = (Stage)description.getScene().getWindow();
                 stage.close();

@@ -6,5 +6,6 @@ public enum ViewType {
     YOUR_GALLERY,
     FAVOURITES,
     PROFILE,
+    TAGGED,
     USER_PROFILE
 }
