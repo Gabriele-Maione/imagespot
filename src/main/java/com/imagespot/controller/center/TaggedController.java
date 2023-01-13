@@ -29,7 +29,7 @@ public class TaggedController extends CenterPaneController {
                 return new TaggedUserDAOImpl().getTag();
             }
         };
-        retrievePostsTask(getTagged, true);
+        retrievePostsTask(getTagged, false);
         progressIndicator.visibleProperty().bind(getTagged.runningProperty());
     }
 }

@@ -32,6 +32,7 @@ public abstract class CenterPaneController implements Initializable {
     @FXML
     protected ScrollPane scrollPane;
     protected Timestamp lastPostDate;
+    protected ListChangeListener<? super Post> postsListner;
 
     public CenterPaneController() {
         lastPostDate = null;
@@ -71,14 +72,25 @@ public abstract class CenterPaneController implements Initializable {
     }
 
     private void addPostsListener(){
-        ViewFactory.getInstance().getUser().getPosts().addListener((ListChangeListener<? super Post>) change ->{
+        ViewType type = ViewFactory.getInstance().getViewType();
+
+        postsListner = (ListChangeListener<Post>) change -> {
             change.next();
+
+            if(type == ViewType.YOUR_GALLERY && change.wasAdded()){
+                Post postAdded = change.getAddedSubList().get(0);
+                VBox postBox = ViewFactory.getInstance().getPostPreview(postAdded);
+                postBox.setId(String.valueOf(postAdded.getIdImage()));
+                flowPane.getChildren().add(0, postBox);
+            }
 
             if(change.wasRemoved()){
                 int id = change.getRemoved().get(0).getIdImage();
                 flowPane.getChildren().removeIf(node -> node.getId().equals(String.valueOf(id)));
             }
-        });
+        };
+
+        ViewFactory.getInstance().getUser().getPosts().addListener(postsListner);
     }
 
     protected void addScrollPaneListener(){

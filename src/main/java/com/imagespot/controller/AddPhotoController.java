@@ -1,12 +1,12 @@
 package com.imagespot.controller;
 
-import com.imagespot.DAO.TaggedUserDAO;
 import com.imagespot.DAOImpl.DeviceDAOImpl;
 import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.DAOImpl.TaggedUserDAOImpl;
 import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Device;
+import com.imagespot.model.Post;
 import com.imagespot.model.User;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -16,12 +16,10 @@ import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,7 +30,6 @@ import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
-
 import static com.imagespot.Utils.Utils.*;
 
 
@@ -183,17 +180,20 @@ public class AddPhotoController implements Initializable {
             device.setBrand(fldBrand.getText());
             device.setModel(fldModel.getText());
             device.setDeviceType(cbType.getValue());
-            final Task<Void> publishPhoto = new Task<Void>() {
+            final Task<Post> publishPhoto = new Task<>() {
                 @Override
-                protected Void call() throws Exception {
-                    int id;
+                protected Post call() throws Exception {
                     TaggedUserDAOImpl taggedUserDAO = new TaggedUserDAOImpl();
-                    id = new PostDAOImpl().addPost(file, getRes(file), fldDescription.getText(),
-                            getSize(file), getExt(file), timestamp, cbStatus.getValue(), device, user);
+                    Post post = new Post(getRes(file), fldDescription.getText(), getSize(file), getExt(file), timestamp, cbStatus.getValue());
+
+                    post = new PostDAOImpl().addPost(file, post, device, user);
+                    post.setProfile(user);
+
+                    int id = post.getIdImage();
                     for (String s : taggedUser) {
-                        taggedUserDAO.addTag(s, id);
+                        taggedUserDAO.addTag(s,id);
                     }
-                    return null;
+                    return post;
                 }
             };
             progressIndicator.setManaged(true);
@@ -204,6 +204,7 @@ public class AddPhotoController implements Initializable {
                 progressIndicator.setManaged(false);
                 btnPublish.setVisible(false);
                 err.setText("DONE");
+                ViewFactory.getInstance().getUser().getPosts().add(0, publishPhoto.getValue());
             });
         }
     }

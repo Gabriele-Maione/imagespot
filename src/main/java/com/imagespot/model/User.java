@@ -3,6 +3,7 @@ package com.imagespot.model;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import java.util.ArrayList;
@@ -25,6 +26,11 @@ public class User {
         this.name = new SimpleObjectProperty<>();
         this.followedUsers = FXCollections.observableList(new ArrayList<>());
         this.posts = FXCollections.observableList(new ArrayList<>());
+    }
+
+    public void resetPosts(ListChangeListener<? super Post> postsListner){
+        posts.removeListener(postsListner);
+        posts.clear();
     }
 
     public ObservableList<User> getFollowedUsers() {

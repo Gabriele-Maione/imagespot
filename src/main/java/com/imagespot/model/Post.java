@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import static com.imagespot.Utils.Utils.photoScaler;
+
 public class Post {
     private Integer idImage;
     private Image photo;
@@ -24,6 +26,15 @@ public class Post {
     private ArrayList<User> likes;
 
     public Post() {}
+
+    public Post(String resolution, String description, int size, String extension, Timestamp date, String status){
+        this.resolution = resolution;
+        this.description = description;
+        this.size = size;
+        this.extension = extension;
+        this.date = date;
+        this.status = status;
+    }
 
     public ArrayList<User> getLikes() {
         return likes;

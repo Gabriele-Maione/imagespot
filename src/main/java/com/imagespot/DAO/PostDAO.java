@@ -16,8 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface PostDAO {
-    int addPost(File photo, String resolution, String description, int size, String extension, Timestamp posting_date,
-                        String status, Device device, User profile) throws SQLException, IOException;
+    Post addPost(File photo, Post post, Device device, User profile) throws SQLException, IOException;
     ArrayList<Post> getRecentPosts(Timestamp timestamp) throws SQLException;
     ArrayList<Post>getUserPosts(String username, Timestamp timestamp) throws SQLException;
     ArrayList<Post> getUsersPublicPosts(String username, Timestamp timestamp) throws SQLException;

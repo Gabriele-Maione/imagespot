@@ -1,21 +1,17 @@
 package com.imagespot.DAOImpl;
 
 import com.imagespot.Connection.ConnectionManager;
-import com.imagespot.DAO.DeviceDAO;
 import com.imagespot.DAO.PostDAO;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Device;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
 import javafx.scene.image.Image;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import org.apache.commons.io.IOUtils;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
+
 
 import static com.imagespot.Utils.Utils.photoScaler;
 
@@ -28,8 +24,7 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public int addPost(File photo, String resolution, String description, int size, String extension,
-                        Timestamp posting_date, String status, Device device, User profile) throws SQLException, IOException {
+    public Post addPost(File photo, Post post, Device device, User profile) throws SQLException, IOException {
         int id = -1;
         PreparedStatement st;
         ResultSet rs;
@@ -37,23 +32,33 @@ public class PostDAOImpl implements PostDAO {
                 " status, device, profile, preview) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING idimage");
 
         //scaling image and deserialize from bufferedImage to InputStream
+
+
         InputStream preview = photoScaler(photo);
         st = con.prepareStatement(insert);
 
+        byte[] previewBytes = IOUtils.toByteArray(preview);
+
         st.setBinaryStream(1, new FileInputStream(photo));
-        st.setString(2, resolution);
-        st.setString(3, description);
-        st.setInt(4, size);
-        st.setString(5, extension);
-        st.setTimestamp(6, posting_date);
-        st.setString(7, status);
+        st.setString(2, post.getResolution());
+        st.setString(3, post.getDescription());
+        st.setInt(4, post.getSize());
+        st.setString(5, post.getExtension());
+        st.setTimestamp(6, post.getDate());
+        st.setString(7, post.getStatus());
         st.setInt(8, device.getIdDevice());
         st.setString(9, profile.getUsername());
-        st.setBinaryStream(10, preview);
+        st.setBinaryStream(10, new ByteArrayInputStream(previewBytes));
         rs = st.executeQuery();
+
         if(rs.next()) id = rs.getInt(1);
         st.close();
-        return id;
+
+        post.setIdImage(id);
+        post.setPreview(new Image(new ByteArrayInputStream(previewBytes)));
+        post.setPhoto(new Image(photo.getAbsolutePath()));
+
+        return post;
     }
 
     public ArrayList<Post> getRecentPosts(Timestamp timestamp) throws SQLException {

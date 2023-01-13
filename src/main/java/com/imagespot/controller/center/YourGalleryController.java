@@ -4,16 +4,12 @@ import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
 import javafx.concurrent.Task;
-import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class YourGalleryController extends CenterPaneController {
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -26,7 +22,7 @@ public class YourGalleryController extends CenterPaneController {
     protected void btnUpdateOnAction(){
         btnUpdate.setOnAction(actionEvent -> {
             flowPane.getChildren().clear();
-            ViewFactory.getInstance().getUser().getPosts().clear();
+            ViewFactory.getInstance().getUser().resetPosts(postsListner);
             lastPostDate = null;
             loadPosts();
         });
