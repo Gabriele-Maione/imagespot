@@ -7,7 +7,6 @@
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
@@ -15,10 +14,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane hbarPolicy="NEVER" prefWidth="602.0" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.AddPhotoController">
+<ScrollPane fx:id="scrollPane" focusTraversable="false" hbarPolicy="NEVER" prefWidth="602.0" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.AddPhotoController">
    <content>
       <VBox alignment="CENTER" spacing="10.0">
          <opaqueInsets>
@@ -123,17 +123,21 @@
             <Separator prefWidth="200.0" />
             <VBox VBox.vgrow="ALWAYS">
                <children>
-                  <Label focusTraversable="false" text="Tag someone" textFill="#2d6139">
+                  <Label text="Tag someone" textFill="#2d6139">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="searchUser" focusTraversable="false" promptText="Search user">
+                  <TextField fx:id="searchUser" promptText="Search user">
                      <contextMenu>
                         <ContextMenu fx:id="contextMenu" autoHide="false" />
                      </contextMenu>
                   </TextField>
-                  <ListView fx:id="taggedUsersList" focusTraversable="false" prefHeight="115.0" prefWidth="0.0" VBox.vgrow="ALWAYS" />
+                  <TilePane fx:id="taggedUsersList" maxWidth="560.0" prefHeight="0.0" prefWidth="560.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </TilePane>
                </children>
             </VBox>
             <Label fx:id="err" textFill="RED">

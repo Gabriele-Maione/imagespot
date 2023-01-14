@@ -8,13 +8,18 @@ import com.imagespot.model.User;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
+
 import java.net.URL;
+import java.nio.Buffer;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -37,17 +42,23 @@ public class UserPageController extends CenterPaneController {
     private Label username;
     @FXML
     private ProgressIndicator progressIndicator;
+    @FXML
+    private Button postBtn;
+    @FXML
+    private Button tagBtn;
+
+    private HashMap<String, ArrayList<Post>> select;
+
     private User user;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //Chiamato solo per fare in modo che nn chiami quello della superclasse
     }
 
     public void init(User u) throws SQLException {
         this.user = u;
         lastPostDate = null;
-
+        select = new HashMap<>();
         if(this.user != null){
             setUserInfo();
             getUserStatsTask();
@@ -56,6 +67,20 @@ public class UserPageController extends CenterPaneController {
             addScrollPaneListener();
         }
     }
+
+    @FXML
+    private void postBtnOnAction() {
+        flowPane.getChildren().clear();
+        loadPosts();
+    }
+
+    @FXML
+    private void tagBtnOnAction() {
+        flowPane.getChildren().clear();
+        loadTag();
+    }
+
+
 
     @FXML
     private void followButtonOnAction() {
@@ -146,14 +171,36 @@ public class UserPageController extends CenterPaneController {
         final Task<List<Post>> userPostsTask = new Task<>() {
             @Override
             protected List<Post> call() throws Exception {
-                ArrayList<Post> posts = new PostDAOImpl().getUsersPublicPosts(user.getUsername(), lastPostDate);
-                if(posts != null)
-                    lastPostDate = posts.get(posts.size() - 1).getDate();
-                return posts;
+                if(!select.containsKey("Post")){
+
+                    select.put("Post", new PostDAOImpl().getUsersPublicPosts(user.getUsername(), lastPostDate));
+                    if(select.get("Post") != null){
+                        lastPostDate = select.get("Post").get(select.get("Post").size() - 1).getDate();
+                    }
+                }
+                return select.get("Post");
             }
         };
         retrievePostsTask(userPostsTask, true);
         progressIndicator.visibleProperty().bind(userPostsTask.runningProperty());
+    }
+
+
+    private void loadTag() {
+        final Task<List<Post>> userTag = new Task<List<Post>>() {
+            @Override
+            protected List<Post> call() throws Exception {
+                if(!select.containsKey("Tag")){
+                    select.put("Tag", new PostDAOImpl().getRecentPosts(null));
+                    if(select.get("Tag") != null){
+                        lastPostDate = select.get("Tag").get(select.get("Tag").size() - 1 ).getDate();
+                    }
+                }
+                return select.get("Tag");
+            }
+        };
+        retrievePostsTask(userTag, true);
+        progressIndicator.visibleProperty().bind(userTag.runningProperty());
     }
 
 

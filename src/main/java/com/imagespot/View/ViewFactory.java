@@ -96,7 +96,7 @@ public class ViewFactory {
         }
         return favoritesView;
     }
-    
+
     public VBox getBrowseView() {
         if (browseView == null) {
             try {
@@ -249,7 +249,7 @@ public class ViewFactory {
                 Stage stage = new Stage();
                 stage.setMinHeight(400);
                 stage.setMinWidth(400);
-                stage.setTitle("Imagespot - Home");
+                stage.setTitle("Imagespot");
                 stage.setScene(scene);
                 stage.show();
             } catch (IOException e) {
@@ -322,7 +322,7 @@ public class ViewFactory {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.initOwner(homeRoot.getScene().getWindow());
-            stage.setTitle("Login");
+            stage.setTitle("Add Photo");
             Scene scene = new Scene(root, 602, 602);
             stage.setScene(scene);
             stage.show();

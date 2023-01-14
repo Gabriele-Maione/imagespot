@@ -25,3 +25,26 @@ Button:hover {
 Button:pressed {
     -fx-background-color: -pressed;
 }
+
+
+.xButton{
+    -fx-font-size: 10;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-background-color: rgba(128,175,246,0.16);
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-font-family: "Mulish", sans-serif;
+}
+
+.xButton:hover{
+    -fx-background-color: rgba(246,0,6,0.16);
+    -fx-border-color: rgba(246,0,6,0.46);
+}
+
+.usersHbox{
+    -fx-border-color: -first-detail;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+

@@ -11,18 +11,23 @@ import com.imagespot.model.User;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.kordamp.ikonli.javafx.FontIcon;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -31,6 +36,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
 import static com.imagespot.Utils.Utils.*;
+import static org.kordamp.ikonli.fontawesome5.FontAwesomeSolid.USER_CHECK;
 
 
 public class AddPhotoController implements Initializable {
@@ -74,9 +80,11 @@ public class AddPhotoController implements Initializable {
     @FXML
     private TextField searchUser;
     @FXML
-    private ListView taggedUsersList;
+    private TilePane taggedUsersList;
     @FXML
     private ProgressIndicator progressIndicator;
+    @FXML
+    private ScrollPane scrollPane;
 
     private File file;
 
@@ -227,7 +235,7 @@ public class AddPhotoController implements Initializable {
             else {
                 contextMenu.getItems().clear();
                 for (User user : searchedUsersTask.getValue()) {
-                   if(!taggedUser.contains(user.getUsername())) {
+                    if(!taggedUser.contains(user.getUsername())) {
                         MenuItem menu = new MenuItem();
                         menu.setGraphic(createUserPreview(user.getName(), user.getUsername(), user.getAvatar(), false));
                         menu.setId(user.getUsername());
@@ -235,11 +243,10 @@ public class AddPhotoController implements Initializable {
 
                         menu.setOnAction(event -> {
                             taggedUser.add(menu.getId());
-                            taggedUsersList.getItems().add(createUserPreview(user.getName(), user.getUsername(), user.getAvatar(), true));
+                            taggedUsersList.getChildren().add(createUserPreview(user.getName(), user.getUsername(), user.getAvatar(), true));
                             contextMenu.getItems().remove(menu);
                         });
                     }
-
                 }
             }
         });
@@ -249,8 +256,6 @@ public class AddPhotoController implements Initializable {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_LEFT);
         hbox.setSpacing(10);
-        hbox.setPrefHeight(30);
-        hbox.setPrefWidth(200);
         ImageView avatar = new ImageView();
         avatar.setFitHeight(25);
         avatar.setFitWidth(25);
@@ -269,20 +274,27 @@ public class AddPhotoController implements Initializable {
 
         if(ViewFactory.getInstance().getUser().getFollowedUsers()
                 .stream().anyMatch(user -> user.getUsername().equals(username))) {
-            Label followingLabel = new Label("Following"); //TODO add icon
-            hbox.getChildren().add(followingLabel);
+            hbox.getChildren().add(FontIcon.of(USER_CHECK));
         }
 
-        Button btnRemove = new Button("X");
-        btnRemove.setVisible(isRemovable);
-        btnRemove.setOnAction(event -> {
-            taggedUser.remove(username);
-            taggedUsersList.getItems().remove(hbox);
-        });
-        hbox.getChildren().add(btnRemove);
+        if(isRemovable){
+            HBox hBoxRemove = new HBox();
+            HBox.setHgrow(hBoxRemove, Priority.ALWAYS);
+            hBoxRemove.setAlignment(Pos.CENTER_RIGHT);
+            TilePane.setMargin(hbox, new Insets(0, 0, 5, 10));
+            Button btnRemove = new Button("x");
 
+            btnRemove.setFocusTraversable(false);
+            btnRemove.getStyleClass().add("xButton");
+
+            btnRemove.setOnAction(event -> {
+                taggedUser.remove(username);
+                taggedUsersList.getChildren().remove(hbox);
+            });
+
+            hBoxRemove.getChildren().add(btnRemove);
+            hbox.getChildren().add(hBoxRemove);
+        }
         return hbox;
     }
-
-
 }
