@@ -1,7 +1,6 @@
 package com.imagespot.controller.center;
 
 import com.imagespot.View.ViewFactory;
-import com.imagespot.View.ViewType;
 import com.imagespot.model.Post;
 import javafx.collections.ListChangeListener;
 import javafx.concurrent.Task;
@@ -17,6 +16,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,7 +32,6 @@ public abstract class CenterPaneController implements Initializable {
     @FXML
     protected ScrollPane scrollPane;
     protected Timestamp lastPostDate;
-    protected ListChangeListener<? super Post> postsListner;
 
     public CenterPaneController() {
         lastPostDate = null;
@@ -42,6 +41,7 @@ public abstract class CenterPaneController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnUpdateOnAction();
         loadPosts();
+        flowPaneResponsive(flowPane);
     }
 
     protected void btnUpdateOnAction() {
@@ -54,43 +54,41 @@ public abstract class CenterPaneController implements Initializable {
 
     protected abstract void loadPosts();
 
-    protected void retrievePostsTask(Task<List<Post>> task, boolean addListener) {
+    protected void retrievePostsTask(Task<List<Post>> task) {
         new Thread(task).start();
         task.setOnSucceeded(workerStateEvent -> {
             List<Post> posts = task.getValue();
 
-            for (Post post : posts) {
-                VBox postBox = ViewFactory.getInstance().getPostPreview(post);
-                postBox.setId(String.valueOf(post.getIdImage()));
-                flowPane.getChildren().add(postBox);
+            if(posts != null){
+                for (Post post : posts) {
+                    VBox postBox = ViewFactory.getInstance().getPostPreview(post);
+                    postBox.setId(String.valueOf(post.getIdImage()));
+                    flowPane.getChildren().add(postBox);
+                }
+                setWidthOfFlowPaneChild(flowPane.getChildren(), flowPane.getWidth());
             }
-            flowPaneResponsive();
 
-            if(addListener)
-                addPostsListener();
         });
     }
 
-    private void addPostsListener(){
-        ViewType type = ViewFactory.getInstance().getViewType();
+    protected Timestamp retrieveDateOfLastPost(ArrayList<Post> posts){
+        Timestamp date = lastPostDate;
+        if(posts != null){
+            if(!posts.isEmpty())
+                date = posts.get(posts.size() - 1).getDate();
+        }
+        return date;
+    }
 
-        postsListner = (ListChangeListener<Post>) change -> {
+    protected void addPostsRemovedListener(){
+        ViewFactory.getInstance().getUser().getPosts().addListener((ListChangeListener<Post>) change -> {
             change.next();
 
-            if(type == ViewType.YOUR_GALLERY && change.wasAdded()){
-                Post postAdded = change.getAddedSubList().get(0);
-                VBox postBox = ViewFactory.getInstance().getPostPreview(postAdded);
-                postBox.setId(String.valueOf(postAdded.getIdImage()));
-                flowPane.getChildren().add(0, postBox);
-            }
-
-            if(change.wasRemoved()){
+            if(change.wasRemoved() && change.getRemoved().size() == 1){
                 int id = change.getRemoved().get(0).getIdImage();
                 flowPane.getChildren().removeIf(node -> node.getId().equals(String.valueOf(id)));
             }
-        };
-
-        ViewFactory.getInstance().getUser().getPosts().addListener(postsListner);
+        });
     }
 
     protected void addScrollPaneListener(){
@@ -101,15 +99,12 @@ public abstract class CenterPaneController implements Initializable {
         });
     }
 
-    private void flowPaneResponsive(){
-        List<Node> flowPaneChildren = flowPane.getChildren();
-        setWidthOfFlowPaneChild(flowPaneChildren, flowPane.getWidth());
-
-        flowPane.widthProperty().addListener((observableValue, number, width) ->
-                setWidthOfFlowPaneChild(flowPaneChildren, width.doubleValue()));
+    protected void flowPaneResponsive(FlowPane fp){
+        fp.widthProperty().addListener((observableValue, number, width) ->
+                setWidthOfFlowPaneChild(fp.getChildren(), width.doubleValue()));
     }
 
-    private void setWidthOfFlowPaneChild(List<Node> flowPaneChild, double flowPaneWidth){
+    protected void setWidthOfFlowPaneChild(List<Node> flowPaneChild, double flowPaneWidth){
         for(Node box : flowPaneChild){
             VBox v = (VBox)box;
             ImageView i = (ImageView)v.getChildren().get(0);

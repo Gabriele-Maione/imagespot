@@ -31,16 +31,25 @@ public class TaggedUserDAOImpl implements TaggedUserDAO {
         }
     }
 
-    public ArrayList<Post> getTag() throws SQLException {
-        ArrayList<Post> tag = new  ArrayList<Post>();
+    public ArrayList<Post> getTag(String username, Timestamp timestamp) throws SQLException {
+        ArrayList<Post> tag = new  ArrayList<>();
         PreparedStatement st;
         ResultSet rs;
         PostDAOImpl post = new PostDAOImpl();
-        String query = "SELECT idimage FROM taggeduser WHERE nickname = ?";
+
+        StringBuilder complexQuery = new StringBuilder("SELECT P.idimage FROM post P" +
+                " JOIN taggeduser T ON P.idimage = T.idimage" +
+                " WHERE nickname = ?");
+
+        if(timestamp != null)
+            complexQuery.append(" AND posting_date < ?");
+        complexQuery.append(" ORDER BY posting_date DESC LIMIT 20");
 
         try {
-            st = con.prepareStatement(query);
-            st.setString(1, ViewFactory.getInstance().getUser().getUsername());
+            st = con.prepareStatement(complexQuery.toString());
+            st.setString(1, username);
+            if(timestamp != null)
+                st.setTimestamp(2, timestamp);
             rs = st.executeQuery();
             while (rs.next()) {
 
@@ -51,7 +60,6 @@ public class TaggedUserDAOImpl implements TaggedUserDAO {
         } catch (SQLException e) {
             System.out.println("Failed to retrieve data from TaggedUser table");
         }
-
         return tag;
     }
 }

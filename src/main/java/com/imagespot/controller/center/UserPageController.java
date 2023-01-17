@@ -1,6 +1,7 @@
 package com.imagespot.controller.center;
 
 import com.imagespot.DAOImpl.PostDAOImpl;
+import com.imagespot.DAOImpl.TaggedUserDAOImpl;
 import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
@@ -10,20 +11,19 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-
+import javafx.scene.layout.VBox;
 import java.net.URL;
-import java.nio.Buffer;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+import static com.imagespot.Utils.Utils.setAvatarRounde;
 
-public class UserPageController extends CenterPaneController {
+public class UserPageController extends CenterPaneController{
     @FXML
     private ImageView avatar;
     @FXML
@@ -41,46 +41,80 @@ public class UserPageController extends CenterPaneController {
     @FXML
     private Label username;
     @FXML
-    private ProgressIndicator progressIndicator;
-    @FXML
     private Button postBtn;
     @FXML
     private Button tagBtn;
 
-    private HashMap<String, ArrayList<Post>> select;
-
-    private User user;
+    public User user;
+    protected FlowPane flowPanePosts;
+    private FlowPane flowPaneTag;
+    private Timestamp lastUserTagDate;
+    private Timestamp lastUserPostDate;
+    private enum userPageViewType{USER_PROFILE_POSTS, USER_PROFILE_TAG}
+    private userPageViewType type;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        type = userPageViewType.USER_PROFILE_POSTS;
+        lastPostDate = null;
+        lastUserPostDate = null;
+        lastUserTagDate = null;
+        flowPanePosts = new FlowPane();
+        flowPaneTag = new FlowPane();
+        ((VBox) scrollPane.getContent()).getChildren().add(flowPanePosts);
+        flowPane = flowPanePosts;
+        addScrollPaneListener();
+        flowPaneResponsive(flowPanePosts);
+        flowPaneResponsive(flowPaneTag);
     }
 
-    public void init(User u) throws SQLException {
-        this.user = u;
-        lastPostDate = null;
-        select = new HashMap<>();
+    public void init(User user) throws SQLException {
+        this.user = user;
+
         if(this.user != null){
             setUserInfo();
             getUserStatsTask();
             loadPosts();
-
-            addScrollPaneListener();
         }
     }
 
     @FXML
     private void postBtnOnAction() {
-        flowPane.getChildren().clear();
+        if(type != userPageViewType.USER_PROFILE_POSTS){
+            switchUserProfileView();
+            type = userPageViewType.USER_PROFILE_POSTS;
+        }
         loadPosts();
     }
 
     @FXML
     private void tagBtnOnAction() {
-        flowPane.getChildren().clear();
-        loadTag();
+        if(type != userPageViewType.USER_PROFILE_TAG){
+            switchUserProfileView();
+            type = userPageViewType.USER_PROFILE_TAG;
+        }
+        loadPosts();
     }
 
-
+    private void switchUserProfileView(){
+        VBox scrollPaneVbox = (VBox) scrollPane.getContent();
+        scrollPaneVbox.getChildren().remove(flowPane);
+        if(type == userPageViewType.USER_PROFILE_POSTS){
+            flowPane = flowPaneTag;
+            lastUserPostDate = lastPostDate;
+            lastPostDate = lastUserTagDate;
+            tagBtn.getStyleClass().add("btn-switch-view-selected");
+            postBtn.getStyleClass().remove("btn-switch-view-selected");
+        }
+        else{
+            flowPane = flowPanePosts;
+            lastUserTagDate = lastPostDate;
+            lastPostDate = lastUserPostDate;
+            postBtn.getStyleClass().add("btn-switch-view-selected");
+            tagBtn.getStyleClass().remove("btn-switch-view-selected");
+        }
+        scrollPaneVbox.getChildren().add(flowPane);
+    }
 
     @FXML
     private void followButtonOnAction() {
@@ -112,10 +146,11 @@ public class UserPageController extends CenterPaneController {
             followedUsers.removeIf(u -> u.getUsername().equals(user.getUsername()));
     }
 
-
     public void setUserInfo() {
-        if (user.getAvatar() != null)
+        if (user.getAvatar() != null){
             avatar.setImage(user.getAvatar());
+            setAvatarRounde(avatar);
+        }
 
         name.setText(user.getName());
         this.username.setText("@" + user.getUsername());
@@ -125,7 +160,6 @@ public class UserPageController extends CenterPaneController {
 
         checkFollowingTask();
     }
-
 
     public void checkFollowingTask() {
         final Task<Boolean> checkFollowing = new Task<>() {
@@ -159,49 +193,48 @@ public class UserPageController extends CenterPaneController {
         userStats.setOnSucceeded(workerStateEvent -> {
             int[] stats = userStats.getValue();
 
-            post.setText("Post: " + stats[0]);
-            follower.setText("Follower: " + stats[1]);
-            following.setText("Following: " + stats[2]);
+            post.setText(String.valueOf(stats[0]));
+            follower.setText(String.valueOf(stats[1]));
+            following.setText(String.valueOf(stats[2]));
         });
 
     }
 
     @Override
-    public void loadPosts() {
+    protected void loadPosts() {
+        if(type == userPageViewType.USER_PROFILE_POSTS)
+            loadUserPosts();
+        else
+            loadUserTags();
+    }
+
+    private void loadUserPosts(){
         final Task<List<Post>> userPostsTask = new Task<>() {
             @Override
             protected List<Post> call() throws Exception {
-                if(!select.containsKey("Post")){
-
-                    select.put("Post", new PostDAOImpl().getUsersPublicPosts(user.getUsername(), lastPostDate));
-                    if(select.get("Post") != null){
-                        lastPostDate = select.get("Post").get(select.get("Post").size() - 1).getDate();
-                    }
-                }
-                return select.get("Post");
+                ArrayList<Post> posts = new PostDAOImpl().getUsersPublicPosts(user.getUsername(), lastPostDate);
+                lastPostDate = retrieveDateOfLastPost(posts);
+                return posts;
             }
         };
-        retrievePostsTask(userPostsTask, true);
+        retrievePostsTask(userPostsTask);
+        postBtn.disableProperty().bind(userPostsTask.runningProperty());
+        tagBtn.disableProperty().bind(userPostsTask.runningProperty());
         progressIndicator.visibleProperty().bind(userPostsTask.runningProperty());
     }
 
-
-    private void loadTag() {
-        final Task<List<Post>> userTag = new Task<List<Post>>() {
+    private void loadUserTags() {
+        final Task<List<Post>> userTagsTask = new Task<>() {
             @Override
             protected List<Post> call() throws Exception {
-                if(!select.containsKey("Tag")){
-                    select.put("Tag", new PostDAOImpl().getRecentPosts(null));
-                    if(select.get("Tag") != null){
-                        lastPostDate = select.get("Tag").get(select.get("Tag").size() - 1 ).getDate();
-                    }
-                }
-                return select.get("Tag");
+                ArrayList<Post> posts = new TaggedUserDAOImpl().getTag(user.getUsername(), lastPostDate);
+                lastPostDate = retrieveDateOfLastPost(posts);
+                return posts;
             }
         };
-        retrievePostsTask(userTag, true);
-        progressIndicator.visibleProperty().bind(userTag.runningProperty());
+        retrievePostsTask(userTagsTask);
+        postBtn.disableProperty().bind(userTagsTask.runningProperty());
+        tagBtn.disableProperty().bind(userTagsTask.runningProperty());
+        progressIndicator.visibleProperty().bind(userTagsTask.runningProperty());
     }
-
-
 }

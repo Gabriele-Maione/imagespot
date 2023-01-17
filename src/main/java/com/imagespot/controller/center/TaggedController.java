@@ -1,7 +1,5 @@
 package com.imagespot.controller.center;
 
-import com.imagespot.DAOImpl.BookmarkDAOImpl;
-import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.DAOImpl.TaggedUserDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
@@ -16,7 +14,6 @@ public class TaggedController extends CenterPaneController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
-
         name.setText("Tagged");
         addScrollPaneListener();
     }
@@ -26,10 +23,13 @@ public class TaggedController extends CenterPaneController {
         final Task<List<Post>> getTagged = new Task<>() {
             @Override
             protected ArrayList<Post> call() throws Exception {
-                return new TaggedUserDAOImpl().getTag();
+                ArrayList<Post> posts = new TaggedUserDAOImpl().getTag(ViewFactory.getInstance().getUser().getUsername(), lastPostDate);
+                lastPostDate = retrieveDateOfLastPost(posts);
+                return posts;
             }
         };
-        retrievePostsTask(getTagged, false);
+        retrievePostsTask(getTagged);
         progressIndicator.visibleProperty().bind(getTagged.runningProperty());
+        btnUpdate.disableProperty().bind(getTagged.runningProperty());
     }
 }

@@ -19,16 +19,15 @@ public class BrowseController extends CenterPaneController {
 
     protected void loadPosts() {
         final Task<List<Post>> getRecentPosts = new Task<>() {
-            ArrayList<Post> posts;
             @Override
             protected ArrayList<Post> call() throws Exception {
-                posts = new PostDAOImpl().getRecentPosts(lastPostDate);
-                if(posts != null)
-                    lastPostDate = posts.get(posts.size() - 1).getDate();
+                ArrayList<Post> posts = new PostDAOImpl().getRecentPosts(lastPostDate);
+                lastPostDate = retrieveDateOfLastPost(posts);
                 return posts;
             }
         };
-        retrievePostsTask(getRecentPosts, false);
+        retrievePostsTask(getRecentPosts);
         progressIndicator.visibleProperty().bind(getRecentPosts.runningProperty());
+        btnUpdate.disableProperty().bind(getRecentPosts.runningProperty());
     }
 }

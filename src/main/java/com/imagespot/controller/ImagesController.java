@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 
 import static com.imagespot.Utils.TimeUtil.toDuration;
+import static com.imagespot.Utils.Utils.setAvatarRounde;
 
 
 public class ImagesController {
@@ -43,6 +44,7 @@ public class ImagesController {
         username.setText("@" + post.getProfile().getUsername());
         if (post.getProfile().getAvatar() != null) {
             avatar.setImage((post.getProfile().getAvatar()));
+            setAvatarRounde(avatar);
         }
 
         passedTime.setText(toDuration(System.currentTimeMillis()-post.getDate().getTime()));

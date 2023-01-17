@@ -14,6 +14,8 @@ import javafx.scene.layout.HBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static com.imagespot.Utils.Utils.setAvatarRounde;
+
 public class UserPreviewController implements Initializable {
     @FXML
     private ImageView avatar;
@@ -34,6 +36,7 @@ public class UserPreviewController implements Initializable {
         this.user = user;
         if (user.getAvatar() != null) {
             avatar.setImage(user.getAvatar());
+            setAvatarRounde(avatar);
         }
         name.setText(user.getName());
         username.setText("@" + user.getUsername());

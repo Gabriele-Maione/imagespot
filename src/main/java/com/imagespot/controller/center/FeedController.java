@@ -14,23 +14,22 @@ public class FeedController extends CenterPaneController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
-        name.setText("Feed");
+        name.setText("Home");
         addScrollPaneListener();
     }
 
     @Override
     protected void loadPosts() {
         final Task<List<Post>> getFeed = new Task<>() {
-            ArrayList<Post> posts;
             @Override
             protected ArrayList<Post> call() throws Exception {
-                posts = new PostDAOImpl().getFeed(ViewFactory.getInstance().getUser().getUsername(), lastPostDate);
-                if(posts != null)
-                    lastPostDate = posts.get(posts.size() - 1).getDate();
+                ArrayList<Post> posts = new PostDAOImpl().getFeed(ViewFactory.getInstance().getUser().getUsername(), lastPostDate);
+                lastPostDate = retrieveDateOfLastPost(posts);
                 return posts;
             }
         };
-        retrievePostsTask(getFeed, false);
+        retrievePostsTask(getFeed);
         progressIndicator.visibleProperty().bind(getFeed.runningProperty());
+        btnUpdate.disableProperty().bind(getFeed.runningProperty());
     }
 }

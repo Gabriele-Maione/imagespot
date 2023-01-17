@@ -5,6 +5,7 @@ import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.DAOImpl.TaggedUserDAOImpl;
 import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.View.ViewFactory;
+import com.imagespot.View.ViewType;
 import com.imagespot.model.Device;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
@@ -262,7 +263,7 @@ public class AddPhotoController implements Initializable {
         avatar.setPickOnBounds(true);
         avatar.setPreserveRatio(true);
         avatar.setImage(Objects.requireNonNullElseGet(pfp, () -> new Image(getClass().getResourceAsStream("/icons/bear_icon.png"))));
-
+        setAvatarRounde(avatar);
 
         Label nameLabel = new Label(name);
         nameLabel.setFont(new Font("System Bold", 14));

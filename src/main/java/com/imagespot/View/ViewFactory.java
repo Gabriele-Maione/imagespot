@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -56,10 +57,10 @@ public class ViewFactory {
     }
 
     public VBox getFeedView() {
+        viewType = ViewType.FEED;
         if (feedView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
-                viewType = ViewType.FEED;
                 loader.setController(new FeedController());
                 feedView = loader.load();
             } catch (Exception e) {
@@ -70,10 +71,10 @@ public class ViewFactory {
     }
 
     public VBox getTaggedView() {
+        viewType = ViewType.TAGGED;
         if (taggedView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
-                viewType = ViewType.TAGGED;
                 loader.setController(new TaggedController());
                 taggedView = loader.load();
             } catch (Exception e) {
@@ -84,10 +85,10 @@ public class ViewFactory {
     }
 
     public VBox getFavoritesView() {
+        viewType = ViewType.FAVOURITES;
         if (favoritesView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
-                viewType = ViewType.FAVOURITES;
                 loader.setController(new FavouritesController());
                 favoritesView = loader.load();
             } catch (Exception e) {
@@ -98,10 +99,10 @@ public class ViewFactory {
     }
 
     public VBox getBrowseView() {
+        viewType = ViewType.EXPLORE;
         if (browseView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
-                viewType = ViewType.EXPLORE;
                 loader.setController(new BrowseController());
                 browseView = loader.load();
             } catch (Exception e) {
@@ -112,10 +113,10 @@ public class ViewFactory {
     }
 
     public VBox getYourGalleryView() {
+        viewType = ViewType.YOUR_GALLERY;
         if(yourGallery == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
-                viewType = ViewType.YOUR_GALLERY;
                 loader.setController(new YourGalleryController());
                 yourGallery = loader.load();
             } catch (Exception e) {

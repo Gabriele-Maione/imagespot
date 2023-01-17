@@ -15,6 +15,7 @@ public class FavouritesController extends CenterPaneController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
         name.setText("Favourites");
+        addPostsRemovedListener();
     }
 
     protected void loadPosts() {
@@ -26,8 +27,9 @@ public class FavouritesController extends CenterPaneController {
                 return posts;
             }
         };
-        retrievePostsTask(getFavourites, true);
+        retrievePostsTask(getFavourites);
         progressIndicator.visibleProperty().bind(getFavourites.runningProperty());
+        btnUpdate.disableProperty().bind(getFavourites.runningProperty());
     }
 
 }

@@ -11,6 +11,7 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import org.apache.commons.io.FilenameUtils;
 import org.imgscalr.Scalr;
 import javax.imageio.ImageIO;
@@ -61,7 +62,6 @@ public class Utils {
         // Convert the KB to MegaBytes (1 MB = 1024 KBytes)
         return (int)(file.length()/1024);
     }
-
     public static String getMostCommonColour(Image image) {
         int width = (int) image.getWidth();
         int height = (int) image.getHeight();
@@ -104,7 +104,6 @@ public class Utils {
             return result.substring(0, result.length()-1);
         }
     }
-
     private static int getPixel(HashMap<Integer, Integer> map, int value){
         for(Map.Entry<Integer, Integer> temp : map.entrySet()){
             if(temp.getValue() == value)
@@ -112,7 +111,6 @@ public class Utils {
         }
         return -1;
     }
-
     private static int[] getRGBArr(int pixel) {
         int red = (pixel >> 16) & 0xff;
         int green = (pixel >> 8) & 0xff;
@@ -129,5 +127,9 @@ public class Utils {
             return rbDiff <= tolerance && rbDiff >= -tolerance;
         return true;
     }
-
+    public static void setAvatarRounde(ImageView avatar){
+        double avatarWidth = avatar.getFitWidth() / 2;
+        Circle circle = new Circle(avatarWidth, avatarWidth, avatarWidth);
+        avatar.setClip(circle);
+    }
 }

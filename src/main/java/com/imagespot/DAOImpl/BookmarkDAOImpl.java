@@ -38,6 +38,7 @@ public class BookmarkDAOImpl implements BookmarkDAO {
     public void removeBookmark(int idImage) {
         PreparedStatement st;
         String query = "DELETE FROM bookmark WHERE username = ? AND idimage = ?";
+        System.out.println("Bookmark removed");
         try {
             st = con.prepareStatement(query);
             st.setString(1, ViewFactory.getInstance().getUser().getUsername());

@@ -20,6 +20,7 @@ import java.io.*;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import static com.imagespot.Utils.Utils.getMostCommonColour;
+import static com.imagespot.Utils.Utils.setAvatarRounde;
 
 public class PostController {
     @FXML
@@ -85,6 +86,7 @@ public class PostController {
 
             if (post.getProfile().getAvatar() != null) {
                 avatar.setImage((post.getProfile().getAvatar()));
+                setAvatarRounde(avatar);
             }
             date.setText(new SimpleDateFormat("h:mm a '·' d MMM yyyy").format(post.getDate()));
             description.setText(post.getDescription());
@@ -158,8 +160,10 @@ public class PostController {
                     post.getLikes().add(ViewFactory.getInstance().getUser());
                     new BookmarkDAOImpl().addBookmark(post.getIdImage());
                 }
-                else
+                else{
                     post.getLikes().removeIf(user -> ViewFactory.getInstance().getUser().getUsername().equals(user.getUsername()));
+                    new BookmarkDAOImpl().removeBookmark(post.getIdImage());
+                }
                 return null;
             }
         };
