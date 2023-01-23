@@ -9,6 +9,15 @@ public class Device {
     private String deviceType;
     private ArrayList<Post> posts;
 
+    public Device(){}
+
+    public Device(int idDevice, String brand, String model, String deviceType){
+        this.idDevice = idDevice;
+        this.brand = brand;
+        this.model = model;
+        this.deviceType = deviceType;
+    }
+
     public Integer getIdDevice() {
         return idDevice;
     }

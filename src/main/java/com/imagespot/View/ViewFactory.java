@@ -325,6 +325,8 @@ public class ViewFactory {
             stage.initOwner(homeRoot.getScene().getWindow());
             stage.setTitle("Add Photo");
             Scene scene = new Scene(root, 602, 602);
+            scene.setFill(Color.TRANSPARENT);
+            stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(scene);
             stage.show();
         } catch(IOException e) { e.printStackTrace(); }

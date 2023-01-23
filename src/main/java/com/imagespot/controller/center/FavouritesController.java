@@ -22,7 +22,8 @@ public class FavouritesController extends CenterPaneController {
         final Task<List<Post>> getFavourites = new Task<>() {
             @Override
             protected ArrayList<Post> call() throws Exception {
-                ArrayList<Post> posts = new BookmarkDAOImpl().getUserBookmarks();
+                ArrayList<Post> posts = new BookmarkDAOImpl().getUserBookmarks(lastPostDate);
+                lastPostDate = retrieveDateOfLastPost(posts);
                 ViewFactory.getInstance().getUser().setBookmarks(posts);
                 return posts;
             }

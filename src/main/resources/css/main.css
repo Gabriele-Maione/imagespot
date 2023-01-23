@@ -31,6 +31,7 @@ Button:pressed {
     -fx-font-size: 10;
     -fx-font-weight: bold;
     -fx-text-fill: black;
+    -fx-border-color: rgba(128,175,246,0.16);
     -fx-background-color: rgba(128,175,246,0.16);
     -fx-background-radius: 20;
     -fx-border-radius: 20;

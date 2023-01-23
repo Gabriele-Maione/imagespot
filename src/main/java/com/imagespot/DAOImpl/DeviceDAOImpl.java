@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DeviceDAOImpl implements DeviceDAO {
 
@@ -19,32 +21,62 @@ public class DeviceDAOImpl implements DeviceDAO {
     }
 
     @Override
-    public int addDevice(String brand, String model, String deviceType) throws SQLException {
-
-        int i = this.getDeviceID(brand, model);
+    public Device addDevice(String brand, String model, String deviceType, String username) throws SQLException {
+        int id = this.getDeviceID(brand, model);
         PreparedStatement st;
-        String addNewDevice = "INSERT INTO device(Brand, Model, deviceType) VALUES(?, ?, ?)";
-        if(i == -1) {
+        ResultSet rs;
+        String addNewDevice = "INSERT INTO device(Brand, Model, deviceType) VALUES(?, ?, ?) RETURNING iddevice";
+        if(id == -1) {
 
             try {
                 st = con.prepareStatement(addNewDevice);
                 st.setString(1, brand);
                 st.setString(2, model);
                 st.setString(3, deviceType);
-                st.execute();
-                st.close();
+                rs = st.executeQuery();
 
+                if(rs.next())
+                    id = rs.getInt(1);
+
+                st.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            i = this.getDeviceID(brand, model);
         }
-        return i;
+        addUserDevice(id, username);
+        Device device = new Device(id, brand, model, deviceType);
+        return device;
+    }
+
+    private void addUserDevice(int idDevice, String username) throws SQLException{
+        String query = "INSERT INTO userdevice(device, profile) VALUES(?, ?)";
+        PreparedStatement st;
+
+        st = con.prepareStatement(query);
+        st.setInt(1, idDevice);
+        st.setString(2, username);
+
+        st.execute();
+        st.close();
+    }
+
+    public void removeUserDevice(int idDevice, String username){
+        String query = "DELETE FROM userdevice WHERE device = ? AND profile = ?";
+        PreparedStatement st;
+
+        try {
+            st = con.prepareStatement(query);
+            st.setInt(1, idDevice);
+            st.setString(2, username);
+            st.execute();
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public int getDeviceID(String brand, String model) throws SQLException {
-
         int id = -1;
         PreparedStatement st;
         ResultSet rs;
@@ -83,5 +115,34 @@ public class DeviceDAOImpl implements DeviceDAO {
             throw new RuntimeException(e);
         }
         return device;
+    }
+
+    public ArrayList<Device> getRecentUsedDevices(String username){
+        ArrayList<Device> devices = new ArrayList<>();
+        PreparedStatement st;
+        ResultSet rs;
+        String query = "SELECT iddevice, brand, model, devicetype FROM device" +
+                " JOIN userdevice ON iddevice = device" +
+                " WHERE profile = ?";
+
+        try {
+            st = con.prepareStatement(query);
+            st.setString(1, username);
+            rs = st.executeQuery();
+
+            while(rs.next()){
+                Device device = new Device();
+                device.setIdDevice(rs.getInt(1));
+                device.setBrand(rs.getString(2));
+                device.setModel(rs.getString(3));
+                device.setDeviceType(rs.getString(4));
+
+                devices.add(device);
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return devices;
     }
 }
