@@ -308,6 +308,24 @@
                                     <Insets left="16.0" right="16.0" />
                                  </VBox.margin>
                               </HBox>
+                              <HBox alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
+                                 <children>
+                                    <Label text="Collections" textFill="#586067">
+                                       <font>
+                                          <Font name="Open Sans Semibold" size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                       <graphic>
+                                          <FontIcon iconColor="#586067" iconLiteral="far-folder-open" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                       </graphic>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
+                              </HBox>
                            </children>
                            <opaqueInsets>
                               <Insets />

@@ -8,7 +8,8 @@ public class Device {
     private String model;
     private String deviceType;
     private ArrayList<Post> posts;
-
+    public static final String SMARTPHONE = "Smartphone";
+    public static final String DIGITAL_CAMERA = "Digital Camera";
     public Device(){}
 
     public Device(int idDevice, String brand, String model, String deviceType){

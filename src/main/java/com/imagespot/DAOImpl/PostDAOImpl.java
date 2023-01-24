@@ -24,7 +24,7 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public Post addPost(File photo, Post post, Device device, User profile) throws SQLException, IOException {
+    public void addPost(File photo, Post post, Device device, User profile) throws SQLException, IOException {
         int id = -1;
         PreparedStatement st;
         ResultSet rs;
@@ -57,8 +57,6 @@ public class PostDAOImpl implements PostDAO {
         post.setIdImage(id);
         post.setPreview(new Image(new ByteArrayInputStream(previewBytes)));
         post.setPhoto(new Image(photo.getAbsolutePath()));
-
-        return post;
     }
 
     public ArrayList<Post> getRecentPosts(Timestamp timestamp) throws SQLException {

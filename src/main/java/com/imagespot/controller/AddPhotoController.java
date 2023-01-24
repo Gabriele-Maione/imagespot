@@ -31,7 +31,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
 import static com.imagespot.Utils.Utils.*;
@@ -51,8 +50,6 @@ public class AddPhotoController implements Initializable {
     @FXML
     private TextField fldSubject;
     @FXML
-    private Hyperlink hlinkCancel;
-    @FXML
     private ImageView img;
     @FXML
     private Label err;
@@ -66,8 +63,6 @@ public class AddPhotoController implements Initializable {
     private TilePane taggedUsersList;
     @FXML
     private ProgressIndicator progressIndicator;
-    @FXML
-    private ScrollPane scrollPane;
     @FXML
     private SplitPane splitPaneDevices;
     @FXML
@@ -92,24 +87,20 @@ public class AddPhotoController implements Initializable {
     private HBox hBoxNewDigitalCamera;
     private double x, y;
     private File file;
-    private PostDAOImpl postDAO;
-    private DeviceDAOImpl deviceDAO;
     private ArrayList<String> taggedUser;
     private User user;
     private Device device;
-    private HashMap<String, List<String>> defaultDevices;
     private ArrayList<Device> recentUserDevices;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         device = null;
         progressIndicator.setManaged(false);
-        setVisibilityOfHbox(hBoxNewSmartphone, false);
-        setVisibilityOfHbox(hBoxNewDigitalCamera, false);
+        setHboxVisibility(hBoxNewSmartphone, false);
+        setHboxVisibility(hBoxNewDigitalCamera, false);
 
         //Json file
         loadLabels();
-        loadDefaultDevices();
 
         user = ViewFactory.getInstance().getUser();
         cbStatus.getSelectionModel().selectFirst();
@@ -144,56 +135,27 @@ public class AddPhotoController implements Initializable {
         else
             System.out.println("Error opening JSON file!");
     }
-    private void loadDefaultDevices(){
-        URL devicesJsonFile = getClass().getResource("/json/devices.json");
-        JSONObject jsonObject;
-        defaultDevices = new HashMap<>();
-        defaultDevices.put("Smartphone", new ArrayList<>());
-        defaultDevices.put("Digital Camera", new ArrayList<>());
 
-        if(devicesJsonFile != null){
-            try {
-                jsonObject = new JSONObject(IOUtils.toString(devicesJsonFile, StandardCharsets.UTF_8));
-
-                JSONArray jsonSmartphone = jsonObject.getJSONArray("Smartphone");
-                JSONArray jsonDigitalCamera = jsonObject.getJSONArray("Digital Camera");
-
-                for(Object smartphone: jsonSmartphone)
-                    defaultDevices.get("Smartphone").add(smartphone.toString());
-                for(Object digitalCamera: jsonDigitalCamera)
-                    defaultDevices.get("Digital Camera").add(digitalCamera.toString());
-
-                System.out.println("Smartphone: " + defaultDevices.get("Smartphone").toString());
-                System.out.println("\n\nDigital Camera: " + defaultDevices.get("Digital Camera").toString());
-
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        else
-            System.out.println("Error opening JSON file!");
-    }
     @FXML
     private void confirmNewDeviceOnClick(MouseEvent event){
         Button button = (Button) event.getSource();
         HBox hBox = hBoxNewSmartphone;
         String brand, model;
-        String deviceType = "Smartphone";
+        String deviceType = Device.SMARTPHONE;
 
         if(button.equals(btnConfirmNewDigitalCamera)){
             hBox = hBoxNewDigitalCamera;
-            deviceType = "Digital Camera";
+            deviceType = Device.DIGITAL_CAMERA;
         }
         brand = ((TextField)hBox.getChildren().get(0)).getText().trim().replaceAll(" +", " ").toUpperCase();
         model = ((TextField)hBox.getChildren().get(1)).getText().trim().replaceAll(" +", " ").toLowerCase();
 
         if(recentUserDevices.stream().anyMatch(d -> d.getBrand().equals(brand) && d.getModel().equals(model))){
-            System.out.println("Device already in your device list"); //idk where put the error lable lool
+            System.out.println("Device already in your device list");
         }
         else{
             addDeviceTask(brand, model, deviceType, user.getUsername());
-            setVisibilityOfHbox(hBox, false);
+            setHboxVisibility(hBox, false);
         }
     }
     @FXML
@@ -201,10 +163,10 @@ public class AddPhotoController implements Initializable {
         Button button = (Button) event.getSource();
 
         if(button.equals(btnCancelNewSmartphone))
-            setVisibilityOfHbox(hBoxNewSmartphone, false);
+            setHboxVisibility(hBoxNewSmartphone, false);
 
         else if(button.equals(btnCancelNewDigitalCamera))
-            setVisibilityOfHbox(hBoxNewDigitalCamera, false);
+            setHboxVisibility(hBoxNewDigitalCamera, false);
 
         btnAddSmartphone.setDisable(false);
         btnAddDigitalCamera.setDisable(false);
@@ -214,13 +176,13 @@ public class AddPhotoController implements Initializable {
         Button button = (Button) event.getSource();
         HBox hBox = (button.equals(btnAddSmartphone)) ? hBoxNewSmartphone : hBoxNewDigitalCamera;
 
-        setVisibilityOfHbox(hBox, true);
+        setHboxVisibility(hBox, true);
         ((TextField)hBox.getChildren().get(0)).setText("");
         ((TextField)hBox.getChildren().get(1)).setText("");
         btnAddSmartphone.setDisable(true);
         btnAddDigitalCamera.setDisable(true);
     }
-    private void setVisibilityOfHbox(HBox hBox, boolean visible){
+    private void setHboxVisibility(HBox hBox, boolean visible){
         hBox.setManaged(visible);
         hBox.setVisible(visible);
     }
@@ -256,9 +218,8 @@ public class AddPhotoController implements Initializable {
         }
     }
     @FXML
-    private void btnPublishOnAction() throws SQLException{
+    private void btnPublishOnAction(){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        deviceDAO = new DeviceDAOImpl();
 
         if (file == null)
             err.setText("LOAD A PHOTO!!!");
@@ -273,7 +234,7 @@ public class AddPhotoController implements Initializable {
                     TaggedUserDAOImpl taggedUserDAO = new TaggedUserDAOImpl();
                     Post post = new Post(getRes(file), fldDescription.getText(), getSize(file), getExt(file), timestamp, cbStatus.getValue());
 
-                    post = new PostDAOImpl().addPost(file, post, device, user);
+                    new PostDAOImpl().addPost(file, post, device, user);
                     post.setProfile(user);
 
                     int id = post.getIdImage();
@@ -308,11 +269,11 @@ public class AddPhotoController implements Initializable {
             recentUserDevices = getRecentUserDevicesTask.getValue();
 
             if(recentUserDevices != null){
-                setVisibilityOfHbox((HBox) smartphoneVBox.getChildren().get(0), recentUserDevices.stream().noneMatch(d-> d.getDeviceType().equals("Smartphone")));
-                setVisibilityOfHbox((HBox) digitalCameraVBox.getChildren().get(0), recentUserDevices.stream().noneMatch(d-> d.getDeviceType().equals("Digital Camera")));
+                setHboxVisibility((HBox) smartphoneVBox.getChildren().get(0), recentUserDevices.stream().noneMatch(d-> d.getDeviceType().equals(Device.SMARTPHONE)));
+                setHboxVisibility((HBox) digitalCameraVBox.getChildren().get(0), recentUserDevices.stream().noneMatch(d-> d.getDeviceType().equals(Device.DIGITAL_CAMERA)));
 
                 for (Device d : recentUserDevices){
-                    if(d.getDeviceType().equals("Smartphone"))
+                    if(d.getDeviceType().equals(Device.SMARTPHONE))
                         smartphoneVBox.getChildren().add(createDevicePreview(d.getBrand(), d.getModel(), d.getIdDevice()));
                     else
                         digitalCameraVBox.getChildren().add(createDevicePreview(d.getBrand(), d.getModel(), d.getIdDevice()));
@@ -335,13 +296,13 @@ public class AddPhotoController implements Initializable {
             recentUserDevices.add(newDevice);
 
             switch (deviceType) {
-                case "Smartphone" -> {
+                case Device.SMARTPHONE -> {
                     smartphoneVBox.getChildren().add(2, createDevicePreview(newDevice.getBrand(), newDevice.getModel(), newDevice.getIdDevice()));
-                    setVisibilityOfHbox((HBox) smartphoneVBox.getChildren().get(0), recentUserDevices.stream().noneMatch(d-> d.getDeviceType().equals("Smartphone")));
+                    setHboxVisibility((HBox) smartphoneVBox.getChildren().get(0), recentUserDevices.stream().noneMatch(d-> d.getDeviceType().equals(Device.SMARTPHONE)));
                 }
-                case "Digital Camera" -> {
+                case Device.DIGITAL_CAMERA -> {
                     digitalCameraVBox.getChildren().add(2, createDevicePreview(newDevice.getBrand(), newDevice.getModel(), newDevice.getIdDevice()));
-                    setVisibilityOfHbox((HBox) digitalCameraVBox.getChildren().get(0), recentUserDevices.stream().noneMatch(d-> d.getDeviceType().equals("Digital Camera")));
+                    setHboxVisibility((HBox) digitalCameraVBox.getChildren().get(0), recentUserDevices.stream().noneMatch(d-> d.getDeviceType().equals(Device.DIGITAL_CAMERA)));
                 }
             }
 
@@ -363,10 +324,10 @@ public class AddPhotoController implements Initializable {
             recentUserDevices.removeIf(d-> d.getIdDevice() == idDevice);
 
             if(smartphoneVBox.getChildren().remove(hBoxRemovedDevice) && smartphoneVBox.getChildren().size() == 2)
-                setVisibilityOfHbox((HBox)smartphoneVBox.getChildren().get(0), true);
+                setHboxVisibility((HBox)smartphoneVBox.getChildren().get(0), true);
 
             if(digitalCameraVBox.getChildren().remove(hBoxRemovedDevice) && digitalCameraVBox.getChildren().size() == 2)
-                setVisibilityOfHbox((HBox)digitalCameraVBox.getChildren().get(0), true);
+                setHboxVisibility((HBox)digitalCameraVBox.getChildren().get(0), true);
 
             if(device != null && idDevice == device.getIdDevice()){
                 device = null;
@@ -419,7 +380,7 @@ public class AddPhotoController implements Initializable {
         avatar.setFitWidth(25);
         avatar.setPickOnBounds(true);
         avatar.setPreserveRatio(true);
-        avatar.setImage(Objects.requireNonNullElseGet(pfp, () -> new Image(getClass().getResourceAsStream("/icons/bear_icon.png"))));
+        avatar.setImage(Objects.requireNonNullElseGet(pfp, () -> new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/bear_icon.png")))));
         setAvatarRounde(avatar);
 
         Label nameLabel = new Label(name);
