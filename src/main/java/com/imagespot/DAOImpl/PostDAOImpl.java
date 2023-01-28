@@ -29,7 +29,7 @@ public class PostDAOImpl implements PostDAO {
         PreparedStatement st;
         ResultSet rs;
         String insert = ("INSERT INTO Post (photo, resolution, description, size, extension, posting_date," +
-                " status, device, profile, preview) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING idimage");
+                " status, device, profile, preview, location) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING idimage");
 
         //scaling image and deserialize from bufferedImage to InputStream
 
@@ -49,6 +49,8 @@ public class PostDAOImpl implements PostDAO {
         st.setInt(8, device.getIdDevice());
         st.setString(9, profile.getUsername());
         st.setBinaryStream(10, new ByteArrayInputStream(previewBytes));
+        System.out.println(post.getLocation().getIdLocation());
+        st.setInt(11, post.getLocation().getIdLocation());
         rs = st.executeQuery();
 
         if(rs.next()) id = rs.getInt(1);

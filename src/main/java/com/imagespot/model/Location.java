@@ -1,4 +1,5 @@
 package com.imagespot.model;
+
 import java.util.ArrayList;
 import java.math.BigDecimal;
 
@@ -6,11 +7,11 @@ import java.math.BigDecimal;
 public class Location {
     private Integer idLocation;
     private String country;
-    private String region;
+    private String state;
     private String city;
     private String postacode;
-    private String metrocode;
-    private String areacode;
+    private String formatted_address;
+    private String road;
     private BigDecimal latitude;
     private BigDecimal longitude;
     private ArrayList<Post> posts;
@@ -31,12 +32,12 @@ public class Location {
         this.country = country;
     }
 
-    public String getRegion() {
-        return region;
+    public String getState() {
+        return state;
     }
 
-    public void setRegion(String region) {
-        this.region = region;
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getCity() {
@@ -55,20 +56,20 @@ public class Location {
         this.postacode = postacode;
     }
 
-    public String getMetrocode() {
-        return metrocode;
+    public String getFormatted_address() {
+        return formatted_address;
     }
 
-    public void setMetrocode(String metrocode) {
-        this.metrocode = metrocode;
+    public void setFormatted_address(String formatted_address) {
+        this.formatted_address = formatted_address;
     }
 
-    public String getAreacode() {
-        return areacode;
+    public String getRoad() {
+        return road;
     }
 
-    public void setAreacode(String areacode) {
-        this.areacode = areacode;
+    public void setRoad(String road) {
+        this.road = road;
     }
 
     public BigDecimal getLatitude() {

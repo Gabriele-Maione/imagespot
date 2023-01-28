@@ -27,13 +27,14 @@ public class Post {
 
     public Post() {}
 
-    public Post(String resolution, String description, int size, String extension, Timestamp date, String status){
+    public Post(String resolution, String description, int size, String extension, Timestamp date, String status, Location location){
         this.resolution = resolution;
         this.description = description;
         this.size = size;
         this.extension = extension;
         this.date = date;
         this.status = status;
+        this.location = location;
     }
 
     public ArrayList<User> getLikes() {
