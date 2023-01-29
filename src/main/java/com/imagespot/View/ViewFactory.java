@@ -100,6 +100,19 @@ public class ViewFactory {
         return favoritesView;
     }
 
+    public VBox getPostsByPlace(String location, String type) {
+        viewType = ViewType.LOCATION;
+        VBox postsByPlaceView = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
+            loader.setController(new LocationController(location, type));
+            postsByPlaceView = loader.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return postsByPlaceView;
+    }
+
     public VBox getBrowseView() {
         viewType = ViewType.EXPLORE;
         if (browseView == null) {

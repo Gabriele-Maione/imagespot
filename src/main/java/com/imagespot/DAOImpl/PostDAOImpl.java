@@ -19,7 +19,7 @@ public class PostDAOImpl implements PostDAO {
 
     private final Connection con;
 
-    public PostDAOImpl() throws SQLException {
+    public PostDAOImpl() {
         con = ConnectionManager.getInstance().getConnection();
     }
 
@@ -94,6 +94,15 @@ public class PostDAOImpl implements PostDAO {
                         " FROM following" +
                         " WHERE nickname = '" + username + "')";
 
+        return getPreviews(query, timestamp);
+    }
+
+    @Override
+    public ArrayList<Post> getPostsByLocation(String location, String type, Timestamp timestamp) throws SQLException {
+        String query = "SELECT preview, profile, posting_date, idimage" +
+                " FROM post JOIN location ON idlocation = location" +
+                " WHERE status = 'Public'" +
+                " AND " + type + " = '" + location + "'";
         return getPreviews(query, timestamp);
     }
 
@@ -256,6 +265,29 @@ public class PostDAOImpl implements PostDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Image getPreviewForLocation(String location, String type) {
+        PreparedStatement st;
+        ResultSet rs;
+        Image img = null;
+        String query = "SELECT preview FROM post JOIN location ON post.location = location.idlocation\n" +
+                "WHERE " + type + " = ? AND status = 'Public'\n" +
+                "ORDER BY posting_date DESC\n" +
+                "LIMIT 1";
+        try {
+            st = con.prepareStatement(query);
+            st.setString(1, location);
+            rs = st.executeQuery();
+            if(rs.next())
+                img = new Image(rs.getBinaryStream(1));
+            st.close();
+            rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return img;
     }
 
     public InputStream getPhotoFile(int id) {

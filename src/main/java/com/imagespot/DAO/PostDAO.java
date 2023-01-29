@@ -21,6 +21,7 @@ public interface PostDAO {
     ArrayList<Post>getUserPosts(String username, Timestamp timestamp) throws SQLException;
     ArrayList<Post> getUsersPublicPosts(String username, Timestamp timestamp) throws SQLException;
     ArrayList<Post> getFeed(String username, Timestamp timestamp) throws SQLException;
+    ArrayList<Post> getPostsByLocation(String location, String type, Timestamp timestamp) throws SQLException;
     Image getPhoto(int id);
     Post getPost(int id);
     Post getPreviewPost(int id);
@@ -29,4 +30,5 @@ public interface PostDAO {
     void setDescription(int id, String description);
     void setStatus(int id, String status);
     void deletePost(int id);
+    Image getPreviewForLocation(String location, String type);
 }
