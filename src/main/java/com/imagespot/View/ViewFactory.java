@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -27,18 +28,19 @@ public class ViewFactory {
     private VBox feedView;
     private VBox favoritesView;
     private VBox taggedView;
+    private VBox topPlaces;
     private Parent homeRoot;
     private ViewType viewType;
     private static User user;
     private HashMap<Integer, HBox> openedImages;
 
     public User getUser() {
-        if(user == null) user = new User();
+        if (user == null) user = new User();
         return user;
     }
 
     public static synchronized ViewFactory getInstance() {
-        if(viewFactory == null) {
+        if (viewFactory == null) {
             viewFactory = new ViewFactory();
         }
         return viewFactory;
@@ -112,9 +114,22 @@ public class ViewFactory {
         return browseView;
     }
 
+    public VBox getTopPlaces() {
+        if (topPlaces == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/top-places-view.fxml"));
+                topPlaces = loader.load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return topPlaces;
+    }
+
+
     public VBox getYourGalleryView() {
         viewType = ViewType.YOUR_GALLERY;
-        if(yourGallery == null) {
+        if (yourGallery == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
                 loader.setController(new YourGalleryController());
@@ -195,10 +210,10 @@ public class ViewFactory {
     public HBox getPostView(int idpost) {
         HBox postRoot = null;
 
-        if(openedImages == null)
+        if (openedImages == null)
             openedImages = new HashMap<>();
 
-        if(openedImages.get(idpost) != null)
+        if (openedImages.get(idpost) != null)
             return openedImages.get(idpost);
 
         try {
@@ -218,7 +233,7 @@ public class ViewFactory {
     }
 
     public void closeSession() {
-        Stage stage = (Stage)homeRoot.getScene().getWindow();
+        Stage stage = (Stage) homeRoot.getScene().getWindow();
         stage.close();
         viewFactory = null;
     }
@@ -242,7 +257,7 @@ public class ViewFactory {
     }
 
     public void showHomeWindow() {
-        if(homeRoot == null){
+        if (homeRoot == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-view.fxml"));
                 homeRoot = loader.load();
@@ -329,6 +344,8 @@ public class ViewFactory {
             stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(scene);
             stage.show();
-        } catch(IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

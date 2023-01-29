@@ -1,5 +1,7 @@
 package com.imagespot.Connection;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConnectionManager {
 
@@ -28,10 +30,15 @@ public class ConnectionManager {
         return con;
     }
 
-    public static ConnectionManager getInstance() throws SQLException {
+    public static ConnectionManager getInstance() {
 
-        if(instance == null || instance.getConnection().isClosed())
-            instance = new ConnectionManager();
+        try {
+            if(instance == null || instance.getConnection().isClosed())
+                instance = new ConnectionManager();
+        } catch (SQLException e) {
+            Logger logger = Logger.getLogger(ConnectionManager.class.getName());
+            logger.log(Level.SEVERE, "Failed to create the database connection.", e);
+        }
 
         return instance;
     }

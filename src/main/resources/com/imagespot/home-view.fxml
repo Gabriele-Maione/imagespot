@@ -219,7 +219,7 @@
                                     <Insets left="16.0" right="16.0" />
                                  </VBox.margin>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
+                              <HBox fx:id="hbTopPlaces" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
                                     <Label text="Top place" textFill="#586067">
                                        <font>
