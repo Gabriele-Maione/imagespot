@@ -54,6 +54,14 @@ public class TopPlacesController implements Initializable {
         }
     }
 
+    @FXML
+    protected void btnUpdateOnAction() {
+        hbCities.getChildren().clear();
+        hbCountries.getChildren().clear();
+        hbPlaces.getChildren().clear();
+        loadTopPlaces();
+    }
+
     private StackPane getContainer(Image img, String location, String type) {
         StackPane stackPane = new StackPane();
         stackPane.setPrefHeight(150);

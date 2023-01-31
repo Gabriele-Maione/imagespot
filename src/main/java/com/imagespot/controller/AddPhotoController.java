@@ -2,10 +2,7 @@ package com.imagespot.controller;
 
 import com.imagespot.DAOImpl.*;
 import com.imagespot.View.ViewFactory;
-import com.imagespot.model.Device;
-import com.imagespot.model.Location;
-import com.imagespot.model.Post;
-import com.imagespot.model.User;
+import com.imagespot.model.*;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,13 +23,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
@@ -90,6 +83,8 @@ public class AddPhotoController implements Initializable {
     private HBox hBoxNewSmartphone;
     @FXML
     private HBox hBoxNewDigitalCamera;
+    @FXML
+    private TilePane categoryTilePane;
 
     //Address
     private static final String API_KEY = "59fe0bec7ad34ae9a0ee9ee9e38c2d3d";
@@ -108,6 +103,7 @@ public class AddPhotoController implements Initializable {
     private Device device;
     private ArrayList<Device> recentUserDevices;
     private Location location;
+    private ArrayList<Subject> subjects;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -128,6 +124,8 @@ public class AddPhotoController implements Initializable {
         getRecentUsedDevicesTask(user.getUsername());
 
         locationListener();
+
+        subjects = new ArrayList<>();
     }
 
     private void loadLabels() {
@@ -255,8 +253,11 @@ public class AddPhotoController implements Initializable {
                 @Override
                 protected Post call() throws Exception {
                     TaggedUserDAOImpl taggedUserDAO = new TaggedUserDAOImpl();
+                    SubjectDAOImpl subjectDAO = new SubjectDAOImpl();
+
                     if(location != null)
                         location.setIdLocation(new LocationDAOImpl().addLocation(location));
+
                     Post post = new Post(getRes(file), fldDescription.getText(), getSize(file), getExt(file), timestamp, cbStatus.getValue(), location);
 
                     new PostDAOImpl().addPost(file, post, device, user);
@@ -265,6 +266,10 @@ public class AddPhotoController implements Initializable {
                     int id = post.getIdImage();
                     for (String s : taggedUser)
                         taggedUserDAO.addTag(s, id);
+                    for(Subject s : subjects) {
+                        s.setImageID(id);
+                        subjectDAO.addSubject(s);
+                    }
 
                     return post;
                 }
@@ -504,7 +509,7 @@ public class AddPhotoController implements Initializable {
                     locationCm.getItems().clear();
                     JSONObject json = addressReq.getValue();
                     JSONArray results = json.getJSONArray("results");
-                    for (int i = 0; i < results.length() && i < 5; i++) {
+                    for (int i = 0; i < results.length(); i++) {
                         String formattedAddress = results.getJSONObject(i).getString("formatted");
                         MenuItem menuItem = new MenuItem(formattedAddress);
                         menuItem.setOnAction(event1 -> {
@@ -516,7 +521,6 @@ public class AddPhotoController implements Initializable {
                     }
                     locationCm.show(coordinatesFld, Side.BOTTOM, 0, 0);
                 });
-
             }
         });
 
@@ -534,7 +538,6 @@ public class AddPhotoController implements Initializable {
                 try {
                     String text = searchText.replace(" ", "+");
                     URL url = new URL("https://api.opencagedata.com/geocode/v1/json?limit=5&language=en&q=" + text + "&key=" + API_KEY);
-                    System.out.println(url);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
                     String response = IOUtils.toString(conn.getInputStream(), StandardCharsets.UTF_8);
@@ -604,6 +607,41 @@ public class AddPhotoController implements Initializable {
         }
     }
 
+    //  CATEGORIES/SUBJECTS STUFF
+    @FXML
+    private void addSubjectOnAction() {
+        if (!cbCategory.isShowing() && !fldSubject.getText().isEmpty()) {
+            Subject newSubject = new Subject(cbCategory.getValue(),fldSubject.getText());
+            subjects.add(newSubject);
+            categoryHBox(newSubject);
+        }
+    }
+
+    private void categoryHBox(Subject newSubject) {
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER_LEFT);
+        hbox.setSpacing(5);
+
+        VBox vbox = new VBox();
+
+        Label categoryLabel = new Label(newSubject.getCategory());
+        categoryLabel.setFont(new Font("System Bold", 14));
+
+        Label subjectLabel = new Label(newSubject.getSubject());
+        subjectLabel.setFont(new Font(14));
+
+        vbox.getChildren().addAll(categoryLabel, subjectLabel);
+
+        Button removeButton = new Button("X");
+        removeButton.setMnemonicParsing(false);
+        removeButton.setOnAction(event -> {
+            subjects.remove(newSubject);
+            categoryTilePane.getChildren().remove(hbox);
+        });
+
+        hbox.getChildren().addAll(vbox, removeButton);
+        categoryTilePane.getChildren().addAll(hbox);
+    }
 
     @FXML
     private void closeButtonOnAction() {

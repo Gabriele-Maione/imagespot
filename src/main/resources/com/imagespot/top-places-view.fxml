@@ -29,7 +29,7 @@
             </ProgressIndicator>
             <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                <children>
-                  <Button fx:id="btnUpdate" alignment="CENTER" mnemonicParsing="false" styleClass="add-post-button" text="Refresh">
+                  <Button fx:id="btnUpdate" onAction="#btnUpdateOnAction" alignment="CENTER" mnemonicParsing="false" styleClass="add-post-button" text="Refresh">
                      <graphic>
                         <FontIcon iconColor="WHITE" iconLiteral="fas-redo" iconSize="15" wrappingWidth="20.0" />
                      </graphic>

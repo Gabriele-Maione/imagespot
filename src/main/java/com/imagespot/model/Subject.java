@@ -1,32 +1,49 @@
 package com.imagespot.model;
 
+import java.util.ArrayList;
+
 public class Subject {
-    private String name;
-    private Post post;
-    private Category category;
+    private Integer id;
+    private String category;
+    private String subject;
+    private int imageID;
 
-    public String getName() {
-        return name;
+    public Subject(String category, String subject) {
+        this.category = category;
+        this.subject = subject;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Subject() {}
+    public Integer getId() {
+        return id;
     }
 
-    public Post getPost() {
-        return post;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public int getImageID() {
+        return imageID;
+    }
+
+    public void setImageID(int imageID) {
+        this.imageID = imageID;
     }
 
 }

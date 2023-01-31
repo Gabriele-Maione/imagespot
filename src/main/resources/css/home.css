@@ -18,6 +18,10 @@
 .home-center .scroll-pane{
     -fx-background: -primary;
 }
+.scroll-pane {
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
 
 .home-center .scroll-pane .track{
     -fx-background-color: -primary;
