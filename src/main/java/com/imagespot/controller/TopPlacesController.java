@@ -89,7 +89,6 @@ public class TopPlacesController implements Initializable {
         });
     }
 
-
     @FXML
     protected void btnUpdateOnAction() {
         hbCities.getChildren().clear();

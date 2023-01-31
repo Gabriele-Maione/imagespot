@@ -16,6 +16,11 @@ public class Location {
     private BigDecimal longitude;
     private ArrayList<Post> posts;
 
+    public Location(int id) {
+        this.idLocation = id;
+    }
+    public Location() {}
+
     public Integer getIdLocation() {
         return idLocation;
     }

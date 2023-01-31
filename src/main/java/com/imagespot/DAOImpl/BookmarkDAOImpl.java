@@ -8,6 +8,8 @@ import com.imagespot.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BookmarkDAOImpl implements BookmarkDAO {
 
@@ -63,7 +65,7 @@ public class BookmarkDAOImpl implements BookmarkDAO {
             st.setInt(2, idImage);
             rs = st.executeQuery();
 
-            if(rs.next()) flag = true;
+            if (rs.next()) flag = true;
             rs.close();
             st.close();
         } catch (SQLException e) {
@@ -73,20 +75,20 @@ public class BookmarkDAOImpl implements BookmarkDAO {
     }
 
     public ArrayList<Post> getUserBookmarks(Timestamp timestamp) {
-        ArrayList<Post> bookmarks = new  ArrayList<>();
+        ArrayList<Post> bookmarks = new ArrayList<>();
         PreparedStatement st;
         ResultSet rs;
         StringBuilder complexQuery = new StringBuilder("SELECT P.idimage FROM post P" +
                 " JOIN bookmark B ON P.idimage = B.idimage WHERE username = ?");
 
-        if(timestamp != null)
+        if (timestamp != null)
             complexQuery.append(" AND posting_date < ?");
         complexQuery.append(" ORDER BY date DESC LIMIT 20");
 
         try {
             st = con.prepareStatement(complexQuery.toString());
             st.setString(1, ViewFactory.getInstance().getUser().getUsername());
-            if(timestamp != null)
+            if (timestamp != null)
                 st.setTimestamp(2, timestamp);
             rs = st.executeQuery();
             while (rs.next()) {
@@ -125,5 +127,21 @@ public class BookmarkDAOImpl implements BookmarkDAO {
 
     }
 
+    @Override
+    public int getLikesCount(int idImage) {
+        int count = 0;
+        Statement st;
+        ResultSet rs;
+        String query = "SELECT count(*) FROM bookmark WHERE idimage = " + idImage;
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(query);
 
+            if (rs.next()) count = rs.getInt(1);
+        } catch (SQLException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to retrieve likes count.", e);
+        }
+        return count;
+    }
 }

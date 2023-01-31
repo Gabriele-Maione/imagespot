@@ -23,6 +23,8 @@ public class Post {
     private Location location;
     private Image preview;
     private ArrayList<User> taggedUsers;
+
+    private int likesNumber;
     private ArrayList<User> likes;
 
     public Post() {}
@@ -146,5 +148,13 @@ public class Post {
     public Image getPreview() { return preview; }
 
     public void setPreview(Image preview) { this.preview = preview; }
+
+    public int getLikesNumber() {
+        return likesNumber;
+    }
+
+    public void setLikesNumber(int likesNumber) {
+        this.likesNumber = likesNumber;
+    }
 }
 

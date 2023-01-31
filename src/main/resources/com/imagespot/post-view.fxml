@@ -27,7 +27,7 @@
             </StackPane>
          </children>
       </VBox>
-      <VBox fx:id="postSidebar" spacing="10.0">
+      <VBox fx:id="postSidebar" maxWidth="220.8" spacing="10.0">
          <children>
             <HBox alignment="CENTER_LEFT" minWidth="175.0">
                <children>
@@ -90,6 +90,27 @@
                         <Font name="System Bold" size="14.0" />
                      </font></Label>
                   <Label fx:id="deviceLbl" text="Device" textFill="#616161" />
+               </children>
+            </VBox>
+            <Separator prefWidth="200.0" />
+            <VBox fx:id="locationVBox">
+               <children>
+                  <Label text="Location:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="locationLbl" text="Location" wrapText="true" />
+               </children>
+            </VBox>
+            <VBox fx:id="categoryVBox">
+               <children>
+                  <Label text="Category:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <VBox />
                </children>
             </VBox>
          </children>

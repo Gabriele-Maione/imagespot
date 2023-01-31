@@ -53,6 +53,12 @@ public class PostController {
     private Label deviceLbl;
     @FXML
     private Label date;
+    @FXML
+    private VBox categoryVBox;
+    @FXML
+    private VBox locationVBox;
+    @FXML
+    private Label locationLbl;
     private Post post;
     private Image image;
 
@@ -63,6 +69,8 @@ public class PostController {
         likeBtn.setDisable(true);
         photo.fitWidthProperty().bind(root.widthProperty().subtract(postSidebar.widthProperty()));
         photo.fitHeightProperty().bind(root.heightProperty());
+
+        locationVBox.setManaged(false);
 
         invokeInit(idpost);
     }
@@ -91,7 +99,12 @@ public class PostController {
             date.setText(new SimpleDateFormat("h:mm a '·' d MMM yyyy").format(post.getDate()));
             description.setText(post.getDescription());
             deviceLbl.setText(post.getDevice().getBrand() + " " + post.getDevice().getModel());
-            likeBtn.setText(String.valueOf(post.getLikes().size()));
+            likeBtn.setText(String.valueOf(post.getLikesNumber()));
+
+            if(post.getLocation() != null) {
+                locationLbl.setText(post.getLocation().getFormatted_address());
+                locationVBox.setManaged(true);
+            }
 
             initLikeBtn();
         });
@@ -100,7 +113,7 @@ public class PostController {
     private void invokePhoto(int idpost) {
         final Task<Image> photoTask = new Task<>() {
             @Override
-            protected Image call() throws Exception {
+            protected Image call() {
                 return new PostDAOImpl().getPhoto(idpost);
             }
         };
@@ -157,11 +170,11 @@ public class PostController {
             @Override
             protected Void call() throws Exception {
                 if(likeBtn.isSelected()) {
-                    post.getLikes().add(ViewFactory.getInstance().getUser());
+                    post.setLikesNumber(post.getLikesNumber()+1);
                     new BookmarkDAOImpl().addBookmark(post.getIdImage());
                 }
                 else{
-                    post.getLikes().removeIf(user -> ViewFactory.getInstance().getUser().getUsername().equals(user.getUsername()));
+                    post.setLikesNumber(post.getLikesNumber()-1);
                     new BookmarkDAOImpl().removeBookmark(post.getIdImage());
                 }
                 return null;
@@ -169,7 +182,7 @@ public class PostController {
         };
         new Thread(setLike).start();
         setLike.setOnSucceeded(workerStateEvent -> {
-            likeBtn.setText(String.valueOf(post.getLikes().size())); //TODO: do it with listeners
+            likeBtn.setText(String.valueOf(post.getLikesNumber()));
         });
     }
 

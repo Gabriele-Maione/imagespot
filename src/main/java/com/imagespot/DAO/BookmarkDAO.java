@@ -11,6 +11,7 @@ public interface BookmarkDAO {
     void addBookmark(int idImage);
     void removeBookmark(int idImage);
     boolean isLiked(int idImage);
+    int getLikesCount(int idImage);
     ArrayList<Post> getUserBookmarks(Timestamp timestamp);
     ArrayList<User> getPostBookmarks(int id);
 }

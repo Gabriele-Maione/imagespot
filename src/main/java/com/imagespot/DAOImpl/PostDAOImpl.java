@@ -4,6 +4,7 @@ import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.PostDAO;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Device;
+import com.imagespot.model.Location;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
 import javafx.scene.image.Image;
@@ -158,9 +159,11 @@ public class PostDAOImpl implements PostDAO {
     @Override
     public Post getPost(int id) {
         Post post = new Post();
+        int locID;
         PreparedStatement st;
         ResultSet rs;
-        String query = "SELECT profile, description, extension, idimage, posting_date, device FROM post WHERE idimage = ?";
+        String query = "SELECT profile, description, extension, idimage, posting_date, device, location FROM post WHERE idimage = ?";
+
         try {
             st = con.prepareStatement(query);
             st.setInt(1, id);
@@ -171,8 +174,11 @@ public class PostDAOImpl implements PostDAO {
                 post.setExtension(rs.getString(3));
                 post.setIdImage(rs.getInt(4));
                 post.setDate(rs.getTimestamp(5));
-                post.setLikes(new BookmarkDAOImpl().getPostBookmarks(post.getIdImage()));
+                post.setLikesNumber(new BookmarkDAOImpl().getLikesCount(post.getIdImage()));
                 post.setDevice(new DeviceDAOImpl().getDevice(rs.getInt(6)));
+                locID = rs.getInt(7);
+                if (!rs.wasNull())
+                    post.setLocation(new LocationDAOImpl().getLocation(locID));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

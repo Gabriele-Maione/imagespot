@@ -71,4 +71,23 @@ public class LocationDAOImpl implements LocationDAO {
         }
         return top;
     }
+
+    @Override
+    public Location getLocation(int idLocation) {
+
+        Location location = new Location(idLocation);
+        Statement st;
+        ResultSet rs;
+        String query = "SELECT formatted_address FROM location WHERE idlocation = " + idLocation;
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+
+            if (rs.next()) location.setFormatted_address(rs.getString(1));
+        } catch (SQLException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to retrieve the location.", e);
+        }
+        return location;
+    }
 }
