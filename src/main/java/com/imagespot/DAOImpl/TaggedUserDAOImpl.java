@@ -4,9 +4,12 @@ import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.TaggedUserDAO;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
+import com.imagespot.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TaggedUserDAOImpl implements TaggedUserDAO {
 
@@ -62,4 +65,5 @@ public class TaggedUserDAOImpl implements TaggedUserDAO {
         }
         return tag;
     }
+
 }

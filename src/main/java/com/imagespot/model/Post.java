@@ -24,12 +24,14 @@ public class Post {
     private Image preview;
     private ArrayList<User> taggedUsers;
 
+    private ArrayList<Subject> subjects;
     private int likesNumber;
     private ArrayList<User> likes;
 
-    public Post() {}
+    public Post() {
+    }
 
-    public Post(String resolution, String description, int size, String extension, Timestamp date, String status, Location location){
+    public Post(String resolution, String description, int size, String extension, Timestamp date, String status, Location location) {
         this.resolution = resolution;
         this.description = description;
         this.size = size;
@@ -145,9 +147,13 @@ public class Post {
         this.profile = profile;
     }
 
-    public Image getPreview() { return preview; }
+    public Image getPreview() {
+        return preview;
+    }
 
-    public void setPreview(Image preview) { this.preview = preview; }
+    public void setPreview(Image preview) {
+        this.preview = preview;
+    }
 
     public int getLikesNumber() {
         return likesNumber;
@@ -155,6 +161,14 @@ public class Post {
 
     public void setLikesNumber(int likesNumber) {
         this.likesNumber = likesNumber;
+    }
+
+    public ArrayList<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(ArrayList<Subject> subjects) {
+        this.subjects = subjects;
     }
 }
 

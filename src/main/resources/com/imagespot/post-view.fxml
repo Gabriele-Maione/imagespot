@@ -110,7 +110,17 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <VBox />
+                  <VBox fx:id="subjectVBox" />
+               </children>
+            </VBox>
+            <VBox fx:id="tagVBox">
+               <children>
+                  <Label text="Tag">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <VBox fx:id="usersVBox" />
                </children>
             </VBox>
          </children>

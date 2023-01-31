@@ -1,6 +1,7 @@
 package com.imagespot.DAO;
 
 import com.imagespot.model.Post;
+import com.imagespot.model.User;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;

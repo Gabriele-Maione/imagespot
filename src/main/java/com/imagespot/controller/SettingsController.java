@@ -63,7 +63,7 @@ public class SettingsController implements Initializable {
 
         user = ViewFactory.getInstance().getUser();
 
-        if(user.getAvatar() != null) {
+        if (user.getAvatar() != null) {
             deleteBtn.setVisible(true);
             imgPreview.setImage(user.getAvatar());
         }
@@ -82,7 +82,7 @@ public class SettingsController implements Initializable {
                     if (cbGender.getValue().equals("Custom")) {
                         fldCustom.setVisible(true);
                         cbGender.valueProperty().bind(fldCustom.textProperty());
-                    } else if(!newValue.equals(fldCustom.getText())){
+                    } else if (!newValue.equals(fldCustom.getText())) {
                         cbGender.valueProperty().unbind();
                         cbGender.setValue(newValue);
                         fldCustom.setVisible(false);
@@ -106,13 +106,12 @@ public class SettingsController implements Initializable {
     @FXML
     private void btnDeleteOnAction() {
 
-        if(deleteBtn.getText().equals("Delete")) {
+        if (deleteBtn.getText().equals("Delete")) {
             imgPreview.setImage(new Image(getClass().getResourceAsStream("/icons/bear_icon.png")));
             deletedAvatarFlag = true;
             avatar = null;
             deleteBtn.setText("Undo");
-        }
-        else if (deleteBtn.getText().equals("Undo")) {
+        } else if (deleteBtn.getText().equals("Undo")) {
             imgPreview.setImage(user.getAvatar());
             deleteBtn.setText("Delete");
             deletedAvatarFlag = false;
@@ -128,21 +127,19 @@ public class SettingsController implements Initializable {
                 UserDAOImpl userDB = new UserDAOImpl();
                 if (changedAvatarFlag)
                     userDB.setAvatar(user.getUsername(), avatar);
-                else if(deletedAvatarFlag)
+                else if (deletedAvatarFlag)
                     userDB.deleteAvatar(user.getUsername());
-                if (!fldName.getText().equals(user.getName()))
-                    userDB.setName(user.getUsername(), fldName.getText());
-                if (!cbGender.getValue().equals(user.getGender()))
-                    userDB.setGender(user.getUsername(), cbGender.getValue());
-                if (!bio.getText().equals(user.getBio()))
-                    userDB.setBio(user.getUsername(), bio.getText());
 
+                userDB.setName(user.getUsername(), fldName.getText());
+                userDB.setGender(user.getUsername(), cbGender.getValue());
+                userDB.setBio(user.getUsername(), bio.getText());
                 return null;
             }
         };
         new Thread(updateTask).start();
         btnApply.textProperty().bind(updateTask.messageProperty());
         updateTask.setOnSucceeded(workerStateEvent -> {
+            System.out.println(deletedAvatarFlag + " " + changedAvatarFlag);
             ViewFactory.getInstance().getUser().setBio(bio.getText());
             ViewFactory.getInstance().getUser().setGender(cbGender.getValue());
             ViewFactory.getInstance().getUser().setName(fldName.getText());
@@ -150,8 +147,7 @@ public class SettingsController implements Initializable {
                 ViewFactory.getInstance().getUser().setAvatar((new Image(avatar.getAbsolutePath())));
                 deleteBtn.setVisible(true);
                 deleteBtn.setText("Delete");
-            }
-            else if(deletedAvatarFlag) {
+            } else if (deletedAvatarFlag) {
                 ViewFactory.getInstance().getUser().setAvatar(null);
                 deleteBtn.setVisible(false);
             }
@@ -183,12 +179,6 @@ public class SettingsController implements Initializable {
 
     @FXML
     private void applyBtnOnAction() {
-        if(!deletedAvatarFlag && !changedAvatarFlag && fldName.getText().equals(user.getName())
-        && bio.getText().equals(user.getBio()) && cbGender.getValue().equals(user.getGender()))
-            btnApply.setText("NOTHING CHANGED");
-        else if(fldCustom.isVisible() && fldCustom.getText().trim().isBlank())
-            btnApply.setText("Select a gender");
-        else
-            updateInfoTask();
+        updateInfoTask();
     }
 }
