@@ -32,4 +32,5 @@ public interface PostDAO {
     void setStatus(int id, String status);
     void deletePost(int id);
     Image getPreviewForLocation(String location, String type);
+    ArrayList<User> getTaggedUsers(int id);
 }

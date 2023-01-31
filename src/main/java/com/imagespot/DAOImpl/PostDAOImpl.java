@@ -13,6 +13,7 @@ import org.apache.commons.io.IOUtils;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -176,6 +177,8 @@ public class PostDAOImpl implements PostDAO {
                 post.setDate(rs.getTimestamp(5));
                 post.setLikesNumber(new BookmarkDAOImpl().getLikesCount(post.getIdImage()));
                 post.setDevice(new DeviceDAOImpl().getDevice(rs.getInt(6)));
+                post.setTaggedUsers(getTaggedUsers(post.getIdImage()));
+                post.setSubjects(new SubjectDAOImpl().getSubjects(post.getIdImage()));
                 locID = rs.getInt(7);
                 if (!rs.wasNull())
                     post.setLocation(new LocationDAOImpl().getLocation(locID));
@@ -334,5 +337,23 @@ public class PostDAOImpl implements PostDAO {
             throw new RuntimeException(e);
         }
         return output;
+    }
+
+    public ArrayList<User> getTaggedUsers(int idimage) {
+        ArrayList<User> users = new ArrayList<>();
+        UserDAOImpl userDAO = new UserDAOImpl();
+        Statement st;
+        ResultSet rs;
+        String query = "SELECT nickname FROM taggeduser WHERE idimage = " + idimage;
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            while(rs.next()) {
+                users.add(userDAO.getUserInfoForPreview(rs.getString(1)));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return users;
     }
 }

@@ -19,7 +19,7 @@ public class UserDAOImpl implements UserDAO {
 
     private final Connection con;
 
-    public UserDAOImpl() throws SQLException {
+    public UserDAOImpl() {
         con = ConnectionManager.getInstance().getConnection();
     }
 
