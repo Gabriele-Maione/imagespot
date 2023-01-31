@@ -3,6 +3,7 @@ package com.imagespot.controller;
 import com.imagespot.DAOImpl.LocationDAOImpl;
 import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -29,47 +30,82 @@ public class TopPlacesController implements Initializable {
     private HBox hbPlaces;
     @FXML
     private HBox hbCities;
+    @FXML
+    protected ProgressIndicator progressIndicator;
+
+
+    List<String> countries;
+    List<String> cities;
+    List<String> places;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadTopPlaces();
+        getTopTask();
+    }
+
+    private void getTopTask() {
+        final Task<Void> getTop = new Task<>() {
+            @Override
+            protected Void call() {
+                LocationDAOImpl locDAO = new LocationDAOImpl();
+                countries = locDAO.getTop("country");
+                cities = locDAO.getTop("city");
+                places = locDAO.getTop("formatted_address");
+                return null;
+            }
+        };
+        new Thread(getTop).start();
+        getTop.setOnSucceeded(workerStateEvent -> loadTopPlaces());
     }
 
     private void loadTopPlaces() {
-        LocationDAOImpl locDAO = new LocationDAOImpl();
-        List<String> countries = locDAO.getTop("country");
-        List<String> cities = locDAO.getTop("city");
-        List<String> places = locDAO.getTop("formatted_address");
-        for (String country : countries) {
-            hbCountries.getChildren().addAll(getContainer(new PostDAOImpl()
-                    .getPreviewForLocation(country, "country"), country, "country"));
-        }
-        for (String city : cities) {
-            hbCities.getChildren().addAll(getContainer(new PostDAOImpl()
-                    .getPreviewForLocation(city, "city"), city, "city"));
-        }
-        for (String place : places) {
-            hbPlaces.getChildren().addAll(getContainer(new PostDAOImpl()
-                    .getPreviewForLocation(place, "formatted_address"), place, "formatted_address"));
-        }
+
+        for (String country : countries)
+            getPreviewTask(country, "country");
+
+        for (String city : cities)
+            getPreviewTask(city, "city");
+
+        for (String place : places)
+            getPreviewTask(place, "formatted_address");
     }
+
+    private void getPreviewTask(String location, String type) {
+        final Task<Image> getPreview = new Task<>() {
+            @Override
+            protected Image call() {
+                return new PostDAOImpl().getPreviewForLocation(location, type);
+            }
+        };
+        progressIndicator.visibleProperty().bind(getPreview.runningProperty());
+        new Thread(getPreview).start();
+        getPreview.setOnSucceeded(workerStateEvent -> {
+            if(type == "country")
+                hbCountries.getChildren().addAll(getContainer(getPreview.getValue(), location, type));
+            else if(type == "city")
+                hbCities.getChildren().addAll(getContainer(getPreview.getValue(), location, type));
+            else
+                hbPlaces.getChildren().addAll(getContainer(getPreview.getValue(), location, type));
+        });
+    }
+
 
     @FXML
     protected void btnUpdateOnAction() {
         hbCities.getChildren().clear();
         hbCountries.getChildren().clear();
         hbPlaces.getChildren().clear();
-        loadTopPlaces();
+        getTopTask();
     }
 
     private StackPane getContainer(Image img, String location, String type) {
         StackPane stackPane = new StackPane();
-        stackPane.setPrefHeight(150);
-        stackPane.setPrefWidth(150);
+        stackPane.setPrefHeight(200);
+        stackPane.setPrefWidth(200);
 
         ImageView imageView = new ImageView(img);
-        imageView.setFitHeight(150);
-        imageView.setFitWidth(150);
+        imageView.setFitHeight(200);
+        imageView.setFitWidth(200);
         Color darkOpacity = Color.color(0, 0, 0, 0.5);
         Rectangle rect = new Rectangle(imageView.getFitWidth(), imageView.getFitHeight(), darkOpacity);
         imageView.setPreserveRatio(true);

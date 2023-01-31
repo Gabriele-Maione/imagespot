@@ -49,6 +49,8 @@ public class HomeController implements Initializable {
     @FXML
     private HBox hbTopPlaces;
     @FXML
+    private HBox hbCategories;
+    @FXML
     private BorderPane homePane;
     @FXML
     private TextField fldSearch;
@@ -167,6 +169,8 @@ public class HomeController implements Initializable {
             homePane.setCenter(ViewFactory.getInstance().getTaggedView());
         } else if(hbTopPlaces.equals(box)) {
             homePane.setCenter(ViewFactory.getInstance().getTopPlaces());
+        } else if(hbCategories.equals(box)) {
+            homePane.setCenter(ViewFactory.getInstance().getCategories());
         }
 
         removeSelectedView();

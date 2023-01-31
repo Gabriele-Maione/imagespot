@@ -22,6 +22,7 @@ public interface PostDAO {
     ArrayList<Post> getUsersPublicPosts(String username, Timestamp timestamp) throws SQLException;
     ArrayList<Post> getFeed(String username, Timestamp timestamp) throws SQLException;
     ArrayList<Post> getPostsByLocation(String location, String type, Timestamp timestamp) throws SQLException;
+    ArrayList<Post> getPostsByCategory(String category, Timestamp timestamp);
     Image getPhoto(int id);
     Post getPost(int id);
     Post getPreviewPost(int id);

@@ -7,5 +7,5 @@ public enum ViewType {
     FAVOURITES,
     PROFILE,
     TAGGED,
-    LOCATION, USER_PROFILE
+    LOCATION, CATEGORY, USER_PROFILE
 }

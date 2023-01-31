@@ -39,17 +39,18 @@ public class LocationDAOImpl implements LocationDAO {
             st.setString(8, location.getRoad());
             st.executeUpdate();
             rs = st.getGeneratedKeys();
-            if(rs.next())
+            if (rs.next())
                 id = rs.getInt(1);
             rs.close();
             st.close();
-            return id;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to add location.", e);
         }
+        return id;
     }
 
-    public List<String> getTop(String location){
+    public List<String> getTop(String location) {
         ArrayList<String> top = new ArrayList<>();
         Statement st;
         ResultSet rs;
@@ -61,7 +62,7 @@ public class LocationDAOImpl implements LocationDAO {
         try {
             st = con.createStatement();
             rs = st.executeQuery(query);
-            while(rs.next()) {
+            while (rs.next()) {
                 top.add(rs.getString(1));
             }
         } catch (SQLException e) {

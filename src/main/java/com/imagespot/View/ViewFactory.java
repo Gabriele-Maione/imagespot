@@ -2,13 +2,14 @@ package com.imagespot.View;
 
 import com.imagespot.controller.*;
 import com.imagespot.controller.center.*;
+import com.imagespot.controller.center.categories.CategoriesController;
+import com.imagespot.controller.center.categories.CategoryController;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -29,6 +30,7 @@ public class ViewFactory {
     private VBox favoritesView;
     private VBox taggedView;
     private VBox topPlaces;
+    private VBox categories;
     private Parent homeRoot;
     private ViewType viewType;
     private static User user;
@@ -125,6 +127,32 @@ public class ViewFactory {
             }
         }
         return browseView;
+    }
+
+    public VBox getCategories() {
+        if(categories == null) {
+            try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
+            loader.setController(new CategoriesController());
+                categories = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return categories;
+    }
+
+    public VBox getPostsByCategory(String category) {
+        viewType = ViewType.CATEGORY;
+        VBox postsByCategoryView = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
+            loader.setController(new CategoryController(category));
+            postsByCategoryView = loader.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return postsByCategoryView;
     }
 
     public VBox getTopPlaces() {

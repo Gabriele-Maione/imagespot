@@ -8,9 +8,12 @@ import com.imagespot.model.Post;
 import com.imagespot.model.User;
 import javafx.scene.image.Image;
 import org.apache.commons.io.IOUtils;
+
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 import static com.imagespot.Utils.Utils.photoScaler;
@@ -53,7 +56,7 @@ public class PostDAOImpl implements PostDAO {
         st.setInt(11, post.getLocation().getIdLocation());
         rs = st.executeQuery();
 
-        if(rs.next()) id = rs.getInt(1);
+        if (rs.next()) id = rs.getInt(1);
         st.close();
 
         post.setIdImage(id);
@@ -63,8 +66,8 @@ public class PostDAOImpl implements PostDAO {
 
     public ArrayList<Post> getRecentPosts(Timestamp timestamp) throws SQLException {
         String query = "SELECT preview, profile, posting_date, idimage FROM post " +
-                        " WHERE status = 'Public' AND profile NOT IN('" +
-                         ViewFactory.getInstance().getUser().getUsername() + "')";
+                " WHERE status = 'Public' AND profile NOT IN('" +
+                ViewFactory.getInstance().getUser().getUsername() + "')";
 
         return getPreviews(query, timestamp);
     }
@@ -80,7 +83,7 @@ public class PostDAOImpl implements PostDAO {
     @Override
     public ArrayList<Post> getUsersPublicPosts(String username, Timestamp timestamp) throws SQLException {
         String query = "SELECT preview, profile, posting_date, idimage FROM post WHERE " +
-                        "status = 'Public' AND profile = '" + username + "'";
+                "status = 'Public' AND profile = '" + username + "'";
 
         return getPreviews(query, timestamp);
     }
@@ -88,11 +91,11 @@ public class PostDAOImpl implements PostDAO {
     @Override
     public ArrayList<Post> getFeed(String username, Timestamp timestamp) throws SQLException {
         String query = "SELECT preview, profile, posting_date, idimage" +
-                        " FROM post" +
-                        " WHERE status = 'Public'" +
-                        " AND profile IN (SELECT idfollowing" +
-                        " FROM following" +
-                        " WHERE nickname = '" + username + "')";
+                " FROM post" +
+                " WHERE status = 'Public'" +
+                " AND profile IN (SELECT idfollowing" +
+                " FROM following" +
+                " WHERE nickname = '" + username + "')";
 
         return getPreviews(query, timestamp);
     }
@@ -106,33 +109,48 @@ public class PostDAOImpl implements PostDAO {
         return getPreviews(query, timestamp);
     }
 
-    public ArrayList<Post> getPreviews(String query, Timestamp timestamp) throws SQLException {
+    @Override
+    public ArrayList<Post> getPostsByCategory(String category, Timestamp timestamp) {
+        String query = "SELECT preview, profile, posting_date, idimage" +
+                " FROM post JOIN subject ON idimage = image" +
+                " WHERE status = 'Public'" +
+                " AND category = '" + category + "'";
+        return getPreviews(query, timestamp);
+    }
+
+
+    public ArrayList<Post> getPreviews(String query, Timestamp timestamp) {
         ArrayList<Post> ls = new ArrayList<>();
         Post post;
         Statement st;
         ResultSet rs;
-        st = con.createStatement();
+        try {
+            st = con.createStatement();
 
-        StringBuilder complexQuery = new StringBuilder(query);
+            StringBuilder complexQuery = new StringBuilder(query);
 
-        if(timestamp != null)
-            complexQuery.append(" AND posting_date < '").append(timestamp).append("'");
-        complexQuery.append(" ORDER BY posting_date DESC LIMIT 20");
+            if (timestamp != null)
+                complexQuery.append(" AND posting_date < '").append(timestamp).append("'");
+            complexQuery.append(" ORDER BY posting_date DESC LIMIT 20");
 
-        rs = st.executeQuery(complexQuery.toString());
+            rs = st.executeQuery(complexQuery.toString());
 
-        while (rs.next()) {
-            post = new Post();
-            post.setIdImage(rs.getInt(4));
-            if (rs.getBinaryStream(1) != null)
-                post.setPreview(new Image(rs.getBinaryStream(1)));
-            post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
-            post.setDate(rs.getTimestamp(3));
-            post.setIdImage(rs.getInt(4));
-            ls.add(post);
+            while (rs.next()) {
+                post = new Post();
+                post.setIdImage(rs.getInt(4));
+                if (rs.getBinaryStream(1) != null)
+                    post.setPreview(new Image(rs.getBinaryStream(1)));
+                post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
+                post.setDate(rs.getTimestamp(3));
+                post.setIdImage(rs.getInt(4));
+                ls.add(post);
+            }
+            st.close();
+            rs.close();
+        } catch (SQLException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to load posts.", e);
         }
-
-        st.close();
         return ls;
     }
 
@@ -161,6 +179,7 @@ public class PostDAOImpl implements PostDAO {
         }
         return post;
     }
+
     @Override
     public Image getPhoto(int id) {
 
@@ -180,8 +199,8 @@ public class PostDAOImpl implements PostDAO {
         }
         return output;
     }
-    
-    @Override 
+
+    @Override
     public Post getPreviewPost(int id) {
         Post post = null;
         Statement st;
@@ -192,7 +211,7 @@ public class PostDAOImpl implements PostDAO {
         try {
             st = con.createStatement();
             rs = st.executeQuery(query);
-            if(rs.next()) {
+            if (rs.next()) {
                 post = new Post();
                 post.setIdImage(rs.getInt(4));
                 post.setPreview(new Image(rs.getBinaryStream(1)));
@@ -217,7 +236,7 @@ public class PostDAOImpl implements PostDAO {
             st = con.prepareStatement(query);
             st.setInt(1, post.getIdImage());
             rs = st.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 post.setStatus(rs.getString(1));
                 post.setDescription(rs.getString(2));
             }
@@ -242,6 +261,7 @@ public class PostDAOImpl implements PostDAO {
         }
 
     }
+
     public void setStatus(int id, String status) {
         PreparedStatement st;
         String query = "UPDATE post SET status = ? WHERE idimage = ?";
@@ -255,6 +275,7 @@ public class PostDAOImpl implements PostDAO {
             throw new RuntimeException(e);
         }
     }
+
     public void deletePost(int id) {
         Statement st;
         String query = "DELETE FROM post WHERE idimage = '" + id + "'";
@@ -280,7 +301,7 @@ public class PostDAOImpl implements PostDAO {
             st = con.prepareStatement(query);
             st.setString(1, location);
             rs = st.executeQuery();
-            if(rs.next())
+            if (rs.next())
                 img = new Image(rs.getBinaryStream(1));
             st.close();
             rs.close();
