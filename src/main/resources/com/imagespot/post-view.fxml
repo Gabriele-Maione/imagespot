@@ -35,19 +35,19 @@
                      <children>
                         <HBox minWidth="175.0" spacing="10.0">
                            <children>
-                              <ImageView fx:id="avatar" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="avatar" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#userProfileOnClick" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../icons/bear_icon.png" />
                                  </image>
                               </ImageView>
                               <VBox>
                                  <children>
-                                    <Label fx:id="name" text="name">
+                                    <Label fx:id="name" onMouseClicked="#userProfileOnClick" text="name">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="username" text="\@username" textFill="#616161">
+                                    <Label fx:id="username" onMouseClicked="#userProfileOnClick" text="\@username" textFill="#616161">
                                        <font>
                                           <Font size="14.0" />
                                        </font>

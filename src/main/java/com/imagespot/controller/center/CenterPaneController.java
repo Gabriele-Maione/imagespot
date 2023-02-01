@@ -47,7 +47,6 @@ public abstract class CenterPaneController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnUpdateOnAction();
         loadPosts();
-        flowPaneResponsive(flowPane);
     }
 
     protected void btnUpdateOnAction() {
@@ -73,6 +72,7 @@ public abstract class CenterPaneController implements Initializable {
                     flowPane.getChildren().add(postBox);
                 }
                 setWidthOfFlowPaneChild(flowPane.getChildren(), flowPane.getWidth());
+                flowPaneResponsive(flowPane);
             }
             else {
                 flowPane.getChildren().add(nothingHereLabel());

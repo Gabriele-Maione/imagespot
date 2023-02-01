@@ -72,10 +72,12 @@ public class PostController {
     private Label locationLbl;
     private Post post;
     private Image image;
+    HomeController hm;
 
     public void init(int idpost) throws SQLException {
         //imgContainer is the pane that contains the image
         //photo is my imageview
+        hm = ViewFactory.getInstance().getHomeController();
         btnDownload.setDisable(true);
         likeBtn.setDisable(true);
         photo.fitWidthProperty().bind(root.widthProperty().subtract(postSidebar.widthProperty()));
@@ -119,7 +121,7 @@ public class PostController {
             deviceLbl.setText(post.getDevice().getBrand() + " " + post.getDevice().getModel());
             likeBtn.setText(String.valueOf(post.getLikesNumber()));
 
-            if(!post.getTaggedUsers().isEmpty()) {
+            if (!post.getTaggedUsers().isEmpty()) {
                 System.out.println(post.getTaggedUsers().isEmpty());
 
                 for (User user : post.getTaggedUsers())
@@ -130,11 +132,15 @@ public class PostController {
 
             if (post.getLocation() != null) {
                 locationLbl.setText(post.getLocation().getFormatted_address());
+                locationLbl.setOnMouseClicked(mouseEvent -> {
+                    hm.getBorderPane().setCenter(ViewFactory.getInstance().getPostsByPlace(post.getLocation().getFormatted_address(), "formatted_address"));
+                    username.getScene().setRoot(ViewFactory.getInstance().getHomeRoot());
+                });
                 locationVBox.setManaged(true);
                 locationVBox.setVisible(true);
             }
 
-            if(!post.getSubjects().isEmpty()) {
+            if (!post.getSubjects().isEmpty()) {
                 for (Subject subject : post.getSubjects())
                     categoryVBox.getChildren().add(getContainerCategory(subject));
                 categoryVBox.setManaged(true);
@@ -268,7 +274,12 @@ public class PostController {
     }
 
     @FXML
-    public void buttonCloseOnAction() {
+    private void buttonCloseOnAction() {
+        username.getScene().setRoot(ViewFactory.getInstance().getHomeRoot());
+    }
+    @FXML
+    private void userProfileOnClick() {
+        hm.getBorderPane().setCenter(ViewFactory.getInstance().getUserPage(post.getProfile()));
         username.getScene().setRoot(ViewFactory.getInstance().getHomeRoot());
     }
 
@@ -296,7 +307,6 @@ public class PostController {
         hBox.setPrefWidth(200);
         hBox.setSpacing(10);
         hBox.setOnMouseClicked(mouseEvent -> {
-            HomeController hm = ViewFactory.getInstance().getHomeController();
             hm.getBorderPane().setCenter(ViewFactory.getInstance().getUserPage(user));
             username.getScene().setRoot(ViewFactory.getInstance().getHomeRoot());
         });
@@ -309,6 +319,10 @@ public class PostController {
         VBox vBox = new VBox();
         Label categoryLabel = new Label(subject.getCategory());
         categoryLabel.setFont(new Font("System Bold", 14.0));
+        categoryLabel.setOnMouseClicked(mouseEvent -> {
+            hm.getBorderPane().setCenter(ViewFactory.getInstance().getPostsByCategory(subject.getCategory()));
+            username.getScene().setRoot(ViewFactory.getInstance().getHomeRoot());
+        });
         Label subjectLabel = new Label(subject.getSubject());
         vBox.getChildren().addAll(categoryLabel, subjectLabel);
         return vBox;
