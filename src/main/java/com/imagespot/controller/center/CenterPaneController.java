@@ -2,6 +2,7 @@ package com.imagespot.controller.center;
 
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -39,6 +40,8 @@ public abstract class CenterPaneController implements Initializable {
     protected ScrollPane scrollPane;
     protected Timestamp lastPostDate;
 
+    private ChangeListener<Number> flowPaneResponsiveListener;
+
     public CenterPaneController() {
         lastPostDate = null;
     }
@@ -75,6 +78,8 @@ public abstract class CenterPaneController implements Initializable {
                 flowPaneResponsive(flowPane);
             }
             else {
+                if(flowPaneResponsiveListener != null)
+                    flowPane.widthProperty().removeListener(flowPaneResponsiveListener);
                 flowPane.getChildren().add(nothingHereLabel());
                 flowPane.setAlignment(Pos.CENTER);
             }
@@ -110,9 +115,11 @@ public abstract class CenterPaneController implements Initializable {
     }
 
     protected void flowPaneResponsive(FlowPane fp){
-        fp.widthProperty().addListener((observableValue, number, width) ->
-                setWidthOfFlowPaneChild(fp.getChildren(), width.doubleValue()));
+        flowPaneResponsiveListener = (observableValue, number, width) ->
+                setWidthOfFlowPaneChild(fp.getChildren(), width.doubleValue());
+        fp.widthProperty().addListener(flowPaneResponsiveListener);
     }
+
 
     protected void setWidthOfFlowPaneChild(List<Node> flowPaneChild, double flowPaneWidth){
         for(Node box : flowPaneChild){
@@ -131,7 +138,7 @@ public abstract class CenterPaneController implements Initializable {
         Label label = new Label();
         label.setPrefHeight(118);
         label.setPrefWidth(280);
-        label.setText("THERE IS NOTHING HERE  \u00AF \\ _ (ツ) _ / \u00AF");
+        label.setText("THERE IS NOTHING HERE\n¯\\_(ツ)_/¯");
         label.setTextAlignment(TextAlignment.CENTER);
         label.setTextFill(Color.valueOf("#7678ed"));
         label.setWrapText(true);

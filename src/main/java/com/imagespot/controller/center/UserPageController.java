@@ -15,15 +15,17 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import static com.imagespot.Utils.Utils.setAvatarRounde;
 
-public class UserPageController extends CenterPaneController{
+public class UserPageController extends CenterPaneController {
     @FXML
     private ImageView avatar;
     @FXML
@@ -50,7 +52,9 @@ public class UserPageController extends CenterPaneController{
     private FlowPane flowPaneTag;
     private Timestamp lastUserTagDate;
     private Timestamp lastUserPostDate;
-    private enum userPageViewType{USER_PROFILE_POSTS, USER_PROFILE_TAG}
+
+    private enum userPageViewType {USER_PROFILE_POSTS, USER_PROFILE_TAG}
+
     private userPageViewType type;
 
     @Override
@@ -71,16 +75,19 @@ public class UserPageController extends CenterPaneController{
     public void init(User user) throws SQLException {
         this.user = user;
 
-        if(this.user != null){
+        if (this.user != null) {
             setUserInfo();
             getUserStatsTask();
             loadPosts();
+            if (user.getUsername().equals(ViewFactory.getInstance().getUser().getUsername()))
+                followButton.setVisible(false);
         }
+
     }
 
     @FXML
     private void postBtnOnAction() {
-        if(type != userPageViewType.USER_PROFILE_POSTS){
+        if (type != userPageViewType.USER_PROFILE_POSTS) {
             switchUserProfileView();
             type = userPageViewType.USER_PROFILE_POSTS;
         }
@@ -89,24 +96,23 @@ public class UserPageController extends CenterPaneController{
 
     @FXML
     private void tagBtnOnAction() {
-        if(type != userPageViewType.USER_PROFILE_TAG){
+        if (type != userPageViewType.USER_PROFILE_TAG) {
             switchUserProfileView();
             type = userPageViewType.USER_PROFILE_TAG;
         }
         loadPosts();
     }
 
-    private void switchUserProfileView(){
+    private void switchUserProfileView() {
         VBox scrollPaneVbox = (VBox) scrollPane.getContent();
         scrollPaneVbox.getChildren().remove(flowPane);
-        if(type == userPageViewType.USER_PROFILE_POSTS){
+        if (type == userPageViewType.USER_PROFILE_POSTS) {
             flowPane = flowPaneTag;
             lastUserPostDate = lastPostDate;
             lastPostDate = lastUserTagDate;
             tagBtn.getStyleClass().add("btn-switch-view-selected");
             postBtn.getStyleClass().remove("btn-switch-view-selected");
-        }
-        else{
+        } else {
             flowPane = flowPanePosts;
             lastUserTagDate = lastPostDate;
             lastPostDate = lastUserPostDate;
@@ -125,7 +131,7 @@ public class UserPageController extends CenterPaneController{
         final Task<Void> followingTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
-                if(action)
+                if (action)
                     new UserDAOImpl().setFollow(user.getUsername());
                 else
                     new UserDAOImpl().removeFollow(user.getUsername());
@@ -140,14 +146,14 @@ public class UserPageController extends CenterPaneController{
         });
 
         ObservableList<User> followedUsers = ViewFactory.getInstance().getUser().getFollowedUsers();
-        if(action)
+        if (action)
             followedUsers.add(0, user);
         else
             followedUsers.removeIf(u -> u.getUsername().equals(user.getUsername()));
     }
 
     public void setUserInfo() {
-        if (user.getAvatar() != null){
+        if (user.getAvatar() != null) {
             avatar.setImage(user.getAvatar());
             setAvatarRounde(avatar);
         }
@@ -173,15 +179,14 @@ public class UserPageController extends CenterPaneController{
             if (checkFollowing.getValue()) {
                 followButton.setSelected(true);
                 followButton.setText("UNFOLLOW");
-            }
-            else {
+            } else {
                 followButton.setSelected(false);
                 followButton.setText("FOLLOW");
             }
         });
     }
 
-    private void getUserStatsTask(){
+    private void getUserStatsTask() {
         final Task<int[]> userStats = new Task<>() {
             @Override
             protected int[] call() throws Exception {
@@ -202,13 +207,13 @@ public class UserPageController extends CenterPaneController{
 
     @Override
     protected void loadPosts() {
-        if(type == userPageViewType.USER_PROFILE_POSTS)
+        if (type == userPageViewType.USER_PROFILE_POSTS)
             loadUserPosts();
         else
             loadUserTags();
     }
 
-    private void loadUserPosts(){
+    private void loadUserPosts() {
         final Task<List<Post>> userPostsTask = new Task<>() {
             @Override
             protected List<Post> call() throws Exception {

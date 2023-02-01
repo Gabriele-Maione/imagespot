@@ -53,3 +53,8 @@
 .close-button:pressed {
     -fx-background-color: red;
 }
+
+.clickable:hover {
+    -fx-cursor: hand;
+    -fx-underline: true;
+}

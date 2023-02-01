@@ -318,6 +318,7 @@ public class PostController {
     private VBox getContainerCategory(Subject subject) {
         VBox vBox = new VBox();
         Label categoryLabel = new Label(subject.getCategory());
+        categoryLabel.getStyleClass().add("clickable");
         categoryLabel.setFont(new Font("System Bold", 14.0));
         categoryLabel.setOnMouseClicked(mouseEvent -> {
             hm.getBorderPane().setCenter(ViewFactory.getInstance().getPostsByCategory(subject.getCategory()));
