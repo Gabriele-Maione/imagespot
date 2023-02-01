@@ -186,4 +186,6 @@ public class HomeController implements Initializable {
     private void btnAddPhotoOnAction() {
         ViewFactory.getInstance().showAddPhotoWindow();
     }
+
+    public BorderPane getBorderPane() {return homePane;}
 }

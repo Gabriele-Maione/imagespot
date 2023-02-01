@@ -33,6 +33,8 @@ public class ViewFactory {
     private VBox categories;
     private Parent homeRoot;
     private ViewType viewType;
+
+    private HomeController hm;
     private static User user;
     private HashMap<Integer, HBox> openedImages;
 
@@ -58,6 +60,10 @@ public class ViewFactory {
 
     public Parent getHomeRoot() {
         return homeRoot;
+    }
+
+    public HomeController getHomeController() {
+        return hm;
     }
 
     public VBox getFeedView() {
@@ -302,6 +308,7 @@ public class ViewFactory {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-view.fxml"));
                 homeRoot = loader.load();
+                hm = loader.getController();
                 Scene scene = new Scene(homeRoot, 1050, 550);
                 Stage stage = new Stage();
                 stage.setMinHeight(400);

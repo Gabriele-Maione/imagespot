@@ -54,8 +54,9 @@ public class PostDAOImpl implements PostDAO {
         st.setInt(8, device.getIdDevice());
         st.setString(9, profile.getUsername());
         st.setBinaryStream(10, new ByteArrayInputStream(previewBytes));
-        System.out.println(post.getLocation().getIdLocation());
-        st.setInt(11, post.getLocation().getIdLocation());
+        if(post.getLocation() != null)
+            st.setInt(11, post.getLocation().getIdLocation());
+        else st.setNull(11, Types.INTEGER);
         rs = st.executeQuery();
 
         if (rs.next()) id = rs.getInt(1);
@@ -288,7 +289,6 @@ public class PostDAOImpl implements PostDAO {
     public void deletePost(int id) {
         Statement st;
         String query = "DELETE FROM post WHERE idimage = '" + id + "'";
-        System.out.println(query);
         try {
             st = con.createStatement();
             st.executeUpdate(query);

@@ -66,7 +66,8 @@ public class SettingsController implements Initializable {
         if (user.getAvatar() != null) {
             deleteBtn.setVisible(true);
             imgPreview.setImage(user.getAvatar());
-        }
+        } else deleteBtn.setVisible(false);
+
         fldName.setText(user.getName());
         bio.setText(user.getBio());
         choiceBoxInit();
@@ -139,7 +140,6 @@ public class SettingsController implements Initializable {
         new Thread(updateTask).start();
         btnApply.textProperty().bind(updateTask.messageProperty());
         updateTask.setOnSucceeded(workerStateEvent -> {
-            System.out.println(deletedAvatarFlag + " " + changedAvatarFlag);
             ViewFactory.getInstance().getUser().setBio(bio.getText());
             ViewFactory.getInstance().getUser().setGender(cbGender.getValue());
             ViewFactory.getInstance().getUser().setName(fldName.getText());
@@ -147,7 +147,7 @@ public class SettingsController implements Initializable {
                 ViewFactory.getInstance().getUser().setAvatar((new Image(avatar.getAbsolutePath())));
                 deleteBtn.setVisible(true);
                 deleteBtn.setText("Delete");
-            } else if (deletedAvatarFlag) {
+            } else {
                 ViewFactory.getInstance().getUser().setAvatar(null);
                 deleteBtn.setVisible(false);
             }

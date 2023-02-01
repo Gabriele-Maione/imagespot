@@ -15,6 +15,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -294,6 +295,11 @@ public class PostController {
         hBox.setPrefHeight(30);
         hBox.setPrefWidth(200);
         hBox.setSpacing(10);
+        hBox.setOnMouseClicked(mouseEvent -> {
+            HomeController hm = ViewFactory.getInstance().getHomeController();
+            hm.getBorderPane().setCenter(ViewFactory.getInstance().getUserPage(user));
+            username.getScene().setRoot(ViewFactory.getInstance().getHomeRoot());
+        });
 
         hBox.getChildren().addAll(avatar, name, username);
         return hBox;

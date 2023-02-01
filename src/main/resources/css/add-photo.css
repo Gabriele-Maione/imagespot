@@ -105,3 +105,10 @@ ChoiceBox {
 }
 
 .choice-box > .label { -fx-text-fill: -primary;}
+
+.hbLoc {
+    -fx-background-color: rgba(255, 244, 230, 0.44);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: rgba(250, 219, 147, 0.51);
+}

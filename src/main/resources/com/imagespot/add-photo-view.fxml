@@ -278,7 +278,7 @@
                                         <Font size="20.0" />
                                     </font>
                                 </Label>
-                                <TextArea fx:id="fldDescription" prefHeight="90.0" prefWidth="560.0" promptText="Max 140 characters" />
+                                <TextArea fx:id="fldDescription" prefHeight="90.0" prefWidth="560.0" promptText="Max 140 characters" wrapText="true" />
                             </children>
                         </VBox>
                         <Separator prefWidth="200.0" />
@@ -326,7 +326,7 @@
                         <Separator prefWidth="200.0" />
                         <VBox>
                             <children>
-                                <VBox fx:id="locationVbox">
+                                <VBox fx:id="locationVbox" fillWidth="false">
                                     <children>
                                         <Label text="Add location" textFill="#7678ed">
                                             <font>
@@ -347,7 +347,22 @@
                                                 <Button mnemonicParsing="false" onAction="#btnFindCoordinatesOnAction" text="Search" />
                                             </children>
                                         </HBox>
-                                        <Label fx:id="addressLbl" />
+                              <HBox fx:id="hbLoc" alignment="TOP_CENTER" fillHeight="false" maxWidth="560.0" spacing="10.0" styleClass="hbLoc">
+                                 <children>
+                                              <Label fx:id="addressLbl" wrapText="true">
+                                       <padding>
+                                          <Insets top="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <Button mnemonicParsing="false" onAction="#btnRemoveLocationOnAction" styleClass="xButton" text="x" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </HBox>
                                     </children>
                                     <padding>
                                         <Insets top="5.0" />

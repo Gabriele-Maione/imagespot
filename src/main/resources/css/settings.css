@@ -38,7 +38,6 @@ TextField {
 /* Style the choice box */
 ChoiceBox {
     -fx-pref-width: 150px;
-    -fx-border-color: #cccccc;
     -fx-background-radius: 20;
     -fx-border-radius: 20;
     -fx-border-color: -first-detail;

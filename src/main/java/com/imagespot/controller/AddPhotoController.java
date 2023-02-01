@@ -72,8 +72,6 @@ public class AddPhotoController implements Initializable {
     @FXML
     private Button btnAddDigitalCamera;
     @FXML
-    private Button btnConfirmNewSmartphone;
-    @FXML
     private Button btnConfirmNewDigitalCamera;
     @FXML
     private Button btnCancelNewSmartphone;
@@ -85,6 +83,8 @@ public class AddPhotoController implements Initializable {
     private HBox hBoxNewDigitalCamera;
     @FXML
     private TilePane categoryTilePane;
+    @FXML
+    private HBox hbLoc;
 
     //Address
     private static final String API_KEY = "59fe0bec7ad34ae9a0ee9ee9e38c2d3d";
@@ -123,6 +123,8 @@ public class AddPhotoController implements Initializable {
 
         getRecentUsedDevicesTask(user.getUsername());
 
+        hbLoc.setManaged(false);
+        hbLoc.setVisible(false);
         locationListener();
 
         subjects = new ArrayList<>();
@@ -566,6 +568,8 @@ public class AddPhotoController implements Initializable {
                     location.setFormatted_address(results.getJSONObject(0).getString("formatted"));
                     location.setLatitude(results.getJSONObject(0).getJSONObject("geometry").getBigDecimal("lat"));
                     location.setLongitude(results.getJSONObject(0).getJSONObject("geometry").getBigDecimal("lng"));
+                    hbLoc.setManaged(true);
+                    hbLoc.setVisible(true);
                     if (component.has("country")) {
                         address += "Country\t\t" + component.getString("country") + "\n";
                         location.setCountry(component.getString("country"));
@@ -598,6 +602,7 @@ public class AddPhotoController implements Initializable {
                     address += "Coord\t\t" + location.getLatitude() + ", " + location.getLongitude() + "\n";
                     address += "Formatted\t" + location.getFormatted_address();
                     addressLbl.setText(address);
+                    System.out.println(addressLbl.getText());
                 }
                 else {
                     location = null;
@@ -605,6 +610,14 @@ public class AddPhotoController implements Initializable {
                 }
             });
         }
+    }
+
+    @FXML
+    private void btnRemoveLocationOnAction() {
+        location = null;
+        addressLbl.setText("");
+        hbLoc.setManaged(false);
+        hbLoc.setVisible(false);
     }
 
     //  CATEGORIES/SUBJECTS STUFF
