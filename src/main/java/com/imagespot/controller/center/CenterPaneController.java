@@ -6,6 +6,7 @@ import javafx.collections.ListChangeListener;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +14,12 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
+
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -59,7 +65,8 @@ public abstract class CenterPaneController implements Initializable {
         task.setOnSucceeded(workerStateEvent -> {
             List<Post> posts = task.getValue();
 
-            if(posts != null){
+            if(!posts.isEmpty()){
+                flowPane.setAlignment(Pos.BASELINE_LEFT);
                 for (Post post : posts) {
                     VBox postBox = ViewFactory.getInstance().getPostPreview(post);
                     postBox.setId(String.valueOf(post.getIdImage()));
@@ -67,7 +74,10 @@ public abstract class CenterPaneController implements Initializable {
                 }
                 setWidthOfFlowPaneChild(flowPane.getChildren(), flowPane.getWidth());
             }
-
+            else {
+                flowPane.getChildren().add(nothingHereLabel());
+                flowPane.setAlignment(Pos.CENTER);
+            }
         });
     }
 
@@ -115,5 +125,20 @@ public abstract class CenterPaneController implements Initializable {
             v.setPrefWidth(nodeWidth - 1);
             i.setFitWidth(nodeWidth - 10);
         }
+    }
+
+    private Label nothingHereLabel() {
+        Label label = new Label();
+        label.setPrefHeight(118);
+        label.setPrefWidth(280);
+        label.setText("THERE IS NOTHING HERE  \u00AF \\ _ (ツ) _ / \u00AF");
+        label.setTextAlignment(TextAlignment.CENTER);
+        label.setTextFill(Color.valueOf("#7678ed"));
+        label.setWrapText(true);
+
+        Font font = new Font(24.0);
+        label.setFont(font);
+
+        return label;
     }
 }
