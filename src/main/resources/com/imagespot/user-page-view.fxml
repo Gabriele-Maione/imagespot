@@ -52,7 +52,7 @@
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <ToggleButton fx:id="followButton" mnemonicParsing="false" onAction="#followButtonOnAction" styleClass="followButton" text="FOLLOW">
+                                    <ToggleButton fx:id="followButton" mnemonicParsing="false" styleClass="followButton" text="FOLLOW">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin></ToggleButton>

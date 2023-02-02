@@ -56,6 +56,7 @@ public class LocationDAOImpl implements LocationDAO {
         ResultSet rs;
         String query = "SELECT " + location + ", count(*) as postN\n" +
                 "FROM location join post p on location.idlocation = p.location\n" +
+                "WHERE " + location + " IS NOT NULL\n" +
                 "group by " + location +
                 "\norder by postN DESC\n" +
                 "LIMIT 10";

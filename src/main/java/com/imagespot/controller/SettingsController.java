@@ -121,7 +121,7 @@ public class SettingsController implements Initializable {
 
 
     private void updateInfoTask() {
-        final Task<Void> updateTask = new Task<Void>() {
+        final Task<Void> updateTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
                 updateMessage("Loading...");
@@ -147,7 +147,7 @@ public class SettingsController implements Initializable {
                 ViewFactory.getInstance().getUser().setAvatar((new Image(avatar.getAbsolutePath())));
                 deleteBtn.setVisible(true);
                 deleteBtn.setText("Delete");
-            } else {
+            } else if(deletedAvatarFlag){
                 ViewFactory.getInstance().getUser().setAvatar(null);
                 deleteBtn.setVisible(false);
             }

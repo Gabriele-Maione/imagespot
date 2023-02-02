@@ -73,9 +73,9 @@ public class HomeController implements Initializable {
         nameLabel.textProperty().bind(user.nameProperty());
         usernameLabel.setText("@" + user.getUsername());
 
+        setAvatarRounde(profilePic);
         if(user.getAvatar() != null){
             profilePic.setImage(crop(user.getAvatar()));
-            setAvatarRounde(profilePic);
         }
         user.avatarProperty().addListener((ObservableValue<? extends Image> observable, Image oldVal, Image newVal) ->
                 profilePic.setImage( (newVal == null) ? new Image(getClass().getResourceAsStream("/icons/bear_icon.png")) : crop(user.getAvatar())));

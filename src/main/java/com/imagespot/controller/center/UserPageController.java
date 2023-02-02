@@ -67,9 +67,9 @@ public class UserPageController extends CenterPaneController {
         flowPaneTag = new FlowPane();
         ((VBox) scrollPane.getContent()).getChildren().add(flowPanePosts);
         flowPane = flowPanePosts;
-        addScrollPaneListener();
         flowPaneResponsive(flowPanePosts);
         flowPaneResponsive(flowPaneTag);
+        addScrollPaneListener();
     }
 
     public void init(User user) throws SQLException {
@@ -79,10 +79,13 @@ public class UserPageController extends CenterPaneController {
             setUserInfo();
             getUserStatsTask();
             loadPosts();
-            if (user.getUsername().equals(ViewFactory.getInstance().getUser().getUsername()))
-                followButton.setVisible(false);
+            if (user.getUsername().equals(ViewFactory.getInstance().getUser().getUsername())) {
+                followButton.setText("Settings");
+                followButton.setOnAction(actionEvent -> settingsButtonOnAction());
+            }
+            else
+                followButton.setOnAction(actionEvent -> followButtonOnAction());
         }
-
     }
 
     @FXML
@@ -122,9 +125,12 @@ public class UserPageController extends CenterPaneController {
         scrollPaneVbox.getChildren().add(flowPane);
     }
 
-    @FXML
     private void followButtonOnAction() {
         followUnfollowTask(followButton.isSelected());
+    }
+
+    private void settingsButtonOnAction() {
+        ViewFactory.getInstance().showSettingsWindow();
     }
 
     public void followUnfollowTask(boolean action) {
@@ -163,7 +169,7 @@ public class UserPageController extends CenterPaneController {
 
         if (user.getBio() != null)
             bio.setText(user.getBio());
-
+        if(!user.getUsername().equals(ViewFactory.getInstance().getUser().getUsername()))
         checkFollowingTask();
     }
 
