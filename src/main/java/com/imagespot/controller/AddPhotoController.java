@@ -345,28 +345,42 @@ public class AddPhotoController implements Initializable {
     }
 
     private void removeDeviceTask(int idDevice, String username, HBox hBoxRemovedDevice) {
-        final Task<Void> removeDeviceTask = new Task<>() {
-            @Override
-            protected Void call() throws Exception {
-                new DeviceDAOImpl().removeUserDevice(idDevice, username);
-                return null;
-            }
-        };
-        new Thread(removeDeviceTask).start();
-        removeDeviceTask.setOnSucceeded(workerStateEvent -> {
-            recentUserDevices.removeIf(d -> d.getIdDevice() == idDevice);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Device");
+        alert.setHeaderText("Are you sure you want to delete this device?");
+        alert.setContentText("This action cannot be undone.");
 
-            if (smartphoneVBox.getChildren().remove(hBoxRemovedDevice) && smartphoneVBox.getChildren().size() == 2)
-                setHboxVisibility((HBox) smartphoneVBox.getChildren().get(0), true);
+        ButtonType buttonTypeYes = new ButtonType("Yes");
+        ButtonType buttonTypeNo = new ButtonType("No");
 
-            if (digitalCameraVBox.getChildren().remove(hBoxRemovedDevice) && digitalCameraVBox.getChildren().size() == 2)
-                setHboxVisibility((HBox) digitalCameraVBox.getChildren().get(0), true);
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
-            if (device != null && idDevice == device.getIdDevice()) {
-                device = null;
-                lblDeviceSelected.setText("select or add a new Device");
-            }
-        });
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if(result.get() == buttonTypeYes){
+            final Task<Void> removeDeviceTask = new Task<>() {
+                @Override
+                protected Void call() throws Exception {
+                    new DeviceDAOImpl().removeUserDevice(idDevice, username);
+                    return null;
+                }
+            };
+            new Thread(removeDeviceTask).start();
+            removeDeviceTask.setOnSucceeded(workerStateEvent -> {
+                recentUserDevices.removeIf(d -> d.getIdDevice() == idDevice);
+
+                if (smartphoneVBox.getChildren().remove(hBoxRemovedDevice) && smartphoneVBox.getChildren().size() == 2)
+                    setHboxVisibility((HBox) smartphoneVBox.getChildren().get(0), true);
+
+                if (digitalCameraVBox.getChildren().remove(hBoxRemovedDevice) && digitalCameraVBox.getChildren().size() == 2)
+                    setHboxVisibility((HBox) digitalCameraVBox.getChildren().get(0), true);
+
+                if (device != null && idDevice == device.getIdDevice()) {
+                    device = null;
+                    lblDeviceSelected.setText("select or add a new Device");
+                }
+            });
+        }
     }
 
     private void searchUsersTask(String searchedString) {
