@@ -42,12 +42,12 @@
                               </ImageView>
                               <VBox>
                                  <children>
-                                    <Label fx:id="name" onMouseClicked="#userProfileOnClick" styleClass="clickable" text="name">
+                                    <Label fx:id="name" onMouseClicked="#userProfileOnClick" styleClass="clickableText" text="name">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="username" onMouseClicked="#userProfileOnClick" styleClass="clickable" text="\@username" textFill="#616161">
+                                    <Label fx:id="username" onMouseClicked="#userProfileOnClick" styleClass="clickableText" text="\@username" textFill="#616161">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -100,7 +100,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="locationLbl" styleClass="clickable" text="Location" wrapText="true" />
+                  <Label fx:id="locationLbl" styleClass="clickableText" text="Location" wrapText="true" />
                </children>
             </VBox>
             <VBox fx:id="categoryVBox">

@@ -148,3 +148,7 @@
 .clickable {
     -fx-cursor: hand;
 }
+
+.clickable:hover {
+    -fx-background-color: -selected;
+}

@@ -27,6 +27,9 @@ import java.io.*;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static com.imagespot.Utils.Utils.getMostCommonColour;
 import static com.imagespot.Utils.Utils.setAvatarRounde;
@@ -269,7 +272,8 @@ public class PostController {
         new Thread(fileTask).start();
         fileTask.setOnSucceeded(workerStateEvent -> {
             btnDownload.textProperty().unbind();
-            btnDownload.setText("Done!");
+            btnDownload.setText("Download again");
+            btnDownload.setDisable(false);
         });
     }
 

@@ -22,12 +22,12 @@
                <children>
                   <HBox prefHeight="20.0" prefWidth="98.0" spacing="5.0">
                      <children>
-                        <Label fx:id="name" onMouseClicked="#userOnClick" styleClass="clickable" text="Name">
+                        <Label fx:id="name" onMouseClicked="#userOnClick" styleClass="clickableText" text="Name">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="username" onMouseClicked="#userOnClick" styleClass="clickable" text="\\@username" textFill="#8d8d8d" />
+                        <Label fx:id="username" onMouseClicked="#userOnClick" styleClass="clickableText" text="\\@username" textFill="#8d8d8d" />
                      </children>
                   </HBox>
                   <Label fx:id="passedTime" text="days ago..." />

@@ -18,7 +18,13 @@
 }
 
 .like-button:hover {
-    -fx-border-color: -first-detail;
+    -fx-border-color: #ea8f8f;
+    -fx-background-color: rgba(255, 0, 0, 0.26);
+}
+
+.like-button:pressed {
+    -fx-border-color: #880000;
+    -fx-background-color: rgb(255, 0, 0);
 }
 
 .dowload-button {
@@ -48,6 +54,7 @@
 
 .close-button:hover {
     -fx-background-color: #ff6868;
+    -fx-text-fill: white;
 }
 
 .close-button:pressed {

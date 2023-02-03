@@ -71,7 +71,7 @@ Button:pressed {
     -fx-background-radius: 10;
 }
 
-.clickable:hover {
+.clickableText:hover {
     -fx-cursor: hand;
     -fx-underline: true;
 }
