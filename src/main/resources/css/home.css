@@ -138,8 +138,13 @@
 
 .categoryBox {
     -fx-background-radius: 20;
+    -fx-border-radius: 20;
 }
 
 .categoryBox:hover {
+    -fx-cursor: hand;
+}
+
+.clickable {
     -fx-cursor: hand;
 }

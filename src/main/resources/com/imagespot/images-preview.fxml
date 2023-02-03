@@ -11,23 +11,23 @@
 
 <VBox fx:id="preview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.ImagesController">
    <children>
-      <ImageView fx:id="image_preview" onMouseClicked="#previewOnClick" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image_preview" onMouseClicked="#previewOnClick" pickOnBounds="true" preserveRatio="true" styleClass="clickable_img" />
       <HBox alignment="CENTER_LEFT">
          <children>
-            <ImageView fx:id="avatar" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="avatar" fitHeight="45.0" fitWidth="45.0" onMouseClicked="#userOnClick" pickOnBounds="true" preserveRatio="true" styleClass="clickable_img">
                <image>
-                  <Image url="@../../icons/default_avatar_icon.jpg" />
+                  <Image url="@../../icons/bear_icon.png" />
                </image></ImageView>
             <VBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="134.0">
                <children>
                   <HBox prefHeight="20.0" prefWidth="98.0" spacing="5.0">
                      <children>
-                        <Label fx:id="name" text="Name">
+                        <Label fx:id="name" onMouseClicked="#userOnClick" styleClass="clickable" text="Name">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="username" text="\\@username" textFill="#8d8d8d" />
+                        <Label fx:id="username" onMouseClicked="#userOnClick" styleClass="clickable" text="\\@username" textFill="#8d8d8d" />
                      </children>
                   </HBox>
                   <Label fx:id="passedTime" text="days ago..." />

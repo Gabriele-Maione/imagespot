@@ -647,7 +647,7 @@ public class AddPhotoController implements Initializable {
     private void categoryHBox(Subject newSubject) {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_LEFT);
-        hbox.setSpacing(5);
+        TilePane.setMargin(hbox, new Insets(0, 0, 5, 10));
 
         VBox vbox = new VBox();
 
@@ -659,7 +659,8 @@ public class AddPhotoController implements Initializable {
 
         vbox.getChildren().addAll(categoryLabel, subjectLabel);
 
-        Button removeButton = new Button("X");
+        Button removeButton = new Button("x");
+        removeButton.getStyleClass().add("xButton");
         removeButton.setMnemonicParsing(false);
         removeButton.setOnAction(event -> {
             subjects.remove(newSubject);

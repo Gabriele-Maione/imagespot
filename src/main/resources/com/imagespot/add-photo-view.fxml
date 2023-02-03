@@ -267,7 +267,10 @@
                               <Insets />
                            </VBox.margin>
                         </HBox>
-                        <TilePane fx:id="categoryTilePane" prefWidth="200.0" />
+                        <TilePane fx:id="categoryTilePane" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin></TilePane>
                             </children>
                         </VBox>
                         <Separator prefWidth="200.0" />
@@ -333,7 +336,7 @@
                                                 <Font size="20.0" />
                                             </font>
                                         </Label>
-                                        <HBox alignment="CENTER_LEFT">
+                                        <HBox alignment="CENTER_LEFT" spacing="5.0">
                                             <children>
                                                 <TextField fx:id="coordinatesFld" prefHeight="33.0" prefWidth="477.0" promptText="Search coordinates/address">
                                                     <padding>
@@ -344,7 +347,7 @@
                                                         </ContextMenu>
                                                     </contextMenu>
                                                 </TextField>
-                                                <Button mnemonicParsing="false" onAction="#btnFindCoordinatesOnAction" text="Search" />
+                                                <Button mnemonicParsing="false" onAction="#btnFindCoordinatesOnAction" prefHeight="31.0" prefWidth="56.0" text="Search" />
                                             </children>
                                         </HBox>
                               <HBox fx:id="hbLoc" alignment="TOP_CENTER" fillHeight="false" maxWidth="560.0" spacing="10.0" styleClass="hbLoc">

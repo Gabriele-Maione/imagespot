@@ -58,3 +58,12 @@
     -fx-cursor: hand;
     -fx-underline: true;
 }
+.tagged {
+    -fx-padding: 0 0 0 3;
+}
+
+.tagged:hover {
+    -fx-background-color: #babae7;
+    -fx-cursor: hand;
+    -fx-background-radius: 5;
+}

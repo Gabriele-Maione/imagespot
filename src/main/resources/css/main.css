@@ -50,7 +50,6 @@ Button:pressed {
 }
 
 
-
 .xButton{
     -fx-font-size: 10;
     -fx-font-weight: bold;
@@ -72,3 +71,16 @@ Button:pressed {
     -fx-background-radius: 10;
 }
 
+.clickable:hover {
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+
+.clickable_img {
+    -fx-cursor: hand;
+}
+.user_preview:hover {
+    -fx-background-color: #babae7;
+    -fx-cursor: hand;
+    -fx-background-radius: 5;
+}

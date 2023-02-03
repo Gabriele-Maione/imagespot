@@ -49,7 +49,6 @@ public class ImagesController {
 
         passedTime.setText(toDuration(System.currentTimeMillis()-post.getDate().getTime()));
         setModify();
-        addListeners();
     }
 
     private void setModify() {
@@ -64,18 +63,16 @@ public class ImagesController {
         ViewFactory.getInstance().showEditPostWindow(post);
     }
 
-    public void addListeners() {
-        avatar.setOnMouseClicked(event -> {
-            ViewFactory.getInstance().setViewType(ViewType.PROFILE);
-            BorderPane borderPane = (BorderPane) image_preview.getScene().getRoot();
-            borderPane.setCenter(ViewFactory.getInstance().getUserPage(post.getProfile()));
-        });
-    }
 
     @FXML
-    public void previewOnClick() throws IOException {
+    private void previewOnClick() {
         username.getScene().setRoot(ViewFactory.getInstance().getPostView(post.getIdImage()));
     }
-
+    @FXML
+    private void userOnClick() {
+        ViewFactory.getInstance().setViewType(ViewType.PROFILE);
+        BorderPane borderPane = (BorderPane) image_preview.getScene().getRoot();
+        borderPane.setCenter(ViewFactory.getInstance().getUserPage(post.getProfile()));
+    }
 
 }

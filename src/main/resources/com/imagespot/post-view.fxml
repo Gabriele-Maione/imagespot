@@ -105,7 +105,7 @@
             </VBox>
             <VBox fx:id="categoryVBox">
                <children>
-                  <Label text="Category:">
+                  <Label text="Categories:">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -115,7 +115,7 @@
             </VBox>
             <VBox fx:id="tagVBox">
                <children>
-                  <Label text="Tag">
+                  <Label text="Tag:">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>

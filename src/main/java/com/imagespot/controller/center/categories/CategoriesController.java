@@ -3,17 +3,12 @@ package com.imagespot.controller.center.categories;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.controller.center.CenterPaneController;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import org.apache.commons.io.IOUtils;
@@ -84,8 +79,9 @@ public class CategoriesController extends CenterPaneController {
         stackPane.setPrefHeight(150);
         stackPane.setPrefWidth(150);
         stackPane.getStyleClass().add("categoryBox");
-        stackPane.setStyle("-fx-background-color: rgba(" + (int)(Math.random() * 200 + 55) + "," +
-                (int)(Math.random() * 200 + 55) + "," + (int)(Math.random() * 200 + 55) + ",1);");
+        stackPane.setStyle("-fx-background-color: linear-gradient(to bottom, "
+                + "rgba(" + (int)(Math.random() * 200 + 55) + "," + (int)(Math.random() * 200 + 55) + "," + (int)(Math.random() * 200 + 55) + ",1), "
+                + "rgba(" + (int)(Math.random() * 200 + 55) + "," + (int)(Math.random() * 200 + 55) + "," + (int)(Math.random() * 200 + 55) + ",1));");
         Label label = new Label(category);
         label.setTextAlignment(TextAlignment.CENTER);
         label.setTextFill(Color.WHITE);

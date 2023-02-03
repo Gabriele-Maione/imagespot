@@ -285,6 +285,7 @@ public class PostController {
 
     private HBox getContainerForTag(User user) {
         HBox hBox = new HBox();
+        hBox.getStyleClass().add("tagged");
         avatar = new ImageView();
         avatar.setFitHeight(25);
         avatar.setFitWidth(25);
@@ -299,7 +300,7 @@ public class PostController {
         name = new Label(user.getName());
         name.setFont(new Font("System Bold", 14));
 
-        username = new Label(user.getUsername());
+        username = new Label("@" + user.getUsername());
         username.setTextFill(Paint.valueOf("#5b5b5b"));
 
         hBox.setAlignment(Pos.CENTER_LEFT);

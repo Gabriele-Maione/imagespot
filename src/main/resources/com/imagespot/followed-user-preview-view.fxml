@@ -7,24 +7,24 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="hboxUser" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="50.0" onMouseClicked="#userPreviewOnClick" prefHeight="50.0" spacing="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.UserPreviewController">
+<HBox fx:id="hboxUser" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="50.0" onMouseClicked="#userPreviewOnClick" prefHeight="38.0" prefWidth="225.0" spacing="10.0" styleClass="user_preview" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.UserPreviewController">
    <children>
       <ImageView fx:id="avatar" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../icons/default_avatar_icon.jpg" />
+            <Image url="@../../icons/bear_icon.png" />
          </image></ImageView>
       <Label fx:id="name" text="Name" textFill="#586067">
          <font>
-            <Font name="Open Sans Semibold" size="16.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Label>
       <Label fx:id="username" text="\@Username" textFill="#5b5b5b">
          <font>
-            <Font name="Open Sans Semibold" size="16.0" />
+            <Font size="14.0" />
          </font>
       </Label>
    </children>
    <padding>
-      <Insets left="26.0" />
+      <Insets left="10.0" />
    </padding>
 </HBox>

@@ -61,16 +61,16 @@ public class TopPlacesController implements Initializable {
     private void loadTopPlaces() {
 
         for (String country : countries)
-            getPreviewTask(country, "country");
+            hbCountries.getChildren().add(getContainer(country, "country"));
 
         for (String city : cities)
-            getPreviewTask(city, "city");
+            hbCities.getChildren().add(getContainer(city, "city"));
 
         for (String place : places)
-            getPreviewTask(place, "formatted_address");
+            hbPlaces.getChildren().add(getContainer(place, "formatted_address"));
     }
 
-    private void getPreviewTask(String location, String type) {
+    private void getPreviewTask(ImageView imageView, String location, String type) {
         final Task<Image> getPreview = new Task<>() {
             @Override
             protected Image call() {
@@ -79,14 +79,7 @@ public class TopPlacesController implements Initializable {
         };
         progressIndicator.visibleProperty().bind(getPreview.runningProperty());
         new Thread(getPreview).start();
-        getPreview.setOnSucceeded(workerStateEvent -> {
-            if(type == "country")
-                hbCountries.getChildren().addAll(getContainer(getPreview.getValue(), location, type));
-            else if(type == "city")
-                hbCities.getChildren().addAll(getContainer(getPreview.getValue(), location, type));
-            else
-                hbPlaces.getChildren().addAll(getContainer(getPreview.getValue(), location, type));
-        });
+        getPreview.setOnSucceeded(workerStateEvent -> imageView.setImage(getPreview.getValue()));
     }
 
     @FXML
@@ -97,12 +90,14 @@ public class TopPlacesController implements Initializable {
         getTopTask();
     }
 
-    private StackPane getContainer(Image img, String location, String type) {
+    private StackPane getContainer(String location, String type) {
         StackPane stackPane = new StackPane();
+        stackPane.getStyleClass().add("categoryBox");
         stackPane.setPrefHeight(200);
         stackPane.setPrefWidth(200);
 
-        ImageView imageView = new ImageView(img);
+        ImageView imageView = new ImageView();
+        getPreviewTask(imageView, location, type);
         imageView.setFitHeight(200);
         imageView.setFitWidth(200);
         Color darkOpacity = Color.color(0, 0, 0, 0.5);
