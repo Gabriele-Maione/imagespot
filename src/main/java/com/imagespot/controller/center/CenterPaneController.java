@@ -1,7 +1,6 @@
 package com.imagespot.controller.center;
 
 import com.imagespot.View.ViewFactory;
-import com.imagespot.View.ViewType;
 import com.imagespot.model.Post;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
@@ -16,15 +15,11 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-
 import java.net.URL;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -39,11 +34,11 @@ public abstract class CenterPaneController implements Initializable {
     protected ProgressIndicator progressIndicator;
     @FXML
     protected ScrollPane scrollPane;
-    protected Timestamp lastPostDate;
+    protected int offset;
     protected ChangeListener<Number> flowPaneResponsiveListener;
 
     public CenterPaneController() {
-        lastPostDate = null;
+        offset = 0;
     }
 
     @Override
@@ -56,7 +51,7 @@ public abstract class CenterPaneController implements Initializable {
     protected void btnUpdateOnAction() {
         btnUpdate.setOnAction(actionEvent -> {
             flowPane.getChildren().clear();
-            lastPostDate = null;
+            offset = 0;
             loadPosts();
         });
     }
@@ -73,22 +68,13 @@ public abstract class CenterPaneController implements Initializable {
                 postBox.setId(String.valueOf(post.getIdImage()));
                 flowPane.getChildren().add(postBox);
             }
-            setWidthOfFlowPaneChild(flowPane.getChildren(), flowPane.getWidth());
+            setFlowPaneChildWidth(flowPane.getChildren(), flowPane.getWidth());
 
             if(flowPane.getChildren().isEmpty()) {
                 flowPane.getChildren().add(nothingHereLabel());
                 flowPane.setAlignment(Pos.CENTER);
             }
         });
-    }
-
-    protected Timestamp retrieveDateOfLastPost(ArrayList<Post> posts) {
-        Timestamp date = lastPostDate;
-        if (posts != null) {
-            if (!posts.isEmpty())
-                date = posts.get(posts.size() - 1).getDate();
-        }
-        return date;
     }
 
     protected void addPostsRemovedListener() {
@@ -104,20 +90,19 @@ public abstract class CenterPaneController implements Initializable {
 
     protected void addScrollPaneListener() {
         scrollPane.vvalueProperty().addListener((observableValue, number, scrollPosition) -> {
-            if (scrollPosition.intValue() == 1 && flowPane.getChildren().size() % 20 == 0) { //scrollPosition == 1 -> scroll have reached the bottom
+            if (scrollPosition.intValue() == 1 && offset % 20 == 0)  //scrollPosition == 1 -> scroll have reached the bottom
                 loadPosts();
-            }
         });
     }
 
     protected void flowPaneResponsive(FlowPane fp) {
         flowPaneResponsiveListener = (observableValue, number, width) ->
-                setWidthOfFlowPaneChild(fp.getChildren(), width.doubleValue());
+                setFlowPaneChildWidth(fp.getChildren(), width.doubleValue());
         fp.widthProperty().addListener(flowPaneResponsiveListener);
     }
 
 
-    protected void setWidthOfFlowPaneChild(List<Node> flowPaneChild, double flowPaneWidth) {
+    protected void setFlowPaneChildWidth(List<Node> flowPaneChild, double flowPaneWidth) {
         for (Node box : flowPaneChild) {
             if(box instanceof VBox v){
                 ImageView i = (ImageView) v.getChildren().get(0);

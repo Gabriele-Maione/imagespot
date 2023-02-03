@@ -31,8 +31,8 @@ public class LocationController extends CenterPaneController {
         final Task<List<Post>> getPostsByLocation = new Task<>() {
             @Override
             protected ArrayList<Post> call() throws Exception {
-                ArrayList<Post> posts = new PostDAOImpl().getPostsByLocation(location, type, lastPostDate);
-                lastPostDate = retrieveDateOfLastPost(posts);
+                ArrayList<Post> posts = new PostDAOImpl().getPostsByLocation(location, type, offset);
+                offset += posts.size();
                 return posts;
             }
         };

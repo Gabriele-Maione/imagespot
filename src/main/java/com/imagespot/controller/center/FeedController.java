@@ -23,8 +23,8 @@ public class FeedController extends CenterPaneController {
         final Task<List<Post>> getFeed = new Task<>() {
             @Override
             protected ArrayList<Post> call() throws Exception {
-                ArrayList<Post> posts = new PostDAOImpl().getFeed(ViewFactory.getInstance().getUser().getUsername(), lastPostDate);
-                lastPostDate = retrieveDateOfLastPost(posts);
+                ArrayList<Post> posts = new PostDAOImpl().getFeed(ViewFactory.getInstance().getUser().getUsername(), offset);
+                offset += posts.size();
                 return posts;
             }
         };

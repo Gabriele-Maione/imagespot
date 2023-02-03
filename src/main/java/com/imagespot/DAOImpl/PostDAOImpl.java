@@ -67,32 +67,32 @@ public class PostDAOImpl implements PostDAO {
         post.setPhoto(new Image(photo.getAbsolutePath()));
     }
 
-    public ArrayList<Post> getRecentPosts(Timestamp timestamp) throws SQLException {
+    public ArrayList<Post> getRecentPosts(int offset) throws SQLException {
         String query = "SELECT preview, profile, posting_date, idimage FROM post " +
                 " WHERE status = 'Public' AND profile NOT IN('" +
                 ViewFactory.getInstance().getUser().getUsername() + "')";
 
-        return getPreviews(query, timestamp);
+        return getPreviews(query, offset);
     }
 
     //Retrieve user's personal posts
     @Override
-    public ArrayList<Post> getUserPosts(String username, Timestamp timestamp) throws SQLException {
+    public ArrayList<Post> getUserPosts(String username, int offset) throws SQLException {
         String query = "SELECT preview, profile, posting_date, idimage FROM post WHERE profile = '" + username + "'";
 
-        return getPreviews(query, timestamp);
+        return getPreviews(query, offset);
     }
 
     @Override
-    public ArrayList<Post> getUsersPublicPosts(String username, Timestamp timestamp) throws SQLException {
+    public ArrayList<Post> getUsersPublicPosts(String username, int offset) throws SQLException {
         String query = "SELECT preview, profile, posting_date, idimage FROM post WHERE " +
                 "status = 'Public' AND profile = '" + username + "'";
 
-        return getPreviews(query, timestamp);
+        return getPreviews(query, offset);
     }
 
     @Override
-    public ArrayList<Post> getFeed(String username, Timestamp timestamp) throws SQLException {
+    public ArrayList<Post> getFeed(String username, int offset) throws SQLException {
         String query = "SELECT preview, profile, posting_date, idimage" +
                 " FROM post" +
                 " WHERE status = 'Public'" +
@@ -100,29 +100,29 @@ public class PostDAOImpl implements PostDAO {
                 " FROM following" +
                 " WHERE nickname = '" + username + "')";
 
-        return getPreviews(query, timestamp);
+        return getPreviews(query, offset);
     }
 
     @Override
-    public ArrayList<Post> getPostsByLocation(String location, String type, Timestamp timestamp) throws SQLException {
+    public ArrayList<Post> getPostsByLocation(String location, String type, int offset) throws SQLException {
         String query = "SELECT preview, profile, posting_date, idimage" +
                 " FROM post JOIN location ON idlocation = location" +
                 " WHERE status = 'Public'" +
                 " AND " + type + " = '" + location + "'";
-        return getPreviews(query, timestamp);
+        return getPreviews(query, offset);
     }
 
     @Override
-    public ArrayList<Post> getPostsByCategory(String category, Timestamp timestamp) {
+    public ArrayList<Post> getPostsByCategory(String category, int offset) {
         String query = "SELECT preview, profile, posting_date, idimage" +
                 " FROM post JOIN subject ON idimage = image" +
                 " WHERE status = 'Public'" +
                 " AND category = '" + category + "'";
-        return getPreviews(query, timestamp);
+        return getPreviews(query, offset);
     }
 
 
-    public ArrayList<Post> getPreviews(String query, Timestamp timestamp) {
+    public ArrayList<Post> getPreviews(String query, int offset) {
         ArrayList<Post> ls = new ArrayList<>();
         Post post;
         Statement st;
@@ -132,9 +132,7 @@ public class PostDAOImpl implements PostDAO {
 
             StringBuilder complexQuery = new StringBuilder(query);
 
-            if (timestamp != null)
-                complexQuery.append(" AND posting_date < '").append(timestamp).append("'");
-            complexQuery.append(" ORDER BY posting_date DESC LIMIT 20");
+            complexQuery.append(" ORDER BY posting_date DESC LIMIT 20 OFFSET ").append(offset);
 
             rs = st.executeQuery(complexQuery.toString());
 
@@ -293,6 +291,7 @@ public class PostDAOImpl implements PostDAO {
             st = con.createStatement();
             st.executeUpdate(query);
         } catch (SQLException e) {
+            System.out.println(e.toString());
             throw new RuntimeException(e);
         }
     }

@@ -66,7 +66,7 @@ public class CategoriesController extends CenterPaneController {
     }
 
     @Override
-    protected void setWidthOfFlowPaneChild(List<Node> flowPaneChild, double flowPaneWidth) {
+    protected void setFlowPaneChildWidth(List<Node> flowPaneChild, double flowPaneWidth) {
         for (Node box : flowPaneChild) {
             if(box instanceof StackPane v){
 

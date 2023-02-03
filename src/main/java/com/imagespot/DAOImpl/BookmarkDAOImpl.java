@@ -74,22 +74,20 @@ public class BookmarkDAOImpl implements BookmarkDAO {
         return flag;
     }
 
-    public ArrayList<Post> getUserBookmarks(Timestamp timestamp) {
+    public ArrayList<Post> getUserBookmarks(int offset) {
         ArrayList<Post> bookmarks = new ArrayList<>();
         PreparedStatement st;
         ResultSet rs;
         StringBuilder complexQuery = new StringBuilder("SELECT P.idimage FROM post P" +
                 " JOIN bookmark B ON P.idimage = B.idimage WHERE username = ?");
 
-        if (timestamp != null)
-            complexQuery.append(" AND posting_date < ?");
-        complexQuery.append(" ORDER BY date DESC LIMIT 20");
+        complexQuery.append(" ORDER BY date DESC LIMIT 20 OFFSET ?");
 
         try {
             st = con.prepareStatement(complexQuery.toString());
             st.setString(1, ViewFactory.getInstance().getUser().getUsername());
-            if (timestamp != null)
-                st.setTimestamp(2, timestamp);
+            st.setInt(2, offset);
+
             rs = st.executeQuery();
             while (rs.next()) {
                 Post post;

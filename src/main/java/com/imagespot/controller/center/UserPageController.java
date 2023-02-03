@@ -50,8 +50,10 @@ public class UserPageController extends CenterPaneController {
     public User user;
     protected FlowPane flowPanePosts;
     private FlowPane flowPaneTag;
-    private Timestamp lastUserTagDate;
-    private Timestamp lastUserPostDate;
+
+    private int offsetUserPosts;
+
+    private int offsetUserTags;
 
     private enum userPageViewType {USER_PROFILE_POSTS, USER_PROFILE_TAG}
 
@@ -60,9 +62,8 @@ public class UserPageController extends CenterPaneController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         type = userPageViewType.USER_PROFILE_POSTS;
-        lastPostDate = null;
-        lastUserPostDate = null;
-        lastUserTagDate = null;
+        offsetUserPosts = 0;
+        offsetUserTags = 0;
         flowPanePosts = new FlowPane();
         flowPaneTag = new FlowPane();
         ((VBox) scrollPane.getContent()).getChildren().add(flowPanePosts);
@@ -111,14 +112,14 @@ public class UserPageController extends CenterPaneController {
         scrollPaneVbox.getChildren().remove(flowPane);
         if (type == userPageViewType.USER_PROFILE_POSTS) {
             flowPane = flowPaneTag;
-            lastUserPostDate = lastPostDate;
-            lastPostDate = lastUserTagDate;
+            offsetUserPosts = offset;
+            offset = offsetUserTags;
             tagBtn.getStyleClass().add("btn-switch-view-selected");
             postBtn.getStyleClass().remove("btn-switch-view-selected");
         } else {
             flowPane = flowPanePosts;
-            lastUserTagDate = lastPostDate;
-            lastPostDate = lastUserPostDate;
+            offsetUserTags = offset;
+            offset = offsetUserPosts;
             postBtn.getStyleClass().add("btn-switch-view-selected");
             tagBtn.getStyleClass().remove("btn-switch-view-selected");
         }
@@ -170,7 +171,7 @@ public class UserPageController extends CenterPaneController {
         if (user.getBio() != null)
             bio.setText(user.getBio());
         if(!user.getUsername().equals(ViewFactory.getInstance().getUser().getUsername()))
-        checkFollowingTask();
+            checkFollowingTask();
     }
 
     public void checkFollowingTask() {
@@ -223,8 +224,8 @@ public class UserPageController extends CenterPaneController {
         final Task<List<Post>> userPostsTask = new Task<>() {
             @Override
             protected List<Post> call() throws Exception {
-                ArrayList<Post> posts = new PostDAOImpl().getUsersPublicPosts(user.getUsername(), lastPostDate);
-                lastPostDate = retrieveDateOfLastPost(posts);
+                ArrayList<Post> posts = new PostDAOImpl().getUsersPublicPosts(user.getUsername(), offset);
+                offset += posts.size();
                 return posts;
             }
         };
@@ -238,8 +239,8 @@ public class UserPageController extends CenterPaneController {
         final Task<List<Post>> userTagsTask = new Task<>() {
             @Override
             protected List<Post> call() throws Exception {
-                ArrayList<Post> posts = new TaggedUserDAOImpl().getTag(user.getUsername(), lastPostDate);
-                lastPostDate = retrieveDateOfLastPost(posts);
+                ArrayList<Post> posts = new TaggedUserDAOImpl().getTag(user.getUsername(), offset);
+                offset += posts.size();
                 return posts;
             }
         };

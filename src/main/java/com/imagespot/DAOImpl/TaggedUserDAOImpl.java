@@ -34,7 +34,7 @@ public class TaggedUserDAOImpl implements TaggedUserDAO {
         }
     }
 
-    public ArrayList<Post> getTag(String username, Timestamp timestamp) throws SQLException {
+    public ArrayList<Post> getTag(String username, int offset) throws SQLException {
         ArrayList<Post> tag = new  ArrayList<>();
         PreparedStatement st;
         ResultSet rs;
@@ -44,18 +44,14 @@ public class TaggedUserDAOImpl implements TaggedUserDAO {
                 " JOIN taggeduser T ON P.idimage = T.idimage" +
                 " WHERE nickname = ?");
 
-        if(timestamp != null)
-            complexQuery.append(" AND posting_date < ?");
-        complexQuery.append(" ORDER BY posting_date DESC LIMIT 20");
+        complexQuery.append(" ORDER BY posting_date DESC LIMIT 20 OFFSET ?");
 
         try {
             st = con.prepareStatement(complexQuery.toString());
             st.setString(1, username);
-            if(timestamp != null)
-                st.setTimestamp(2, timestamp);
+            st.setInt(2, offset);
             rs = st.executeQuery();
             while (rs.next()) {
-
                 tag.add(post.getPreviewPost(rs.getInt(1)));
             }
             rs.close();

@@ -28,12 +28,8 @@ public class YourGalleryController extends CenterPaneController {
 
     @Override
     protected void btnUpdateOnAction(){
-        btnUpdate.setOnAction(actionEvent -> {
-            flowPane.getChildren().clear();
-            ViewFactory.getInstance().getUser().getPosts().clear();
-            lastPostDate = null;
-            loadPosts();
-        });
+        ViewFactory.getInstance().getUser().getPosts().clear();
+        super.btnUpdateOnAction();
     }
 
     protected void loadPosts() {
@@ -41,8 +37,9 @@ public class YourGalleryController extends CenterPaneController {
 
             @Override
             protected ArrayList<Post> call() throws Exception {
-                ArrayList<Post> posts = new PostDAOImpl().getUserPosts(ViewFactory.getInstance().getUser().getUsername(), lastPostDate);
-                lastPostDate = retrieveDateOfLastPost(posts);
+                System.out.println();
+                ArrayList<Post> posts = new PostDAOImpl().getUserPosts(ViewFactory.getInstance().getUser().getUsername(), (flowPane.getChildren().size() - offset) + offset);
+                offset += posts.size();
                 ViewFactory.getInstance().getUser().getPosts().addAll(posts);
                 return posts;
             }
@@ -62,7 +59,7 @@ public class YourGalleryController extends CenterPaneController {
                 VBox postBox = ViewFactory.getInstance().getPostPreview(postAdded);
                 postBox.setId(String.valueOf(postAdded.getIdImage()));
                 flowPane.getChildren().add(0, postBox);
-                setWidthOfFlowPaneChild(flowPane.getChildren(), flowPane.getWidth());
+                setFlowPaneChildWidth(flowPane.getChildren(), flowPane.getWidth());
             }
         });
     }

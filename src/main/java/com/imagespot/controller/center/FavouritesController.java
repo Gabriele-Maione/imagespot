@@ -15,6 +15,7 @@ public class FavouritesController extends CenterPaneController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
         name.setText("Favourites");
+        addScrollPaneListener();
         addPostsRemovedListener();
     }
 
@@ -22,8 +23,8 @@ public class FavouritesController extends CenterPaneController {
         final Task<List<Post>> getFavourites = new Task<>() {
             @Override
             protected ArrayList<Post> call() throws Exception {
-                ArrayList<Post> posts = new BookmarkDAOImpl().getUserBookmarks(lastPostDate);
-                lastPostDate = retrieveDateOfLastPost(posts);
+                ArrayList<Post> posts = new BookmarkDAOImpl().getUserBookmarks(offset);
+                offset += posts.size();
                 ViewFactory.getInstance().getUser().setBookmarks(posts);
                 return posts;
             }

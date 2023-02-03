@@ -17,12 +17,12 @@ import java.util.List;
 
 public interface PostDAO {
     void addPost(File photo, Post post, Device device, User profile) throws SQLException, IOException;
-    ArrayList<Post> getRecentPosts(Timestamp timestamp) throws SQLException;
-    ArrayList<Post>getUserPosts(String username, Timestamp timestamp) throws SQLException;
-    ArrayList<Post> getUsersPublicPosts(String username, Timestamp timestamp) throws SQLException;
-    ArrayList<Post> getFeed(String username, Timestamp timestamp) throws SQLException;
-    ArrayList<Post> getPostsByLocation(String location, String type, Timestamp timestamp) throws SQLException;
-    ArrayList<Post> getPostsByCategory(String category, Timestamp timestamp);
+    ArrayList<Post> getRecentPosts(int offset) throws SQLException;
+    ArrayList<Post>getUserPosts(String username, int offset) throws SQLException;
+    ArrayList<Post> getUsersPublicPosts(String username, int offset) throws SQLException;
+    ArrayList<Post> getFeed(String username, int offset) throws SQLException;
+    ArrayList<Post> getPostsByLocation(String location, String type, int offset) throws SQLException;
+    ArrayList<Post> getPostsByCategory(String category, int offset);
     Image getPhoto(int id);
     Post getPost(int id);
     Post getPreviewPost(int id);

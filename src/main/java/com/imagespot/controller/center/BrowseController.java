@@ -21,8 +21,8 @@ public class BrowseController extends CenterPaneController {
         final Task<List<Post>> getRecentPosts = new Task<>() {
             @Override
             protected ArrayList<Post> call() throws Exception {
-                ArrayList<Post> posts = new PostDAOImpl().getRecentPosts(lastPostDate);
-                lastPostDate = retrieveDateOfLastPost(posts);
+                ArrayList<Post> posts = new PostDAOImpl().getRecentPosts(offset);
+                offset += posts.size();
                 return posts;
             }
         };

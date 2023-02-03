@@ -11,5 +11,5 @@ public interface TaggedUserDAO {
 
     void addTag(String username, int idimage);
 
-    ArrayList<Post> getTag(String username, Timestamp timestamp) throws SQLException;
+    ArrayList<Post> getTag(String username, int offset) throws SQLException;
 }
