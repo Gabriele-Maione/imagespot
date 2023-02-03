@@ -63,7 +63,7 @@ public class HomeController implements Initializable {
     @FXML
     private MenuItem logoutItem;
     @FXML
-    private AnchorPane searchButton;
+    private StackPane searchButton;
     private User user;
 
     @Override

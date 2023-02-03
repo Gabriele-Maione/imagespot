@@ -32,8 +32,8 @@
 }
 
 .search-user-text-field{
-    -fx-background-radius: 15 0 0 15;
-    -fx-border-radius: 15 0 0 15;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
     -fx-border-color: -first-detail;
     -fx-border-width: 1.25;
 }
@@ -134,4 +134,12 @@
 .sidebar .scroll-pane .thumb:pressed,
 .scroll-pane .thumb:pressed{
     -fx-background-color: -first-detail;
+}
+
+.categoryBox {
+    -fx-background-radius: 20;
+}
+
+.categoryBox:hover {
+    -fx-cursor: hand;
 }

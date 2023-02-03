@@ -37,6 +37,9 @@ public class CategoriesController extends CenterPaneController {
         loadPosts();
         flowPane.setVgap(5);
         flowPane.setHgap(5);
+        progressIndicator.setVisible(false);
+        btnUpdate.setVisible(false);
+        name.setText("Categories");
 
         flowPaneResponsive(flowPane);
 
@@ -46,7 +49,6 @@ public class CategoriesController extends CenterPaneController {
     protected void loadPosts() {
         URL lablesJsonFile = getClass().getResource("/json/labels.json");
         JSONObject jsonObject;
-        System.out.println("BIBAAAAAA");
 
         if (lablesJsonFile != null) {
             try {
@@ -81,8 +83,9 @@ public class CategoriesController extends CenterPaneController {
         StackPane stackPane = new StackPane();
         stackPane.setPrefHeight(150);
         stackPane.setPrefWidth(150);
-        stackPane.setStyle("-fx-background-color: rgba(" + (int)(Math.random() * 255) + "," +
-                (int)(Math.random() * 255) + "," + (int)(Math.random() * 255) + ",1);");
+        stackPane.getStyleClass().add("categoryBox");
+        stackPane.setStyle("-fx-background-color: rgba(" + (int)(Math.random() * 200 + 55) + "," +
+                (int)(Math.random() * 200 + 55) + "," + (int)(Math.random() * 200 + 55) + ",1);");
         Label label = new Label(category);
         label.setTextAlignment(TextAlignment.CENTER);
         label.setTextFill(Color.WHITE);

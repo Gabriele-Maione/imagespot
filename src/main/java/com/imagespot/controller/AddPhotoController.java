@@ -1,6 +1,7 @@
 package com.imagespot.controller;
 
 import com.imagespot.DAOImpl.*;
+import com.imagespot.Utils.Utils;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.*;
 import javafx.concurrent.Task;
@@ -257,7 +258,7 @@ public class AddPhotoController implements Initializable {
                     TaggedUserDAOImpl taggedUserDAO = new TaggedUserDAOImpl();
                     SubjectDAOImpl subjectDAO = new SubjectDAOImpl();
 
-                    if(location != null)
+                    if (location != null)
                         location.setIdLocation(new LocationDAOImpl().addLocation(location));
 
                     Post post = new Post(getRes(file), fldDescription.getText(), getSize(file), getExt(file), timestamp, cbStatus.getValue(), location);
@@ -268,7 +269,7 @@ public class AddPhotoController implements Initializable {
                     int id = post.getIdImage();
                     for (String s : taggedUser)
                         taggedUserDAO.addTag(s, id);
-                    for(Subject s : subjects) {
+                    for (Subject s : subjects) {
                         s.setImageID(id);
                         subjectDAO.addSubject(s);
                     }
@@ -560,7 +561,7 @@ public class AddPhotoController implements Initializable {
 
             addressReq.setOnSucceeded(workerStateEvent -> {
                 JSONObject jsonResponse = addressReq.getValue();
-                if (jsonResponse.getJSONArray("results").length() > 0){
+                if (jsonResponse.getJSONArray("results").length() > 0) {
                     location = new Location();
                     JSONArray results = jsonResponse.getJSONArray("results");
                     JSONObject component = results.getJSONObject(0).getJSONObject("components");
@@ -603,8 +604,7 @@ public class AddPhotoController implements Initializable {
                     address += "Formatted\t" + location.getFormatted_address();
                     addressLbl.setText(address);
                     System.out.println(addressLbl.getText());
-                }
-                else {
+                } else {
                     location = null;
                     addressLbl.setText("No results found");
                 }
@@ -624,7 +624,7 @@ public class AddPhotoController implements Initializable {
     @FXML
     private void addSubjectOnAction() {
         if (!cbCategory.isShowing() && !fldSubject.getText().isEmpty()) {
-            Subject newSubject = new Subject(cbCategory.getValue(),fldSubject.getText());
+            Subject newSubject = new Subject(cbCategory.getValue(), fldSubject.getText());
             subjects.add(newSubject);
             categoryHBox(newSubject);
         }

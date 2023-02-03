@@ -10,7 +10,7 @@
 
 AnchorPane {
 
-    -fx-background-color: linear-gradient(rgba(198,61,121,0.2) 0%, rgba(0,213,218,0.2) 100%);
+    -fx-background-color: white;
 }
 
 /* Style the main label */
@@ -67,4 +67,8 @@ Hyperlink {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-text-fill: #777777;
+}
+
+.linearGar {
+    -fx-background-color: linear-gradient(rgba(198,61,121,0.2) 0%, rgba(0,213,218,0.2) 100%);
 }

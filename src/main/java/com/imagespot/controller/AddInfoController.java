@@ -1,6 +1,7 @@
 package com.imagespot.controller;
 
 import com.imagespot.DAOImpl.UserDAOImpl;
+import com.imagespot.Utils.Utils;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.User;
 import javafx.beans.value.ObservableValue;
@@ -58,6 +59,7 @@ public class AddInfoController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         user = ViewFactory.getInstance().getUser();
+        Utils.setAvatarRounde(avatarPreview);
 
         welcomeLabel.setText("Welcome, " + user.getName());
         choiceBoxInit();

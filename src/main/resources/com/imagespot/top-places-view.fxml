@@ -29,7 +29,7 @@
             </ProgressIndicator>
             <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                <children>
-                  <Button fx:id="btnUpdate" onAction="#btnUpdateOnAction" alignment="CENTER" mnemonicParsing="false" styleClass="add-post-button" text="Refresh">
+                  <Button fx:id="btnUpdate" alignment="CENTER" mnemonicParsing="false" onAction="#btnUpdateOnAction" styleClass="add-post-button" text="Refresh">
                      <graphic>
                         <FontIcon iconColor="WHITE" iconLiteral="fas-redo" iconSize="15" wrappingWidth="20.0" />
                      </graphic>
@@ -58,7 +58,7 @@
                               <Font name="Open Sans Semibold" size="18.0" />
                            </font>
                         </Label>
-                        <ScrollPane focusTraversable="false" hbarPolicy="NEVER" pannable="true" vbarPolicy="NEVER">
+                        <ScrollPane focusTraversable="false" pannable="true" prefHeight="217.0" vbarPolicy="NEVER" VBox.vgrow="SOMETIMES">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
@@ -75,7 +75,7 @@
                               <Font name="Open Sans Semibold" size="18.0" />
                            </font>
                         </Label>
-                        <ScrollPane focusTraversable="false" hbarPolicy="NEVER" pannable="true" vbarPolicy="NEVER">
+                        <ScrollPane focusTraversable="false" pannable="true" prefHeight="217.0" vbarPolicy="NEVER" VBox.vgrow="SOMETIMES">
                            <content>
                               <HBox fx:id="hbCities" spacing="5.0" />
                            </content>
@@ -89,7 +89,7 @@
                               <Font name="Open Sans Semibold" size="18.0" />
                            </font>
                         </Label>
-                        <ScrollPane focusTraversable="false" hbarPolicy="NEVER" pannable="true" vbarPolicy="NEVER">
+                        <ScrollPane focusTraversable="false" pannable="true" prefHeight="217.0" vbarPolicy="NEVER" VBox.vgrow="SOMETIMES">
                            <content>
                               <HBox fx:id="hbPlaces" spacing="5.0" />
                            </content>
