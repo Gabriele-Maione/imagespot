@@ -49,7 +49,7 @@ public class DeviceDAOImpl implements DeviceDAO {
     }
 
     private void addUserDevice(int idDevice, String username) throws SQLException{
-        String query = "INSERT INTO userdevice(device, profile) VALUES(?, ?)";
+        String query = "INSERT INTO user_device(device, profile) VALUES(?, ?)";
         PreparedStatement st;
 
         st = con.prepareStatement(query);
@@ -122,7 +122,7 @@ public class DeviceDAOImpl implements DeviceDAO {
         PreparedStatement st;
         ResultSet rs;
         String query = "SELECT iddevice, brand, model, devicetype FROM device" +
-                " JOIN userdevice ON iddevice = device" +
+                " JOIN user_device ON iddevice = device" +
                 " WHERE profile = ?";
 
         try {
