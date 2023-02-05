@@ -212,7 +212,7 @@
                                     <Insets left="16.0" right="16.0" />
                                  </VBox.margin>
                               </HBox>
-                              <HBox fx:id="hbBrowse" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
+                              <HBox fx:id="hbBrowse" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0">
                                  <children>
                                     <Label text="Explore" textFill="#586067">
                                        <font>
@@ -229,6 +229,10 @@
                                  <VBox.margin>
                                     <Insets left="16.0" right="16.0" />
                                  </VBox.margin>
+                                 <styleClass>
+                                    <String fx:value="selected" />
+                                    <String fx:value="sidebar-item" />
+                                 </styleClass>
                               </HBox>
                               <HBox fx:id="hbTopPlaces" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
@@ -256,6 +260,24 @@
                                        </font>
                                        <graphic>
                                           <FontIcon iconColor="#586067" iconLiteral="fas-home" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                       </graphic>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox fx:id="hbCollections" alignment="CENTER_LEFT" layoutX="26.0" layoutY="192.0" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
+                                 <children>
+                                    <Label text="Collections" textFill="#586067">
+                                       <font>
+                                          <Font name="Open Sans Semibold" size="16.0" />
+                                       </font>
+                                       <graphic>
+                                          <FontIcon iconColor="#586067" iconLiteral="far-folder-open" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
                                        </graphic>
                                        <HBox.margin>
                                           <Insets left="10.0" />
@@ -337,9 +359,9 @@
                                     <Insets left="16.0" right="16.0" />
                                  </VBox.margin>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" minHeight="50.0" prefHeight="50.0" styleClass="sidebar-item">
+                              <HBox fx:id="hbYourCollections" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
                                  <children>
-                                    <Label text="Collections" textFill="#586067">
+                                    <Label text="Your Collections" textFill="#586067">
                                        <font>
                                           <Font name="Open Sans Semibold" size="16.0" />
                                        </font>
@@ -369,7 +391,7 @@
                            <children>
                               <Label minHeight="32.0" prefHeight="32.0" text="Followed users" textFill="#7678ed">
                                  <font>
-                                    <Font name="Open Sans Semibold" size="16.0" />
+                                    <Font name="Open Sans Semibold" size="18.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="16.0" />

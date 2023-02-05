@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -20,12 +21,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.Supplier;
 
 import static com.imagespot.Utils.Utils.crop;
 import static com.imagespot.Utils.Utils.setAvatarRounde;
-
 
 public class HomeController implements Initializable {
     @FXML
@@ -36,20 +39,6 @@ public class HomeController implements Initializable {
     private ImageView profilePic;
     @FXML
     private Button btnAddPhoto;
-    @FXML
-    private HBox hbYourGallery;
-    @FXML
-    private HBox hbBrowse;
-    @FXML
-    private HBox hbFeed;
-    @FXML
-    private HBox hbFavorites;
-    @FXML
-    private HBox hbTagged;
-    @FXML
-    private HBox hbTopPlaces;
-    @FXML
-    private HBox hbCategories;
     @FXML
     private BorderPane homePane;
     @FXML
@@ -81,7 +70,6 @@ public class HomeController implements Initializable {
                 profilePic.setImage( (newVal == null) ? new Image(getClass().getResourceAsStream("/icons/bear_icon.png")) : crop(user.getAvatar())));
 
         homePane.setCenter(ViewFactory.getInstance().getBrowseView());
-        hbBrowse.getStyleClass().add(0, "selected");
 
         getFollowedUsersTask(user.getUsername());
         addListeners();
@@ -156,23 +144,15 @@ public class HomeController implements Initializable {
     @FXML
     private void setSelectedView(MouseEvent event){
         HBox box = (HBox) event.getSource();
-
-        if (hbFeed.equals(box)) {
-            homePane.setCenter(ViewFactory.getInstance().getFeedView());
-        } else if (hbBrowse.equals(box)) {
-            homePane.setCenter(ViewFactory.getInstance().getBrowseView());
-        } else if (hbFavorites.equals(box)) {
-            homePane.setCenter(ViewFactory.getInstance().getFavoritesView());
-        } else if (hbYourGallery.equals(box)) {
-            homePane.setCenter(ViewFactory.getInstance().getYourGalleryView());
-        } else if (hbTagged.equals(box)) {
-            homePane.setCenter(ViewFactory.getInstance().getTaggedView());
-        } else if(hbTopPlaces.equals(box)) {
-            homePane.setCenter(ViewFactory.getInstance().getTopPlaces());
-        } else if(hbCategories.equals(box)) {
-            homePane.setCenter(ViewFactory.getInstance().getCategories());
+        switch (box.getId()){
+            case "hbFeed" -> homePane.setCenter(ViewFactory.getInstance().getFeedView());
+            case "hbBrowse" -> homePane.setCenter(ViewFactory.getInstance().getBrowseView());
+            case "hbTopPlaces" -> homePane.setCenter(ViewFactory.getInstance().getTopPlaces());
+            case "hbCategories" -> homePane.setCenter(ViewFactory.getInstance().getCategories());
+            case "hbYourGallery" -> homePane.setCenter(ViewFactory.getInstance().getYourGalleryView());
+            case "hbFavorites" -> homePane.setCenter(ViewFactory.getInstance().getFavoritesView());
+            case "hbTagged" -> homePane.setCenter(ViewFactory.getInstance().getTaggedView());
         }
-
         removeSelectedView();
         box.getStyleClass().add(0, "selected");
     }
