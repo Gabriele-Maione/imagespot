@@ -168,13 +168,15 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void getUserInfo(String username) throws SQLException {
+    public void getUserInfo(String username) {
         PreparedStatement st;
         ResultSet rs;
 
         String query = "SELECT email, name, gender, bio, avatar FROM account WHERE Username = ?";
 
-        st = con.prepareStatement(query);
+        try {
+            st = con.prepareStatement(query);
+
         st.setString(1, username);
         rs = st.executeQuery();
         if (rs.next()) {
@@ -187,7 +189,9 @@ public class UserDAOImpl implements UserDAO {
                 ViewFactory.getInstance().getUser().setAvatar(new Image(rs.getBinaryStream(5)));
         }
         st.close();
-
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public User getUserInfoForPreview(String username) {

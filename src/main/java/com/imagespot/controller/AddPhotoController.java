@@ -1,7 +1,6 @@
 package com.imagespot.controller;
 
 import com.imagespot.DAOImpl.*;
-import com.imagespot.Utils.Utils;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.*;
 import javafx.concurrent.Task;
@@ -258,19 +257,21 @@ public class AddPhotoController implements Initializable {
                     TaggedUserDAOImpl taggedUserDAO = new TaggedUserDAOImpl();
                     SubjectDAOImpl subjectDAO = new SubjectDAOImpl();
 
-                    if (location != null)
-                        location.setIdLocation(new LocationDAOImpl().addLocation(location));
 
                     Post post = new Post(getRes(file), fldDescription.getText(), getSize(file), getExt(file), timestamp, cbStatus.getValue(), location);
 
                     new PostDAOImpl().addPost(file, post, device, user);
                     post.setProfile(user);
 
-                    int id = post.getIdImage();
+                    if (location != null)
+                        location.setPost(post);
+
+                    new LocationDAOImpl().addLocation(location);
+
                     for (String s : taggedUser)
-                        taggedUserDAO.addTag(s, id);
+                        taggedUserDAO.addTag(s, post.getIdImage());
                     for (Subject s : subjects) {
-                        s.setImageID(id);
+                        s.setImageID(post.getIdImage());
                         subjectDAO.addSubject(s);
                     }
 
@@ -608,7 +609,7 @@ public class AddPhotoController implements Initializable {
                     }
                     if (component.has("postcode")) {
                         address += "Postcode\t\t" + component.getString("postcode") + "\n";
-                        location.setPostacode(component.getString("postcode"));
+                        location.setPostcode(component.getString("postcode"));
                     }
                     if (component.has("road")) {
                         address += "Road\t\t" + component.getString("road") + "\n";

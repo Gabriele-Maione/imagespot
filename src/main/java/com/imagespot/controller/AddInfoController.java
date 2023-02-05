@@ -116,11 +116,7 @@ public class AddInfoController implements Initializable {
         submitTask.setOnSucceeded(workerStateEvent -> {
             Stage stage = (Stage)submit.getScene().getWindow();
             stage.close();
-            try {
-                new UserDAOImpl().getUserInfo(user.getUsername());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            new UserDAOImpl().getUserInfo(user.getUsername());
             ViewFactory.getInstance().showHomeWindow();
         });
     }

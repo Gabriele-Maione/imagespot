@@ -101,7 +101,7 @@ public class PostController {
     private void invokeInit(int idpost) {
         final Task<Post> postTask = new Task<>() {
             @Override
-            protected Post call() throws Exception {
+            protected Post call() {
                 return new PostDAOImpl().getPost(idpost);
             }
         };

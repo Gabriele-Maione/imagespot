@@ -29,42 +29,49 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public void addPost(File photo, Post post, Device device, User profile) throws SQLException, IOException {
+    public void addPost(File photo, Post post, Device device, User profile) {
         int id = -1;
         PreparedStatement st;
         ResultSet rs;
         String insert = ("INSERT INTO Post (photo, resolution, description, size, extension, posting_date," +
-                " status, device, profile, preview, location) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING idimage");
+                " status, device, profile, preview) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING idimage");
 
         //scaling image and deserialize from bufferedImage to InputStream
 
 
-        InputStream preview = photoScaler(photo);
-        st = con.prepareStatement(insert);
+        InputStream preview = null;
+        try {
+            preview = photoScaler(photo);
 
-        byte[] previewBytes = IOUtils.toByteArray(preview);
+            st = con.prepareStatement(insert);
 
-        st.setBinaryStream(1, new FileInputStream(photo));
-        st.setString(2, post.getResolution());
-        st.setString(3, post.getDescription());
-        st.setInt(4, post.getSize());
-        st.setString(5, post.getExtension());
-        st.setTimestamp(6, post.getDate());
-        st.setString(7, post.getStatus());
-        st.setInt(8, device.getIdDevice());
-        st.setString(9, profile.getUsername());
-        st.setBinaryStream(10, new ByteArrayInputStream(previewBytes));
-        if(post.getLocation() != null)
-            st.setInt(11, post.getLocation().getIdLocation());
-        else st.setNull(11, Types.INTEGER);
-        rs = st.executeQuery();
+            byte[] previewBytes = IOUtils.toByteArray(preview);
 
-        if (rs.next()) id = rs.getInt(1);
-        st.close();
+            st.setBinaryStream(1, new FileInputStream(photo));
+            st.setString(2, post.getResolution());
+            st.setString(3, post.getDescription());
+            st.setInt(4, post.getSize());
+            st.setString(5, post.getExtension());
+            st.setTimestamp(6, post.getDate());
+            st.setString(7, post.getStatus());
+            st.setInt(8, device.getIdDevice());
+            st.setString(9, profile.getUsername());
+            st.setBinaryStream(10, new ByteArrayInputStream(previewBytes));
 
-        post.setIdImage(id);
-        post.setPreview(new Image(new ByteArrayInputStream(previewBytes)));
-        post.setPhoto(new Image(photo.getAbsolutePath()));
+            rs = st.executeQuery();
+
+            if (rs.next()) id = rs.getInt(1);
+
+            post.setIdImage(id);
+            post.setPreview(new Image(new ByteArrayInputStream(previewBytes)));
+            post.setPhoto(new Image(photo.getAbsolutePath()));
+            st.close();
+            rs.close();
+        } catch (IOException | SQLException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to add new post", e);
+        }
+
     }
 
     public ArrayList<Post> getRecentPosts(int offset) throws SQLException {
@@ -104,9 +111,9 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public ArrayList<Post> getPostsByLocation(String location, String type, int offset) throws SQLException {
+    public ArrayList<Post> getPostsByLocation(String location, String type, int offset) {
         String query = "SELECT preview, profile, posting_date, idimage" +
-                " FROM post JOIN location ON idlocation = location" +
+                " FROM post p JOIN location l ON p.idimage = l.post" +
                 " WHERE status = 'Public'" +
                 " AND " + type + " = '" + location + "'";
         return getPreviews(query, offset);
@@ -159,10 +166,9 @@ public class PostDAOImpl implements PostDAO {
     @Override
     public Post getPost(int id) {
         Post post = new Post();
-        int locID;
         PreparedStatement st;
         ResultSet rs;
-        String query = "SELECT profile, description, extension, idimage, posting_date, device, location FROM post WHERE idimage = ?";
+        String query = "SELECT profile, description, extension, idimage, posting_date, device FROM post WHERE idimage = ?";
 
         try {
             st = con.prepareStatement(query);
@@ -178,9 +184,7 @@ public class PostDAOImpl implements PostDAO {
                 post.setDevice(new DeviceDAOImpl().getDevice(rs.getInt(6)));
                 post.setTaggedUsers(getTaggedUsers(post.getIdImage()));
                 post.setSubjects(new SubjectDAOImpl().getSubjects(post.getIdImage()));
-                locID = rs.getInt(7);
-                if (!rs.wasNull())
-                    post.setLocation(new LocationDAOImpl().getLocation(locID));
+                post.setLocation(new LocationDAOImpl().getLocation(post.getIdImage()));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -301,7 +305,7 @@ public class PostDAOImpl implements PostDAO {
         PreparedStatement st;
         ResultSet rs;
         Image img = null;
-        String query = "SELECT preview FROM post JOIN location ON post.location = location.idlocation\n" +
+        String query = "SELECT preview FROM post JOIN location ON post.idimage = location.post\n" +
                 "WHERE " + type + " = ? AND status = 'Public'\n" +
                 "ORDER BY posting_date DESC\n" +
                 "LIMIT 1";
@@ -314,7 +318,9 @@ public class PostDAOImpl implements PostDAO {
             st.close();
             rs.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to get previews.", e);
+
         }
         return img;
     }
@@ -343,11 +349,11 @@ public class PostDAOImpl implements PostDAO {
         UserDAOImpl userDAO = new UserDAOImpl();
         Statement st;
         ResultSet rs;
-        String query = "SELECT nickname FROM taggeduser WHERE idimage = " + idimage;
+        String query = "SELECT nickname FROM tagged_user WHERE idimage = " + idimage;
         try {
             st = con.createStatement();
             rs = st.executeQuery(query);
-            while(rs.next()) {
+            while (rs.next()) {
                 users.add(userDAO.getUserInfoForPreview(rs.getString(1)));
             }
         } catch (SQLException e) {

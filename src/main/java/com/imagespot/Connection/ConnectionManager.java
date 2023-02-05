@@ -1,4 +1,6 @@
 package com.imagespot.Connection;
+import javafx.scene.control.Alert;
+
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,8 +20,11 @@ public class ConnectionManager {
             try {
                 con = DriverManager.getConnection(url, username, password);
             } catch (SQLException ex) {
-                //log exception
-                System.out.println("Failed to create the database connection");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Failed to connect to the database");
+                alert.setContentText("An error occurred while connecting to the database. Check your connection settings and try again.");
+                alert.showAndWait();
             }
         } catch (ClassNotFoundException ex) {
             System.out.println("Driver not found");
@@ -36,8 +41,11 @@ public class ConnectionManager {
             if(instance == null || instance.getConnection().isClosed())
                 instance = new ConnectionManager();
         } catch (SQLException e) {
-            Logger logger = Logger.getLogger(ConnectionManager.class.getName());
-            logger.log(Level.SEVERE, "Failed to create the database connection.", e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Failed to connect to the database");
+            alert.setContentText("An error occurred while connecting to the database. Check your connection settings and try again.");
+            alert.showAndWait();
         }
 
         return instance;

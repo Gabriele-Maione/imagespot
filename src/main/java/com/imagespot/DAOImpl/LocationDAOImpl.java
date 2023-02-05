@@ -20,34 +20,28 @@ public class LocationDAOImpl implements LocationDAO {
     }
 
     @Override
-    public int addLocation(Location location) {
+    public void addLocation(Location location) {
         PreparedStatement st;
         String query = "INSERT INTO " +
-                "location(country, state, city, postacode, latitude, longitude, formatted_address, road)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        ResultSet rs;
-        int id = -1;
+                "location(country, state, city, postcode, latitude, longitude, formatted_address, road, post)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
-            st = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            st = con.prepareStatement(query);
             st.setString(1, location.getCountry());
             st.setString(2, location.getState());
             st.setString(3, location.getCity());
-            st.setString(4, location.getPostacode());
+            st.setString(4, location.getPostcode());
             st.setBigDecimal(5, location.getLatitude());
             st.setBigDecimal(6, location.getLongitude());
             st.setString(7, location.getFormatted_address());
             st.setString(8, location.getRoad());
+            st.setInt(9, location.getPost().getIdImage());
             st.executeUpdate();
-            rs = st.getGeneratedKeys();
-            if (rs.next())
-                id = rs.getInt(1);
-            rs.close();
             st.close();
         } catch (SQLException e) {
             Logger logger = Logger.getLogger(getClass().getName());
             logger.log(Level.SEVERE, "Failed to add location.", e);
         }
-        return id;
     }
 
     public List<String> getTop(String location) {
@@ -55,7 +49,7 @@ public class LocationDAOImpl implements LocationDAO {
         Statement st;
         ResultSet rs;
         String query = "SELECT " + location + ", count(*) as postN\n" +
-                "FROM location join post p on location.idlocation = p.location\n" +
+                "FROM location\n" +
                 "WHERE " + location + " IS NOT NULL\n" +
                 "group by " + location +
                 "\norder by postN DESC\n" +
@@ -74,17 +68,21 @@ public class LocationDAOImpl implements LocationDAO {
     }
 
     @Override
-    public Location getLocation(int idLocation) {
+    public Location getLocation(int idPost) {
 
-        Location location = new Location(idLocation);
+        Location location = null;
         Statement st;
         ResultSet rs;
-        String query = "SELECT formatted_address FROM location WHERE idlocation = " + idLocation;
+        String query = "SELECT formatted_address FROM location WHERE post = " + idPost;
+        System.out.println(query);
         try {
             st = con.createStatement();
             rs = st.executeQuery(query);
 
-            if (rs.next()) location.setFormatted_address(rs.getString(1));
+            if (rs.next()) {
+                location = new Location();
+                location.setFormatted_address(rs.getString(1));
+            }
         } catch (SQLException e) {
             Logger logger = Logger.getLogger(getClass().getName());
             logger.log(Level.SEVERE, "Failed to retrieve the location.", e);

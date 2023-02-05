@@ -22,7 +22,7 @@ public class TaggedUserDAOImpl implements TaggedUserDAO {
     @Override
     public void addTag(String username, int idimage) {
         PreparedStatement st;
-        String query = "INSERT INTO taggeduser(nickname, idimage) VALUES (?, ?)";
+        String query = "INSERT INTO tagged_user(nickname, idimage) VALUES (?, ?)";
         try {
             st = con.prepareStatement(query);
             st.setString(1, username);
@@ -41,7 +41,7 @@ public class TaggedUserDAOImpl implements TaggedUserDAO {
         PostDAOImpl post = new PostDAOImpl();
 
         StringBuilder complexQuery = new StringBuilder("SELECT P.idimage FROM post P" +
-                " JOIN taggeduser T ON P.idimage = T.idimage" +
+                " JOIN tagged_user T ON P.idimage = T.idimage" +
                 " WHERE nickname = ?");
 
         complexQuery.append(" ORDER BY posting_date DESC LIMIT 20 OFFSET ?");
