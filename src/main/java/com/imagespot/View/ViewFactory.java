@@ -44,9 +44,9 @@ public class ViewFactory {
     }
 
     public static synchronized ViewFactory getInstance() {
-        if (viewFactory == null) {
+        if (viewFactory == null)
             viewFactory = new ViewFactory();
-        }
+
         return viewFactory;
     }
 
@@ -162,6 +162,7 @@ public class ViewFactory {
     }
 
     public VBox getTopPlaces() {
+        viewType = ViewType.TOP_PLACES;
         if (topPlaces == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/top-places-view.fxml"));

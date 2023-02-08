@@ -249,11 +249,20 @@
                                         <Insets bottom="4.0" top="4.0" />
                                     </padding>
                                 </ChoiceBox>
-                                <Label text="Subject" textFill="#7678ed">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
+                        <HBox alignment="CENTER_LEFT" spacing="20.0">
+                           <children>
+                                      <Label text="Subject" textFill="#7678ed">
+                                          <font>
+                                              <Font size="20.0" />
+                                          </font>
+                                      </Label>
+                              <Label fx:id="subErr" textFill="#e10000">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                            <children>
                                       <TextField fx:id="fldSubject" promptText="Subject" HBox.hgrow="ALWAYS">

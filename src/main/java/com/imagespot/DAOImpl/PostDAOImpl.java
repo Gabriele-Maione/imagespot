@@ -121,7 +121,7 @@ public class PostDAOImpl implements PostDAO {
 
     @Override
     public ArrayList<Post> getPostsByCategory(String category, int offset) {
-        String query = "SELECT preview, profile, posting_date, idimage" +
+        String query = "SELECT DISTINCT preview, profile, posting_date, idimage" +
                 " FROM post JOIN subject ON idimage = image" +
                 " WHERE status = 'Public'" +
                 " AND category = '" + category + "'";

@@ -20,14 +20,6 @@ public class Location {
     }
     public Location() {}
 
-    public Integer getIdLocation() {
-        return idLocation;
-    }
-
-    public void setIdLocation(Integer idLocation) {
-        this.idLocation = idLocation;
-    }
-
     public String getCountry() {
         return country;
     }

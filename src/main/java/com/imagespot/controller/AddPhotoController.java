@@ -84,6 +84,8 @@ public class AddPhotoController implements Initializable {
     @FXML
     private TilePane categoryTilePane;
     @FXML
+    private Label subErr;
+    @FXML
     private HBox hbLoc;
 
     //Address
@@ -263,10 +265,10 @@ public class AddPhotoController implements Initializable {
                     new PostDAOImpl().addPost(file, post, device, user);
                     post.setProfile(user);
 
-                    if (location != null)
+                    if (location != null) {
                         location.setPost(post);
-
-                    new LocationDAOImpl().addLocation(location);
+                        new LocationDAOImpl().addLocation(location);
+                    }
 
                     for (String s : taggedUser)
                         taggedUserDAO.addTag(s, post.getIdImage());
@@ -639,9 +641,16 @@ public class AddPhotoController implements Initializable {
     @FXML
     private void addSubjectOnAction() {
         if (!cbCategory.isShowing() && !fldSubject.getText().isEmpty()) {
-            Subject newSubject = new Subject(cbCategory.getValue(), fldSubject.getText());
-            subjects.add(newSubject);
-            categoryHBox(newSubject);
+            if(subjects.size() < 5){
+                subErr.setText("");
+                Subject newSubject = new Subject(cbCategory.getValue(), fldSubject.getText());
+                subjects.add(newSubject);
+                categoryHBox(newSubject);
+            }
+            else subErr.setText("Max 5 subjects");
+        }
+        else {
+            subErr.setText("Category or subject should not be empty");
         }
     }
 

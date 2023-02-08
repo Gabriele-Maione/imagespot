@@ -22,7 +22,7 @@ public class SubjectDAOImpl implements SubjectDAO {
     public void addSubject(Subject subject) {
         PreparedStatement st;
         String query = "INSERT INTO subject (category, subject, image) VALUES (?, ?, ?)";
-
+        System.out.println(subject.getImageID());
         try {
             st = con.prepareStatement(query);
             st.setString(1, subject.getCategory());

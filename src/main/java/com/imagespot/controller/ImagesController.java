@@ -52,7 +52,7 @@ public class ImagesController {
     }
 
     private void setModify() {
-        if(ViewFactory.getInstance().getViewType() == ViewType.YOUR_GALLERY){
+        if(ViewFactory.getInstance().getUser().getUsername().equals(post.getProfile().getUsername())){
             modify.setDisable(false);
             modify.setVisible(true);
         }
