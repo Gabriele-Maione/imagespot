@@ -35,10 +35,12 @@ public class ImagesController {
     private Button modify;
 
     private Post post;
+    private ViewType viewType;
 
 
-    public void setData(Post pst) {
+    public void setData(Post pst, ViewType type) {
         this.post = pst;
+        this.viewType = type;
         image_preview.setImage((post.getPreview()));
         name.setText(post.getProfile().getName());
         username.setText("@" + post.getProfile().getUsername());
@@ -52,7 +54,7 @@ public class ImagesController {
     }
 
     private void setModify() {
-        if(ViewFactory.getInstance().getUser().getUsername().equals(post.getProfile().getUsername())){
+        if(viewType.equals(ViewType.YOUR_GALLERY)){
             modify.setDisable(false);
             modify.setVisible(true);
         }

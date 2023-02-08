@@ -19,6 +19,7 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,11 +33,19 @@ public class ViewFactory {
     private VBox topPlaces;
     private VBox categories;
     private Parent homeRoot;
-    private ViewType viewType;
 
     private HomeController hm;
     private static User user;
     private HashMap<Integer, HBox> openedImages;
+    private ViewType viewType;
+
+    public void setViewType(ViewType type) {
+        viewType = type;
+    }
+
+    public ViewType getViewType() {
+        return viewType;
+    }
 
     public User getUser() {
         if (user == null) user = new User();
@@ -50,13 +59,6 @@ public class ViewFactory {
         return viewFactory;
     }
 
-    public ViewType getViewType() {
-        return viewType;
-    }
-
-    public void setViewType(ViewType viewType) {
-        this.viewType = viewType;
-    }
 
     public Parent getHomeRoot() {
         return homeRoot;
@@ -67,7 +69,7 @@ public class ViewFactory {
     }
 
     public VBox getFeedView() {
-        viewType = ViewType.FEED;
+        setViewType(ViewType.FEED);
         if (feedView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
@@ -81,7 +83,7 @@ public class ViewFactory {
     }
 
     public VBox getTaggedView() {
-        viewType = ViewType.TAGGED;
+        setViewType(ViewType.TAGGED);
         if (taggedView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
@@ -95,7 +97,7 @@ public class ViewFactory {
     }
 
     public VBox getFavoritesView() {
-        viewType = ViewType.FAVOURITES;
+        setViewType(ViewType.FAVOURITES);
         if (favoritesView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
@@ -109,7 +111,7 @@ public class ViewFactory {
     }
 
     public VBox getPostsByPlace(String location, String type) {
-        viewType = ViewType.LOCATION;
+        setViewType(ViewType.LOCATION);
         VBox postsByPlaceView = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
@@ -122,7 +124,7 @@ public class ViewFactory {
     }
 
     public VBox getBrowseView() {
-        viewType = ViewType.EXPLORE;
+        setViewType(ViewType.EXPLORE);
         if (browseView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
@@ -149,7 +151,7 @@ public class ViewFactory {
     }
 
     public VBox getPostsByCategory(String category) {
-        viewType = ViewType.CATEGORY;
+        setViewType(ViewType.CATEGORY);
         VBox postsByCategoryView = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
@@ -162,7 +164,7 @@ public class ViewFactory {
     }
 
     public VBox getTopPlaces() {
-        viewType = ViewType.TOP_PLACES;
+        setViewType(ViewType.TOP_PLACES);
         if (topPlaces == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/top-places-view.fxml"));
@@ -176,7 +178,7 @@ public class ViewFactory {
 
 
     public VBox getYourGalleryView() {
-        viewType = ViewType.YOUR_GALLERY;
+        setViewType(ViewType.YOUR_GALLERY);
         if (yourGallery == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
@@ -189,13 +191,13 @@ public class ViewFactory {
         return yourGallery;
     }
 
-    public VBox getPostPreview(Post post) {
+    public VBox getPostPreview(Post post, ViewType type) {
         VBox postPreview = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/images-preview.fxml"));
             postPreview = loader.load();
             ImagesController controller = loader.getController();
-            controller.setData(post);
+            controller.setData(post, type);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -2,6 +2,7 @@ package com.imagespot.controller.center;
 
 import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
+import com.imagespot.View.ViewType;
 import com.imagespot.model.Post;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -56,7 +57,7 @@ public class YourGalleryController extends CenterPaneController {
 
             if(change.wasAdded() && !isLoading.getValue()){
                 Post postAdded = change.getAddedSubList().get(0);
-                VBox postBox = ViewFactory.getInstance().getPostPreview(postAdded);
+                VBox postBox = ViewFactory.getInstance().getPostPreview(postAdded, ViewType.YOUR_GALLERY);
                 postBox.setId(String.valueOf(postAdded.getIdImage()));
                 flowPane.getChildren().add(0, postBox);
                 setFlowPaneChildWidth(flowPane.getChildren(), flowPane.getWidth());

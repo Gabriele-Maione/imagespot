@@ -1,6 +1,7 @@
 package com.imagespot.controller.center;
 
 import com.imagespot.View.ViewFactory;
+import com.imagespot.View.ViewType;
 import com.imagespot.model.Post;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
@@ -59,12 +60,13 @@ public abstract class CenterPaneController implements Initializable {
     protected abstract void loadPosts();
 
     protected void retrievePostsTask(Task<List<Post>> task) {
+        ViewType type = ViewFactory.getInstance().getViewType();
         new Thread(task).start();
         task.setOnSucceeded(workerStateEvent -> {
             List<Post> posts = task.getValue();
 
             for (Post post : posts) {
-                VBox postBox = ViewFactory.getInstance().getPostPreview(post);
+                VBox postBox = ViewFactory.getInstance().getPostPreview(post, type);
                 postBox.setId(String.valueOf(post.getIdImage()));
                 flowPane.getChildren().add(postBox);
             }
