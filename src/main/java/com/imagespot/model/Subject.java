@@ -8,6 +8,12 @@ public class Subject {
     private String subject;
     private int imageID;
 
+    public Subject(int id, String category, String subject) {
+        this.id = id;
+        this.category = category;
+        this.subject = subject;
+    }
+
     public Subject(String category, String subject) {
         this.category = category;
         this.subject = subject;

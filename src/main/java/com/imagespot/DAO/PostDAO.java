@@ -24,6 +24,9 @@ public interface PostDAO {
     ArrayList<Post> getPostsByLocation(String location, String type, int offset) throws SQLException;
     ArrayList<Post> getPostsByCategory(String category, int offset);
     Image getPhoto(int id);
+
+    ArrayList<Post> getPostsBySubject(int subject_id, int offset);
+
     Post getPost(int id);
     Post getPreviewPost(int id);
     //Retrieving data for edit post page

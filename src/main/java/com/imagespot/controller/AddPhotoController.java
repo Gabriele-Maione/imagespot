@@ -520,7 +520,7 @@ public class AddPhotoController implements Initializable {
             locationCm.show(coordinatesFld, Side.BOTTOM, 0, 0);
         });
 
-        coordinatesFld.textProperty().addListener(event -> {
+        coordinatesFld.setOnKeyReleased(event -> {
             if (coordinatesFld.getText().length() > 5) {
                 Task<JSONObject> addressReq = searchAddressesTask(coordinatesFld.getText());
                 new Thread(addressReq).start();
@@ -533,7 +533,6 @@ public class AddPhotoController implements Initializable {
                         String formattedAddress = results.getJSONObject(i).getString("formatted");
                         MenuItem menuItem = new MenuItem(formattedAddress);
                         menuItem.setOnAction(event1 -> {
-                            locationCm.getItems().clear();
                             locationCm.hide();
                             coordinatesFld.setText(formattedAddress);
                         });
@@ -552,7 +551,7 @@ public class AddPhotoController implements Initializable {
     }
 
     private Task<JSONObject> searchAddressesTask(String searchText) {
-        return new Task<JSONObject>() {
+        return new Task<>() {
             @Override
             protected JSONObject call() {
                 try {
@@ -578,6 +577,8 @@ public class AddPhotoController implements Initializable {
 
             addressReq.setOnSucceeded(workerStateEvent -> {
                 JSONObject jsonResponse = addressReq.getValue();
+                hbLoc.setManaged(true);
+                hbLoc.setVisible(true);
                 if (jsonResponse.getJSONArray("results").length() > 0) {
                     location = new Location();
                     JSONArray results = jsonResponse.getJSONArray("results");
@@ -586,8 +587,6 @@ public class AddPhotoController implements Initializable {
                     location.setFormatted_address(results.getJSONObject(0).getString("formatted"));
                     location.setLatitude(results.getJSONObject(0).getJSONObject("geometry").getBigDecimal("lat"));
                     location.setLongitude(results.getJSONObject(0).getJSONObject("geometry").getBigDecimal("lng"));
-                    hbLoc.setManaged(true);
-                    hbLoc.setVisible(true);
                     if (component.has("country")) {
                         address += "Country\t\t" + component.getString("country") + "\n";
                         location.setCountry(component.getString("country"));
@@ -620,7 +619,6 @@ public class AddPhotoController implements Initializable {
                     address += "Coord\t\t" + location.getLatitude() + ", " + location.getLongitude() + "\n";
                     address += "Formatted\t" + location.getFormatted_address();
                     addressLbl.setText(address);
-                    System.out.println(addressLbl.getText());
                 } else {
                     location = null;
                     addressLbl.setText("No results found");
@@ -640,12 +638,16 @@ public class AddPhotoController implements Initializable {
     //  CATEGORIES/SUBJECTS STUFF
     @FXML
     private void addSubjectOnAction() {
-        if (!cbCategory.isShowing() && !fldSubject.getText().isEmpty()) {
+        if (cbCategory.getValue() != null && !fldSubject.getText().isEmpty()) {
             if(subjects.size() < 5){
-                subErr.setText("");
-                Subject newSubject = new Subject(cbCategory.getValue(), fldSubject.getText());
-                subjects.add(newSubject);
-                categoryHBox(newSubject);
+                    if(subjects.stream().noneMatch(s -> s.getSubject().equals(fldSubject.getText()))) {
+                        subErr.setText("");
+                        Subject newSubject = new Subject(cbCategory.getValue(), fldSubject.getText());
+                        subjects.add(newSubject);
+                        categoryHBox(newSubject);
+                    }
+                    else
+                        subErr.setText("The subject has already been added");
             }
             else subErr.setText("Max 5 subjects");
         }

@@ -5,6 +5,7 @@ import com.imagespot.controller.center.*;
 import com.imagespot.controller.center.categories.CategoriesController;
 import com.imagespot.controller.center.categories.CategoryController;
 import com.imagespot.model.Post;
+import com.imagespot.model.Subject;
 import com.imagespot.model.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -161,6 +162,19 @@ public class ViewFactory {
             e.printStackTrace();
         }
         return postsByCategoryView;
+    }
+
+    public VBox getPostsBySubject(Subject subject) {
+        setViewType(ViewType.SUBJECT);
+        VBox postsBySubjectView = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
+            loader.setController(new SubjectController(subject));
+            postsBySubjectView = loader.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return postsBySubjectView;
     }
 
     public VBox getTopPlaces() {

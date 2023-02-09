@@ -34,7 +34,7 @@ public class TaggedUserDAOImpl implements TaggedUserDAO {
         }
     }
 
-    public ArrayList<Post> getTag(String username, int offset) throws SQLException {
+    public ArrayList<Post> getTag(String username, int offset) {
         ArrayList<Post> tag = new  ArrayList<>();
         PreparedStatement st;
         ResultSet rs;

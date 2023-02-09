@@ -21,14 +21,14 @@ public class SubjectDAOImpl implements SubjectDAO {
     @Override
     public void addSubject(Subject subject) {
         PreparedStatement st;
-        String query = "INSERT INTO subject (category, subject, image) VALUES (?, ?, ?)";
+        String query = "select insert_subject_post(?, ?, ?)";
         System.out.println(subject.getImageID());
         try {
             st = con.prepareStatement(query);
-            st.setString(1, subject.getCategory());
-            st.setString(2, subject.getSubject());
+            st.setString(1, subject.getSubject());
+            st.setString(2, subject.getCategory());
             st.setInt(3, subject.getImageID());
-            st.executeUpdate();
+            st.execute();
             st.close();
         } catch (SQLException e) {
             Logger logger = Logger.getLogger(ConnectionManager.class.getName());
@@ -40,12 +40,14 @@ public class SubjectDAOImpl implements SubjectDAO {
         ArrayList<Subject> subjects = new ArrayList<>();
         Statement st;
         ResultSet rs;
-        String query = "SELECT category, subject FROM subject WHERE image = " + idimage;
+        String query = "SELECT subject_id, category, name\n" +
+                "FROM subject join subject_post sp on subject.subject_id = sp.subject\n" +
+                "WHERE post = " + idimage;
         try {
             st = con.createStatement();
             rs = st.executeQuery(query);
             while(rs.next()) {
-                subjects.add(new Subject(rs.getString(1), rs.getString(2)));
+                subjects.add(new Subject(rs.getInt(1), rs.getString(2), rs.getString(3)));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

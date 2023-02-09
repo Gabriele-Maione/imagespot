@@ -4,7 +4,6 @@ import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.PostDAO;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Device;
-import com.imagespot.model.Location;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
 import javafx.scene.image.Image;
@@ -13,7 +12,6 @@ import org.apache.commons.io.IOUtils;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -122,12 +120,21 @@ public class PostDAOImpl implements PostDAO {
     @Override
     public ArrayList<Post> getPostsByCategory(String category, int offset) {
         String query = "SELECT DISTINCT preview, profile, posting_date, idimage" +
-                " FROM post JOIN subject ON idimage = image" +
+                " from post join subject_post sp on post.idimage = sp.post join subject s on sp.subject = s.subject_id" +
                 " WHERE status = 'Public'" +
                 " AND category = '" + category + "'";
         return getPreviews(query, offset);
     }
 
+    @Override
+    public ArrayList<Post> getPostsBySubject(int subject_id, int offset) {
+        String query = "SELECT DISTINCT preview, profile, posting_date, idimage" +
+                " from post join subject_post sp on post.idimage = sp.post" +
+                " WHERE status = 'Public'" +
+                " AND subject = '" + subject_id + "'";
+        System.out.println(query);
+        return getPreviews(query, offset);
+    }
 
     public ArrayList<Post> getPreviews(String query, int offset) {
         ArrayList<Post> ls = new ArrayList<>();
