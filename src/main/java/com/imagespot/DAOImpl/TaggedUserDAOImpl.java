@@ -42,7 +42,7 @@ public class TaggedUserDAOImpl implements TaggedUserDAO {
 
         StringBuilder complexQuery = new StringBuilder("SELECT P.idimage FROM post P" +
                 " JOIN tagged_user T ON P.idimage = T.idimage" +
-                " WHERE nickname = ?");
+                " WHERE nickname = ? AND status = 'Public'");
 
         complexQuery.append(" ORDER BY posting_date DESC LIMIT 20 OFFSET ?");
 

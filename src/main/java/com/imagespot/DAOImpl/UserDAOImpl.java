@@ -12,6 +12,8 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.imagespot.Utils.Utils.photoScaler;
 
@@ -26,47 +28,31 @@ public class UserDAOImpl implements UserDAO {
     // false -> user registered
     // true -> email/username already exists
     @Override
-    public boolean signup(String username, String name, String email, String password) {
-        PreparedStatement st, st1;
-        ResultSet rs, rs1;
-        boolean flag = false;
-
-        String mailCheck = "SELECT count(*) FROM account WHERE Email = ?";
-        String usernameCheck = "SELECT count(*) FROM account WHERE Username = ?";
-        String addNewUser = "INSERT INTO account(Username, Name, Email, password) VALUES(?, ?, ?, ?)";
+    public int signup(String username, String name, String email, String password) {
+        PreparedStatement st;
+        ResultSet rs;
+        int flag = 0;
+        String query = "SELECT insert_account(?, ?, ?, ?)";
 
         try {
-            st = con.prepareStatement(usernameCheck);
-            st1 = con.prepareStatement(mailCheck);
-
+            st = con.prepareStatement(query);
             st.setString(1, username);
-            st1.setString(1, email);
-
+            st.setString(2, email);
+            st.setString(3, name);
+            st.setString(4, password);
             rs = st.executeQuery();
-            rs1 = st1.executeQuery();
-
-            if (rs.next() && rs1.next()) {
-                if (rs.getInt(1) == 0 && rs1.getInt(1) == 0) {
-
-                    //riutilizzo lo statement pke è importante riciclare
-                    st = con.prepareStatement(addNewUser);
-                    st.setString(1, username);
-                    st.setString(2, name);
-                    st.setString(3, email);
-                    st.setString(4, password);
-                    st.execute();
-                    flag = true;
-                }
-            }
+            if(rs.next()) flag = rs.getInt(1);
             st.close();
-            st1.close();
+            rs.close();
+        } catch (SQLException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to check credentials.", e);
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        System.out.println(flag);
         return flag;
     }
+
+
 
     @Override
     public boolean login(String username, String password) throws SQLException {

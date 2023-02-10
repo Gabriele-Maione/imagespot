@@ -16,7 +16,7 @@
    <children>
       <VBox alignment="CENTER" spacing="10.0">
          <children>
-            <Label fx:id="lblCollectioName" text="Add posts to ... collection">
+            <Label fx:id="lblCollectionName" text="Add posts to ... collection">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>

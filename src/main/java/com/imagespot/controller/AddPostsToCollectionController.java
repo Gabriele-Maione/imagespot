@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
 
 public class AddPostsToCollectionController implements Initializable {
     @FXML
-    private Label lblCollectioName;
+    private Label lblCollectionName;
     @FXML
     private Label lblSelectedYourGalleryPosts;
     @FXML
@@ -86,7 +86,7 @@ public class AddPostsToCollectionController implements Initializable {
         this.collection = collection;
 
         if(this.collection != null){
-            lblCollectioName.setText("Add posts to " + collection.getName() + " collection");
+            lblCollectionName.setText("Add posts to " + collection.getName() + " collection");
             loadUserPostsCollection();
             loadYourGalleryPosts();
 

@@ -54,7 +54,6 @@ public class SignInController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //agg caput a cosa serve init, in fxml nn agg miz o flag della funzione, ma cmq funziona
         redirectToLoginView();
 
     }
@@ -80,16 +79,38 @@ public class SignInController implements Initializable {
                 || signUpName.getText().isBlank() || signUpPass.getText().isBlank())
             signUpErr.setText("Fields can't be empty");
 
-        else if(new UserDAOImpl().signup(signUpUsername.getText(), signUpName.getText(),
-                signUpEmail.getText(), signUpPass.getText())) {
-            ViewFactory.getInstance().getUser().setUsername(signUpUsername.getText());
-            ViewFactory.getInstance().getUser().setName(signUpName.getText());
-            ViewFactory.getInstance().getUser().setEmail(signUpEmail.getText());
-            ViewFactory.getInstance().getUser().setPassword(signUpPass.getText());
-            ViewFactory.getInstance().showAddInfoWindow();
-            Stage stage = (Stage) btnSignUp.getScene().getWindow();
-            stage.close();
-        } else signUpErr.setText("Credentials already exists");
+        else
+            checkCredentialsTask(signUpUsername.getText(), signUpEmail.getText(), signUpName.getText(), signUpPass.getText());
+    }
+
+    private void checkCredentialsTask(String username, String email, String name, String password) {
+        final Task<Integer> checkCredentialsT = new Task<>() {
+            @Override
+            protected Integer call() {
+                updateMessage("Loading...");
+                return new UserDAOImpl().signup(username, email, name, password);
+            }
+        };
+        new Thread(checkCredentialsT).start();
+        signUpErr.textProperty().bind(checkCredentialsT.messageProperty());
+        checkCredentialsT.setOnSucceeded(workerStateEvent -> {
+            switch(checkCredentialsT.getValue()) {
+                case -1 -> signUpErr.setText("Username already exist");
+                case -2 -> signUpErr.setText("Email already exist");
+                case 0 -> signUpErr.setText("Username and email already exists");
+                case 1 -> startNewUser();
+            }
+        });
+    }
+
+    private void startNewUser() {
+        ViewFactory.getInstance().getUser().setUsername(signUpUsername.getText());
+        ViewFactory.getInstance().getUser().setName(signUpName.getText());
+        ViewFactory.getInstance().getUser().setEmail(signUpEmail.getText());
+        ViewFactory.getInstance().getUser().setPassword(signUpPass.getText());
+        ViewFactory.getInstance().showAddInfoWindow();
+        Stage stage = (Stage) btnSignUp.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
