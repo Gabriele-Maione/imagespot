@@ -11,8 +11,7 @@ import java.sql.SQLException;
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException, SQLException {
-        new UserDAOImpl().getUserInfo("FelCon");
-        ViewFactory.getInstance().showHomeWindow();
+        ViewFactory.getInstance().showAuthWindow();
     }
 
     public static void main(String[] args) {

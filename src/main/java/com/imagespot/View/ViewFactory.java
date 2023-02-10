@@ -4,6 +4,11 @@ import com.imagespot.controller.*;
 import com.imagespot.controller.center.*;
 import com.imagespot.controller.center.categories.CategoriesController;
 import com.imagespot.controller.center.categories.CategoryController;
+import com.imagespot.controller.center.collections.CollectionPostsController;
+import com.imagespot.controller.center.collections.RecentCollectionsController;
+import com.imagespot.controller.center.collections.UsedCollectionsController;
+import com.imagespot.controller.center.collections.YourCollectionsController;
+import com.imagespot.model.Collection;
 import com.imagespot.model.Post;
 import com.imagespot.model.Subject;
 import com.imagespot.model.User;
@@ -16,11 +21,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,8 +36,10 @@ public class ViewFactory {
     private VBox taggedView;
     private VBox topPlaces;
     private VBox categories;
+    private VBox collections;
+    private VBox yourCollections;
+    private VBox usedCollections;
     private Parent homeRoot;
-
     private HomeController hm;
     private static User user;
     private HashMap<Integer, HBox> openedImages;
@@ -205,6 +210,48 @@ public class ViewFactory {
         return yourGallery;
     }
 
+    public VBox getCollectionView() {
+        viewType = ViewType.COLLECTIONS;
+        if(collections == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
+                loader.setController(new RecentCollectionsController());
+                collections = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return collections;
+    }
+
+    public VBox getYourCollectionView(){
+        viewType = ViewType.YOUR_COLLECTIONS;
+        if(yourCollections == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
+                loader.setController(new YourCollectionsController());
+                yourCollections = loader.load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return yourCollections;
+    }
+
+    public VBox getUsedCollectionView(){
+        viewType = ViewType.USED_COLLECTIONS;
+        if(usedCollections == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/home-center-view.fxml"));
+                loader.setController(new UsedCollectionsController());
+                usedCollections = loader.load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return usedCollections;
+    }
+
     public VBox getPostPreview(Post post, ViewType type) {
         VBox postPreview = null;
         try {
@@ -216,6 +263,20 @@ public class ViewFactory {
             e.printStackTrace();
         }
         return postPreview;
+    }
+
+    public VBox getCollectionPreview(Collection collection, ViewType type){
+        VBox collectionPreview = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/collection-preview-view.fxml"));
+            collectionPreview = loader.load();
+            CollectionPreviewController controller = loader.getController();
+            controller.setData(collection, type);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return collectionPreview;
     }
 
     public HBox getUserPreview(User user) {
@@ -294,6 +355,19 @@ public class ViewFactory {
             throw new RuntimeException(e);
         }
         return postRoot;
+    }
+
+    public ScrollPane getCollectionPostsView(Collection collection) {
+        ScrollPane collectionPostsPage;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/collection-posts-view.fxml"));
+            collectionPostsPage = loader.load();
+            CollectionPostsController controller = loader.getController();
+            controller.init(collection);
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return collectionPostsPage;
     }
 
     public void closeSession() {
@@ -411,6 +485,60 @@ public class ViewFactory {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void showAddCollectionWindow(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/add-collection-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.initOwner(homeRoot.getScene().getWindow());
+            stage.setTitle("Add Collection");
+            Scene scene = new Scene(root, 602, 520);
+            scene.setFill(Color.TRANSPARENT);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.show();
+        } catch(IOException e) { e.printStackTrace(); }
+    }
+
+    public void showEditCollectionWindow(Collection collection){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/edit-collection-view.fxml"));
+        try {
+            Parent root = loader.load();
+            EditCollectionController controller = loader.getController();
+            controller.init(collection);
+            Scene scene = new Scene(root, 400, 400);
+            Stage stage = new Stage();
+            stage.setTitle("Edit Collection");
+            stage.setResizable(false);
+            stage.initOwner(homeRoot.getScene().getWindow());
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create Window.", e);
+        }
+    }
+
+    public void showAddPostsToCollectionWindow(Collection collection){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/add-posts-to-collection-view.fxml"));
+        try {
+            Parent root = loader.load();
+            AddPostsToCollectionController controller = loader.getController();
+            controller.init(collection);
+            Scene scene = new Scene(root, 600, 768);
+            Stage stage = new Stage();
+            stage.setTitle("Add posts to " + collection.getName() + " collection");
+            stage.setResizable(false);
+            stage.initOwner(homeRoot.getScene().getWindow());
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create Window.", e);
         }
     }
 }

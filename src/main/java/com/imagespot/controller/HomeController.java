@@ -38,8 +38,6 @@ public class HomeController implements Initializable {
     @FXML
     private ImageView profilePic;
     @FXML
-    private Button btnAddPhoto;
-    @FXML
     private BorderPane homePane;
     @FXML
     private TextField fldSearch;
@@ -51,6 +49,10 @@ public class HomeController implements Initializable {
     private MenuItem settingsItem;
     @FXML
     private MenuItem logoutItem;
+    @FXML
+    private MenuItem addPhotoItem;
+    @FXML
+    private MenuItem addCollectionItem;
     @FXML
     private StackPane searchButton;
     private User user;
@@ -83,6 +85,9 @@ public class HomeController implements Initializable {
         });
         searchButton.setOnMouseClicked(event -> searchUser());
 
+        //create button
+        addPhotoItem.setOnAction(event -> ViewFactory.getInstance().showAddPhotoWindow());
+        addCollectionItem.setOnAction(event -> ViewFactory.getInstance().showAddCollectionWindow());
         //user's menu bar
         myProfileItem.setOnAction(actionEvent -> {
             ViewFactory.getInstance().setViewType(ViewType.PROFILE);
@@ -149,9 +154,12 @@ public class HomeController implements Initializable {
             case "hbBrowse" -> homePane.setCenter(ViewFactory.getInstance().getBrowseView());
             case "hbTopPlaces" -> homePane.setCenter(ViewFactory.getInstance().getTopPlaces());
             case "hbCategories" -> homePane.setCenter(ViewFactory.getInstance().getCategories());
+            case "hbCollections" -> homePane.setCenter(ViewFactory.getInstance().getCollectionView());
             case "hbYourGallery" -> homePane.setCenter(ViewFactory.getInstance().getYourGalleryView());
             case "hbFavorites" -> homePane.setCenter(ViewFactory.getInstance().getFavoritesView());
             case "hbTagged" -> homePane.setCenter(ViewFactory.getInstance().getTaggedView());
+            case "hbYourCollections" -> homePane.setCenter(ViewFactory.getInstance().getYourCollectionView());
+            case "hbUsedCollections" -> homePane.setCenter(ViewFactory.getInstance().getUsedCollectionView());
         }
         removeSelectedView();
         box.getStyleClass().add(0, "selected");
@@ -160,11 +168,6 @@ public class HomeController implements Initializable {
     private void removeSelectedView(){
         if(homePane.lookup(".selected") != null)
             homePane.lookup(".selected").getStyleClass().remove(0);
-    }
-
-    @FXML
-    private void btnAddPhotoOnAction() {
-        ViewFactory.getInstance().showAddPhotoWindow();
     }
 
     public BorderPane getBorderPane() {return homePane;}

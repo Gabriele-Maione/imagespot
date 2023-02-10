@@ -81,7 +81,7 @@ public class UserPageController extends CenterPaneController {
             getUserStatsTask();
             loadPosts();
             if (user.getUsername().equals(ViewFactory.getInstance().getUser().getUsername())) {
-                followButton.setText("Settings");
+                followButton.setText("SETTINGS");
                 followButton.setOnAction(actionEvent -> settingsButtonOnAction());
             }
             else

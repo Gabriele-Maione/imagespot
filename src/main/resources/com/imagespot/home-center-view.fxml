@@ -42,7 +42,7 @@
                         <Insets bottom="6.0" left="10.0" right="10.0" top="6.0" />
                      </padding>
                      <styleClass>
-                        <String fx:value="add-post-button" />
+                        <String fx:value="refresh-btn" />
                         <String fx:value="clickable" />
                      </styleClass>
                   </Button>

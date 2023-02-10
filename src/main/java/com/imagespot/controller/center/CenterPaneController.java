@@ -35,6 +35,7 @@ public abstract class CenterPaneController implements Initializable {
     protected ProgressIndicator progressIndicator;
     @FXML
     protected ScrollPane scrollPane;
+
     protected int offset;
     protected ChangeListener<Number> flowPaneResponsiveListener;
 
@@ -65,6 +66,7 @@ public abstract class CenterPaneController implements Initializable {
         task.setOnSucceeded(workerStateEvent -> {
             List<Post> posts = task.getValue();
 
+            flowPane.setAlignment(Pos.TOP_LEFT);
             for (Post post : posts) {
                 VBox postBox = ViewFactory.getInstance().getPostPreview(post, type);
                 postBox.setId(String.valueOf(post.getIdImage()));
@@ -76,6 +78,7 @@ public abstract class CenterPaneController implements Initializable {
                 flowPane.getChildren().add(nothingHereLabel());
                 flowPane.setAlignment(Pos.CENTER);
             }
+
         });
     }
 
@@ -92,7 +95,7 @@ public abstract class CenterPaneController implements Initializable {
 
     protected void addScrollPaneListener() {
         scrollPane.vvalueProperty().addListener((observableValue, number, scrollPosition) -> {
-            if (scrollPosition.intValue() == 1 && offset % 20 == 0)  //scrollPosition == 1 -> scroll have reached the bottom
+            if (scrollPosition.intValue() == 1 && offset % 20 == 0)  //scrollPosition == 1 -> scrolling have reached the bottom
                 loadPosts();
         });
     }
@@ -118,7 +121,7 @@ public abstract class CenterPaneController implements Initializable {
         }
     }
 
-    private Label nothingHereLabel() {
+    protected Label nothingHereLabel() {
         Label label = new Label();
         label.setPrefHeight(118);
         label.setPrefWidth(280);

@@ -69,7 +69,7 @@ public class CategoriesController extends CenterPaneController {
                 double nodeWidth = flowPaneWidth / numNodeForRow;
 
                 v.setPrefWidth(nodeWidth - 5);
-                v.setPrefHeight(nodeWidth - 10);
+                v.setPrefHeight(nodeWidth - 5);
             }
         }
     }

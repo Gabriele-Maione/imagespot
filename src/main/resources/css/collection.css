@@ -1,0 +1,65 @@
+*{
+    -primary: #fdfdfe;
+    -secondary: #e1e3e7;
+    -sidebar-color: #f0f1f4;
+    -scrollbar-thumb-color: #cacacb;
+    -dark: #000000;
+    -fill: #3b3b3b;
+    -first-detail: #7678ed;
+    -selected: #afafe3;
+    -hovered: #babae7;
+    -pressed: #a1a1d2;
+}
+
+.scroll-pane{
+    -fx-background: -sidebar-color;
+    -fx-background-insets: 0;
+}
+
+.main-scroll-pane{
+    -fx-background: -primary;
+}
+
+.scroll-pane .track{
+    -fx-background-color: -sidebar-color;
+}
+
+.scroll-pane .increment-button,
+.scroll-pane .decrement-button{
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-padding: 0;
+}
+
+.scroll-pane .increment-arrow,
+.scroll-pane .decrement-arrow{
+    -fx-padding: 0;
+}
+
+.scroll-pane .thumb{
+    -fx-background-color: -scrollbar-thumb-color;
+}
+
+.scroll-pane .thumb:pressed,
+.scroll-pane .thumb:pressed{
+    -fx-background-color: -first-detail;
+}
+
+Button {
+    -fx-background-color: -first-detail;
+    -fx-background-radius: 15;
+    -fx-text-fill: #fff;
+    -fx-cursor: hand;
+}
+
+Button:hover {
+    -fx-background-color: -hovered;
+}
+
+Button:pressed {
+    -fx-background-color: -pressed;
+}
+
+.btn-remove-posts{
+    -fx-background-color: #d20000;
+}

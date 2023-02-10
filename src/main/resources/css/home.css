@@ -60,14 +60,25 @@
     -fx-background-color: -first-detail;
 }
 
+.menu-button{
+    -fx-background-color: transparent;
+}
+
 .add-post-button{
+    -fx-background: -first-detail;
+    -fx-background-color: -first-detail;
+    -fx-background-radius: 15;
+}
+
+.add-post-button > .arrow-button, .add-post-button > .arrow-button > .arrow{
+    -fx-padding: 0;
+}
+
+.refresh-btn{
+    -fx-background: -first-detail;
     -fx-background-color: -first-detail;
     -fx-background-radius: 15;
     -fx-text-fill: #fff;
-}
-
-.menu-button{
-    -fx-background-color: transparent;
 }
 
 /*side bar buttons*/
