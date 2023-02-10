@@ -13,12 +13,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
-
 import static com.imagespot.Utils.Utils.crop;
+import static com.imagespot.Utils.Utils.setAvatarRounde;
 
 
 public class SettingsController implements Initializable {
@@ -27,9 +27,6 @@ public class SettingsController implements Initializable {
 
     @FXML
     private Button btnApply;
-
-    @FXML
-    private Button btnAvatar;
 
     @FXML
     private ChoiceBox<String> cbGender;
@@ -62,16 +59,16 @@ public class SettingsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         user = ViewFactory.getInstance().getUser();
-
+        setAvatarRounde(imgPreview);
         if (user.getAvatar() != null) {
             deleteBtn.setVisible(true);
             imgPreview.setImage(user.getAvatar());
         } else deleteBtn.setVisible(false);
 
+
         fldName.setText(user.getName());
         bio.setText(user.getBio());
         choiceBoxInit();
-
     }
 
     public void choiceBoxInit() {
@@ -108,7 +105,7 @@ public class SettingsController implements Initializable {
     private void btnDeleteOnAction() {
 
         if (deleteBtn.getText().equals("Delete")) {
-            imgPreview.setImage(new Image(getClass().getResourceAsStream("/icons/bear_icon.png")));
+            imgPreview.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/bear_icon.png"))));
             deletedAvatarFlag = true;
             avatar = null;
             deleteBtn.setText("Undo");

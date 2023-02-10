@@ -5,7 +5,6 @@ import com.imagespot.DAO.UserDAO;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.User;
 import javafx.scene.image.Image;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import static com.imagespot.Utils.Utils.photoScaler;
 
 public class UserDAOImpl implements UserDAO {
@@ -28,7 +26,7 @@ public class UserDAOImpl implements UserDAO {
     // false -> user registered
     // true -> email/username already exists
     @Override
-    public int signup(String username, String name, String email, String password) {
+    public int signup(String username, String email, String name,String password) {
         PreparedStatement st;
         ResultSet rs;
         int flag = 0;

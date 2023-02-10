@@ -92,7 +92,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="bio" prefHeight="110.0" prefWidth="386.0" promptText="Max 140 characters" />
+                  <TextArea fx:id="bio" prefHeight="110.0" prefWidth="386.0" promptText="Max 140 characters" wrapText="true" />
                </children>
             </VBox>
             <HBox alignment="CENTER_RIGHT">

@@ -20,8 +20,6 @@ public class SignInController implements Initializable {
 
     private double x, y;
     @FXML
-    private Button btnSignIn;
-    @FXML
     private Button btnSignUp;
     @FXML
     private Button btnClose;
@@ -94,6 +92,7 @@ public class SignInController implements Initializable {
         new Thread(checkCredentialsT).start();
         signUpErr.textProperty().bind(checkCredentialsT.messageProperty());
         checkCredentialsT.setOnSucceeded(workerStateEvent -> {
+            signUpErr.textProperty().unbind();
             switch(checkCredentialsT.getValue()) {
                 case -1 -> signUpErr.setText("Username already exist");
                 case -2 -> signUpErr.setText("Email already exist");
@@ -167,9 +166,7 @@ public class SignInController implements Initializable {
     }
 
     private void redirectToLoginView() {
-        hlinkSignIn.setOnMouseClicked(ev -> {
-            tabPane.getSelectionModel().select(0);
-        });
+        hlinkSignIn.setOnMouseClicked(ev -> tabPane.getSelectionModel().select(0));
     }
 
 
