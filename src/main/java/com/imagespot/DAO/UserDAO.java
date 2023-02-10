@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface UserDAO {
     // true - user registered && false - username/email already exists
-    int signup(String username, String name, String email, String password);
+    int signup(String username, String email, String name, String password);
 
     boolean login(String credentials, String password) throws SQLException;
 
