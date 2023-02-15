@@ -23,8 +23,7 @@ public class UserDAOImpl implements UserDAO {
         con = ConnectionManager.getInstance().getConnection();
     }
 
-    // false -> user registered
-    // true -> email/username already exists
+
     @Override
     public int signup(String username, String email, String name,String password) {
         PreparedStatement st;
@@ -51,22 +50,29 @@ public class UserDAOImpl implements UserDAO {
     }
 
 
-
     @Override
-    public boolean login(String username, String password) throws SQLException {
+    public boolean login(String username, String password) {
         PreparedStatement st;
         ResultSet rs;
         boolean flag = false;
 
-        String credentialsCheck = "SELECT * FROM account WHERE Username = ? AND password = ?";
+        String credentialsCheck = "SELECT username FROM account WHERE Username = ? AND password = crypt(?, password)";
 
-        st = con.prepareStatement(credentialsCheck);
-        st.setString(1, username);
-        st.setString(2, password);
-        rs = st.executeQuery();
-        if(rs.next())
-            flag = true;
-        st.close();
+        try {
+            st = con.prepareStatement(credentialsCheck);
+
+            st.setString(1, username);
+            st.setString(2, password);
+            rs = st.executeQuery();
+            if (rs.next())
+                flag = true;
+            st.close();
+            rs.close();
+        } catch (SQLException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to check credentials.", e);
+        }
+
         return flag;
     }
 
