@@ -19,7 +19,6 @@ import java.util.ResourceBundle;
 public class YourGalleryController extends CenterPaneController {
     private ObjectProperty<Boolean> isLoading;
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         isLoading = new SimpleObjectProperty<>();

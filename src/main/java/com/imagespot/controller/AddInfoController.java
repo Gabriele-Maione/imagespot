@@ -14,12 +14,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 
 public class AddInfoController implements Initializable {
 
@@ -94,7 +91,6 @@ public class AddInfoController implements Initializable {
 
     @FXML
     private void submitBtnOnAction() {
-
         submitTask();
     }
 

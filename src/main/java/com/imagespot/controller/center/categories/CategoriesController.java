@@ -14,7 +14,6 @@ import javafx.scene.text.TextAlignment;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -30,14 +29,13 @@ public class CategoriesController extends CenterPaneController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnUpdate.setVisible(false);
         loadPosts();
-        flowPane.setVgap(5);
-        flowPane.setHgap(5);
         progressIndicator.setVisible(false);
         btnUpdate.setVisible(false);
         name.setText("Categories");
 
         flowPaneResponsive(flowPane);
-
+        flowPane.setVgap(5);
+        flowPane.setHgap(5);
     }
 
     @Override
@@ -64,12 +62,11 @@ public class CategoriesController extends CenterPaneController {
     protected void setFlowPaneChildWidth(List<Node> flowPaneChild, double flowPaneWidth) {
         for (Node box : flowPaneChild) {
             if(box instanceof StackPane v){
-
                 int numNodeForRow = (int) (flowPaneWidth / 178);
                 double nodeWidth = flowPaneWidth / numNodeForRow;
 
-                v.setPrefWidth(nodeWidth - 5);
-                v.setPrefHeight(nodeWidth - 5);
+                v.setPrefWidth(nodeWidth - 6);
+                v.setPrefHeight(nodeWidth - 6);
             }
         }
     }

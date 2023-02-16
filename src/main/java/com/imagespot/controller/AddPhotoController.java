@@ -22,15 +22,12 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kordamp.ikonli.javafx.FontIcon;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.Timestamp;
 import java.util.*;
-
 import static com.imagespot.Utils.Utils.*;
 import static org.kordamp.ikonli.fontawesome5.FontAwesomeSolid.USER_CHECK;
 
@@ -236,7 +233,6 @@ public class AddPhotoController implements Initializable {
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg"));
         file = fc.showOpenDialog(img.getScene().getWindow());
         if (file != null) {
-
             img.setImage(new Image((file.getAbsolutePath())));
             btnUpload.setText("Change");
         }
@@ -244,8 +240,6 @@ public class AddPhotoController implements Initializable {
 
     @FXML
     private void btnPublishOnAction() {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
         if (file == null)
             err.setText("LOAD A PHOTO!!!");
         else if (device == null)
@@ -258,9 +252,9 @@ public class AddPhotoController implements Initializable {
                 protected Post call() throws Exception {
                     TaggedUserDAOImpl taggedUserDAO = new TaggedUserDAOImpl();
                     SubjectDAOImpl subjectDAO = new SubjectDAOImpl();
+                    String description = fldDescription.getText().isBlank() ? null : fldDescription.getText();
 
-
-                    Post post = new Post(getRes(file), fldDescription.getText(), getSize(file), getExt(file), timestamp, cbStatus.getValue(), location);
+                    Post post = new Post(getRes(file), description, getSize(file), getExt(file), cbStatus.getValue(), location);
 
                     new PostDAOImpl().addPost(file, post, device, user);
                     post.setProfile(user);

@@ -2,6 +2,7 @@ package com.imagespot.controller.center.collections;
 
 import com.imagespot.DAOImpl.CollectionDaoImpl;
 import com.imagespot.View.ViewFactory;
+import com.imagespot.View.ViewType;
 import com.imagespot.controller.center.CenterPaneController;
 import com.imagespot.model.Collection;
 import com.imagespot.model.Post;
@@ -10,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,5 +106,12 @@ public class CollectionPostsController extends CenterPaneController {
     @FXML
     private void showAddPostsToCollectionWindow(){
         ViewFactory.getInstance().showAddPostsToCollectionWindow(collection);
+    }
+
+    @FXML
+    private void userOnClick() {
+        ViewFactory.getInstance().setViewType(ViewType.PROFILE);
+        BorderPane borderPane = (BorderPane) ownerAvatar.getScene().getRoot();
+        borderPane.setCenter(ViewFactory.getInstance().getUserPage(collection.getOwner()));
     }
 }

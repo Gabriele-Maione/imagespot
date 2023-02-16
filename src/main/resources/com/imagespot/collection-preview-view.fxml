@@ -13,7 +13,7 @@
 
 <VBox fx:id="collectionVBox" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.CollectionPreviewController">
    <children>
-      <StackPane fx:id="stackPane">
+      <StackPane fx:id="stackPane" styleClass="clickable_img">
          <children>
             <FlowPane fx:id="flowPaneCollection" />
             <HBox alignment="CENTER">
@@ -54,12 +54,12 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT">
                      <children>
-                        <ImageView fx:id="avatar" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="avatar" fitHeight="45.0" fitWidth="45.0" onMouseClicked="#userOnClick" pickOnBounds="true" preserveRatio="true" styleClass="clickable_img">
                            <image>
                               <Image url="@../../icons/default_avatar_icon.jpg" />
                            </image>
                         </ImageView>
-                        <Label fx:id="lblName" text="name">
+                        <Label fx:id="lblName" onMouseClicked="#userOnClick" styleClass="clickableText" text="name">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -67,7 +67,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblUsername" text="\@username">
+                        <Label fx:id="lblUsername" onMouseClicked="#userOnClick" styleClass="clickableText" text="\@username">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>

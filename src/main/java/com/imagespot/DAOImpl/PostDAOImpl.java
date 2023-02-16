@@ -28,15 +28,12 @@ public class PostDAOImpl implements PostDAO {
 
     @Override
     public void addPost(File photo, Post post, Device device, User profile) {
-        int id = -1;
         PreparedStatement st;
         ResultSet rs;
-        String insert = ("INSERT INTO Post (photo, resolution, description, size, extension, posting_date," +
-                " status, device, profile, preview) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING idimage");
+        String insert = ("INSERT INTO Post (photo, resolution, description, size, extension, status, device, profile, preview)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING idimage, posting_date");
 
         //scaling image and deserialize from bufferedImage to InputStream
-
-
         InputStream preview = null;
         try {
             preview = photoScaler(photo);
@@ -50,17 +47,18 @@ public class PostDAOImpl implements PostDAO {
             st.setString(3, post.getDescription());
             st.setInt(4, post.getSize());
             st.setString(5, post.getExtension());
-            st.setTimestamp(6, post.getDate());
-            st.setString(7, post.getStatus());
-            st.setInt(8, device.getIdDevice());
-            st.setString(9, profile.getUsername());
-            st.setBinaryStream(10, new ByteArrayInputStream(previewBytes));
+            st.setString(6, post.getStatus());
+            st.setInt(7, device.getIdDevice());
+            st.setString(8, profile.getUsername());
+            st.setBinaryStream(9, new ByteArrayInputStream(previewBytes));
 
             rs = st.executeQuery();
 
-            if (rs.next()) id = rs.getInt(1);
+            if (rs.next()){
+                post.setIdImage(rs.getInt(1));
+                post.setDate(rs.getTimestamp(2));
+            }
 
-            post.setIdImage(id);
             post.setPreview(new Image(new ByteArrayInputStream(previewBytes)));
             post.setPhoto(new Image(photo.getAbsolutePath()));
             st.close();
@@ -69,7 +67,6 @@ public class PostDAOImpl implements PostDAO {
             Logger logger = Logger.getLogger(getClass().getName());
             logger.log(Level.SEVERE, "Failed to add new post", e);
         }
-
     }
 
     public ArrayList<Post> getRecentPosts(int offset) throws SQLException {

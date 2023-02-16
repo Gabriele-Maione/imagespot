@@ -22,6 +22,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -276,5 +278,11 @@ public class AddPostsToCollectionController implements Initializable {
             imageView.fitWidthProperty().bind(stackPane.prefWidthProperty());
             imageView.fitHeightProperty().bind(stackPane.prefWidthProperty());
         }
+    }
+
+    @FXML
+    private void closeButtonOnAction() {
+        Stage stage = (Stage) btnAddPosts.getScene().getWindow();
+        stage.close();
     }
 }

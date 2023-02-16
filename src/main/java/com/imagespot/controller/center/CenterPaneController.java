@@ -14,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -36,8 +35,9 @@ public abstract class CenterPaneController implements Initializable {
     @FXML
     protected ScrollPane scrollPane;
 
-    protected int offset;
     protected ChangeListener<Number> flowPaneResponsiveListener;
+
+    protected int offset;
 
     public CenterPaneController() {
         offset = 0;
@@ -66,19 +66,20 @@ public abstract class CenterPaneController implements Initializable {
         task.setOnSucceeded(workerStateEvent -> {
             List<Post> posts = task.getValue();
 
-            flowPane.setAlignment(Pos.TOP_LEFT);
-            for (Post post : posts) {
-                VBox postBox = ViewFactory.getInstance().getPostPreview(post, type);
-                postBox.setId(String.valueOf(post.getIdImage()));
-                flowPane.getChildren().add(postBox);
+            if(!posts.isEmpty()){
+                flowPane.setAlignment(Pos.TOP_LEFT);
+                for (Post post : posts) {
+                    VBox postBox = ViewFactory.getInstance().getPostPreview(post, type);
+                    postBox.setId(String.valueOf(post.getIdImage()));
+                    flowPane.getChildren().add(postBox);
+                }
+                setFlowPaneChildWidth(flowPane.getChildren(), flowPane.getWidth());
             }
-            setFlowPaneChildWidth(flowPane.getChildren(), flowPane.getWidth());
 
             if(flowPane.getChildren().isEmpty()) {
                 flowPane.getChildren().add(nothingHereLabel());
                 flowPane.setAlignment(Pos.CENTER);
             }
-
         });
     }
 
@@ -101,22 +102,19 @@ public abstract class CenterPaneController implements Initializable {
     }
 
     protected void flowPaneResponsive(FlowPane fp) {
+        fp.setVgap(10);
+        fp.setHgap(10);
         flowPaneResponsiveListener = (observableValue, number, width) ->
                 setFlowPaneChildWidth(fp.getChildren(), width.doubleValue());
         fp.widthProperty().addListener(flowPaneResponsiveListener);
     }
 
-
     protected void setFlowPaneChildWidth(List<Node> flowPaneChild, double flowPaneWidth) {
         for (Node box : flowPaneChild) {
             if(box instanceof VBox v){
-                ImageView i = (ImageView) v.getChildren().get(0);
-
                 int numNodeForRow = (int) (flowPaneWidth / 280);
                 double nodeWidth = flowPaneWidth / numNodeForRow;
-
-                v.setPrefWidth(nodeWidth - 1);
-                i.setFitWidth(nodeWidth - 10);
+                v.setPrefWidth(nodeWidth - 10);
             }
         }
     }

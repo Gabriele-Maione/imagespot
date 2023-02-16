@@ -74,6 +74,7 @@ public class EditCollectionController {
                 }
                 String descriptionText = description.getText();
                 if(!descriptionText.equals(collection.getDescription())){
+                    descriptionText = descriptionText.isEmpty() ? null : descriptionText;
                     new CollectionDaoImpl().setCollectionDescription(collection.getIdCollection(), descriptionText);
                     collection.setDescription(descriptionText);
                 }
@@ -91,6 +92,7 @@ public class EditCollectionController {
 
     @FXML
     void closeButtonOnAction() {
-
+        Stage stage = (Stage) btnApply.getScene().getWindow();
+        stage.close();
     }
 }

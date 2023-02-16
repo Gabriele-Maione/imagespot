@@ -31,7 +31,7 @@ public class AddCollectionController implements Initializable {
 
         btnCreate.setOnAction(event -> {
             String name = textFieldName.getText().trim();
-            String description = textAreaDescription.getText().trim();
+            String description = textAreaDescription.getText().isEmpty() ? null : textAreaDescription.getText().trim();
             String owner = ViewFactory.getInstance().getUser().getUsername();
             createCollectionTask(name, description, owner);
         });

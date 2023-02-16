@@ -9,8 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import java.io.IOException;
-
 import static com.imagespot.Utils.TimeUtil.toDuration;
 import static com.imagespot.Utils.Utils.setAvatarRounde;
 
@@ -42,6 +40,8 @@ public class ImagesController {
         this.post = pst;
         this.viewType = type;
         image_preview.setImage((post.getPreview()));
+        image_preview.fitWidthProperty().bind(preview.prefWidthProperty().subtract(1));
+        image_preview.fitHeightProperty().bind(preview.prefWidthProperty().subtract(1));
         name.setText(post.getProfile().getName());
         username.setText("@" + post.getProfile().getUsername());
         if (post.getProfile().getAvatar() != null) {
@@ -49,7 +49,7 @@ public class ImagesController {
             setAvatarRounde(avatar);
         }
 
-        passedTime.setText(toDuration(System.currentTimeMillis()-post.getDate().getTime()));
+        passedTime.setText(toDuration(System.currentTimeMillis() - post.getDate().getTime()));
         setModify();
     }
 
@@ -64,7 +64,6 @@ public class ImagesController {
     private void ModifyBtnOnAction() {
         ViewFactory.getInstance().showEditPostWindow(post);
     }
-
 
     @FXML
     private void previewOnClick() {

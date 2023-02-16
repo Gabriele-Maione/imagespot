@@ -15,14 +15,11 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import static com.imagespot.Utils.Utils.setAvatarRounde;
 
 public class UserPageController extends CenterPaneController {
@@ -50,13 +47,9 @@ public class UserPageController extends CenterPaneController {
     public User user;
     protected FlowPane flowPanePosts;
     private FlowPane flowPaneTag;
-
     private int offsetUserPosts;
-
     private int offsetUserTags;
-
     private enum userPageViewType {USER_PROFILE_POSTS, USER_PROFILE_TAG}
-
     private userPageViewType type;
 
     @Override
@@ -168,8 +161,8 @@ public class UserPageController extends CenterPaneController {
         name.setText(user.getName());
         this.username.setText("@" + user.getUsername());
 
-        if (user.getBio() != null)
-            bio.setText(user.getBio());
+        bio.setText(user.getBio() != null ? user.getBio() : "");
+
         if(!user.getUsername().equals(ViewFactory.getInstance().getUser().getUsername()))
             checkFollowingTask();
     }

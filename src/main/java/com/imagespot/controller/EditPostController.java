@@ -1,47 +1,35 @@
 package com.imagespot.controller;
 
 import com.imagespot.DAOImpl.PostDAOImpl;
-import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-
 import java.sql.SQLException;
 import java.util.Optional;
 
 public class EditPostController {
     @FXML
     private Button btnApply;
-
     @FXML
     private Hyperlink cancel;
-
     @FXML
     private Button deleteBtn;
-
     @FXML
     private TextArea description;
-
     @FXML
     private ImageView imgPreview;
-
     @FXML
     private HBox photo;
-
     @FXML
     private ChoiceBox<String> photoStatus;
     @FXML
     private ProgressIndicator loadingIndicator;
-
     private final String[] status = {"Public", "Private"};
-
-
     Post post;
 
     public void init(Post post) throws SQLException {
@@ -51,7 +39,7 @@ public class EditPostController {
     }
 
     private void getData() {
-        final Task<Void> getDataTask = new Task<Void>() {
+        final Task<Void> getDataTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
                 new PostDAOImpl().getDataForEdit(post);
@@ -68,7 +56,7 @@ public class EditPostController {
     }
 
     private void getPhoto() {
-        final Task<Void> getPhotoTask = new Task<Void>() {
+        final Task<Void> getPhotoTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
                 if(post.getPhoto() == null)
@@ -85,12 +73,13 @@ public class EditPostController {
 
     @FXML
     void applyBtnOnAction() throws SQLException {
-        final Task btnApplyTask = new Task() {
+        final Task<Void> btnApplyTask = new Task<>() {
             @Override
-            protected Object call() throws Exception {
+            protected Void call() throws Exception {
                 if(!description.getText().equals(post.getDescription())) {
-                    new PostDAOImpl().setDescription(post.getIdImage(), description.getText());
-                    post.setDescription(description.getText());
+                    String desc = description.getText().isEmpty() ? null : description.getText();
+                    new PostDAOImpl().setDescription(post.getIdImage(), desc);
+                    post.setDescription(desc);
                 }
                 if(!photoStatus.getValue().equals(post.getStatus())) {
                     new PostDAOImpl().setStatus(post.getIdImage(), photoStatus.getValue());
@@ -140,7 +129,8 @@ public class EditPostController {
 
     @FXML
     void closeButtonOnAction() {
-
+        Stage stage = (Stage) btnApply.getScene().getWindow();
+        stage.close();
     }
 
 }

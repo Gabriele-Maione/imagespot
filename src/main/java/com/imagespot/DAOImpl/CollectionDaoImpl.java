@@ -272,14 +272,13 @@ public class CollectionDaoImpl implements CollectionDao {
     public void addPostsToCollection(Integer collectionId, List<Integer> postsId){
         PreparedStatement st;
 
-        String query = "INSERT INTO collection_post(collection, post, date) VALUES (?, ?, ?)";
+        String query = "INSERT INTO collection_post(collection, post) VALUES (?, ?)";
 
         try {
             st = con.prepareStatement(query);
             for(Integer postId : postsId){
                 st.setInt(1, collectionId);
                 st.setInt(2, postId);
-                st.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
                 st.execute();
             }
         }

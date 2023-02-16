@@ -1,13 +1,8 @@
 package com.imagespot.model;
 
 import javafx.scene.image.Image;
-
-import java.io.File;
-import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-
-import static com.imagespot.Utils.Utils.photoScaler;
 
 public class Post {
     private Integer idImage;
@@ -23,20 +18,17 @@ public class Post {
     private Location location;
     private Image preview;
     private ArrayList<User> taggedUsers;
-
     private ArrayList<Subject> subjects;
     private int likesNumber;
     private ArrayList<User> likes;
 
-    public Post() {
-    }
+    public Post() {}
 
-    public Post(String resolution, String description, int size, String extension, Timestamp date, String status, Location location) {
+    public Post(String resolution, String description, int size, String extension, String status, Location location) {
         this.resolution = resolution;
         this.description = description;
         this.size = size;
         this.extension = extension;
-        this.date = date;
         this.status = status;
         this.location = location;
     }
@@ -49,7 +41,6 @@ public class Post {
         this.likes = likes;
     }
 
-
     public Location getLocation() {
         return location;
     }
@@ -57,7 +48,6 @@ public class Post {
     public void setLocation(Location location) {
         this.location = location;
     }
-
 
     public ArrayList<User> getTaggedUsers() {
         return taggedUsers;

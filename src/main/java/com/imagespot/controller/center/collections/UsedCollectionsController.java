@@ -5,7 +5,6 @@ import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Collection;
 import com.imagespot.model.User;
 import javafx.concurrent.Task;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;

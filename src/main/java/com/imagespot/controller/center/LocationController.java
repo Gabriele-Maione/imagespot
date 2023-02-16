@@ -3,7 +3,6 @@ package com.imagespot.controller.center;
 import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.model.Post;
 import javafx.concurrent.Task;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,6 @@ public class LocationController extends CenterPaneController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
-        System.out.println(location);
         name.setText(location);
     }
 

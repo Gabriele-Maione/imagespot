@@ -2,8 +2,6 @@ package com.imagespot.Connection;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ConnectionManager {
 

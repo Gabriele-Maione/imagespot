@@ -4,7 +4,6 @@ import com.imagespot.DAOImpl.PostDAOImpl;
 import com.imagespot.controller.center.CenterPaneController;
 import com.imagespot.model.Post;
 import javafx.concurrent.Task;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;

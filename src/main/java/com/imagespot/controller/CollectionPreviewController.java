@@ -66,11 +66,6 @@ public class CollectionPreviewController implements Initializable {
             avatar.setImage(collection.getOwner().getAvatar());
             setAvatarRounde(avatar);
         }
-        avatar.setOnMouseClicked(event -> {
-            ViewFactory.getInstance().setViewType(ViewType.PROFILE);
-            BorderPane borderPane = (BorderPane) avatar.getScene().getRoot();
-            borderPane.setCenter(ViewFactory.getInstance().getUserPage(collection.getOwner()));
-        });
         setModify();
 
         if(collection.getPosts().size() == 4){
@@ -111,6 +106,13 @@ public class CollectionPreviewController implements Initializable {
     @FXML
     private void btnEditOnClick(){
         ViewFactory.getInstance().showEditCollectionWindow(collection);
+    }
+
+    @FXML
+    private void userOnClick() {
+        ViewFactory.getInstance().setViewType(ViewType.PROFILE);
+        BorderPane borderPane = (BorderPane) avatar.getScene().getRoot();
+        borderPane.setCenter(ViewFactory.getInstance().getUserPage(collection.getOwner()));
     }
 }
 

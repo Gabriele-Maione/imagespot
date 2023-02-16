@@ -15,22 +15,16 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
-
 import java.io.*;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
+import java.util.Objects;
 import static com.imagespot.Utils.Utils.getMostCommonColour;
 import static com.imagespot.Utils.Utils.setAvatarRounde;
 
@@ -120,7 +114,7 @@ public class PostController {
                 setAvatarRounde(avatar);
             }
             date.setText(new SimpleDateFormat("h:mm a '·' d MMM yyyy").format(post.getDate()));
-            description.setText(post.getDescription());
+            description.setText(post.getDescription() != null ? post.getDescription() : "");
             deviceLbl.setText(post.getDevice().getBrand() + " " + post.getDevice().getModel());
             likeBtn.setText(String.valueOf(post.getLikesNumber()));
 
@@ -299,7 +293,7 @@ public class PostController {
         if (user.getAvatar() != null)
             avatar.setImage(user.getAvatar());
         else
-            avatar.setImage(new Image(getClass().getResourceAsStream("/icons/bear_icon.png")));
+            avatar.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/bear_icon.png"))));
 
         name = new Label(user.getName());
         name.setFont(new Font("System Bold", 14));
