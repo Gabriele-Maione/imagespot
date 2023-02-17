@@ -73,10 +73,13 @@ public class SignInController implements Initializable {
     @FXML
     private void signUpButtonOnAction() throws SQLException {
 
-        if(signUpUsername.getText().isBlank() || signUpEmail.getText().isBlank()
+        if (signUpUsername.getText().isBlank() || signUpEmail.getText().isBlank()
                 || signUpName.getText().isBlank() || signUpPass.getText().isBlank())
             signUpErr.setText("Fields can't be empty");
-
+        else if (!signUpEmail.getText().matches("[^@]+@[^@]+\\.[^@]+"))
+            signUpErr.setText("Invalid email format");
+        else if (signUpPass.getText().length() < 8)
+            signUpErr.setText("Password must be at least 8 characters long");
         else
             checkCredentialsTask(signUpUsername.getText(), signUpEmail.getText(), signUpName.getText(), signUpPass.getText());
     }
@@ -123,7 +126,7 @@ public class SignInController implements Initializable {
     public void checkUserSignInTask() {
         final Task<Boolean> userCheck = new Task<>() {
             @Override
-            protected Boolean call() throws Exception {
+            protected Boolean call() {
                 updateMessage("Loading...");
                 if (new UserDAOImpl().login(signInUsername.getText(), signInPass.getText())) {
                     new UserDAOImpl().getUserInfo(signInUsername.getText());

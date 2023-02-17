@@ -214,6 +214,7 @@ public class AddPhotoController implements Initializable {
             contextMenu.show(searchUser, Side.BOTTOM, 0, 0);
         });
         searchUser.setOnKeyReleased(event -> {
+            contextMenu.show(searchUser, Side.BOTTOM, 0, 0);
             if (!searchUser.getText().isBlank())
                 searchUsersTask(searchUser.getText().trim());
             else {

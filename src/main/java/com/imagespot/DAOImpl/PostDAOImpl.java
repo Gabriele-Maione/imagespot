@@ -31,7 +31,7 @@ public class PostDAOImpl implements PostDAO {
         PreparedStatement st;
         ResultSet rs;
         String insert = ("INSERT INTO Post (photo, resolution, description, size, extension, status, device, profile, preview)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING idimage, posting_date");
+                " VALUES (?, ?, ?, ?, ?, ?::statust, ?, ?, ?) RETURNING idimage, posting_date");
 
         //scaling image and deserialize from bufferedImage to InputStream
         InputStream preview = null;
@@ -280,7 +280,7 @@ public class PostDAOImpl implements PostDAO {
 
     public void setStatus(int id, String status) {
         PreparedStatement st;
-        String query = "UPDATE post SET status = ? WHERE idimage = ?";
+        String query = "UPDATE post SET status = ?::statust WHERE idimage = ?";
         try {
             st = con.prepareStatement(query);
             st.setString(1, status);
