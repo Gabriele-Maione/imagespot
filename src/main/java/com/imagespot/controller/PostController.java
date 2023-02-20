@@ -324,6 +324,7 @@ public class PostController {
             username.getScene().setRoot(ViewFactory.getInstance().getHomeRoot());
         });
         Label subjectLabel = new Label(subject.getSubject());
+        subjectLabel.getStyleClass().add("clickable");
         subjectLabel.setOnMouseClicked(mouseEvent -> {
             hm.getBorderPane().setCenter(ViewFactory.getInstance().getPostsBySubject(subject));
             username.getScene().setRoot(ViewFactory.getInstance().getHomeRoot());

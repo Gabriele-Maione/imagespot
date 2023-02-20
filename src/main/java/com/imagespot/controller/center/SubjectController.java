@@ -29,6 +29,7 @@ public class SubjectController extends CenterPaneController {
             @Override
             protected ArrayList<Post> call() {
                 ArrayList<Post> posts = new PostDAOImpl().getPostsBySubject(subject.getId(), offset);
+                subject.getPosts().addAll(posts);
                 offset += posts.size();
                 return posts;
             }
