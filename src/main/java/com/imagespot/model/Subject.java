@@ -6,6 +6,7 @@ public class Subject {
     private Integer id;
     private String category;
     private String subject;
+    ArrayList<Post> posts;
     private int imageID;
 
     public Subject(int id, String category, String subject) {

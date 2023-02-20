@@ -58,8 +58,8 @@ public class CollectionPreviewController implements Initializable {
         this.collection = collection;
         this.viewType = type;
         lblCollectionName.setText(collection.getName());
-        lblCollectionPosts.setText(String.valueOf(collection.getPostsSize()));
-        lblCollectionMembers.setText(String.valueOf(collection.getMemberSize()));
+        lblCollectionPosts.setText(String.valueOf(collection.getPostsCount()));
+        lblCollectionMembers.setText(String.valueOf(collection.getMemberCount()));
         lblName.setText(collection.getOwner().getName());
         lblUsername.setText("@" + collection.getOwner().getUsername());
         if(collection.getOwner().getAvatar() != null){

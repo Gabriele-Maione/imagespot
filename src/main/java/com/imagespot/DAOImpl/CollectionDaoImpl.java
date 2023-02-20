@@ -59,8 +59,8 @@ public class CollectionDaoImpl implements CollectionDao {
                 );
                 collection.setPosts(getPostsOfCollectionForPreview(collection.getIdCollection()));
                 int[] stats = getCollectionStats(collection.getIdCollection());
-                collection.setPostsSize(stats[0]);
-                collection.setMemberSize(stats[1]);
+                collection.setPostsCount(stats[0]);
+                collection.setMemberCount(stats[1]);
                 collections.add(collection);
             }
         } catch (SQLException e) {
@@ -90,8 +90,8 @@ public class CollectionDaoImpl implements CollectionDao {
                 collection.setPosts(getPostsOfCollectionForPreview(collection.getIdCollection()));
                 collection.setOwner(ViewFactory.getInstance().getUser());
                 int[] stats = getCollectionStats(collection.getIdCollection());
-                collection.setPostsSize(stats[0]);
-                collection.setMemberSize(stats[1]);
+                collection.setPostsCount(stats[0]);
+                collection.setMemberCount(stats[1]);
                 collections.add(collection);
             }
         }
@@ -124,8 +124,8 @@ public class CollectionDaoImpl implements CollectionDao {
                 collection.setPosts(getPostsOfCollectionForPreview(collection.getIdCollection()));
                 collection.setOwner(new UserDAOImpl().getUserInfoForPreview(rs.getString(4)));
                 int[] stats = getCollectionStats(collection.getIdCollection());
-                collection.setPostsSize(stats[0]);
-                collection.setMemberSize(stats[1]);
+                collection.setPostsCount(stats[0]);
+                collection.setMemberCount(stats[1]);
                 collections.add(collection);
             }
         }

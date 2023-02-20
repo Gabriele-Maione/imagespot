@@ -13,9 +13,9 @@ public class Collection {
 
     private ArrayList<Post> posts;
 
-    private int postsSize;
+    private int postsCount;
 
-    private int memberSize;
+    private int memberCount;
 
     public Collection(){};
 
@@ -25,7 +25,7 @@ public class Collection {
         this.description = description;
         this.owner = owner;
         this.posts = new ArrayList<>();
-        this.postsSize = 0;
+        this.postsCount = 0;
     }
 
     public Integer getIdCollection() {
@@ -68,19 +68,19 @@ public class Collection {
         this.posts = posts;
     }
 
-    public int getPostsSize() {
-        return postsSize;
+    public int getPostsCount() {
+        return postsCount;
     }
 
-    public void setPostsSize(int postsSize) {
-        this.postsSize = postsSize;
+    public void setPostsCount(int postsCount) {
+        this.postsCount = postsCount;
     }
 
-    public int getMemberSize() {
-        return memberSize;
+    public int getMemberCount() {
+        return memberCount;
     }
 
-    public void setMemberSize(int memberSize) {
-        this.memberSize = memberSize;
+    public void setMemberCount(int memberCount) {
+        this.memberCount = memberCount;
     }
 }

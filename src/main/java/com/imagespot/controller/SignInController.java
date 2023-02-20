@@ -109,7 +109,6 @@ public class SignInController implements Initializable {
         ViewFactory.getInstance().getUser().setUsername(signUpUsername.getText());
         ViewFactory.getInstance().getUser().setName(signUpName.getText());
         ViewFactory.getInstance().getUser().setEmail(signUpEmail.getText());
-        ViewFactory.getInstance().getUser().setPassword(signUpPass.getText());
         ViewFactory.getInstance().showAddInfoWindow();
         Stage stage = (Stage) btnSignUp.getScene().getWindow();
         stage.close();

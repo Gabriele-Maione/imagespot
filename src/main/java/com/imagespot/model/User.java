@@ -12,12 +12,14 @@ public class User {
     private String username;
     private ObjectProperty<String> name;
     private String email;
-    private String password;
     private String gender;
     private String bio;
     private ObjectProperty<Image> avatar;
     private ObservableList<User> followedUsers;
+
+    private ObservableList<User> follower;
     private ObservableList<Post> posts;
+    private ArrayList<Post> tagged;
     private ObservableList<Collection> collections;
     private ArrayList<Post> bookmark;
 
@@ -96,14 +98,6 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getGender() {
         return gender;
     }
@@ -120,4 +114,19 @@ public class User {
         this.bio = bio;
     }
 
+    public ObservableList<User> getFollower() {
+        return follower;
+    }
+
+    public void setFollower(ObservableList<User> follower) {
+        this.follower = follower;
+    }
+
+    public ArrayList<Post> getTagged() {
+        return tagged;
+    }
+
+    public void setTagged(ArrayList<Post> tagged) {
+        this.tagged = tagged;
+    }
 }

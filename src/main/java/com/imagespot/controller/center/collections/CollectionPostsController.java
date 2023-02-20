@@ -64,8 +64,8 @@ public class CollectionPostsController extends CenterPaneController {
             setAvatarRounde(ownerAvatar);
             lblOwnerName.setText(collection.getOwner().getName());
             lblOwnerUsername.setText("@" + collection.getOwner().getUsername());
-            lblPostSize.setText(String.valueOf(collection.getPostsSize()));
-            lblMemberSize.setText(String.valueOf(collection.getMemberSize()));
+            lblPostSize.setText(String.valueOf(collection.getPostsCount()));
+            lblMemberSize.setText(String.valueOf(collection.getMemberCount()));
             loadPosts();
         }
     }
@@ -96,10 +96,10 @@ public class CollectionPostsController extends CenterPaneController {
         collectionStatsTask.setOnSucceeded(workerStateEvent -> {
             int[] stats = collectionStatsTask.getValue();
 
-            collection.setPostsSize(stats[0]);
-            collection.setMemberSize(stats[1]);
-            lblPostSize.setText(String.valueOf(collection.getPostsSize()));
-            lblMemberSize.setText(String.valueOf(collection.getMemberSize()));
+            collection.setPostsCount(stats[0]);
+            collection.setMemberCount(stats[1]);
+            lblPostSize.setText(String.valueOf(collection.getPostsCount()));
+            lblMemberSize.setText(String.valueOf(collection.getMemberCount()));
         });
     }
 
