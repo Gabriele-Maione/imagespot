@@ -74,7 +74,7 @@ public class LocationDAOImpl implements LocationDAO {
         Statement st;
         ResultSet rs;
         String query = "SELECT formatted_address FROM location WHERE post = " + idPost;
-        System.out.println(query);
+
         try {
             st = con.createStatement();
             rs = st.executeQuery(query);

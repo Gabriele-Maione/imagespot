@@ -13,6 +13,15 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.http.HttpHeaders;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.imgscalr.Scalr;
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -47,7 +56,23 @@ public class Utils {
         output.createGraphics()
                 .drawImage(bufferedImage, 0, 0, Color.WHITE, null);
         ImageIO.write(output, "jpeg", baos);
+
         return new ByteArrayInputStream(baos.toByteArray());
+    }
+    public static File photoScaler2(File photo) throws IOException {
+        BufferedImage bufferedImage = ImageIO.read(photo.getAbsoluteFile());
+        bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 700, 700, Scalr.OP_ANTIALIAS);
+        bufferedImage = Scalr.crop(bufferedImage, (bufferedImage.getWidth() - Math.min(bufferedImage.getWidth(), bufferedImage.getHeight())) / 2,
+                (bufferedImage.getHeight() - Math.min(bufferedImage.getWidth(), bufferedImage.getHeight())) / 2, Math.min(bufferedImage.getWidth(), bufferedImage.getHeight()),
+                Math.min(bufferedImage.getWidth(), bufferedImage.getHeight()));
+
+        File tempFile = File.createTempFile("scaledphoto", ".jpeg");
+
+        BufferedImage output = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+        output.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+        ImageIO.write(output, "jpeg", tempFile);
+
+        return tempFile;
     }
 
     public static String getRes(File file) {
@@ -131,5 +156,23 @@ public class Utils {
         double avatarWidth = avatar.getFitWidth() / 2;
         Circle circle = new Circle(avatarWidth, avatarWidth, avatarWidth);
         avatar.setClip(circle);
+    }
+
+    public static String uploadFile(File file, File preview){
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+            builder.addPart("image", new FileBody(file));
+            builder.addPart("preview", new FileBody(preview));
+            HttpUriRequest request = RequestBuilder.post()
+                    .setUri("https://myapplications.altervista.org/imagespot/upload.php")
+                    .setHeader(HttpHeaders.ACCEPT, "application/json")
+                    .setEntity(builder.build()).build();
+            HttpResponse response = httpClient.execute(request);
+
+            return EntityUtils.toString(response.getEntity(), "UTF-8");
+        } catch (Exception e) {
+            System.out.println("Uploading file failed...");
+        }
+        return null;
     }
 }

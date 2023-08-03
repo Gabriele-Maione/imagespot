@@ -6,10 +6,10 @@ import java.sql.*;
 public class ConnectionManager {
 
     private static ConnectionManager instance;
-    private final String url = "jdbc:postgresql://dpg-cef3kb1gp3jk7mgsl3b0-a.frankfurt-postgres.render.com:5432/imagespotdb";
+    private final String url = "jdbc:postgresql://dpg-cj5sptqcn0vc7384d0sg-a.frankfurt-postgres.render.com:5432/imagespot";
     private final String driverName = "org.postgresql.Driver";
-    private final String username = "oobdsquad";
-    private final String password = "01ZpBQblnK9VysKAqQGyWWwMJrstJY41";
+    private final String username = "imagespot";
+    private final String password = "sxGcPx536GhTuwFeHtBwNEfqFM4lq4rL";
     private Connection con;
 
     private ConnectionManager() {

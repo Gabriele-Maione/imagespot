@@ -12,6 +12,10 @@ module com.imagespot {
     requires org.kordamp.ikonli.fontawesome;
     requires org.kordamp.ikonli.fontawesome5;
 
+    requires org.apache.httpcomponents.httpcore;
+    requires org.apache.httpcomponents.httpclient;
+    requires org.apache.httpcomponents.httpmime;
+
 
     opens com.imagespot to javafx.fxml;
     exports com.imagespot;

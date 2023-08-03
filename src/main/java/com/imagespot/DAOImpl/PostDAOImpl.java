@@ -27,22 +27,17 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public void addPost(File photo, Post post, Device device, User profile) {
+    public void addPost(String photo, Post post, Device device, User profile) {
         PreparedStatement st;
         ResultSet rs;
-        String insert = ("INSERT INTO Post (photo, resolution, description, size, extension, status, device, profile, preview)" +
-                " VALUES (?, ?, ?, ?, ?, ?::statust, ?, ?, ?) RETURNING idimage, posting_date");
+        String insert = ("INSERT INTO Post (photo, resolution, description, size, extension, status, device, profile)" +
+                " VALUES (?, ?, ?, ?, ?, ?::statust, ?, ?) RETURNING idimage, posting_date");
 
-        //scaling image and deserialize from bufferedImage to InputStream
-        InputStream preview = null;
         try {
-            preview = photoScaler(photo);
 
             st = con.prepareStatement(insert);
 
-            byte[] previewBytes = IOUtils.toByteArray(preview);
-
-            st.setBinaryStream(1, new FileInputStream(photo));
+            st.setString(1, photo);
             st.setString(2, post.getResolution());
             st.setString(3, post.getDescription());
             st.setInt(4, post.getSize());
@@ -50,7 +45,6 @@ public class PostDAOImpl implements PostDAO {
             st.setString(6, post.getStatus());
             st.setInt(7, device.getIdDevice());
             st.setString(8, profile.getUsername());
-            st.setBinaryStream(9, new ByteArrayInputStream(previewBytes));
 
             rs = st.executeQuery();
 
@@ -59,18 +53,18 @@ public class PostDAOImpl implements PostDAO {
                 post.setDate(rs.getTimestamp(2));
             }
 
-            post.setPreview(new Image(new ByteArrayInputStream(previewBytes)));
-            post.setPhoto(new Image(photo.getAbsolutePath()));
+            post.setPreviewFromUrl(photo);
+            post.setPhoto(new Image(photo));
             st.close();
             rs.close();
-        } catch (IOException | SQLException e) {
+        } catch (SQLException e) {
             Logger logger = Logger.getLogger(getClass().getName());
             logger.log(Level.SEVERE, "Failed to add new post", e);
         }
     }
 
     public ArrayList<Post> getRecentPosts(int offset) throws SQLException {
-        String query = "SELECT preview, profile, posting_date, idimage FROM post " +
+        String query = "SELECT photo, profile, posting_date, idimage FROM post " +
                 " WHERE status = 'Public' AND profile NOT IN('" +
                 ViewFactory.getInstance().getUser().getUsername() + "')";
 
@@ -80,14 +74,14 @@ public class PostDAOImpl implements PostDAO {
     //Retrieve user's personal posts
     @Override
     public ArrayList<Post> getUserPosts(String username, int offset) throws SQLException {
-        String query = "SELECT preview, profile, posting_date, idimage FROM post WHERE profile = '" + username + "'";
+        String query = "SELECT photo, profile, posting_date, idimage FROM post WHERE profile = '" + username + "'";
 
         return getPreviews(query, offset);
     }
 
     @Override
     public ArrayList<Post> getUsersPublicPosts(String username, int offset) throws SQLException {
-        String query = "SELECT preview, profile, posting_date, idimage FROM post WHERE " +
+        String query = "SELECT photo, profile, posting_date, idimage FROM post WHERE " +
                 "status = 'Public' AND profile = '" + username + "'";
 
         return getPreviews(query, offset);
@@ -95,7 +89,7 @@ public class PostDAOImpl implements PostDAO {
 
     @Override
     public ArrayList<Post> getFeed(String username, int offset) throws SQLException {
-        String query = "SELECT preview, profile, posting_date, idimage" +
+        String query = "SELECT photo, profile, posting_date, idimage" +
                 " FROM post" +
                 " WHERE status = 'Public'" +
                 " AND profile IN (SELECT idfollowing" +
@@ -107,7 +101,7 @@ public class PostDAOImpl implements PostDAO {
 
     @Override
     public ArrayList<Post> getPostsByLocation(String location, String type, int offset) {
-        String query = "SELECT preview, profile, posting_date, idimage" +
+        String query = "SELECT photo, profile, posting_date, idimage" +
                 " FROM post p JOIN location l ON p.idimage = l.post" +
                 " WHERE status = 'Public'" +
                 " AND " + type + " = '" + location + "'";
@@ -116,7 +110,7 @@ public class PostDAOImpl implements PostDAO {
 
     @Override
     public ArrayList<Post> getPostsByCategory(String category, int offset) {
-        String query = "SELECT DISTINCT preview, profile, posting_date, idimage" +
+        String query = "SELECT DISTINCT photo, profile, posting_date, idimage" +
                 " from post join subject_post sp on post.idimage = sp.post join subject s on sp.subject = s.subject_id" +
                 " WHERE status = 'Public'" +
                 " AND category = '" + category + "'";
@@ -125,7 +119,7 @@ public class PostDAOImpl implements PostDAO {
 
     @Override
     public ArrayList<Post> getPostsBySubject(int subject_id, int offset) {
-        String query = "SELECT DISTINCT preview, profile, posting_date, idimage" +
+        String query = "SELECT DISTINCT photo, profile, posting_date, idimage" +
                 " from post join subject_post sp on post.idimage = sp.post" +
                 " WHERE status = 'Public'" +
                 " AND subject = '" + subject_id + "'";
@@ -150,8 +144,7 @@ public class PostDAOImpl implements PostDAO {
             while (rs.next()) {
                 post = new Post();
                 post.setIdImage(rs.getInt(4));
-                if (rs.getBinaryStream(1) != null)
-                    post.setPreview(new Image(rs.getBinaryStream(1)));
+                post.setPreviewFromUrl(rs.getString(1));
                 post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
                 post.setDate(rs.getTimestamp(3));
                 post.setIdImage(rs.getInt(4));
@@ -208,7 +201,7 @@ public class PostDAOImpl implements PostDAO {
             st.setInt(1, id);
             rs = st.executeQuery();
             if (rs.next()) {
-                output = (new Image(rs.getBinaryStream(1)));
+                output = (new Image(rs.getString(1)));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -221,7 +214,7 @@ public class PostDAOImpl implements PostDAO {
         Post post = null;
         Statement st;
         ResultSet rs;
-        String query = "SELECT preview, profile, posting_date, idimage FROM post " +
+        String query = "SELECT photo, profile, posting_date, idimage FROM post " +
                 "WHERE idimage = '" + id + "'";
 
         try {
@@ -230,7 +223,7 @@ public class PostDAOImpl implements PostDAO {
             if (rs.next()) {
                 post = new Post();
                 post.setIdImage(rs.getInt(4));
-                post.setPreview(new Image(rs.getBinaryStream(1)));
+                post.setPreviewFromUrl(rs.getString(1));
                 post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
                 post.setDate(rs.getTimestamp(3));
                 post.setIdImage(rs.getInt(4));

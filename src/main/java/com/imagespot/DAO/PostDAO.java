@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface PostDAO {
-    void addPost(File photo, Post post, Device device, User profile) throws SQLException, IOException;
+    void addPost(String photo, Post post, Device device, User profile) throws SQLException, IOException;
     ArrayList<Post> getRecentPosts(int offset) throws SQLException;
     ArrayList<Post>getUserPosts(String username, int offset) throws SQLException;
     ArrayList<Post> getUsersPublicPosts(String username, int offset) throws SQLException;

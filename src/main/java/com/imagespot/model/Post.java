@@ -145,6 +145,10 @@ public class Post {
         this.preview = preview;
     }
 
+    public void setPreviewFromUrl(String url){
+        setPreview(new Image(url.replace(url.substring(url.lastIndexOf('.')), "_preview.jpeg")));
+    }
+
     public int getLikesNumber() {
         return likesNumber;
     }

@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import static com.imagespot.Utils.TimeUtil.toDuration;
+import static com.imagespot.Utils.Utils.crop;
 import static com.imagespot.Utils.Utils.setAvatarRounde;
 
 
@@ -39,7 +40,7 @@ public class ImagesController {
     public void setData(Post pst, ViewType type) {
         this.post = pst;
         this.viewType = type;
-        image_preview.setImage((post.getPreview()));
+        image_preview.setImage(post.getPreview());
         image_preview.fitWidthProperty().bind(preview.prefWidthProperty().subtract(1));
         image_preview.fitHeightProperty().bind(preview.prefWidthProperty().subtract(1));
         name.setText(post.getProfile().getName());
