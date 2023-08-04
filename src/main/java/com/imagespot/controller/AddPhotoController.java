@@ -260,7 +260,7 @@ public class AddPhotoController implements Initializable {
                     JSONObject response = new JSONObject(uploadFile(file, photoScaler2(file)));
 
                     if(response.getBoolean("success")){
-                        new PostDAOImpl().addPost(response.getString("path"), post, device, user);
+                        new PostDAOImpl().addPost(response.getString("path"), response.getString("preview_path"), post, device, user);
                     }
 
                     post.setProfile(user);

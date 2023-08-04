@@ -4,13 +4,12 @@ import com.imagespot.model.Device;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
 import javafx.scene.image.Image;
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface PostDAO {
-    void addPost(String photo, Post post, Device device, User profile) throws SQLException, IOException;
+    void addPost(String photo, String preivew, Post post, Device device, User profile) throws SQLException, IOException;
     ArrayList<Post> getRecentPosts(int offset) throws SQLException;
     ArrayList<Post>getUserPosts(String username, int offset) throws SQLException;
     ArrayList<Post> getUsersPublicPosts(String username, int offset) throws SQLException;

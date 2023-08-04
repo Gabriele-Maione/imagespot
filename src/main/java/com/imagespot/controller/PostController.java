@@ -22,6 +22,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
@@ -242,10 +244,16 @@ public class PostController {
             @Override
             protected Void call() throws Exception {
                 updateMessage("Downloading...");
-                InputStream inputStream = new PostDAOImpl().getPhotoFile(post.getIdImage());
+                String urlImg = new PostDAOImpl().getPhotoFile(post.getIdImage());
+
                 OutputStream outputStream;
+                InputStream inputStream;
 
                 try {
+                    URL url = new URL(urlImg);
+                    URLConnection connection = url.openConnection();
+                    inputStream = connection.getInputStream();
+
                     outputStream = new FileOutputStream(file);
                     int byteRead;
                     byte[] buffer = new byte[1024];
