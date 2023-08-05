@@ -92,8 +92,8 @@ public class AddPostsToCollectionController implements Initializable {
             loadUserPostsCollection();
             loadYourGalleryPosts();
 
-            btnRemovePosts.setOnAction(event -> removePostsToCollection());
-            btnAddPosts.setOnAction(event -> addPostsToCollection());
+            btnRemovePosts.setOnAction(event -> removePostsFromCollection());
+            btnAddPosts.setOnAction(event -> addPostsFromCollection());
 
             btnCancel1.setOnAction(event -> {
                 btnCancelOnAction(flowPanePostCollection);
@@ -110,7 +110,7 @@ public class AddPostsToCollectionController implements Initializable {
     private void loadUserPostsCollection(){
         final Task<List<Post>> userPostsCollectionTask = new Task<>() {
             @Override
-            protected List<Post> call() throws Exception {
+            protected List<Post> call() {
                 ArrayList<Post> posts = new CollectionDaoImpl().getUserPostsOfCollection(user.getUsername(), collection.getIdCollection(), (flowPanePostCollection.getChildren().size() - offsetPostsCollection) + offsetPostsCollection);
                 offsetPostsCollection += posts.size();
                 return posts;
@@ -129,7 +129,7 @@ public class AddPostsToCollectionController implements Initializable {
     private void loadYourGalleryPosts(){
         final Task<List<Post>> yourGalleryPostsTask = new Task<>() {
             @Override
-            protected List<Post> call() throws Exception {
+            protected List<Post> call() {
                 ArrayList<Post> posts = new CollectionDaoImpl().getUserGallery(user.getUsername(), collection.getIdCollection(), (flowPaneYourGallery.getChildren().size() - offsetYourGalleryPosts) + offsetYourGalleryPosts);
                 offsetYourGalleryPosts += posts.size();
                 return posts;
@@ -145,11 +145,11 @@ public class AddPostsToCollectionController implements Initializable {
         });
     }
 
-    private void removePostsToCollection(){
+    private void removePostsFromCollection(){
         if(!selectedPostsToRemove.isEmpty()){
             final Task<Void> removePostsToCollectionTask = new Task<>() {
                 @Override
-                protected Void call() throws Exception {
+                protected Void call() {
                     new CollectionDaoImpl().removePostsToCollection(collection.getIdCollection(), selectedPostsToRemove);
                     return null;
                 }
@@ -167,11 +167,11 @@ public class AddPostsToCollectionController implements Initializable {
         }
     }
 
-    private void addPostsToCollection(){
+    private void addPostsFromCollection(){
         if(!selectedPostsToAdd.isEmpty()){
             final Task<Void> addPostsToCollectionTask = new Task<>() {
                 @Override
-                protected Void call() throws Exception {
+                protected Void call() {
                     new CollectionDaoImpl().addPostsToCollection(collection.getIdCollection(), selectedPostsToAdd);
                     return null;
                 }

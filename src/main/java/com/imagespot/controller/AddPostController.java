@@ -31,7 +31,7 @@ import java.util.*;
 import static com.imagespot.Utils.Utils.*;
 import static org.kordamp.ikonli.fontawesome5.FontAwesomeSolid.USER_CHECK;
 
-public class AddPhotoController implements Initializable {
+public class AddPostController implements Initializable {
     @FXML
     private Button btnPublish;
     @FXML
@@ -242,9 +242,9 @@ public class AddPhotoController implements Initializable {
     @FXML
     private void btnPublishOnAction() {
         if (file == null)
-            err.setText("LOAD A PHOTO!!!");
+            err.setText("Please, LOAD A PHOTO!!!");
         else if (device == null)
-            err.setText("SPECIFY DEVICE!!!");
+            err.setText("Please, SPECIFY A DEVICE!!!");
         else {
             btnPublish.setVisible(false);
             err.setText("");
@@ -257,7 +257,7 @@ public class AddPhotoController implements Initializable {
 
                     Post post = new Post(getRes(file), description, getSize(file), getExt(file), cbStatus.getValue(), location);
 
-                    JSONObject response = new JSONObject(uploadFile(file, photoScaler2(file)));
+                    JSONObject response = new JSONObject(Objects.requireNonNull(uploadFile(file, photoScaler2(file))));
 
                     if(response.getBoolean("success")){
                         new PostDAOImpl().addPost(response.getString("path"), response.getString("preview_path"), post, device, user);
@@ -521,7 +521,7 @@ public class AddPhotoController implements Initializable {
         });
 
         coordinatesFld.setOnKeyReleased(event -> {
-            if (coordinatesFld.getText().length() > 5) {
+            if (coordinatesFld.getText().length() > 2) {
                 Task<JSONObject> addressReq = searchAddressesTask(coordinatesFld.getText());
                 new Thread(addressReq).start();
 

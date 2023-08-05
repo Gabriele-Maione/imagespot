@@ -19,6 +19,7 @@ public class FavouritesController extends CenterPaneController {
         addPostsRemovedListener();
     }
 
+    @Override
     protected void loadPosts() {
         final Task<List<Post>> getFavourites = new Task<>() {
             @Override

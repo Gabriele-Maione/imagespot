@@ -17,6 +17,7 @@ public class BrowseController extends CenterPaneController {
         addScrollPaneListener();
     }
 
+    @Override
     protected void loadPosts() {
         final Task<List<Post>> getRecentPosts = new Task<>() {
             @Override

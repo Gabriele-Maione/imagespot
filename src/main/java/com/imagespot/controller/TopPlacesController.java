@@ -33,10 +33,9 @@ public class TopPlacesController implements Initializable {
     @FXML
     protected ProgressIndicator progressIndicator;
 
-
-    List<String> countries;
-    List<String> cities;
-    List<String> places;
+    private List<String> countries;
+    private List<String> cities;
+    private List<String> places;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

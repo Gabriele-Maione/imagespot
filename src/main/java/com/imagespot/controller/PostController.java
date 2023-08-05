@@ -121,7 +121,6 @@ public class PostController {
             likeBtn.setText(String.valueOf(post.getLikesNumber()));
 
             if (!post.getTaggedUsers().isEmpty()) {
-                System.out.println(post.getTaggedUsers().isEmpty());
 
                 for (User user : post.getTaggedUsers())
                     tagVBox.getChildren().add(getContainerForTag(user));
@@ -175,7 +174,7 @@ public class PostController {
         Task<Boolean> isLikedTask = new Task<>() {
             @Override
             protected Boolean call() throws Exception {
-                return new BookmarkDAOImpl().isLiked(post.getIdImage());
+                return new BookmarkDAOImpl().isLiked(post.getIdImage(), ViewFactory.getInstance().getUser());
             }
         };
         new Thread(isLikedTask).start();

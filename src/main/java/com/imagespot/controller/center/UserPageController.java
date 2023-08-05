@@ -189,7 +189,7 @@ public class UserPageController extends CenterPaneController {
     private void getUserStatsTask() {
         final Task<int[]> userStats = new Task<>() {
             @Override
-            protected int[] call() throws Exception {
+            protected int[] call() {
                 return new UserDAOImpl().retrieveUserStats(user.getUsername());
             }
         };

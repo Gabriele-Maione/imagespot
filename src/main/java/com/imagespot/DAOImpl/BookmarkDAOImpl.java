@@ -5,7 +5,6 @@ import com.imagespot.DAO.BookmarkDAO;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -23,12 +22,12 @@ public class BookmarkDAOImpl implements BookmarkDAO {
     @Override
     public void addBookmark(int idImage) {
         PreparedStatement st;
-        String query = "INSERT INTO bookmark (username, idimage, date) VALUES (?, ?, ?)";
+        String query = "INSERT INTO bookmark (username, idimage) VALUES (?, ?)";
         try {
             st = con.prepareStatement(query);
             st.setString(1, ViewFactory.getInstance().getUser().getUsername());
             st.setInt(2, idImage);
-            st.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
@@ -40,7 +39,7 @@ public class BookmarkDAOImpl implements BookmarkDAO {
     public void removeBookmark(int idImage) {
         PreparedStatement st;
         String query = "DELETE FROM bookmark WHERE username = ? AND idimage = ?";
-        System.out.println("Bookmark removed");
+
         try {
             st = con.prepareStatement(query);
             st.setString(1, ViewFactory.getInstance().getUser().getUsername());
@@ -53,7 +52,7 @@ public class BookmarkDAOImpl implements BookmarkDAO {
     }
 
     @Override
-    public boolean isLiked(int idImage) {
+    public boolean isLiked(int idImage, User user) {
         boolean flag = false;
         PreparedStatement st;
         ResultSet rs;
@@ -61,7 +60,7 @@ public class BookmarkDAOImpl implements BookmarkDAO {
 
         try {
             st = con.prepareStatement(query);
-            st.setString(1, ViewFactory.getInstance().getUser().getUsername());
+            st.setString(1, user.getUsername());
             st.setInt(2, idImage);
             rs = st.executeQuery();
 
@@ -78,13 +77,13 @@ public class BookmarkDAOImpl implements BookmarkDAO {
         ArrayList<Post> bookmarks = new ArrayList<>();
         PreparedStatement st;
         ResultSet rs;
-        StringBuilder complexQuery = new StringBuilder("SELECT P.idimage FROM post P" +
-                " JOIN bookmark B ON P.idimage = B.idimage WHERE username = ?");
+        String query = "SELECT P.idimage FROM post P" +
+                " JOIN bookmark B ON P.idimage = B.idimage WHERE username = ?" +
+                " ORDER BY date DESC LIMIT 20 OFFSET ?";
 
-        complexQuery.append(" ORDER BY date DESC LIMIT 20 OFFSET ?");
 
         try {
-            st = con.prepareStatement(complexQuery.toString());
+            st = con.prepareStatement(query);
             st.setString(1, ViewFactory.getInstance().getUser().getUsername());
             st.setInt(2, offset);
 

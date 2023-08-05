@@ -1,16 +1,9 @@
 package com.imagespot.Utils;
 
-import com.imagespot.View.ViewFactory;
-import com.imagespot.model.Post;
-import javafx.concurrent.Task;
-import javafx.scene.Node;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpHeaders;
@@ -28,7 +21,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
-import java.util.List;
 
 public class Utils {
     public static Image crop(Image img) {

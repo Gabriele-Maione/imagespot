@@ -1,5 +1,6 @@
 package com.imagespot.model;
 
+import com.imagespot.Utils.Utils;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -16,7 +17,6 @@ public class User {
     private String bio;
     private ObjectProperty<Image> avatar;
     private ObservableList<User> followedUsers;
-
     private ObservableList<User> follower;
     private ObservableList<Post> posts;
     private ArrayList<Post> tagged;
@@ -70,7 +70,7 @@ public class User {
     }
 
     public void setAvatar(Image avatar) {
-        this.avatar.setValue(avatar);
+        this.avatar.setValue((avatar != null) ? Utils.crop(avatar) : null);
     }
     public String getUsername() {
         return username;

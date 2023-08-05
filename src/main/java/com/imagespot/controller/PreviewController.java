@@ -10,14 +10,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import static com.imagespot.Utils.TimeUtil.toDuration;
-import static com.imagespot.Utils.Utils.crop;
 import static com.imagespot.Utils.Utils.setAvatarRounde;
 
+public class PreviewController {
 
-public class ImagesController {
 
-    @FXML
-    private Label date;
     @FXML
     private ImageView image_preview;
     @FXML
@@ -46,7 +43,7 @@ public class ImagesController {
         name.setText(post.getProfile().getName());
         username.setText("@" + post.getProfile().getUsername());
         if (post.getProfile().getAvatar() != null) {
-            avatar.setImage((post.getProfile().getAvatar()));
+            avatar.setImage(post.getProfile().getAvatar());
             setAvatarRounde(avatar);
         }
 
@@ -70,11 +67,11 @@ public class ImagesController {
     private void previewOnClick() {
         username.getScene().setRoot(ViewFactory.getInstance().getPostView(post.getIdImage()));
     }
+
     @FXML
     private void userOnClick() {
         ViewFactory.getInstance().setViewType(ViewType.PROFILE);
         BorderPane borderPane = (BorderPane) image_preview.getScene().getRoot();
         borderPane.setCenter(ViewFactory.getInstance().getUserPage(post.getProfile()));
     }
-
 }

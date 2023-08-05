@@ -2,6 +2,7 @@ package com.imagespot.controller;
 
 import com.imagespot.DAOImpl.UserDAOImpl;
 import com.imagespot.View.ViewFactory;
+import com.imagespot.model.User;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,7 +11,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -53,8 +53,8 @@ public class SignInController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         redirectToLoginView();
-
     }
+
     @FXML
     private void onKeyEnterPressed(KeyEvent event){
         if(event.getCode().equals(KeyCode.ENTER)){
@@ -71,7 +71,7 @@ public class SignInController implements Initializable {
     }
 
     @FXML
-    private void signUpButtonOnAction() throws SQLException {
+    private void signUpButtonOnAction() {
 
         if (signUpUsername.getText().isBlank() || signUpEmail.getText().isBlank()
                 || signUpName.getText().isBlank() || signUpPass.getText().isBlank())
@@ -128,7 +128,15 @@ public class SignInController implements Initializable {
             protected Boolean call() {
                 updateMessage("Loading...");
                 if (new UserDAOImpl().login(signInUsername.getText(), signInPass.getText())) {
-                    new UserDAOImpl().getUserInfo(signInUsername.getText());
+                    User user = new UserDAOImpl().getUserInfo(signInUsername.getText());
+
+                    ViewFactory.getInstance().getUser().setUsername(user.getUsername());
+                    ViewFactory.getInstance().getUser().setEmail(user.getEmail());
+                    ViewFactory.getInstance().getUser().setName(user.getName());
+                    ViewFactory.getInstance().getUser().setGender(user.getGender());
+                    ViewFactory.getInstance().getUser().setBio(user.getBio());
+                    if (user.getAvatar() != null)
+                        ViewFactory.getInstance().getUser().setAvatar(user.getAvatar());
                     return true;
                 }
                 else updateMessage("Credentials are wrong :(");
@@ -148,13 +156,10 @@ public class SignInController implements Initializable {
 
     @FXML
     private void hlinkForgotPass() {
-
         hlinkForgotPass.setText("¯\\_(ツ)_/¯");
         hlinkForgotPass.setStyle("-fx-underline: false");
     }
 
-    /*
-    * Le animazioni di windows nn funzionano*/
     @FXML
     private void closeButtonOnAction() {
         Stage stage = (Stage) btnClose.getScene().getWindow();
@@ -170,8 +175,6 @@ public class SignInController implements Initializable {
     private void redirectToLoginView() {
         hlinkSignIn.setOnMouseClicked(ev -> tabPane.getSelectionModel().select(0));
     }
-
-
 
     @FXML
     private void dragged(MouseEvent ev) {

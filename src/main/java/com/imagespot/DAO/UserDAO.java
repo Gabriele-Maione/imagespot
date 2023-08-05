@@ -23,7 +23,7 @@ public interface UserDAO {
     void deleteAvatar(String username);
     void setName(String username, String name);
 
-    void getUserInfo(String username) throws SQLException;
+    User getUserInfo(String username) throws SQLException;
 
     User getUserInfoForPreview(String username) throws SQLException;
 

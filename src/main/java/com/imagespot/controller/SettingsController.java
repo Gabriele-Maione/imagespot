@@ -20,7 +20,6 @@ import java.util.ResourceBundle;
 import static com.imagespot.Utils.Utils.crop;
 import static com.imagespot.Utils.Utils.setAvatarRounde;
 
-
 public class SettingsController implements Initializable {
     @FXML
     private TextArea bio;

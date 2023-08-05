@@ -18,6 +18,9 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static com.imagespot.Utils.Utils.crop;
+import static com.imagespot.Utils.Utils.setAvatarRounde;
+
 public class AddInfoController implements Initializable {
 
     @FXML
@@ -45,6 +48,7 @@ public class AddInfoController implements Initializable {
     private Label welcomeLabel;
 
     private File avatar;
+
 
     private final String[] gender = {"Male", "Female", "Not binary", "Prefer not say", "Custom"};
 
@@ -85,8 +89,11 @@ public class AddInfoController implements Initializable {
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg"));
             avatar = fc.showOpenDialog(avatarPreview.getScene().getWindow());
-            if(avatar != null)
-                avatarPreview.setImage((new Image((avatar.getAbsolutePath()))));
+            if(avatar != null){
+                user.setAvatar(new Image(avatar.getAbsolutePath()));
+                avatarPreview.setImage(user.getAvatar());
+                setAvatarRounde(avatarPreview);
+            }
     }
 
     @FXML
@@ -95,16 +102,21 @@ public class AddInfoController implements Initializable {
     }
 
     private void submitTask() {
-        final Task<Void> submitTask = new Task<Void>() {
+        final Task<Void> submitTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
                 UserDAOImpl userDB = new UserDAOImpl();
-                if(avatar != null)
+                if(avatar != null) {
                     userDB.setAvatar(user.getUsername(), avatar);
-                if(cbGender.getValue() != null)
+                }
+                if(cbGender.getValue() != null) {
+                    user.setGender(cbGender.getValue());
                     userDB.setGender(user.getUsername(), cbGender.getValue());
-                if(!bio.getText().equals(""))
+                }
+                if(!bio.getText().equals("")) {
+                    user.setBio(bio.getText());
                     userDB.setBio(user.getUsername(), bio.getText());
+                }
                 return null;
             }
         };
@@ -112,7 +124,6 @@ public class AddInfoController implements Initializable {
         submitTask.setOnSucceeded(workerStateEvent -> {
             Stage stage = (Stage)submit.getScene().getWindow();
             stage.close();
-            new UserDAOImpl().getUserInfo(user.getUsername());
             ViewFactory.getInstance().showHomeWindow();
         });
     }

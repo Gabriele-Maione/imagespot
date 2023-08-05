@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import static com.imagespot.Utils.Utils.crop;
 import static com.imagespot.Utils.Utils.setAvatarRounde;
@@ -60,10 +61,10 @@ public class HomeController implements Initializable {
 
         setAvatarRounde(profilePic);
         if(user.getAvatar() != null){
-            profilePic.setImage(crop(user.getAvatar()));
+            profilePic.setImage(user.getAvatar());
         }
         user.avatarProperty().addListener((ObservableValue<? extends Image> observable, Image oldVal, Image newVal) ->
-                profilePic.setImage( (newVal == null) ? new Image(getClass().getResourceAsStream("/icons/bear_icon.png")) : crop(user.getAvatar())));
+                profilePic.setImage( (newVal == null) ? new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/bear_icon.png"))) : crop(user.getAvatar())));
 
         homePane.setCenter(ViewFactory.getInstance().getBrowseView());
 
@@ -72,7 +73,7 @@ public class HomeController implements Initializable {
     }
 
 
-    private void addListeners() { //TODO: add all listeners
+    private void addListeners() {
         //search field
         fldSearch.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER)) searchUser();

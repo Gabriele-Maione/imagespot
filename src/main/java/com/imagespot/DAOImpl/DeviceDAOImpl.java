@@ -3,13 +3,11 @@ package com.imagespot.DAOImpl;
 import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.DeviceDAO;
 import com.imagespot.model.Device;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class DeviceDAOImpl implements DeviceDAO {
 

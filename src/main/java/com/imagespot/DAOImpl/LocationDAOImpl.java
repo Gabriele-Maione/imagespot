@@ -3,7 +3,6 @@ package com.imagespot.DAOImpl;
 import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.LocationDAO;
 import com.imagespot.model.Location;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

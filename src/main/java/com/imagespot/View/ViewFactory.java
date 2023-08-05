@@ -257,7 +257,7 @@ public class ViewFactory {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/images-preview.fxml"));
             postPreview = loader.load();
-            ImagesController controller = loader.getController();
+            PreviewController controller = loader.getController();
             controller.setData(post, type);
         } catch (Exception e) {
             e.printStackTrace();

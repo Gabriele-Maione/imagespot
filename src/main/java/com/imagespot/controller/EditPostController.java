@@ -30,7 +30,7 @@ public class EditPostController {
     @FXML
     private ProgressIndicator loadingIndicator;
     private final String[] status = {"Public", "Private"};
-    Post post;
+    private Post post;
 
     public void init(Post post) throws SQLException {
         this.post = post;
@@ -41,7 +41,7 @@ public class EditPostController {
     private void getData() {
         final Task<Void> getDataTask = new Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 new PostDAOImpl().getDataForEdit(post);
                 return null;
             }
@@ -58,7 +58,7 @@ public class EditPostController {
     private void getPhoto() {
         final Task<Void> getPhotoTask = new Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 if(post.getPhoto() == null)
                     post.setPhoto(new PostDAOImpl().getPhoto(post.getIdImage()));
                 return null;
@@ -66,16 +66,14 @@ public class EditPostController {
         };
         loadingIndicator.visibleProperty().bind(getPhotoTask.runningProperty());
         new Thread(getPhotoTask).start();
-        getPhotoTask.setOnSucceeded(workerStateEvent -> {
-            imgPreview.setImage(post.getPhoto());
-        });
+        getPhotoTask.setOnSucceeded(workerStateEvent -> imgPreview.setImage(post.getPhoto()));
     }
 
     @FXML
-    void applyBtnOnAction() throws SQLException {
+    void applyBtnOnAction() {
         final Task<Void> btnApplyTask = new Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 if(!description.getText().equals(post.getDescription())) {
                     String desc = description.getText().isEmpty() ? null : description.getText();
                     new PostDAOImpl().setDescription(post.getIdImage(), desc);
@@ -89,9 +87,7 @@ public class EditPostController {
             }
         };
         new Thread(btnApplyTask).start();
-        btnApplyTask.setOnSucceeded(workerStateEvent -> {
-            btnApply.setText("Done");
-        });
+        btnApplyTask.setOnSucceeded(workerStateEvent -> btnApply.setText("Done"));
     }
 
     @FXML
@@ -111,7 +107,7 @@ public class EditPostController {
         if (result.get() == buttonTypeYes) {
             Task<Void> deleteTask = new Task<>() {
                 @Override
-                protected Void call() throws Exception {
+                protected Void call() {
                     System.out.println(post.getIdImage());
                     new PostDAOImpl().deletePost(post.getIdImage());
                     return null;

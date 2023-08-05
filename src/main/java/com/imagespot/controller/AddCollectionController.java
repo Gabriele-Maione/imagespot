@@ -43,7 +43,7 @@ public class AddCollectionController implements Initializable {
         else{
             final Task<Integer> createCollectionTask = new Task<>() {
                 @Override
-                protected Integer call() throws Exception {
+                protected Integer call(){
                     return new CollectionDaoImpl().createCollection(name, description, owner);
                 }
             };

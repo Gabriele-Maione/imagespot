@@ -39,6 +39,7 @@ public class YourGalleryController extends CenterPaneController {
         });
     }
 
+    @Override
     protected void loadPosts() {
         final Task<List<Post>> getUserPosts = new Task<>() {
             @Override

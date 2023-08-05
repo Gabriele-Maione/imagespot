@@ -5,7 +5,6 @@ import com.imagespot.DAO.CollectionDao;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.model.Collection;
 import com.imagespot.model.Post;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -331,7 +330,6 @@ public class CollectionDaoImpl implements CollectionDao {
             st.close();
         }
         catch (SQLException e){
-            System.out.println(e.toString());
             throw new RuntimeException(e);
         }
     }
@@ -343,7 +341,6 @@ public class CollectionDaoImpl implements CollectionDao {
             st = con.createStatement();
             st.executeUpdate(query);
         } catch (SQLException e) {
-            System.out.println(e.toString());
             throw new RuntimeException(e);
         }
     }

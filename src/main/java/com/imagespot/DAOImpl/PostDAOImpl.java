@@ -7,16 +7,10 @@ import com.imagespot.model.Device;
 import com.imagespot.model.Post;
 import com.imagespot.model.User;
 import javafx.scene.image.Image;
-import org.apache.commons.io.IOUtils;
-
-import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
-import static com.imagespot.Utils.Utils.photoScaler;
 
 public class PostDAOImpl implements PostDAO {
 
@@ -124,7 +118,6 @@ public class PostDAOImpl implements PostDAO {
                 " from post join subject_post sp on post.idimage = sp.post" +
                 " WHERE status = 'Public'" +
                 " AND subject = '" + subject_id + "'";
-        System.out.println(query);
         return getPreviews(query, offset);
     }
 
@@ -214,7 +207,7 @@ public class PostDAOImpl implements PostDAO {
         Post post = null;
         Statement st;
         ResultSet rs;
-        String query = "SELECT photo, profile, posting_date, idimage FROM post " +
+        String query = "SELECT preview, profile, posting_date, idimage FROM post " +
                 "WHERE idimage = '" + id + "'";
 
         try {
@@ -287,12 +280,11 @@ public class PostDAOImpl implements PostDAO {
 
     public void deletePost(int id) {
         Statement st;
-        String query = "DELETE FROM post WHERE idimage = '" + id + "'";
+        String query = "DELETE FROM post WHERE idimage = " + id;
         try {
             st = con.createStatement();
             st.executeUpdate(query);
         } catch (SQLException e) {
-            System.out.println(e.toString());
             throw new RuntimeException(e);
         }
     }

@@ -66,7 +66,7 @@ public class EditCollectionController {
     void applyBtnOnAction(){
         final Task<Void> btnApplyTask = new Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call(){
                 String nameText = name.getText();
                 if(!nameText.equals(collection.getName())){
                     new CollectionDaoImpl().setCollectionName(collection.getIdCollection(), nameText);

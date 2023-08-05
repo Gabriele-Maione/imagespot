@@ -23,9 +23,8 @@ public class UserDAOImpl implements UserDAO {
         con = ConnectionManager.getInstance().getConnection();
     }
 
-
     @Override
-    public int signup(String username, String email, String name,String password) {
+    public int signup(String username, String email, String name, String password) {
         PreparedStatement st;
         ResultSet rs;
         int flag = 0;
@@ -90,7 +89,6 @@ public class UserDAOImpl implements UserDAO {
         } catch(SQLException ex) {
             ex.printStackTrace();
         }
-        ViewFactory.getInstance().getUser().setBio(bio);
     }
 
     @Override
@@ -107,7 +105,6 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        ViewFactory.getInstance().getUser().setGender(gender);
     }
 
     @Override
@@ -133,7 +130,6 @@ public class UserDAOImpl implements UserDAO {
         Statement st;
         String deleteAvatar = "UPDATE account SET avatar = NULL WHERE username = '" + username + "'";
 
-
         try {
             st = con.createStatement();
             st.executeUpdate(deleteAvatar);
@@ -158,9 +154,10 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void getUserInfo(String username) {
+    public User getUserInfo(String username) {
         PreparedStatement st;
         ResultSet rs;
+        User user = new User();
 
         String query = "SELECT email, name, gender, bio, avatar FROM account WHERE Username = ?";
 
@@ -170,18 +167,19 @@ public class UserDAOImpl implements UserDAO {
         st.setString(1, username);
         rs = st.executeQuery();
         if (rs.next()) {
-            ViewFactory.getInstance().getUser().setUsername(username);
-            ViewFactory.getInstance().getUser().setEmail(rs.getString(1));
-            ViewFactory.getInstance().getUser().setName(rs.getString(2));
-            ViewFactory.getInstance().getUser().setGender(rs.getString(3));
-            ViewFactory.getInstance().getUser().setBio(rs.getString(4));
+            user.setUsername(username);
+            user.setEmail(rs.getString(1));
+            user.setName(rs.getString(2));
+            user.setGender(rs.getString(3));
+            user.setBio(rs.getString(4));
             if (rs.getBinaryStream(5) != null)
-                ViewFactory.getInstance().getUser().setAvatar(new Image(rs.getBinaryStream(5)));
+                user.setAvatar(new Image(rs.getBinaryStream(5)));
         }
         st.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return user;
     }
 
     public User getUserInfoForPreview(String username) {
@@ -202,8 +200,8 @@ public class UserDAOImpl implements UserDAO {
                 user.setName(rs.getString(2));
                 user.setGender(rs.getString(3));
                 user.setBio(rs.getString(4));
-            if(rs.getBinaryStream(5) != null)
-                user.setAvatar(new Image(rs.getBinaryStream(5)));
+                if(rs.getBinaryStream(5) != null)
+                    user.setAvatar(new Image(rs.getBinaryStream(5)));
             }
             st.close();
         } catch (SQLException e) {
