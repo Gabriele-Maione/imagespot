@@ -74,11 +74,12 @@ public class EditPostController {
         final Task<Void> btnApplyTask = new Task<>() {
             @Override
             protected Void call() {
-                if(!description.getText().equals(post.getDescription())) {
+                if(post.getDescription() != null && !description.getText().equals(post.getDescription())) {
                     String desc = description.getText().isEmpty() ? null : description.getText();
                     new PostDAOImpl().setDescription(post.getIdImage(), desc);
                     post.setDescription(desc);
                 }
+
                 if(!photoStatus.getValue().equals(post.getStatus())) {
                     new PostDAOImpl().setStatus(post.getIdImage(), photoStatus.getValue());
                     post.setStatus(photoStatus.getValue());

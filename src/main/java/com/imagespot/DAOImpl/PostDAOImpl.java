@@ -290,7 +290,6 @@ public class PostDAOImpl implements PostDAO {
             st = con.createStatement();
             st.executeUpdate(query);
         } catch (SQLException e) {
-            System.out.println(e.toString());
             throw new RuntimeException(e);
         }
     }
