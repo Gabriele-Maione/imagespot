@@ -139,7 +139,8 @@ public class PostDAOImpl implements PostDAO {
                 post = new Post();
                 post.setIdImage(rs.getInt(4));
                 post.setPreview(new Image(rs.getString(1)));
-                post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
+                if(rs.getString(2) != null)
+                    post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
                 post.setDate(rs.getTimestamp(3));
                 post.setIdImage(rs.getInt(4));
                 ls.add(post);
@@ -166,7 +167,8 @@ public class PostDAOImpl implements PostDAO {
             st.setInt(1, id);
             rs = st.executeQuery();
             if (rs.next()) {
-                post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(1)));
+                if(rs.getString(1) != null)
+                    post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(1)));
                 post.setDescription(rs.getString(2));
                 post.setExtension(rs.getString(3));
                 post.setIdImage(rs.getInt(4));
@@ -217,7 +219,8 @@ public class PostDAOImpl implements PostDAO {
                 post = new Post();
                 post.setIdImage(rs.getInt(4));
                 post.setPreview(new Image(rs.getString(1)));
-                post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
+                if(rs.getString(2) != null)
+                    post.setProfile(new UserDAOImpl().getUserInfoForPreview(rs.getString(2)));
                 post.setDate(rs.getTimestamp(3));
                 post.setIdImage(rs.getInt(4));
             }
@@ -268,12 +271,14 @@ public class PostDAOImpl implements PostDAO {
         PreparedStatement st;
         String query = "UPDATE post SET status = ?::statust WHERE idimage = ?";
         try {
+            System.out.println("afafa");
             st = con.prepareStatement(query);
             st.setString(1, status);
             st.setInt(2, id);
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
+            System.out.println(e.toString());
             throw new RuntimeException(e);
         }
     }
@@ -285,6 +290,7 @@ public class PostDAOImpl implements PostDAO {
             st = con.createStatement();
             st.executeUpdate(query);
         } catch (SQLException e) {
+            System.out.println(e.toString());
             throw new RuntimeException(e);
         }
     }

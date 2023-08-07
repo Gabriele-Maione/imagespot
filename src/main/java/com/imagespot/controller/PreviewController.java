@@ -3,6 +3,7 @@ package com.imagespot.controller;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.View.ViewType;
 import com.imagespot.model.Post;
+import com.imagespot.model.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,9 +30,9 @@ public class PreviewController {
     private VBox preview;
     @FXML
     private Button modify;
-
     private Post post;
     private ViewType viewType;
+    private User userPreview;
 
 
     public void setData(Post pst, ViewType type) {
@@ -40,12 +41,17 @@ public class PreviewController {
         image_preview.setImage(post.getPreview());
         image_preview.fitWidthProperty().bind(preview.prefWidthProperty().subtract(1));
         image_preview.fitHeightProperty().bind(preview.prefWidthProperty().subtract(1));
-        name.setText(post.getProfile().getName());
-        username.setText("@" + post.getProfile().getUsername());
-        if (post.getProfile().getAvatar() != null) {
-            avatar.setImage(post.getProfile().getAvatar());
-            setAvatarRounde(avatar);
+        userPreview = post.getProfile();
+
+        if(userPreview != null){
+            name.setText(userPreview.getName());
+            username.setText("@" + userPreview.getUsername());
+            if (userPreview.getAvatar() != null) {
+                avatar.setImage(userPreview.getAvatar());
+                setAvatarRounde(avatar);
+            }
         }
+
 
         passedTime.setText(toDuration(System.currentTimeMillis() - post.getDate().getTime()));
         setModify();
@@ -70,8 +76,10 @@ public class PreviewController {
 
     @FXML
     private void userOnClick() {
-        ViewFactory.getInstance().setViewType(ViewType.PROFILE);
-        BorderPane borderPane = (BorderPane) image_preview.getScene().getRoot();
-        borderPane.setCenter(ViewFactory.getInstance().getUserPage(post.getProfile()));
+        if(userPreview != null){
+            ViewFactory.getInstance().setViewType(ViewType.PROFILE);
+            BorderPane borderPane = (BorderPane) image_preview.getScene().getRoot();
+            borderPane.setCenter(ViewFactory.getInstance().getUserPage(post.getProfile()));
+        }
     }
 }

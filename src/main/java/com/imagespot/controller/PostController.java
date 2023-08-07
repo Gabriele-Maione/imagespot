@@ -71,7 +71,8 @@ public class PostController {
     private Label locationLbl;
     private Post post;
     private Image image;
-    HomeController hm;
+    private HomeController hm;
+    private User userPost;
 
     public void init(int idpost) throws SQLException {
         //imgContainer is the pane that contains the image
@@ -108,13 +109,18 @@ public class PostController {
             invokePhoto(idpost);
             post = postTask.getValue();
 
-            name.setText(post.getProfile().getName());
-            username.setText("@" + post.getProfile().getUsername());
+            userPost = post.getProfile();
 
-            if (post.getProfile().getAvatar() != null) {
-                avatar.setImage((post.getProfile().getAvatar()));
-                setAvatarRounde(avatar);
+            if(userPost != null){
+                name.setText(userPost.getName());
+                username.setText("@" + userPost.getUsername());
+
+                if (userPost.getAvatar() != null) {
+                    avatar.setImage(userPost.getAvatar());
+                    setAvatarRounde(avatar);
+                }
             }
+
             date.setText(new SimpleDateFormat("h:mm a '·' d MMM yyyy").format(post.getDate()));
             description.setText(post.getDescription() != null ? post.getDescription() : "");
             deviceLbl.setText(post.getDevice().getBrand() + " " + post.getDevice().getModel());
@@ -284,8 +290,10 @@ public class PostController {
     }
     @FXML
     private void userProfileOnClick() {
-        hm.getBorderPane().setCenter(ViewFactory.getInstance().getUserPage(post.getProfile()));
-        username.getScene().setRoot(ViewFactory.getInstance().getHomeRoot());
+        if(userPost != null) {
+            hm.getBorderPane().setCenter(ViewFactory.getInstance().getUserPage(post.getProfile()));
+            username.getScene().setRoot(ViewFactory.getInstance().getHomeRoot());
+        }
     }
 
     private HBox getContainerForTag(User user) {
