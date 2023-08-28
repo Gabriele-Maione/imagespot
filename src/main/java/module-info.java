@@ -1,6 +1,8 @@
 module com.imagespot {
+    requires javafx.base;
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.web;
     requires java.sql;
     requires org.apache.commons.io;
     requires java.desktop;
@@ -20,11 +22,12 @@ module com.imagespot {
     opens com.imagespot to javafx.fxml;
     exports com.imagespot;
     exports com.imagespot.controller;
-    opens com.imagespot.controller to javafx.fxml;
+    opens com.imagespot.controller to javafx.fxml, javafx.base, javafx.web;
     exports com.imagespot.controller.center;
     opens com.imagespot.controller.center to javafx.fxml;
     exports com.imagespot.controller.center.categories;
     opens com.imagespot.controller.center.categories to javafx.fxml;
     exports com.imagespot.controller.center.collections;
     opens com.imagespot.controller.center.collections to javafx.fxml;
+
 }

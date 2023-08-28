@@ -89,4 +89,23 @@ public class Location {
     public void setPost(Post post) {
         this.post = post;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        if(country != null)
+            s.append("Country\t\t").append(country);
+        if(state != null)
+            s.append("\nState\t\t").append(state);
+        if(city != null)
+            s.append("\nCity\t\t\t").append(city);
+        if(postcode != null)
+            s.append("\nPostcode\t\t").append(postcode);
+        if(road != null)
+            s.append("\nRoad\t\t").append(road);
+        s.append("\nCoord\t\t").append(latitude).append(", ").append(longitude);
+        s.append("\nFormatted\t").append(formatted_address);
+
+        return s.toString();
+    }
 }
