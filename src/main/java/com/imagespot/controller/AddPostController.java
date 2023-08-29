@@ -198,7 +198,7 @@ public class AddPostController implements Initializable {
                 progressIndicator.setManaged(false);
                 btnPublish.setVisible(false);
                 err.setText("DONE");
-                ViewFactory.getInstance().getUser().getPosts().add(0, publishPhoto.getValue());
+                ViewFactory.getInstance().getUser().addPost(publishPhoto.getValue());
             });
         }
     }

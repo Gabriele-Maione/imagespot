@@ -129,4 +129,16 @@ public class User {
     public void setTagged(ArrayList<Post> tagged) {
         this.tagged = tagged;
     }
+
+    public void addPost(Post post) {
+        posts.add(0, post);
+    }
+
+    public void removePost(int postID) {
+        posts.removeIf(p -> p.getIdImage().equals(postID));
+    }
+
+    public void removeCollection(int collectionID) {
+        collections.removeIf(c -> c.getIdCollection().equals(collectionID));
+    }
 }

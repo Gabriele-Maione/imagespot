@@ -55,7 +55,7 @@ public class EditCollectionController {
             new Thread(deleteCollectionTask).start();
             progressIndicator.visibleProperty().bind(deleteCollectionTask.runningProperty());
             deleteCollectionTask.setOnSucceeded(workerStateEvent -> {
-                ViewFactory.getInstance().getUser().getCollections().removeIf(c -> c.getIdCollection().equals(collection.getIdCollection()));
+                ViewFactory.getInstance().getUser().removeCollection(collection.getIdCollection());
                 Stage stage = (Stage)description.getScene().getWindow();
                 stage.close();
             });
