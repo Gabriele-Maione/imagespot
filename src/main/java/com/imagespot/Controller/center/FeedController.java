@@ -1,6 +1,6 @@
 package com.imagespot.Controller.center;
 
-import com.imagespot.DAOImpl.PostDAOImpl;
+import com.imagespot.ImplementationPostgresDAO.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.Model.Post;
 import javafx.concurrent.Task;

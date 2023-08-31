@@ -1,6 +1,6 @@
 package com.imagespot.Controller;
 
-import com.imagespot.DAOImpl.UserDAOImpl;
+import com.imagespot.ImplementationPostgresDAO.UserDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.Model.User;
 import javafx.beans.value.ObservableValue;

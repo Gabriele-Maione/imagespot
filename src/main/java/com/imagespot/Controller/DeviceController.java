@@ -1,6 +1,6 @@
 package com.imagespot.Controller;
 
-import com.imagespot.DAOImpl.DeviceDAOImpl;
+import com.imagespot.ImplementationPostgresDAO.DeviceDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.Model.Device;
 import com.imagespot.Model.User;

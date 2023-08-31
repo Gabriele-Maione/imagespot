@@ -1,7 +1,7 @@
 package com.imagespot.Controller;
 
-import com.imagespot.DAOImpl.LocationDAOImpl;
-import com.imagespot.DAOImpl.PostDAOImpl;
+import com.imagespot.ImplementationPostgresDAO.LocationDAOImpl;
+import com.imagespot.ImplementationPostgresDAO.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;

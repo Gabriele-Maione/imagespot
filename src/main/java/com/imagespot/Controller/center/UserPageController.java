@@ -1,8 +1,8 @@
 package com.imagespot.Controller.center;
 
-import com.imagespot.DAOImpl.PostDAOImpl;
-import com.imagespot.DAOImpl.TaggedUserDAOImpl;
-import com.imagespot.DAOImpl.UserDAOImpl;
+import com.imagespot.ImplementationPostgresDAO.PostDAOImpl;
+import com.imagespot.ImplementationPostgresDAO.TaggedUserDAOImpl;
+import com.imagespot.ImplementationPostgresDAO.UserDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.Model.Post;
 import com.imagespot.Model.User;

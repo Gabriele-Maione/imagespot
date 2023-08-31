@@ -1,7 +1,7 @@
 package com.imagespot.Controller;
 
-import com.imagespot.DAOImpl.BookmarkDAOImpl;
-import com.imagespot.DAOImpl.PostDAOImpl;
+import com.imagespot.ImplementationPostgresDAO.BookmarkDAOImpl;
+import com.imagespot.ImplementationPostgresDAO.PostDAOImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.Model.Post;
 import com.imagespot.Model.Subject;

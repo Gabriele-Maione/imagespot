@@ -1,6 +1,6 @@
 package com.imagespot.Controller.center.categories;
 
-import com.imagespot.DAOImpl.PostDAOImpl;
+import com.imagespot.ImplementationPostgresDAO.PostDAOImpl;
 import com.imagespot.Controller.center.CenterPaneController;
 import com.imagespot.Model.Post;
 import javafx.concurrent.Task;

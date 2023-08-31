@@ -1,4 +1,4 @@
-package com.imagespot.DAOImpl;
+package com.imagespot.ImplementationPostgresDAO;
 
 import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.DeviceDAO;
@@ -59,7 +59,7 @@ public class DeviceDAOImpl implements DeviceDAO {
     }
 
     public void removeUserDevice(int idDevice, String username){
-        String query = "DELETE FROM userdevice WHERE device = ? AND profile = ?";
+        String query = "DELETE FROM user_device WHERE device = ? AND profile = ?";
         PreparedStatement st;
 
         try {

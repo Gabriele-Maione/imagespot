@@ -1,4 +1,4 @@
-package com.imagespot.DAOImpl;
+package com.imagespot.ImplementationPostgresDAO;
 
 import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.BookmarkDAO;

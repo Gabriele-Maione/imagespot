@@ -1,6 +1,6 @@
 package com.imagespot.Controller.center.collections;
 
-import com.imagespot.DAOImpl.CollectionDaoImpl;
+import com.imagespot.ImplementationPostgresDAO.CollectionDaoImpl;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.View.ViewType;
 import com.imagespot.Controller.center.CenterPaneController;
