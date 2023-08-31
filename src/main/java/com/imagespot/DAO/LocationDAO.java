@@ -1,6 +1,6 @@
 package com.imagespot.DAO;
 
-import com.imagespot.model.Location;
+import com.imagespot.Model.Location;
 
 import java.util.List;
 

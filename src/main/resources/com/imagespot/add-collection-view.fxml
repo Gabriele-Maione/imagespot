@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox style="-fx-background-radius: 20 20 15 15;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.AddCollectionController">
+<VBox style="-fx-background-radius: 20 20 15 15;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.Controller.AddCollectionController">
    <children>
       <HBox alignment="TOP_RIGHT" onMouseDragged="#dragged" onMousePressed="#pressed" styleClass="topbar" stylesheets="@../../css/signinup-style.css">
          <children>

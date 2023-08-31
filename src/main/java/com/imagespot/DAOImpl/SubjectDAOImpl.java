@@ -2,8 +2,7 @@ package com.imagespot.DAOImpl;
 
 import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.SubjectDAO;
-import com.imagespot.model.Subject;
-import com.imagespot.model.User;
+import com.imagespot.Model.Subject;
 
 import java.sql.*;
 import java.util.ArrayList;

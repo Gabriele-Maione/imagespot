@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" styleClass="main-scroll-pane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.center.collections.CollectionPostsController">
+<ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" styleClass="main-scroll-pane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.Controller.center.collections.CollectionPostsController">
    <content>
       <VBox>
          <children>

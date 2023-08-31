@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<HBox fx:id="root" alignment="CENTER" prefHeight="430.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.PostController">
+<HBox fx:id="root" alignment="CENTER" prefHeight="430.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.Controller.PostController">
    <children>
       <VBox HBox.hgrow="ALWAYS">
          <children>

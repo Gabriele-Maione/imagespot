@@ -2,7 +2,7 @@ package com.imagespot.DAOImpl;
 
 import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.DeviceDAO;
-import com.imagespot.model.Device;
+import com.imagespot.Model.Device;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

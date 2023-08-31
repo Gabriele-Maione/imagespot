@@ -1,8 +1,8 @@
 package com.imagespot.DAO;
 
-import com.imagespot.model.Device;
-import com.imagespot.model.Post;
-import com.imagespot.model.User;
+import com.imagespot.Model.Device;
+import com.imagespot.Model.Post;
+import com.imagespot.Model.User;
 import javafx.scene.image.Image;
 import java.io.IOException;
 import java.sql.SQLException;

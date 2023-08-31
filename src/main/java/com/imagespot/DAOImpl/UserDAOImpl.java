@@ -3,7 +3,7 @@ package com.imagespot.DAOImpl;
 import com.imagespot.Connection.ConnectionManager;
 import com.imagespot.DAO.UserDAO;
 import com.imagespot.View.ViewFactory;
-import com.imagespot.model.User;
+import com.imagespot.Model.User;
 import javafx.scene.image.Image;
 import java.io.File;
 import java.io.IOException;

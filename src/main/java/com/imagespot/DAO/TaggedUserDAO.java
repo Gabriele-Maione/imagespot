@@ -1,10 +1,8 @@
 package com.imagespot.DAO;
 
-import com.imagespot.model.Post;
-import com.imagespot.model.User;
+import com.imagespot.Model.Post;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public interface TaggedUserDAO {

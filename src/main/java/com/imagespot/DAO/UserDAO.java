@@ -1,12 +1,10 @@
 package com.imagespot.DAO;
 
-import com.imagespot.model.Device;
-import com.imagespot.model.User;
+import com.imagespot.Model.User;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 
 public interface UserDAO {

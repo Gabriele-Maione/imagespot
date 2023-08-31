@@ -1,10 +1,8 @@
 package com.imagespot.DAO;
 
-import com.imagespot.model.Post;
-import com.imagespot.model.User;
+import com.imagespot.Model.Post;
+import com.imagespot.Model.User;
 
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public interface BookmarkDAO {

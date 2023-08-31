@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox fx:id="mainContainer" styleClass="root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.AddPostController">
+<VBox fx:id="mainContainer" styleClass="root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.Controller.AddPostController">
     <children>
         <HBox alignment="TOP_RIGHT" onMouseDragged="#dragged" onMousePressed="#pressed" styleClass="topbar" stylesheets="@../../css/signinup-style.css">
             <children>

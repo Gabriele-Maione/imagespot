@@ -21,13 +21,13 @@ module com.imagespot {
 
     opens com.imagespot to javafx.fxml;
     exports com.imagespot;
-    exports com.imagespot.controller;
-    opens com.imagespot.controller to javafx.fxml, javafx.base, javafx.web;
-    exports com.imagespot.controller.center;
-    opens com.imagespot.controller.center to javafx.fxml;
-    exports com.imagespot.controller.center.categories;
-    opens com.imagespot.controller.center.categories to javafx.fxml;
-    exports com.imagespot.controller.center.collections;
-    opens com.imagespot.controller.center.collections to javafx.fxml;
+    exports com.imagespot.Controller;
+    opens com.imagespot.Controller to javafx.fxml, javafx.base, javafx.web;
+    exports com.imagespot.Controller.center;
+    opens com.imagespot.Controller.center to javafx.fxml;
+    exports com.imagespot.Controller.center.categories;
+    opens com.imagespot.Controller.center.categories to javafx.fxml;
+    exports com.imagespot.Controller.center.collections;
+    opens com.imagespot.Controller.center.collections to javafx.fxml;
 
 }

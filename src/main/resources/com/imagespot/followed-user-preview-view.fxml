@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="hboxUser" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="50.0" onMouseClicked="#userPreviewOnClick" prefHeight="38.0" prefWidth="225.0" spacing="10.0" styleClass="user_preview" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.UserPreviewController">
+<HBox fx:id="hboxUser" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="50.0" onMouseClicked="#userPreviewOnClick" prefHeight="38.0" prefWidth="225.0" spacing="10.0" styleClass="user_preview" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.Controller.UserPreviewController">
    <children>
       <ImageView fx:id="avatar" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
          <image>

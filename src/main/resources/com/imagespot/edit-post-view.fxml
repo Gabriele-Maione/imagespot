@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane hbarPolicy="NEVER" stylesheets="@../../css/settings.css" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.controller.EditPostController">
+<ScrollPane hbarPolicy="NEVER" stylesheets="@../../css/settings.css" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.Controller.EditPostController">
    <content>
       <VBox alignment="CENTER" prefWidth="400.0" spacing="10.0">
          <opaqueInsets>

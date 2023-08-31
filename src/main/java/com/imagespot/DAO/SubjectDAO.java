@@ -1,6 +1,6 @@
 package com.imagespot.DAO;
 
-import com.imagespot.model.Subject;
+import com.imagespot.Model.Subject;
 
 import java.util.ArrayList;
 

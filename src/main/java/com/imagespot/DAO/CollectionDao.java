@@ -1,9 +1,8 @@
 package com.imagespot.DAO;
 
-import com.imagespot.model.Collection;
-import com.imagespot.model.Post;
+import com.imagespot.Model.Collection;
+import com.imagespot.Model.Post;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,10 +1,9 @@
 package com.imagespot.DAO;
 
-import com.imagespot.model.Device;
+import com.imagespot.Model.Device;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public interface DeviceDAO {
     Device addDevice(String brand, String model, String deviceType, String username) throws SQLException;
