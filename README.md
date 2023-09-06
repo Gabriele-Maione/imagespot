@@ -10,7 +10,7 @@ Questo progetto è stato sviluppato come parte del corso OOBD.
 
 - Gabriele Maione
   - Matricola: N86004117
-  - Email: [g.maione@studenti.unina.it](mailto:gab.maione@studenti.unina.it)
+  - Email: [gab.maione@studenti.unina.it](mailto:gab.maione@studenti.unina.it)
 
 - Daniyl Popov
   - Matricola: N86003893
