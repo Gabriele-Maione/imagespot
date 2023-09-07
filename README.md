@@ -26,9 +26,8 @@ Il repository è organizzato nel seguente modo:
 ### Parte di Basi di Dati (BD)
 
 - `BD/scripts/`: Contiene gli script SQL per la gestione del database PostgreSQL.
-  - `BD/scripts/creazione_db.sql`: Script per la creazione della struttura del database.
-  - `BD/scripts/popolazione_db.sql`: Script per la popolazione del database con dati di esempio.
-- `BD/documentazione/`: Contiene la documentazione della parte di Basi di Dati.
+  - `BD/scripts/CreazioneDatabase.sql`: Script per la creazione della struttura del database.
+- `BD/Documentazione/`: Contiene la documentazione della parte di Basi di Dati.
 
 ## Come Eseguire l'Applicazione
 
