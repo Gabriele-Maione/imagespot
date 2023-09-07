@@ -35,7 +35,7 @@ Per eseguire l'applicazione Java, segui questi passaggi:
 
 1. Assicurati di avere Java installato sul tuo computer.
 2. Clona questo repository sul tuo computer.
-3. Compila il codice sorgente situato nella directory `OO/Codice Sorgente/`.
+3. Compila il codice sorgente situato nella directory [OO/Codice Sorgente/](OO/Codice%20Sorgente/).
 4. Esegui il programma Java.
 
 ## Requisiti
