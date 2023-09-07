@@ -20,7 +20,7 @@
                </image></ImageView>
             <VBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="134.0">
                <children>
-                  <HBox prefHeight="20.0" prefWidth="98.0" spacing="5.0">
+                  <VBox>
                      <children>
                         <Label fx:id="name" onMouseClicked="#userOnClick" styleClass="clickableText" text="Name">
                            <font>
@@ -29,7 +29,7 @@
                         </Label>
                         <Label fx:id="username" onMouseClicked="#userOnClick" styleClass="clickableText" text="\\@username" textFill="#8d8d8d" />
                      </children>
-                  </HBox>
+                  </VBox>
                   <Label fx:id="passedTime" text="days ago..." />
                </children>
                <opaqueInsets>

@@ -473,7 +473,7 @@ public class ViewFactory {
 
     public void showAddPhotoWindow() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/add-photo-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/imagespot/add-post-view.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.initOwner(homeRoot.getScene().getWindow());
