@@ -20,8 +20,8 @@ Il repository è organizzato nel seguente modo:
 
 ### Parte di Object Orientation (OO)
 
-- `OO/src/`: Contiene il codice sorgente dell'applicativo Javaa.
-- `OO/documentazione/`: Contiene la documentazione della parte di Object Orientation.
+- `OO/Codice Sorgente/`: Contiene il codice sorgente dell'applicativo Javaa.
+- `OO/Documentazione/`: Contiene la documentazione della parte di Object Orientation.
 
 ### Parte di Basi di Dati (BD)
 
@@ -35,7 +35,7 @@ Per eseguire l'applicazione Java, segui questi passaggi:
 
 1. Assicurati di avere Java installato sul tuo computer.
 2. Clona questo repository sul tuo computer.
-3. Compila il codice sorgente situato nella directory `src/`.
+3. Compila il codice sorgente situato nella directory `OO/Codice Sorgente/`.
 4. Esegui il programma Java.
 
 ## Requisiti
