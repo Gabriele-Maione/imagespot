@@ -1,0 +1,7 @@
+{
+  "name": "imgSpot",
+  "version": "1.0.0",
+  "dependencies": {
+    "@arcgis/core": "^4.25.5"
+  }
+}

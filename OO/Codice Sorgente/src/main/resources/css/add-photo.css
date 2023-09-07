@@ -1,0 +1,130 @@
+*{
+    -primary: #fdfdfe;
+    -secondary: #e1e3e7;
+    -sidebar-color: #f0f1f4;
+    -scrollbar-thumb-color: #cacacb;
+    -dark: #000000;
+    -fill: #3b3b3b;
+    -first-detail: #7678ed;
+    -selected: #afafe3;
+    -hovered: #babae7;
+    -pressed: #a1a1d2;
+}
+
+.root {
+    -fx-background-radius:  20 20 15 15;
+}
+
+.btn-cancel-new-device{
+    -fx-background-color: #d91717;
+}
+
+.device-item:hover{
+    -fx-background-color: -hovered;
+}
+
+.selected-device-item{
+    -fx-background-color: -selected!important;
+}
+
+.main-scroll-pane{
+    -fx-background-radius:  0 0 15 15;
+    -fx-background: #fff;
+}
+
+.scroll-pane{
+    -fx-background-insets: 0;
+}
+
+.split-pane .scroll-pane{
+    -fx-background: -sidebar-color;
+    -fx-border-color: -first-detail;
+    -fx-border-width: 1 0;
+}
+
+.scroll-pane .track{
+    -fx-background-color: -sidebar-color;
+}
+
+.scroll-pane .track{
+    -fx-background-color: -sidebar-color;
+}
+
+.scroll-pane .increment-button,
+.scroll-pane .decrement-button{
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-padding: 0;
+}
+
+.scroll-pane .increment-arrow,
+.scroll-pane .decrement-arrow{
+    -fx-padding: 0;
+}
+
+.scroll-pane .thumb{
+    -fx-background-color: -scrollbar-thumb-color;
+}
+
+.sidebar .scroll-pane .thumb{
+    -fx-background-color: transparent;
+}
+
+.sidebar .scroll-pane:hover .thumb{
+    -fx-background-color: -scrollbar-thumb-color;
+}
+
+.scroll-pane .thumb:pressed{
+    -fx-background-color: -first-detail;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+    -fx-background-color: -selected;
+    -fx-padding: 0 0.5 0 0.5;
+}
+
+.split-pane:horizontal{
+    -fx-border-color: -first-detail;
+    -fx-border-radius: 5;
+    -fx-background-insets: 0;
+}
+
+.text-field{
+    -fx-background-color: -fill;
+    -fx-background-radius: 20;
+    -fx-text-fill: -primary;
+    -fx-prompt-text-fill: #cccccc;
+    -fx-highlight-fill: #cccccc;
+}
+
+.text-area{
+    -fx-background-insets: 0;
+    -fx-background-color: -fill;
+    -fx-background-radius: 10;
+    -fx-border-color: -fill;
+    -fx-border-radius: 10;
+    -fx-text-fill: -primary;
+}
+
+.text-area .content{
+    -fx-background-color: -fill;
+    -fx-background-insets: 0;
+    -fx-text-fill: -primary;
+}
+
+ChoiceBox {
+    -fx-pref-width: 150px;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-background-color: -fill;
+    -fx-mark-color: -primary;
+}
+
+.choice-box > .label { -fx-text-fill: -primary;}
+
+.hbLoc {
+    -fx-background-color: rgba(255, 244, 230, 0.44);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: rgba(250, 219, 147, 0.51);
+}

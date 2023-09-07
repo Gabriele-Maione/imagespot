@@ -1,0 +1,74 @@
+* {
+    -primary: #fdfdfe;
+    -secondary: #e1e3e7;
+    -sidebar-color: #f0f1f4;
+    -scrollbar-thumb-color: #cacacb;
+    -dark: #000000;
+    -fill: #3b3b3b;
+    -first-detail: #7678ed;
+}
+
+AnchorPane {
+
+    -fx-background-color: white;
+}
+
+/* Style the main label */
+.genericLabel {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fill;
+}
+
+/* Style the image preview */
+ImageView {
+    -fx-fit-height: 75px;
+    -fx-fit-width: 75px;
+    -fx-preserve-ratio: true;
+}
+
+
+/* Style the text field */
+TextField {
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: -first-detail;
+}
+
+/* Style the choice box */
+ChoiceBox {
+    -fx-pref-width: 150px;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: -first-detail;
+    -fx-background-color: white;
+}
+
+/* Style the text area */
+TextArea {
+    -fx-pref-width: 200px;
+    -fx-pref-height: 75px;
+    -fx-border-color: -first-detail;
+    -fx-border-radius: 5px;
+}
+
+/* Style the hyperlink */
+Hyperlink {
+    -fx-text-fill: #00bfff;
+    -fx-font-weight: bold;
+}
+
+.deleteBtn {
+    -fx-background-color: rgba(170,26,3,0);
+    -fx-text-fill: #840600;
+}
+
+.settingsLabel {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #777777;
+}
+
+.linearGar {
+    -fx-background-color: linear-gradient(rgba(198,61,121,0.2) 0%, rgba(0,213,218,0.2) 100%);
+}

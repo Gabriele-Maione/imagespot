@@ -1,0 +1,86 @@
+*{
+    -primary: #fdfdfe;
+    -secondary: #e1e3e7;
+    -sidebar-color: #f0f1f4;
+    -scrollbar-thumb-color: #cacacb;
+    -dark: #000000;
+    -fill: #3b3b3b;
+    -first-detail: #7678ed;
+    -selected: #afafe3;
+    -hovered: #babae7;
+    -pressed: #a1a1d2;
+}
+
+Button {
+    -fx-background-color: -first-detail;
+    -fx-background-radius: 15;
+    -fx-text-fill: #fff;
+    -fx-cursor: hand;
+}
+
+Button:hover {
+    -fx-background-color: -hovered;
+}
+
+Button:pressed {
+    -fx-background-color: -pressed;
+}
+
+
+.xButton{
+    -fx-font-size: 10;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-border-color: rgba(128,175,246,0.16);
+    -fx-background-color: rgba(128,175,246,0.16);
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-font-family: "Mulish", sans-serif;
+}
+
+.xButton:hover{
+    -fx-background-color: rgba(246,0,6,0.16);
+    -fx-border-color: rgba(246,0,6,0.46);
+}
+
+.usersHbox{
+    -fx-border-color: -first-detail;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+
+.xButton{
+    -fx-font-size: 10;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-background-color: rgba(128,175,246,0.16);
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-font-family: "Mulish", sans-serif;
+}
+
+.xButton:hover{
+    -fx-background-color: rgba(246,0,6,0.16);
+    -fx-border-color: rgba(246,0,6,0.46);
+}
+
+.usersHbox{
+    -fx-border-color: -first-detail;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.clickableText:hover {
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+
+.clickable_img {
+    -fx-cursor: hand;
+}
+.user_preview:hover {
+    -fx-background-color: #babae7;
+    -fx-cursor: hand;
+    -fx-background-radius: 5;
+}

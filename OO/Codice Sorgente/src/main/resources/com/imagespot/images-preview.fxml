@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="preview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.Controller.PreviewController">
+   <children>
+      <ImageView fx:id="image_preview" onMouseClicked="#previewOnClick" pickOnBounds="true" preserveRatio="true" styleClass="clickable_img" />
+      <HBox alignment="CENTER_LEFT">
+         <children>
+            <ImageView fx:id="avatar" fitHeight="45.0" fitWidth="45.0" onMouseClicked="#userOnClick" pickOnBounds="true" preserveRatio="true" styleClass="clickable_img">
+               <image>
+                  <Image url="@../../icons/bear_icon.png" />
+               </image></ImageView>
+            <VBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="134.0">
+               <children>
+                  <VBox>
+                     <children>
+                        <Label fx:id="name" onMouseClicked="#userOnClick" styleClass="clickableText" text="Name">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="username" onMouseClicked="#userOnClick" styleClass="clickableText" text="\\@username" textFill="#8d8d8d" />
+                     </children>
+                  </VBox>
+                  <Label fx:id="passedTime" text="days ago..." />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </VBox>
+            <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button fx:id="modify" disable="true" mnemonicParsing="false" onAction="#ModifyBtnOnAction" text="Edit Photo" visible="false">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </HBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

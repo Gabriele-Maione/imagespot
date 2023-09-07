@@ -1,0 +1,16 @@
+{
+    "categories": [
+        "Landscape", "Wildlife", "Macro", "Underwater",
+        "Astrophotography", "Scientific", "Portrait", "Documentary", "Sport",
+        "Fashion", "Commercial", "Street", "Event", "Travel", "Pet", "Food",
+        "Architecture", "Family", "Other"
+    ],
+    "deviceType": [
+        "Smartphone",
+        "Digital Camera"
+    ],
+    "status" : [
+        "Public",
+        "Private"
+    ]
+}

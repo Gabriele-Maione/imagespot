@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane fx:id="homePane" prefHeight="550.0" prefWidth="900.0" stylesheets="@../../css/home.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.imagespot.Controller.HomeController">
+   <top>
+      <HBox>
+         <children>
+            <VBox alignment="CENTER" minWidth="250.0" prefWidth="250.0" styleClass="logo">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <children>
+                  <FlowPane alignment="CENTER" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label alignment="CENTER" text="IMAGESPOT">
+                           <font>
+                              <Font name="System Bold" size="32.0" />
+                           </font>
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color red="0.4627451002597809" green="0.47058823704719543" blue="0.929411768913269" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="0.9215686321258545" green="0.3686274588108063" blue="0.1568627506494522" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
+                        </Label>
+                     </children>
+                  </FlowPane>
+                  <Separator>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </Separator>
+               </children>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox>
+                     <children>
+                        <HBox alignment="CENTER_LEFT" fillHeight="false" styleClass="transparent-background">
+                           <children>
+                              <HBox styleClass="search-user-text-field">
+                                 <children>
+                                    <TextField fx:id="fldSearch" focusTraversable="false" promptText="Search users" styleClass="transparent-background">
+                                       <font>
+                                          <Font name="Open Sans" size="12.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="6.0" left="10.0" right="25.0" top="5.0" />
+                                       </padding>
+                                    </TextField>
+                                    <StackPane fx:id="searchButton">
+                                       <children>
+                                          <FontIcon iconColor="#616161" iconLiteral="fas-search" iconSize="15" styleClass="btn-search" textAlignment="CENTER" wrappingWidth="15.0" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets right="7.0" />
+                                       </HBox.margin>
+                                    </StackPane>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                           <children>
+                              <MenuButton mnemonicParsing="false" text="Create" textFill="WHITE">
+                                 <items>
+                                    <MenuItem fx:id="addPhotoItem" mnemonicParsing="false" text="Add Post">
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-images" />
+                                       </graphic>
+                                    </MenuItem>
+                                    <MenuItem fx:id="addCollectionItem" mnemonicParsing="false" text="Add Collection">
+                                       <graphic>
+                                          <FontIcon iconLiteral="far-folder-open" />
+                                       </graphic>
+                                    </MenuItem>
+                                 </items>
+                                 <graphic>
+                                    <FontIcon iconColor="WHITE" iconLiteral="fas-plus" iconSize="15" wrappingWidth="15.0" />
+                                 </graphic>
+                                 <padding>
+                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
+                                 </padding>
+                                 <styleClass>
+                                    <String fx:value="add-post-button" />
+                                    <String fx:value="clickable" />
+                                 </styleClass>
+                              </MenuButton>
+                              <MenuButton mnemonicParsing="false" styleClass="clickable">
+                                 <graphic>
+                                    <HBox>
+                                       <children>
+                                          <ImageView fx:id="profilePic" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../icons/bear_icon.png" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets right="10.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox alignment="CENTER_LEFT">
+                                             <children>
+                                                <Label fx:id="nameLabel" text="Name" textFill="#586067">
+                                                   <font>
+                                                      <Font name="Open Sans Semibold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="usernameLabel" text="\@Username" textFill="#586067">
+                                                   <font>
+                                                      <Font name="Open Sans Semibold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </graphic>
+                                 <items>
+                                    <MenuItem id="myProfileItem" fx:id="myProfileItem" mnemonicParsing="false" text="My Profile">
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-user" />
+                                       </graphic>
+                                    </MenuItem>
+                                    <MenuItem fx:id="settingsItem" mnemonicParsing="false" text="Settings">
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-cog" />
+                                       </graphic>
+                                    </MenuItem>
+                                    <MenuItem fx:id="logoutItem" mnemonicParsing="false" text="Logout">
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-sign-out-alt" />
+                                       </graphic>
+                                    </MenuItem>
+                                 </items>
+                              </MenuButton>
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Separator prefWidth="200.0" />
+               </children>
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox prefWidth="250.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+         <children>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <content>
+                  <VBox>
+                     <children>
+                        <VBox>
+                           <children>
+                              <Label minHeight="32.0" prefHeight="32.0" text="Browse" textFill="#7678ed">
+                                 <font>
+                                    <Font name="Open Sans Semibold" size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="16.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <HBox fx:id="hbFeed" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
+                                 <children>
+                                    <Label text="Home" textFill="#586067">
+                                       <font>
+                                          <Font name="Open Sans Semibold" size="16.0" />
+                                       </font>
+                                       <graphic>
+                                          <FontIcon iconColor="#586067" iconLiteral="fas-home" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                       </graphic>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox fx:id="hbBrowse" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0">
+                                 <children>
+                                    <Label text="Explore" textFill="#586067">
+                                       <font>
+                                          <Font name="Open Sans Semibold" size="16.0" />
+                                       </font>
+                                       <graphic>
+                                          <FontIcon iconColor="#586067" iconLiteral="far-compass" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                       </graphic>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
+                                 <styleClass>
+                                    <String fx:value="selected" />
+                                    <String fx:value="sidebar-item" />
+                                 </styleClass>
+                              </HBox>
+                              <HBox fx:id="hbTopPlaces" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
+                                 <children>
+                                    <Label text="Top places" textFill="#586067">
+                                       <font>
+                                          <Font name="Open Sans Semibold" size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                       <graphic>
+                                          <FontIcon iconColor="#586067" iconLiteral="fas-map-marked-alt" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                       </graphic>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox fx:id="hbCategories" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
+                                 <children>
+                                    <Label text="Categories" textFill="#586067">
+                                       <font>
+                                          <Font name="Open Sans Semibold" size="16.0" />
+                                       </font>
+                                       <graphic>
+                                          <FontIcon iconColor="#586067" iconLiteral="fas-home" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                       </graphic>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox fx:id="hbCollections" alignment="CENTER_LEFT" layoutX="26.0" layoutY="192.0" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
+                                 <children>
+                                    <Label text="Collections" textFill="#586067">
+                                       <font>
+                                          <Font name="Open Sans Semibold" size="16.0" />
+                                       </font>
+                                       <graphic>
+                                          <FontIcon iconColor="#586067" iconLiteral="far-folder-open" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                       </graphic>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Separator>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="16.0" right="16.0" top="5.0" />
+                           </VBox.margin>
+                        </Separator>
+                        <VBox>
+                           <children>
+                              <Label minHeight="32.0" prefHeight="32.0" text="Your Photo" textFill="#7678ed">
+                                 <font>
+                                    <Font name="Open Sans Semibold" size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="16.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <HBox fx:id="hbYourGallery" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
+                                 <children>
+                                    <Label text="Your Gallery" textFill="#586067">
+                                       <font>
+                                          <Font name="Open Sans Semibold" size="16.0" />
+                                       </font>
+                                       <graphic>
+                                          <FontIcon iconColor="#586067" iconLiteral="fas-images" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                       </graphic>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox fx:id="hbFavorites" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
+                                 <children>
+                                    <Label text="Favorites" textFill="#586067">
+                                       <font>
+                                          <Font name="Open Sans Semibold" size="16.0" />
+                                       </font>
+                                       <graphic>
+                                          <FontIcon iconColor="#586067" iconLiteral="fas-bookmark" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                       </graphic>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox fx:id="hbTagged" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
+                                 <children>
+                                    <Label text="Tagged" textFill="#586067">
+                                       <font>
+                                          <Font name="Open Sans Semibold" size="16.0" />
+                                       </font>
+                                       <graphic>
+                                          <FontIcon iconColor="#586067" iconLiteral="fas-tags" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                       </graphic>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox fx:id="hbYourCollections" alignment="CENTER_LEFT" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
+                                 <children>
+                                    <Label text="Your Collections" textFill="#586067">
+                                       <font>
+                                          <Font name="Open Sans Semibold" size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                       <graphic>
+                                          <FontIcon iconColor="#586067" iconLiteral="far-folder-open" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                       </graphic>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox fx:id="hbUsedCollections" alignment="CENTER_LEFT" layoutX="26.0" layoutY="192.0" minHeight="50.0" onMouseClicked="#setSelectedView" prefHeight="50.0" styleClass="sidebar-item">
+                                 <children>
+                                    <Label text="Used Collections" textFill="#586067">
+                                       <font>
+                                          <Font name="Open Sans Semibold" size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                       <graphic>
+                                          <FontIcon iconColor="#586067" iconLiteral="far-folder-open" iconSize="20" textAlignment="CENTER" wrappingWidth="40.0" />
+                                       </graphic>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </VBox>
+                        <Separator prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="16.0" right="16.0" top="5.0" />
+                           </VBox.margin>
+                        </Separator>
+                        <VBox prefHeight="34.0" prefWidth="250.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Label minHeight="32.0" prefHeight="32.0" text="Followed users" textFill="#7678ed">
+                                 <font>
+                                    <Font name="Open Sans Semibold" size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="16.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <FlowPane fx:id="followedUserList" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets left="6.0" />
+                                 </VBox.margin></FlowPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </content>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </ScrollPane>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+</BorderPane>

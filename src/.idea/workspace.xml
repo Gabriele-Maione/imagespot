@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="575c9824-3252-4164-be61-1c37aecd8ac5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/cssdialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dependency-reduced-pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Connection/ConnectionManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/AddCollectionController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/AddInfoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/AddLocationController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/AddPostController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/AddPostsToCollectionController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/CollectionPreviewController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/DeviceController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/EditCollectionController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/EditPostController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/HomeController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/PostController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/PreviewController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/SearchedUsersController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/SettingsController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/SignInController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/TopPlacesController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/UserPreviewController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/BrowseController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/CenterPaneController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/FavouritesController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/FeedController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/LocationController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/SubjectController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/TaggedController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/UserPageController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/YourGalleryController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/categories/CategoriesController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/categories/CategoryController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/collections/CollectionPostsController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/collections/CollectionsController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/collections/RecentCollectionsController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/collections/UsedCollectionsController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Controller/center/collections/YourCollectionsController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/DAO/BookmarkDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/DAO/CollectionDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/DAO/DeviceDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/DAO/LocationDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/DAO/PostDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/DAO/SubjectDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/DAO/TaggedUserDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/DAO/UserDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/ImplementationPostgresDAO/BookmarkDAOImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/ImplementationPostgresDAO/CollectionDaoImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/ImplementationPostgresDAO/DeviceDAOImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/ImplementationPostgresDAO/LocationDAOImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/ImplementationPostgresDAO/PostDAOImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/ImplementationPostgresDAO/SubjectDAOImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/ImplementationPostgresDAO/TaggedUserDAOImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/ImplementationPostgresDAO/UserDAOImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/MainApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Model/Collection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Model/Device.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Model/Location.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Model/Post.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Model/Subject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Model/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Utils/TimeUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/Utils/Utils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/View/ViewFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/imagespot/View/ViewType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/module-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/add-collection-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/add-info-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/add-post-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/add-posts-to-collection-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/collection-posts-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/collection-preview-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/device-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/edit-collection-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/edit-post-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/followed-user-preview-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/home-center-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/home-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/images-preview.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/location-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/post-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/searched-users-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/settings-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/sign-in-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/top-places-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/user-page-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/com/imagespot/user-preview-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/css/add-photo.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/css/collection.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/css/home-style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/css/home.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/css/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/css/post-page.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/css/settings.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/css/signinup-style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/css/user-page.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/icons/bear_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/images/placeholder.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/json/labels.json" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;FelCon25&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="8cedfec9-e04e-4a79-bba3-e0148751a832" />
+        <option name="url" value="https://github.com/Gabriele-Maione/imagespot" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2V4mRLao7dDac7L0tBAoZKSETQv" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/daniy/OneDrive/Desktop/Project OOBD/Imagepoint/imagespot/src",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="575c9824-3252-4164-be61-1c37aecd8ac5" name="Changes" comment="" />
+      <created>1694103717849</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1694103717849</updated>
+      <workItem from="1694103718847" duration="20000" />
+      <workItem from="1694103836972" duration="145000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
