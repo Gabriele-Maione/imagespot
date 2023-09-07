@@ -20,7 +20,7 @@
          <children>
             <FlowPane alignment="CENTER">
                <children>
-                  <VBox maxWidth="350.0" spacing="10.0">
+                  <VBox maxWidth="400.0" spacing="10.0">
                      <children>
                         <Label fx:id="lblCollectionName" text="Collection name">
                            <font>

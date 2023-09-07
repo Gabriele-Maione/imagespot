@@ -40,27 +40,31 @@
                                     <Image url="@../../icons/bear_icon.png" />
                                  </image>
                               </ImageView>
-                              <VBox>
+                              <HBox HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Label fx:id="name" onMouseClicked="#userProfileOnClick" styleClass="clickableText" text="name">
+                                    <VBox HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label fx:id="name" onMouseClicked="#userProfileOnClick" styleClass="clickableText" text="name" wrapText="true">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="username" onMouseClicked="#userProfileOnClick" styleClass="clickableText" text="\@username" textFill="#616161">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <Button fx:id="btnClose" mnemonicParsing="false" onAction="#buttonCloseOnAction" prefHeight="20.0" prefWidth="20.0" styleClass="close-button" text="x">
                                        <font>
-                                          <Font size="18.0" />
+                                          <Font name="System Bold" size="12.0" />
                                        </font>
-                                    </Label>
-                                    <Label fx:id="username" onMouseClicked="#userProfileOnClick" styleClass="clickableText" text="\@username" textFill="#616161">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
+                                    </Button>
                                  </children>
-                              </VBox>
+                              </HBox>
                            </children>
                         </HBox>
-                        <Button fx:id="btnClose" mnemonicParsing="false" onAction="#buttonCloseOnAction" prefHeight="20.0" prefWidth="20.0" styleClass="close-button" text="x">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
                      </children>
                   </StackPane>
                </children>

@@ -2,6 +2,8 @@ package com.imagespot.Connection;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConnectionManager {
 
@@ -25,7 +27,8 @@ public class ConnectionManager {
                 alert.showAndWait();
             }
         } catch (ClassNotFoundException ex) {
-            System.out.println("Driver not found");
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Driver not found", ex);
         }
     }
 

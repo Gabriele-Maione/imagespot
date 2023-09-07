@@ -1,14 +1,12 @@
 package com.imagespot.Controller;
 
 import com.imagespot.Model.Location;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.web.WebView;
 import org.json.JSONObject;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,26 +27,6 @@ public class AddLocationController implements Initializable {
         webView.getEngine().load("https://myapplications.altervista.org/imagespot/location/location.php");
         webView.getEngine().setOnAlert(stringWebEvent -> {
             setLocationFromMap(stringWebEvent.getData());
-        });
-
-    }
-
-    private void retrieveMapTask() {
-        final Task<Void> mapTask = new Task<>() {
-            @Override
-            protected Void call() {
-                try {
-
-                }
-                catch (Exception e) {
-                    System.out.println(e);
-                }
-                return null;
-            }
-        };
-        new Thread(mapTask).start();
-        mapTask.setOnSucceeded(workerStateEvent -> {
-
         });
     }
 

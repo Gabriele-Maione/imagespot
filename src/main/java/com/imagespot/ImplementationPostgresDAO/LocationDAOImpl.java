@@ -47,12 +47,12 @@ public class LocationDAOImpl implements LocationDAO {
         ArrayList<String> top = new ArrayList<>();
         Statement st;
         ResultSet rs;
-        String query = "SELECT " + location + ", count(*) as postN\n" +
-                "FROM location\n" +
-                "WHERE " + location + " IS NOT NULL\n" +
-                "group by " + location +
-                "\norder by postN DESC\n" +
-                "LIMIT 10";
+        String query = "SELECT " + location + ", count(*) as postN" +
+                " FROM location JOIN post p ON p.idimage = location.post" +
+                " WHERE " + location + " IS NOT NULL AND P.status = 'Public'" +
+                " GROUP BY " + location +
+                " ORDER BY postN DESC LIMIT 10";
+
         try {
             st = con.createStatement();
             rs = st.executeQuery(query);

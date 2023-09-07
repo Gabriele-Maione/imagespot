@@ -26,7 +26,7 @@ public class TaggedUserDAOImpl implements TaggedUserDAO {
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
-            System.out.println("Failed to insert tagged user to database");
+            throw new RuntimeException(e);
         }
     }
 
@@ -53,7 +53,7 @@ public class TaggedUserDAOImpl implements TaggedUserDAO {
             rs.close();
             st.close();
         } catch (SQLException e) {
-            System.out.println("Failed to retrieve data from TaggedUser table");
+            throw new RuntimeException(e);
         }
         return tag;
     }

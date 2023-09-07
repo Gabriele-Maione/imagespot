@@ -2,9 +2,7 @@ package com.imagespot.Controller.center.categories;
 
 import com.imagespot.View.ViewFactory;
 import com.imagespot.Controller.center.CenterPaneController;
-import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -21,9 +19,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class CategoriesController extends CenterPaneController {
-
-    @FXML
-    private Button btnUpdate;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,7 +41,6 @@ public class CategoriesController extends CenterPaneController {
         if (lablesJsonFile != null) {
             try {
                 jsonObject = new JSONObject(IOUtils.toString(lablesJsonFile, StandardCharsets.UTF_8));
-
                 JSONArray jsonCategories = jsonObject.getJSONArray("categories");
 
                 for (Object category : jsonCategories)
@@ -54,8 +48,7 @@ public class CategoriesController extends CenterPaneController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        } else
-            System.out.println("Error opening JSON file!");
+        }
     }
 
     @Override

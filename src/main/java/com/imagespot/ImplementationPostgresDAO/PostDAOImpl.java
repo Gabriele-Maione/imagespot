@@ -271,14 +271,12 @@ public class PostDAOImpl implements PostDAO {
         PreparedStatement st;
         String query = "UPDATE post SET status = ?::statust WHERE idimage = ?";
         try {
-            System.out.println("afafa");
             st = con.prepareStatement(query);
             st.setString(1, status);
             st.setInt(2, id);
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
-            System.out.println(e.toString());
             throw new RuntimeException(e);
         }
     }

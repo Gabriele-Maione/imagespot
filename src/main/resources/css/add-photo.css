@@ -62,6 +62,22 @@
     -fx-padding: 0;
 }
 
+.scroll-pane .thumb{
+    -fx-background-color: -scrollbar-thumb-color;
+}
+
+.sidebar .scroll-pane .thumb{
+    -fx-background-color: transparent;
+}
+
+.sidebar .scroll-pane:hover .thumb{
+    -fx-background-color: -scrollbar-thumb-color;
+}
+
+.scroll-pane .thumb:pressed{
+    -fx-background-color: -first-detail;
+}
+
 .split-pane:horizontal > .split-pane-divider {
     -fx-background-color: -selected;
     -fx-padding: 0 0.5 0 0.5;

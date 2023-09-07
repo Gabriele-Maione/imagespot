@@ -23,7 +23,7 @@ public class DeviceDAOImpl implements DeviceDAO {
         int id = this.getDeviceID(brand, model);
         PreparedStatement st;
         ResultSet rs;
-        String addNewDevice = "INSERT INTO device(Brand, Model, deviceType) VALUES(?, ?, ?) RETURNING iddevice";
+        String addNewDevice = "INSERT INTO device(brand, model, deviceType) VALUES(?, ?, ?) RETURNING iddevice";
         if(id == -1) {
 
             try {
@@ -41,6 +41,7 @@ public class DeviceDAOImpl implements DeviceDAO {
                 throw new RuntimeException(e);
             }
         }
+
         addUserDevice(id, username);
         Device device = new Device(id, brand, model, deviceType);
         return device;

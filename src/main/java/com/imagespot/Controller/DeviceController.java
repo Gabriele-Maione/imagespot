@@ -75,11 +75,16 @@ public class DeviceController implements Initializable {
         brand = ((TextField) hBox.getChildren().get(0)).getText().trim().replaceAll(" +", " ").toUpperCase();
         model = ((TextField) hBox.getChildren().get(1)).getText().trim().replaceAll(" +", " ").toLowerCase();
 
-        if (recentUserDevices.stream().anyMatch(d -> d.getBrand().equals(brand) && d.getModel().equals(model))) {
-            System.out.println("Device already in your device list");
-        } else {
+        if (recentUserDevices.stream().noneMatch(d -> d.getBrand().equals(brand) && d.getModel().equals(model))) {
             addDeviceTask(brand, model, deviceType, user.getUsername());
             setHboxVisibility(hBox, false);
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Device already exists");
+            alert.setHeaderText("Device already in your device list");
+            alert.setContentText("Change the brand or model of your device!");
+            alert.show();
         }
     }
 

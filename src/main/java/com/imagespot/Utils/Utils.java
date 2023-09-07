@@ -19,8 +19,10 @@ import org.imgscalr.Scalr;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 public class Utils {
     public static Image crop(Image img) {
@@ -35,7 +37,6 @@ public class Utils {
         PixelReader pixelReader = img.getPixelReader();
         return new WritableImage(pixelReader, x, y, cropSize, cropSize);
     }
-
     public static InputStream photoScaler(File photo) throws IOException {
         BufferedImage bufferedImage = ImageIO.read(photo.getAbsoluteFile());
         bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 700, 700, Scalr.OP_ANTIALIAS);
@@ -66,7 +67,6 @@ public class Utils {
 
         return tempFile;
     }
-
     public static String getRes(File file) {
         Image i = new Image(file.getAbsolutePath());
         return ((int)i.getHeight() + "x" + (int)i.getWidth());
@@ -149,7 +149,64 @@ public class Utils {
         Circle circle = new Circle(avatarWidth, avatarWidth, avatarWidth);
         avatar.setClip(circle);
     }
+    public static Image getCollectionPreview(List<Image> images){
+        try {
+            int collageSize = 400;
+            int imagesSize = collageSize / 2;
+            BufferedImage image1 = resizeImage(imageToBufferedImage(images.get(0)), imagesSize);
+            BufferedImage image2 = resizeImage(imageToBufferedImage(images.get(1)), imagesSize);
+            BufferedImage image3 = resizeImage(imageToBufferedImage(images.get(2)), imagesSize);
+            BufferedImage image4 = resizeImage(imageToBufferedImage(images.get(3)), imagesSize);
 
+
+            BufferedImage collage = new BufferedImage(collageSize, collageSize, BufferedImage.TYPE_INT_RGB);
+
+            Graphics2D g2d = collage.createGraphics();
+
+            g2d.drawImage(image1, 0, 0, null);
+            g2d.drawImage(image2, image1.getWidth(), 0, null);
+            g2d.drawImage(image3, 0, image1.getHeight(), null);
+            g2d.drawImage(image4, image1.getWidth(), image1.getHeight(), null);
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            BufferedImage output = new BufferedImage(collage.getWidth(), collage.getHeight(), BufferedImage.TYPE_INT_RGB);
+            output.createGraphics().drawImage(collage, 0, 0, Color.WHITE, null);
+            ImageIO.write(output, "jpeg", baos);
+
+            return new Image(new ByteArrayInputStream(baos.toByteArray()));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private static BufferedImage imageToBufferedImage(Image image){
+        // Convert the JavaFX Image to a BufferedImage
+        int width = (int) image.getWidth();
+        int height = (int) image.getHeight();
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        // Get the PixelReader from the JavaFX Image
+        PixelReader pixelReader = image.getPixelReader();
+
+        // Get the writable pixel array from the BufferedImage
+        int[] pixels = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
+
+        // Copy pixel data from JavaFX Image to BufferedImage
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                pixels[y * width + x] = pixelReader.getArgb(x, y);
+            }
+        }
+
+        return bufferedImage;
+    }
+    private static BufferedImage resizeImage(BufferedImage originalImage, int size) throws IOException {
+        BufferedImage resizedImage = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics2D = resizedImage.createGraphics();
+        graphics2D.drawImage(originalImage, 0, 0, size, size, null);
+        graphics2D.dispose();
+        return resizedImage;
+    }
     public static String uploadFile(File file, File preview){
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
@@ -163,8 +220,7 @@ public class Utils {
 
             return EntityUtils.toString(response.getEntity(), "UTF-8");
         } catch (Exception e) {
-            System.out.println("Uploading file failed...");
+            throw new RuntimeException(e);
         }
-        return null;
     }
 }

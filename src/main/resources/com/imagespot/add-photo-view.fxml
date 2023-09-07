@@ -33,7 +33,7 @@
                 </Button>
             </children>
         </HBox>
-        <ScrollPane fx:id="scrollPane" focusTraversable="false" hbarPolicy="NEVER" prefWidth="602.0" styleClass="main-scroll-pane">
+        <ScrollPane fx:id="scrollPane" focusTraversable="false" hbarPolicy="ALWAYS" prefWidth="602.0" styleClass="main-scroll-pane">
             <content>
                 <VBox alignment="CENTER" spacing="10.0" styleClass="child">
                     <opaqueInsets>

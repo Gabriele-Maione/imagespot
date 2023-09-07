@@ -1,5 +1,6 @@
 package com.imagespot.Controller;
 
+import com.imagespot.Utils.Utils;
 import com.imagespot.View.ViewFactory;
 import com.imagespot.View.ViewType;
 import com.imagespot.Model.Collection;
@@ -18,8 +19,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
+import static com.imagespot.Utils.Utils.getCollectionPreview;
 import static com.imagespot.Utils.Utils.setAvatarRounde;
 
 public class CollectionPreviewController implements Initializable {
@@ -68,25 +72,25 @@ public class CollectionPreviewController implements Initializable {
         }
         setModify();
 
-        if(collection.getPosts().size() == 4){
-            for(Post p : collection.getPosts()){
-                ImageView imageView = new ImageView(p.getPreview());
-                flowPaneCollection.getChildren().add(imageView);
+        ImageView collectionImageView;
 
-                imageView.fitWidthProperty().bind(collectionVBox.prefWidthProperty().divide(2).subtract(1));
-                imageView.fitHeightProperty().bind(collectionVBox.prefWidthProperty().divide(2).subtract(1));
-            }
+        if(collection.getPosts().size() == 4){
+            ArrayList<Image> previews = new ArrayList<>();
+            for (Post p: collection.getPosts())
+                previews.add(p.getPreview());
+
+            collectionImageView = new ImageView(getCollectionPreview(previews));
         }
         else{
-            ImageView imageView = new ImageView((collection.getPosts().isEmpty()) ?
+            collectionImageView = new ImageView((collection.getPosts().isEmpty()) ?
                 new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/placeholder.jpg"))) :
                 collection.getPosts().get(0).getPreview()
             );
-
-            imageView.fitWidthProperty().bind(collectionVBox.prefWidthProperty().subtract(1));
-            imageView.fitHeightProperty().bind(collectionVBox.prefWidthProperty().subtract(1));
-            flowPaneCollection.getChildren().add(imageView);
         }
+
+        collectionImageView.fitWidthProperty().bind(collectionVBox.prefWidthProperty().subtract(1));
+        collectionImageView.fitHeightProperty().bind(collectionVBox.prefWidthProperty().subtract(1));
+        flowPaneCollection.getChildren().add(collectionImageView);
 
         Color darkOpacity = Color.color(0, 0, 0, 0.5);
         Rectangle rect = new Rectangle(0 ,0, darkOpacity);

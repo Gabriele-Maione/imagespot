@@ -44,7 +44,6 @@ public class UserDAOImpl implements UserDAO {
             Logger logger = Logger.getLogger(getClass().getName());
             logger.log(Level.SEVERE, "Failed to check credentials.", e);
         }
-        System.out.println(flag);
         return flag;
     }
 

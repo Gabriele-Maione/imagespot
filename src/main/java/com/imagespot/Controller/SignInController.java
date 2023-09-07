@@ -50,8 +50,11 @@ public class SignInController implements Initializable {
     @FXML
     private TabPane tabPane;
 
+    private User user;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        user = ViewFactory.getInstance().getUser();
         redirectToLoginView();
     }
 
@@ -106,9 +109,9 @@ public class SignInController implements Initializable {
     }
 
     private void startNewUser() {
-        ViewFactory.getInstance().getUser().setUsername(signUpUsername.getText());
-        ViewFactory.getInstance().getUser().setName(signUpName.getText());
-        ViewFactory.getInstance().getUser().setEmail(signUpEmail.getText());
+        user.setUsername(signUpUsername.getText());
+        user.setName(signUpName.getText());
+        user.setEmail(signUpEmail.getText());
         ViewFactory.getInstance().showAddInfoWindow();
         Stage stage = (Stage) btnSignUp.getScene().getWindow();
         stage.close();

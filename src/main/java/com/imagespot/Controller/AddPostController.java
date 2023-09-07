@@ -103,14 +103,12 @@ public class AddPostController implements Initializable {
                 for (Object category : jsonCategories)
                     cbCategory.getItems().add(category.toString());
 
-
                 for (Object state : jsonStatus)
                     cbStatus.getItems().add(state.toString());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        } else
-            System.out.println("Error opening JSON file!");
+        }
     }
 
     private void taggedUsersListeners() {
@@ -167,7 +165,7 @@ public class AddPostController implements Initializable {
 
                     Post post = new Post(getRes(file), description, getSize(file), getExt(file), cbStatus.getValue(), location);
 
-                    JSONObject response = new JSONObject(Objects.requireNonNull(uploadFile(file, photoScaler2(file))));
+                    JSONObject response = new JSONObject(uploadFile(file, photoScaler2(file)));
 
                     if(response.getBoolean("success")){
                         new PostDAOImpl().addPost(response.getString("path"), response.getString("preview_path"), post, device, user);
