@@ -7,7 +7,7 @@ Per connettersi al database, utilizzare le seguenti credenziali:
 - **Utente**: imagespot
 - **Password**: sxGcPx536GhTuwFeHtBwNEfqFM4lq4rL
 
-# Per semplificare la navigazione nel file SQL e trovare rapidamente le sezioni di interesse, può seguire i link diretti alle varie parti del codice:
+### Per semplificare la navigazione nel file SQL e trovare rapidamente le sezioni di interesse, può seguire i link diretti alle varie parti del codice:
 
 - [Creazione dei Domini](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L3)
 - [Creazione delle Tabelle](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L14)
