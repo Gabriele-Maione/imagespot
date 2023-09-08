@@ -186,7 +186,7 @@ SELECT a.username,
         WHERE following.nickname::TEXT = a.username::TEXT)    AS following
 FROM account a;
 
--- funzione per fare il hash della password prima di inserirla
+--funzione per fare l'hash della password prima di inserirla
 CREATE OR REPLACE FUNCTION hash_password() RETURNS trigger
     LANGUAGE plpgsql
 AS
@@ -205,7 +205,7 @@ CREATE TRIGGER hash_password_trigger
     FOR EACH ROW
 EXECUTE PROCEDURE hash_password();
 
--- funzione per inserire un soggetto nel post
+--funzione per inserire un soggetto nel post
 CREATE OR REPLACE FUNCTION insert_subject_post(subject_name CHARACTER varying, category_name CHARACTER varying, image_id INTEGER) RETURNS void
     LANGUAGE plpgsql
 AS
