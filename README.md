@@ -18,12 +18,12 @@ Questo è il repository del progetto sviluppato per due corsi: Object Orientatio
 
 Il repository è organizzato nel seguente modo:
 
-### Parte di Object Orientation (OO)
+### Parte di Object Orientation ([OO](OO))
 
 - [OO/Codice Sorgente/](OO/Codice%20Sorgente/): Contiene il codice sorgente dell'applicativo Java.
 - [OO/Documentazione/](OO/Documentazione/): Contiene la documentazione della parte di Object Orientation.
 
-### Parte di Basi di Dati (BD)
+### Parte di Basi di Dati ([BD](BD))
 
 - [BD/scripts/](BD/scripts/): Contiene gli script SQL per la gestione del database PostgreSQL.
   - [BD/scripts/CreazioneDatabase.sql](BD/scripts/CreazioneDatabase.sql): Script per la creazione della struttura del database.
