@@ -8,20 +8,15 @@ Per connettersi al database, utilizzare le seguenti credenziali:
 - **Password**: sxGcPx536GhTuwFeHtBwNEfqFM4lq4rL
 
 # Contenuto del file CreazioneDatabase
-1. [Creazione dei domini](#creazione-dei-domini)
-2. [Creazione delle tabelle](#creazione-delle-tabelle)
-3. [Trigger e procedure implementate](#trigger-e-procedure-implementate)
-4. [Popolazione del database](#popolazione-del-database)
-5. [Gestione degli utenti e dei privilegi](#gestione-degli-utenti-e-dei-privilegi)
 
 ## Creazione dei domini
-Dalla riga 1 alla riga 40 viene mostrata la creazione dei domini.
+- [Link file SQL](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L3)
 
 ## Creazione delle tabelle
-Dalla riga 40 alla riga 290 viene mostrata la creazione delle tabelle.
+- [Link file SQL](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L14)
 
 ## Trigger e procedure implementate
-Dalla riga 290 alla riga 523 vengono mostrati i trigger e le procedure implementate.
+- [Link file SQL](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L190)
 
 ## Popolazione del database
-Dalla riga 675 alla riga 885 viene mostrata la popolazione del database.
+- [Link file SQL](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L368)
