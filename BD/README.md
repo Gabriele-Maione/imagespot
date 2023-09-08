@@ -2,9 +2,9 @@
 Per connettersi al database, utilizzare le seguenti credenziali:
 ```
 Host: dpg-cj5sptqcn0vc7384d0sg-a.frankfurt-postgres.render.com
-Porta: 5432
+Port: 5432
 Database: imagespot
-Utente: imagespot
+User: imagespot
 Password: sxGcPx536GhTuwFeHtBwNEfqFM4lq4rL
 ```
 
@@ -14,3 +14,10 @@ Password: sxGcPx536GhTuwFeHtBwNEfqFM4lq4rL
 - [Creazione delle Tabelle](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L14)
 - [Trigger e Procedure Implementate](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L190)
 - [Popolazione del Database](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L368)
+
+### Come configurare il database in locale:
+
+Eseguire lo script SQL [CreazioneDatabase.sql](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql) nel proprio ambiente locale.
+```
+psql -h localhost -a -f ../CreazioneDatabase.sql
+```
