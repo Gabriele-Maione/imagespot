@@ -7,16 +7,9 @@ Per connettersi al database, utilizzare le seguenti credenziali:
 - **Utente**: imagespot
 - **Password**: sxGcPx536GhTuwFeHtBwNEfqFM4lq4rL
 
-# Contenuto del file CreazioneDatabase
+# Per semplificare la navigazione nel file SQL e trovare rapidamente le sezioni di interesse, può seguire i link diretti alle varie parti del codice:
 
-## Creazione dei domini
-- [Link file SQL](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L3)
-
-## Creazione delle tabelle
-- [Link file SQL](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L14)
-
-## Trigger e procedure implementate
-- [Link file SQL](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L190)
-
-## Popolazione del database
-- [Link file SQL](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L368)
+- [Creazione dei Domini](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L3)
+- [Creazione delle Tabelle](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L14)
+- [Trigger e Procedure Implementate](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L190)
+- [Popolazione del Database](https://github.com/Gabriele-Maione/imagespot/blob/master/BD/scripts/CreazioneDatabase.sql#L368)
